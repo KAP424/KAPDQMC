@@ -13,8 +13,8 @@ end
 
 struct tU_Hubbard_Para_
     Lattice::String
-    t::Float64
-    U::Float64
+    Ht::Float64
+    Hu::Float64
     site::Vector{Int64}
     Θ::Float64
     Ns::Int64
@@ -35,19 +35,18 @@ struct tU_Hubbard_Para_
     samplers_dict::Dict{UInt8, Random.Sampler}
 end
 
-function tU_Hubbard_Para(;t, U, Lattice::String, site, Δt, Θ, BatchSize, Initial::String)
+function tU_Hubbard_Para(;Ht, Hu, Lattice::String, site, Δt, Θ, BatchSize, Initial::String)
     Nt = 2 * cld(Θ, Δt)
     WrapTime = div(BatchSize, 2)
     
-    α = sqrt(Δt * U / 2)
+    α = sqrt(Δt * Hu / 2)
     γ = [1 + sqrt(6) / 3, 1 + sqrt(6) / 3, 1 - sqrt(6) / 3, 1 - sqrt(6) / 3]
     η = [sqrt(2 * (3 - sqrt(6))), -sqrt(2 * (3 - sqrt(6))), sqrt(2 * (3 + sqrt(6))), -sqrt(2 * (3 + sqrt(6)))]
-
 
     K = K_Matrix(Lattice, site)
     Ns = size(K, 1)
 
-    E, V = LAPACK.syevd!('V', 'L',K[:,:])
+    E, V = LAPACK.syevd!('V', 'L',Ht*K[:,:])
     HalfeK=V*Diagonal(exp.(-Δt.*E./2))*V'
     eK=V*Diagonal(exp.(-Δt.*E))*V'
     HalfeKinv=V*Diagonal(exp.(Δt.*E./2))*V'
@@ -98,7 +97,7 @@ function tU_Hubbard_Para(;t, U, Lattice::String, site, Δt, Θ, BatchSize, Initi
         samplers_dict[excluded] = Random.Sampler(rng, allowed)
     end
 
-    return tU_Hubbard_Para_(Lattice, t, U, site, Θ, Ns, Nt, K, BatchSize, WrapTime, Δt, α, γ, η, Pt, HalfeK, eK, HalfeKinv, eKinv, nodes,samplers_dict)
+    return tU_Hubbard_Para_(Lattice, Ht, Hu, site, Θ, Ns, Nt, K, BatchSize, WrapTime, Δt, α, γ, η, Pt, HalfeK, eK, HalfeKinv, eKinv, nodes,samplers_dict)
 end
 
 function PhyBuffer(Ns,NN)

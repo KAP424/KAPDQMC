@@ -2,8 +2,8 @@
 
 struct tV_Hubbard_Para_
     Lattice::String
-    t::Float64
-    U::Float64
+    Ht::Float64
+    Hv::Float64
     site::Vector{Int64}
     Θ::Float64
     Ns::Int64
@@ -24,11 +24,11 @@ struct tV_Hubbard_Para_
     samplers_dict::Dict{UInt8, Random.Sampler}
 end
 
-function tV_Hubbard_Para(t,U,Lattice::String,site,Δt,Θ,BatchSize,Initial::String)
+function tV_Hubbard_Para(;Ht,Hv,Lattice::String,site,Δt,Θ,BatchSize,Initial::String)
     K=K_Matrix(Lattice,site)
     Ns=size(K,1)
 
-    E,V=LAPACK.syevd!('V', 'L',-t.*K[:,:])
+    E,V=LAPACK.syevd!('V', 'L',-Ht.*K[:,:])
     HalfeK=V*Diagonal(exp.(-Δt.*E./2))*V'
     eK=V*Diagonal(exp.(-Δt.*E))*V'
     HalfeKinv=V*Diagonal(exp.(Δt.*E./2))*V'
@@ -74,7 +74,7 @@ function tV_Hubbard_Para(t,U,Lattice::String,site,Δt,Θ,BatchSize,Initial::Stri
 
     Nt=2*cld(Θ,Δt)
     γ = [1 + sqrt(6) / 3, 1 + sqrt(6) / 3, 1 - sqrt(6) / 3, 1 - sqrt(6) / 3]
-    η = sqrt(Δt * U).*[sqrt(3 - sqrt(6)), -sqrt(3 - sqrt(6)), sqrt(3 + sqrt(6)), -sqrt(3 + sqrt(6))]
+    η = sqrt(Δt * Hv).*[sqrt(3 - sqrt(6)), -sqrt(3 - sqrt(6)), sqrt(3 + sqrt(6)), -sqrt(3 + sqrt(6))]
 
     nnidx=nnidx_F(Lattice,site)
     if div(Nt, 2) % BatchSize == 0
@@ -100,7 +100,7 @@ function tV_Hubbard_Para(t,U,Lattice::String,site,Δt,Θ,BatchSize,Initial::Stri
         samplers_dict[excluded] = Random.Sampler(rng, allowed)
     end
 
-    return Hubbard_Para_(Lattice,t,U,site,Θ,Ns,Nt,K,BatchSize,Δt,γ,η,Pt,HalfeK,eK,HalfeKinv,eKinv,nnidx,nodes,UV,samplers_dict)
+    return tV_Hubbard_Para_(Lattice,Ht,Hv,site,Θ,Ns,Nt,K,BatchSize,Δt,γ,η,Pt,HalfeK,eK,HalfeKinv,eKinv,nnidx,nodes,UV,samplers_dict)
 
 end
 

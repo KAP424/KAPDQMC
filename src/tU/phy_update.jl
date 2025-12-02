@@ -13,6 +13,7 @@ function phy_update(path::String, model::tU_Hubbard_Para_, s::Array{UInt8, 2},Sw
     elseif model.Lattice=="HoneyComb60" "HC" 
     elseif model.Lattice=="HoneyComb120" "HC120" 
     else error("Lattice: $(model.Lattice) is not allowed !") end  
+    file="$(path)/tUphy$(name)_t$(model.Ht)U$(model.Hu)size$(model.site)Δt$(model.Δt)Θ$(model.Θ)BS$(model.BatchSize).csv"
 
     Ns=model.Ns
     ns=div(Ns, 2)
@@ -50,7 +51,7 @@ function phy_update(path::String, model::tU_Hubbard_Para_, s::Array{UInt8, 2},Sw
         for lt in 1:model.Nt
             #####################################################################
             # println("lt=",lt-1)
-            if norm(G-Gτ(model,s,lt-1))>1e-6 
+            if norm(G-Gτ(model,s,lt-1))>ERROR
                 error(lt-1,"Wrap error:  ",norm(G-Gτ(model,s,lt-1)))
             end
             #####################################################################
@@ -88,7 +89,7 @@ function phy_update(path::String, model::tU_Hubbard_Para_, s::Array{UInt8, 2},Sw
                 get_G!(tmpnn,tmpnN,ipiv,view(BLs,:,:,idx),view(BRs,:,:,idx),G)
                 #####################################################################
                 axpy!(-1.0, G, tmpNN)  
-                if norm(tmpNN)>1e-8
+                if norm(tmpNN)>ERROR
                     println("Warning for Batchsize Wrap Error : $(norm(tmpNN))")
                 end
                 #####################################################################
@@ -97,8 +98,8 @@ function phy_update(path::String, model::tU_Hubbard_Para_, s::Array{UInt8, 2},Sw
 
         for lt in model.Nt:-1:1
             #####################################################################
-            print("-")
-            if norm(G-Gτ(model,s,lt))>1e-6 
+            # print("-")
+            if norm(G-Gτ(model,s,lt))>ERROR
                 error(lt," Wrap error:  ",norm(G-Gτ(model,s,lt)))
             end
             #####################################################################
@@ -136,11 +137,13 @@ function phy_update(path::String, model::tU_Hubbard_Para_, s::Array{UInt8, 2},Sw
         end
 
         if record
-            fid = open("$(path)/Phy$(name)_t$(model.t)U$(model.U)size$(model.site)Δt$(model.Δt)Θ$(model.Θ)BS$(model.BatchSize).csv", "a+")
-            writedlm(fid, [Ek Eu CDW0 CDW1 SDW0 SDW1] / counter, ',')
-            close(fid)
+            lock(LOCK) do
+                open(file, "a") do io
+                    writedlm(io,[Ek Eu CDW0 CDW1 SDW0 SDW1] ./ counter, ',')
+                end
+            end
             Ek=Eu=CDW0=CDW1=SDW0=SDW1=0.0
-            counter = 0
+            counter=0
         end
     end
     return s
@@ -177,13 +180,13 @@ function phy_measure(model::tU_Hubbard_Para_,lt,s,G,tmpNN,tmpN)
     mul!(G0,tmpNN,model.HalfeKinv)
     # G0=model.HalfeK* G0 *model.HalfeKinv
 
-    Ek=-2*model.t*real(sum(model.K.*G0))
+    Ek=-2*model.Ht*real(sum(model.K.*G0))
     Eu=0
     for i in 1:model.Ns
         Eu+=(1-G0[i,i])*adjoint(G0[i,i])
     end
     @assert imag(Eu)<1e-8 "Eu get imaginary part! $(Eu)" 
-    Eu=model.U*real(Eu)
+    Eu=model.Hu*real(Eu)
 
     # @assert sum(abs.(imag(diag(G0))))<1e-8 "G0 diag get imaginary part! $(norm(imag(diag(G0))))"
 

@@ -11,29 +11,18 @@ function phy_update(path::String,model::tV_Hubbard_Para_,s::Array{UInt8,3},Sweep
     elseif model.Lattice=="HoneyComb60" "HC" 
     elseif model.Lattice=="HoneyComb120" "HC120" 
     else error("Lattice: $(model.Lattice) is not allowed !") end  
-    file="$(path)/H_phy$(name)_t$(model.t)U$(model.U)size$(model.site)Δt$(model.Δt)Θ$(model.Θ)BS$(model.BatchSize).csv"
+    file="$(path)/tVphy$(name)_t$(model.Ht)V$(model.Hv)size$(model.site)Δt$(model.Δt)Θ$(model.Θ)BS$(model.BatchSize).csv"
 
     rng=MersenneTwister(Threads.threadid()+time_ns())
 
-    tau = Phy.tau
-    ipiv = Phy.ipiv
     Ek=Ev=0.0
     R0=zeros(Float64,4)
     R1=zeros(Float64,4)
     counter=0
 
-    G = Phy.G
+    G ,BLs,BRs,tmpN,tmpNN,tmpnn,tmpnN,tmpNn,tau,ipiv,BM= 
+            Phy.G,Phy.BLs,Phy.BRs,Phy.N,Phy.NN,Phy.nn,Phy.nN,Phy.Nn,Phy.tau,Phy.ipiv,Phy.BM
 
-    # 预分配 BL 和 BR
-    BLs = Phy.BLs
-    BRs = Phy.BRs
-    # 预分配临时数组
-    tmpN = Phy.N
-    tmpNN = Phy.NN
-    BM = Phy.BM
-    tmpNn = Phy.Nn
-    tmpnn = Phy.nn
-    tmpnN = Phy.nN
 
     copyto!(view(BRs,:,:,1) , model.Pt)
     transpose!(view(BLs,:,:,NN) , model.Pt)
@@ -53,10 +42,10 @@ function phy_update(path::String,model::tV_Hubbard_Para_,s::Array{UInt8,3},Sweep
         # println("\n Sweep: $loop ")
         for lt in axes(s,3)
             #####################################################################
-                # # println(lt)
-                # if norm(G-Gτ(model,s,lt-1))>ERROR
-                #     error("Wrap-$(lt)   :   $(norm(G-Gτ(model,s,lt-1))) , $(norm(G)) , $(norm(Gτ(model,s,lt-1))) ")
-                # end
+                # println(lt)
+                if norm(G-Gτ(model,s,lt-1))>ERROR
+                    error("Wrap-$(lt)   :   $(norm(G-Gτ(model,s,lt-1))) , $(norm(G)) , $(norm(Gτ(model,s,lt-1))) ")
+                end
             #####################################################################
 
             mul!(tmpNN,G,model.eKinv)
@@ -260,13 +249,13 @@ function phy_measure(model::tV_Hubbard_Para_,Phy::PhyBuffer_,lt,s)
     mul!(G0,tmpNN,model.HalfeKinv)
     # G0=model.HalfeK* G0 *model.HalfeKinv
 
-    Ek=model.t*sum(model.K.*G0)
+    Ek=model.Ht*sum(model.K.*G0)
     Ev=0.0
     for k in 1:length(model.nnidx)
         x,y=model.nnidx[k]
         Ev+=(1-G0[x,x])*(1-G0[y,y])-G0[x,y]*G0[y,x]
     end
-    # Ev*=model.U
+    Ev*=model.Hv
 
     if occursin("HoneyComb", model.Lattice)
         for rx in 1:model.site[1]

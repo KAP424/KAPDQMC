@@ -2,7 +2,7 @@
 
 struct tUV_Hubbard_Para_
     Lattice::String
-    t::Float64
+    Ht::Float64
     U::Float64
     V::Float64
     a::Float64
@@ -27,11 +27,11 @@ struct tUV_Hubbard_Para_
 end
 
 
-function tUV_Hubbard_Para(t,Hu,Hv,Lattice::String,site,Δt,Θ,BatchSize,Initial::String)
+function tUV_Hubbard_Para(;Ht,Hu,Hv,Lattice::String,site,Δt,Θ,BatchSize,Initial::String)
     K=K_Matrix(Lattice,site)
     Ns=size(K,1)
 
-    E,V=LAPACK.syevd!('V', 'L',-t.*K[:,:])
+    E,V=LAPACK.syevd!('V', 'L',-Ht.*K[:,:])
     HalfeK=V*Diagonal(exp.(-Δt.*E./2))*V'
     eK=V*Diagonal(exp.(-Δt.*E))*V'
     HalfeKinv=V*Diagonal(exp.(Δt.*E./2))*V'
@@ -107,7 +107,7 @@ function tUV_Hubbard_Para(t,Hu,Hv,Lattice::String,site,Δt,Θ,BatchSize,Initial:
         samplers_dict[excluded] = Random.Sampler(rng, allowed)
     end
 
-    return tUV_Hubbard_Para_(Lattice,t,Hu,Hv,a,Type,site,Θ,Ns,Nt,K,BatchSize,Δt,γ,η,Pt,HalfeK,eK,HalfeKinv,eKinv,nnidx,nodes,samplers_dict)
+    return tUV_Hubbard_Para_(Lattice,Ht,Hu,Hv,a,Type,site,Θ,Ns,Nt,K,BatchSize,Δt,γ,η,Pt,HalfeK,eK,HalfeKinv,eKinv,nnidx,nodes,samplers_dict)
 
 end
 

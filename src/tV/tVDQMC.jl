@@ -1,15 +1,20 @@
 module tVDQMC
-    using LinearAlgebra,LinearAlgebra.BLAS,LinearAlgebra.LAPACK
-    using Random, DelimitedFiles
-    include("model.jl")
-    # 使用父模块中已加载的公共几何算法符号
     using ..Geometry: nn2idx, xy_i, i_xy, K_Matrix, area_index, nnidx_F
-    # 导入公共 Buffer 与 GF 工具（由父模块提供）
     using ..KAPDQMC: PhyBuffer_, G4Buffer_, SCEEBuffer_, AreaBuffer_
-    using ..KAPDQMC: Free_G!, Gupdate!, G4update!, GMupdate!, get_abTau1!, get_abTau2!, get_G!, inv22!, GroverMatrix, GroverMatrix!
+    using ..KAPDQMC: inv22!, GroverMatrix, GroverMatrix!
+
+    using LinearAlgebra, LinearAlgebra.BLAS, LinearAlgebra.LAPACK
+    using DelimitedFiles, Random
+
+    # 扩展父模块统一 API：导入父函数，并在本模块中添加方法
+    import ..KAPDQMC: phy_update, Initial_s, ctrl_SCEEicr
+
+    include("model.jl")
+    include("../Gupdate.jl")
     include("GreenMatrix.jl")
     include("phy_update.jl")
     include("SCEE.jl")
 
     export tV_Hubbard_Para
 end
+

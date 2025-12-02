@@ -1,20 +1,3 @@
-function UpdatePhyLayer!(rng,s,model::tUV_Hubbard_Para_,UPD::UpdateBuffer_,Phy::PhyBuffer_)
-    for i in axes(s,1)
-        x,y=model.nnidx[i]
-        UPD.subidx.=[x,y]
-        sx = rand(rng, model.samplers_dict[s[i]])
-        p=get_r!(UPD,model.η[sx]- model.η[s[i]],Phy.G)
-        p*=model.γ[sx]/model.γ[s[i]]
-        if model.Type==Float64
-            p*=exp( ( model.η[s[i]] - model.η[sx] ) * (model.a+1) )
-        end
-        if rand(rng)<p
-            Gupdate!(Phy,UPD)
-            s[i]=sx
-        end
-    end
-end
-
 function phy_update(path::String,model::tUV_Hubbard_Para_,s::Array{UInt8,2},Sweeps::Int64,record::Bool)
     @assert size(s,1)==length(model.nnidx) "size of s $(size(s)) and nnidx $(length(model.nnidx)) not match!"
     @assert size(s,2)==model.Nt "size of s and nnidx not match!"
@@ -31,7 +14,7 @@ function phy_update(path::String,model::tUV_Hubbard_Para_,s::Array{UInt8,2},Swee
     elseif model.Lattice=="HoneyComb60" "HC" 
     elseif model.Lattice=="HoneyComb120" "HC120" 
     else error("Lattice: $(model.Lattice) is not allowed !") end  
-    file="$(path)/Phy$(name)_t$(model.t)U$(model.U)V$(model.V)size$(model.site)Δt$(model.Δt)Θ$(model.Θ)BS$(model.BatchSize).csv"
+    file="$(path)/tUVphy$(name)_t$(model.Ht)U$(model.U)V$(model.V)size$(model.site)Δt$(model.Δt)Θ$(model.Θ)BS$(model.BatchSize).csv"
 
     rng=MersenneTwister(Threads.threadid()+time_ns())
 
@@ -72,9 +55,9 @@ function phy_update(path::String,model::tUV_Hubbard_Para_,s::Array{UInt8,2},Swee
         for lt in axes(s,2)
             #####################################################################
                 # print("*")
-                # if norm(G-Gτ(model,s,lt-1))>ERROR
-                #     error("Wrap-$(lt)   :   $(norm(G-Gτ(model,s,lt-1))) , $(norm(G)) , $(norm(Gτ(model,s,lt-1))) ")
-                # end
+                if norm(G-Gτ(model,s,lt-1))>ERROR
+                    error("Wrap-$(lt)   :   $(norm(G-Gτ(model,s,lt-1))) , $(norm(G)) , $(norm(Gτ(model,s,lt-1))) ")
+                end
             #####################################################################
 
             fill!(tmpN,0)
@@ -130,9 +113,9 @@ function phy_update(path::String,model::tUV_Hubbard_Para_,s::Array{UInt8,2},Swee
         for lt in reverse(axes(s,2))
             #####################################################################
                 # print("-")
-                # if norm(G-Gτ(model,s,lt))>ERROR
-                #     error("Wrap-$(lt)   :   $(norm(G-Gτ(model,s,lt)))")
-                # end
+                if norm(G-Gτ(model,s,lt))>ERROR
+                    error("Wrap-$(lt)   :   $(norm(G-Gτ(model,s,lt)))")
+                end
             ######################################################################
             UpdatePhyLayer!(rng,view(s,:,lt),model,UPD,Phy)
 
@@ -197,7 +180,22 @@ function phy_update(path::String,model::tUV_Hubbard_Para_,s::Array{UInt8,2},Swee
     return s
 end 
 
-
+function UpdatePhyLayer!(rng,s,model::tUV_Hubbard_Para_,UPD::UpdateBuffer_,Phy::PhyBuffer_)
+    for i in axes(s,1)
+        x,y=model.nnidx[i]
+        UPD.subidx.=[x,y]
+        sx = rand(rng, model.samplers_dict[s[i]])
+        p=get_r!(UPD,model.η[sx]- model.η[s[i]],Phy.G)
+        p*=model.γ[sx]/model.γ[s[i]]
+        if model.Type==Float64
+            p*=exp( ( model.η[s[i]] - model.η[sx] ) * (model.a+1) )
+        end
+        if rand(rng)<p
+            Gupdate!(Phy,UPD)
+            s[i]=sx
+        end
+    end
+end
 
 function phy_measure(model::tUV_Hubbard_Para_,Phy::PhyBuffer_,lt,s)
     """
@@ -248,7 +246,7 @@ function phy_measure(model::tUV_Hubbard_Para_,Phy::PhyBuffer_,lt,s)
     mul!(G0,tmpNN,model.HalfeKinv)
     # G0=model.HalfeK* G0 *model.HalfeKinv
 
-    Ek=2*model.t*real(sum(model.K.*G0))
+    Ek=2*model.Ht*real(sum(model.K.*G0))
     Eu=0
     if model.Type==ComplexF64
         for i in 1:model.Ns

@@ -49,7 +49,7 @@ mutable struct AreaBuffer_{T<:Number}
     detg::Float64
     gmInv::Matrix{T}          # nA x nA
     NN::Matrix{T}              # nA x nA
-    N2::Matrix{T}              # nA x 2
+    Nz::Matrix{T}              # nA x 2
     zN::Matrix{T}              # 2 x nA
     a::Matrix{T}               # nA x 2
     b::Matrix{T}               # 2 x nA

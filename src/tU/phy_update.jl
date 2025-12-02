@@ -19,17 +19,8 @@ function phy_update(path::String, model::tU_Hubbard_Para_, s::Array{UInt8, 2},Sw
     ns=div(Ns, 2)
     rng = MersenneTwister(Threads.threadid()+time_ns())
 
-    G = Phy.G
-    tau = Phy.tau
-    ipiv = Phy.ipiv
-    BLs = Phy.BLs
-    BRs = Phy.BRs
-    tmpN = Phy.N
-    tmpNN = Phy.NN
-    BM = Phy.BM
-    tmpNn = Phy.Nn
-    tmpnn = Phy.nn
-    tmpnN = Phy.nN
+    G,tau,ipiv,BLs,BRs,tmpN,tmpNN,BM,tmpNn,tmpnn,tmpnN = 
+        Phy.G,Phy.tau,Phy.ipiv,Phy.BLs,Phy.BRs,Phy.N,Phy.NN,Phy.BM,Phy.Nn,Phy.nn,Phy.nN
 
     Ek=Eu=CDW0=CDW1=SDW0=SDW1=0.0
     counter = 0
@@ -46,7 +37,7 @@ function phy_update(path::String, model::tU_Hubbard_Para_, s::Array{UInt8, 2},Sw
     
     idx=1
     get_G!(tmpnn,tmpnN,ipiv,view(BLs,:,:,idx),view(BRs,:,:,idx),G)
-    for loop in 1:Sweeps
+    for _ in 1:Sweeps
         # println("\n Sweep: $loop ")
         for lt in 1:model.Nt
             #####################################################################
@@ -178,7 +169,6 @@ function phy_measure(model::tU_Hubbard_Para_,lt,s,G,tmpNN,tmpN)
     #####################################################################
     mul!(tmpNN,model.HalfeK,G0)
     mul!(G0,tmpNN,model.HalfeKinv)
-    # G0=model.HalfeK* G0 *model.HalfeKinv
 
     Ek=-2*model.Ht*real(sum(model.K.*G0))
     Eu=0
@@ -221,8 +211,6 @@ function phy_measure(model::tU_Hubbard_Para_,lt,s,G,tmpNN,tmpN)
                             + adjoint(G0[idx1+1,idx1+1])*(1-G0[idx2,idx2])    # <i_B j_A>
                     end
                 end
-                # @assert imag(tmp1)<1e-8 "tmp1 get imaginary part! $(imag(tmp1))"
-                # @assert imag(tmp2)<1e-8 "tmp2 get imaginary part! $(imag(tmp2))"
                 CDW0+=tmp1+tmp2
                 CDW1+=cos(2*π/model.site[1]*rx+2*π/model.site[2]*ry )* (tmp1+tmp2)
                 SDW0+=tmp1-tmp2
@@ -230,7 +218,6 @@ function phy_measure(model::tU_Hubbard_Para_,lt,s,G,tmpNN,tmpN)
             end
         end
         
-        # @assert imag(CDW0)+imag(CDW1)+imag(SDW0)+imag(SDW1)<1e-8 "struct factor get imaginary part! $(imag(CDW0)+imag(CDW1)+imag(SDW0)+imag(SDW1))"
         CDW0=real(CDW0)/model.Ns^2
         CDW1=real(CDW1)/model.Ns^2
         SDW0=real(SDW0)/model.Ns^2

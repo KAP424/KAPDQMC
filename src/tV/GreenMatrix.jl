@@ -25,8 +25,8 @@ function BM_F!(tmpN,tmpNN,BM,model::tV_Hubbard_Para_, s::Array{UInt8, 3}, idx::I
         for j in reverse(axes(s,2))
             for i in axes(s,1)
                 x,y=model.nnidx[i,j]
-                tmpN[x]=model.η[s[i,j,lt]] 
-                tmpN[y]=-model.η[s[i,j,lt]]
+                tmpN[x]=model.α[lt] * model.η[s[i,j,lt]] 
+                tmpN[y]=-model.α[lt] * model.η[s[i,j,lt]]
             end
             tmpN.= exp.(tmpN)
             mul!(tmpNN,view(model.UV,:,:,j),BM)
@@ -53,8 +53,8 @@ function BMinv_F!(tmpN,tmpNN,BM,model::tV_Hubbard_Para_, s::Array{UInt8, 3}, idx
         for j in  reverse(axes(s,2))
             for i in axes(s,1)
                 x,y=model.nnidx[i,j]
-                tmpN[x]=model.η[s[i,j,lt]]
-                tmpN[y]=-model.η[s[i,j,lt]]
+                tmpN[x]=model.α[lt] * model.η[s[i,j,lt]]
+                tmpN[y]=-model.α[lt] * model.η[s[i,j,lt]]
             end
             tmpN.= exp.(.-tmpN)
 
@@ -132,8 +132,8 @@ function Gτ(model::tV_Hubbard_Para_,s::Array{UInt8,3},τ::Int64)::Array{Float64
             fill!(E,0.0)
             for i in axes(s,1)
                 x,y=model.nnidx[i,j]
-                E[x]=model.η[s[i,j,lt]]
-                E[y]=-model.η[s[i,j,lt]]
+                E[x]=model.α[lt] * model.η[s[i,j,lt]]
+                E[y]=-model.α[lt] * model.η[s[i,j,lt]]
             end
             BL=BL*model.UV[:,:,j]*Diagonal(exp.(E))*model.UV[:,:,j]
 
@@ -163,8 +163,8 @@ function Gτ(model::tV_Hubbard_Para_,s::Array{UInt8,3},τ::Int64)::Array{Float64
             fill!(E,0.0)
             for i in axes(s,1)
                 x,y=model.nnidx[i,j]
-                E[x]=model.η[s[i,j,lt]]
-                E[y]=-model.η[s[i,j,lt]]
+                E[x]=model.α[lt] * model.η[s[i,j,lt]]
+                E[y]=-model.α[lt] * model.η[s[i,j,lt]]
             end
             BR=model.UV[:,:,j]*Diagonal(exp.(E))*model.UV[:,:,j] *BR
             #####################################################################
@@ -214,8 +214,8 @@ function G4(model::tV_Hubbard_Para_,s::Array{UInt8,3},τ1::Int64,τ2::Int64,dire
                 E=zeros(model.Ns)
                 for i in axes(s,1)
                     x,y=model.nnidx[i,j]
-                    E[x]=model.η[s[i,j,lt]]
-                    E[y]=-model.η[s[i,j,lt]]
+                    E[x]=model.α[lt] * model.η[s[i,j,lt]]
+                    E[y]=-model.α[lt] * model.η[s[i,j,lt]]
                 end
                 UR[1,:,:]=model.UV[:,:,j]*Diagonal(exp.(E))*model.UV[:,:,j]'*UR[1,:,:]
             end
@@ -234,8 +234,8 @@ function G4(model::tV_Hubbard_Para_,s::Array{UInt8,3},τ1::Int64,τ2::Int64,dire
                 E=zeros(model.Ns)
                 for i in axes(s,1)
                     x,y=model.nnidx[i,j]
-                    E[x]=model.η[s[i,j,lt]]
-                    E[y]=-model.η[s[i,j,lt]]
+                    E[x]=model.α[lt] * model.η[s[i,j,lt]]
+                    E[y]=-model.α[lt] * model.η[s[i,j,lt]]
                 end
                 UL[end,:,:]=UL[end,:,:]*model.UV[:,:,j]*Diagonal(exp.(E))*model.UV[:,:,j]'
             end
@@ -259,8 +259,8 @@ function G4(model::tV_Hubbard_Para_,s::Array{UInt8,3},τ1::Int64,τ2::Int64,dire
                     E=zeros(model.Ns)
                     for i in axes(s,1)
                         x,y=model.nnidx[i,j]
-                        E[x]=model.η[s[i,j,τ2+(lt-1)*model.BatchSize+lt2]]
-                        E[y]=-model.η[s[i,j,τ2+(lt-1)*model.BatchSize+lt2]]
+                        E[x]=model.α[τ2+(lt-1)*model.BatchSize+lt2] * model.η[s[i,j,τ2+(lt-1)*model.BatchSize+lt2]]
+                        E[y]=-model.α[τ2+(lt-1)*model.BatchSize+lt2] * model.η[s[i,j,τ2+(lt-1)*model.BatchSize+lt2]]
                     end
                     BBs[lt,:,:]=model.UV[:,:,j]*Diagonal(exp.(E))*model.UV[:,:,j]'*BBs[lt,:,:]
                     BBsInv[lt,:,:]=BBsInv[lt,:,:]*model.UV[:,:,j]*Diagonal(exp.(-E))*model.UV[:,:,j]'
@@ -278,8 +278,8 @@ function G4(model::tV_Hubbard_Para_,s::Array{UInt8,3},τ1::Int64,τ2::Int64,dire
                 E=zeros(model.Ns)
                 for i in axes(s,1)
                     x,y=model.nnidx[i,j]
-                    E[x]=model.η[s[i,j,lt]]
-                    E[y]=-model.η[s[i,j,lt]]
+                    E[x]=model.α[lt] * model.η[s[i,j,lt]]
+                    E[y]=-model.α[lt] * model.η[s[i,j,lt]]
                 end
                 BBs[end,:,:]=model.UV[:,:,j]*Diagonal(exp.(E))*model.UV[:,:,j]'*BBs[end,:,:]
                 BBsInv[end,:,:]=BBsInv[end,:,:]*model.UV[:,:,j]*Diagonal(exp.(-E))*model.UV[:,:,j]' 

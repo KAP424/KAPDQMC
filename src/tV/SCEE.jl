@@ -17,7 +17,7 @@ function ctrl_SCEEicr(path::String,model::tV_Hubbard_Para_,indexA::Vector{Int64}
     elseif model.Lattice=="HoneyComb60" "HC60" 
     elseif model.Lattice=="HoneyComb120" "HC120" 
     else error("Lattice: $(model.Lattice) is not allowed !") end  
-    file="$(path)/tVSCEE$(name)_t$(model.Ht)V$(model.Hv)size$(model.site)Δt$(model.Δt)Θ$(model.Θ)N$(Nλ)BS$(model.BatchSize).csv"
+    file="$(path)/tVSCEE$(name)_t$(model.Ht)V$(model.Hv1)_$(model.Hv2)size$(model.site)Δt$(model.Δt)Θ$(model.Θrelax)_$(model.Θquench)N$(Nλ)BS$(model.BatchSize).csv"
     rng=MersenneTwister(Threads.threadid()+time_ns())
     
     atexit() do
@@ -114,10 +114,10 @@ function ctrl_SCEEicr(path::String,model::tV_Hubbard_Para_,indexA::Vector{Int64}
             for j in reverse(axes(ss[1],2))
                 for i in axes(ss[1],1)
                     x,y=model.nnidx[i,j]
-                    tmpN[x]=model.η[ss[1][i,j,lt]]
-                    tmpN[y]=-model.η[ss[1][i,j,lt]]
-                    tmpN_[x]=model.η[ss[2][i,j,lt]]
-                    tmpN_[y]=-model.η[ss[2][i,j,lt]]
+                    tmpN[x]= model.α[lt] * model.η[ss[1][i,j,lt]]
+                    tmpN[y]=-model.α[lt] * model.η[ss[1][i,j,lt]]
+                    tmpN_[x]= model.α[lt] * model.η[ss[2][i,j,lt]]
+                    tmpN_[y]=-model.α[lt] * model.η[ss[2][i,j,lt]]
                 end
                 tmpN.= exp.(tmpN)
                 tmpN_.= exp.(tmpN_)
@@ -132,7 +132,7 @@ function ctrl_SCEEicr(path::String,model::tV_Hubbard_Para_,indexA::Vector{Int64}
                 WrapV!(tmpNN,G0t2,tmpN_,view(model.UV,:,:,j),"R")
 
                 # update
-                UpdateSCEELayer!(rng,j,view(ss[1],:,j,lt),view(ss[2],:,j,lt),G1,G2,A,B,model,UPD,SCEE,λ)
+                UpdateSCEELayer!(rng,j,view(ss[1],:,j,lt),view(ss[2],:,j,lt),lt,G1,G2,A,B,model,UPD,SCEE,λ)
                 # # #####################################################################
                 #     print('-')
                 #     Gt1_,G01_,Gt01_,G0t1_=G4(model,ss[1],lt-1,div(model.Nt,2),"Forward")
@@ -156,10 +156,10 @@ function ctrl_SCEEicr(path::String,model::tV_Hubbard_Para_,indexA::Vector{Int64}
                 #         E_=zeros(model.Ns)
                 #         for ii in 1:size(ss[1])[1]
                 #             x,y=model.nnidx[ii,jj]
-                #             E[x]=model.η[ss[1][ii,jj,lt]]
-                #             E[y]=-model.η[ss[1][ii,jj,lt]]
-                #             E_[x]=model.η[ss[2][ii,jj,lt]]
-                #             E_[y]=-model.η[ss[2][ii,jj,lt]]
+                #             E[x]= model.α[lt] * model.η[ss[1][ii,jj,lt]]
+                #             E[y]=-model.α[lt] * model.η[ss[1][ii,jj,lt]]
+                #             E_[x]= model.α[lt] * model.η[ss[2][ii,jj,lt]]
+                #             E_[y]=-model.α[lt] * model.η[ss[2][ii,jj,lt]]
                 #         end
                 #         Gt1_=model.UV[:,:,jj]*Diagonal(exp.(E))*model.UV[:,:,jj] *Gt1_* model.UV[:,:,jj]*Diagonal(exp.(-E))*model.UV[:,:,jj]
                 #         Gt01_=model.UV[:,:,jj]*Diagonal(exp.(E))*model.UV[:,:,jj]*Gt01_
@@ -274,7 +274,7 @@ function ctrl_SCEEicr(path::String,model::tV_Hubbard_Para_,indexA::Vector{Int64}
 
             for j in axes(ss[1],2)
                 # update
-                UpdateSCEELayer!(rng,j,view(ss[1],:,j,lt),view(ss[2],:,j,lt),G1,G2,A,B,model,UPD,SCEE,λ)
+                UpdateSCEELayer!(rng,j,view(ss[1],:,j,lt),view(ss[2],:,j,lt),lt,G1,G2,A,B,model,UPD,SCEE,λ)
                 # #####################################################################
                 #     print('*')
                 #     Gt1_,G01_,Gt01_,G0t1_=G4(model,ss[1],lt-1,div(model.Nt,2),"Forward")
@@ -298,10 +298,10 @@ function ctrl_SCEEicr(path::String,model::tV_Hubbard_Para_,indexA::Vector{Int64}
                 #         E_=zeros(model.Ns)
                 #         for ii in 1:size(ss[1])[1]
                 #             x,y=model.nnidx[ii,jj]
-                #             E[x]=model.η[ss[1][ii,jj,lt]]
-                #             E[y]=-model.η[ss[1][ii,jj,lt]]
-                #             E_[x]=model.η[ss[2][ii,jj,lt]]
-                #             E_[y]=-model.η[ss[2][ii,jj,lt]]
+                #             E[x]= model.α[lt] * model.η[ss[1][ii,jj,lt]]
+                #             E[y]=-model.α[lt] * model.η[ss[1][ii,jj,lt]]
+                #             E_[x]= model.α[lt] * model.η[ss[2][ii,jj,lt]]
+                #             E_[y]=-model.α[lt] * model.η[ss[2][ii,jj,lt]]
                 #         end
                 #         Gt1_=model.UV[:,:,jj]*Diagonal(exp.(E))*model.UV[:,:,jj] *Gt1_* model.UV[:,:,jj]*Diagonal(exp.(-E))*model.UV[:,:,jj]
                 #         Gt01_=model.UV[:,:,jj]*Diagonal(exp.(E))*model.UV[:,:,jj]*Gt01_
@@ -324,10 +324,10 @@ function ctrl_SCEEicr(path::String,model::tV_Hubbard_Para_,indexA::Vector{Int64}
                 
                 for i in axes(ss[1],1)
                     x,y=model.nnidx[i,j]
-                    tmpN[x]=model.η[ss[1][i,j,lt]]
-                    tmpN[y]=-model.η[ss[1][i,j,lt]]
-                    tmpN_[x]=model.η[ss[2][i,j,lt]]
-                    tmpN_[y]=-model.η[ss[2][i,j,lt]]
+                    tmpN[x]= model.α[lt] * model.η[ss[1][i,j,lt]]
+                    tmpN[y]=-model.α[lt] * model.η[ss[1][i,j,lt]]
+                    tmpN_[x]= model.α[lt] * model.η[ss[2][i,j,lt]]
+                    tmpN_[y]=-model.α[lt] * model.η[ss[2][i,j,lt]]
                 end
                 tmpN.= exp.(.-tmpN)
                 tmpN_.= exp.(.-tmpN_)
@@ -436,7 +436,7 @@ function get_ABGM!(G1::G4Buffer_,G2::G4Buffer_,A::AreaBuffer_,B::AreaBuffer_,SCE
     LAPACK.getri!(B.gmInv, B.ipiv)
 end 
 
-function UpdateSCEELayer!(rng,j,s1,s2,G1::G4Buffer_,G2::G4Buffer_,A::AreaBuffer_,B::AreaBuffer_,model::tV_Hubbard_Para_,UPD::UpdateBuffer_,SCEE::SCEEBuffer_,λ)
+function UpdateSCEELayer!(rng,j,s1,s2,lt,G1::G4Buffer_,G2::G4Buffer_,A::AreaBuffer_,B::AreaBuffer_,model::tV_Hubbard_Para_,UPD::UpdateBuffer_,SCEE::SCEEBuffer_,λ)
     for i in axes(s1,1)
         x,y=model.nnidx[i,j]
         UPD.subidx=[x,y]
@@ -444,7 +444,7 @@ function UpdateSCEELayer!(rng,j,s1,s2,G1::G4Buffer_,G2::G4Buffer_,A::AreaBuffer_
         # update s1
         begin
             sx = rand(rng,  model.samplers_dict[s1[i]])
-            p=get_r!(UPD,model.η[sx]- model.η[s1[i]],G1.Gt)
+            p=get_r!(UPD, model.α[lt] * (model.η[sx]- model.η[s1[i]]),G1.Gt)
             p*=model.γ[sx]/model.γ[s1[i]]
 
             detTau_A=get_abTau1!(A,UPD,G2.G0,G1.Gt0,G1.G0t)
@@ -465,7 +465,7 @@ function UpdateSCEELayer!(rng,j,s1,s2,G1::G4Buffer_,G2::G4Buffer_,A::AreaBuffer_
         # update ss[2]
         begin
             sx = rand(rng,  model.samplers_dict[s2[i]])
-            p=get_r!(UPD,model.η[sx]- model.η[s2[i]],G2.Gt)
+            p=get_r!(UPD, model.α[lt] * (model.η[sx]- model.η[s2[i]]),G2.Gt)
             p*=model.γ[sx]/model.γ[s2[i]]
 
             detTau_A=get_abTau2!(A,UPD,G1.G0,G2.Gt0,G2.G0t)

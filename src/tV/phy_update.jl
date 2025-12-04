@@ -11,7 +11,7 @@ function phy_update(path::String,model::tV_Hubbard_Para_,s::Array{UInt8,3},Sweep
     elseif model.Lattice=="HoneyComb60" "HC" 
     elseif model.Lattice=="HoneyComb120" "HC120" 
     else error("Lattice: $(model.Lattice) is not allowed !") end  
-    file="$(path)/tVphy$(name)_t$(model.Ht)V$(model.Hv)size$(model.site)Δt$(model.Δt)Θ$(model.Θ)BS$(model.BatchSize).csv"
+    file="$(path)/tVphy$(name)_t$(model.Ht)V$(model.Hv1)_$(model.Hv2)size$(model.site)Δt$(model.Δt)Θ$(model.Θrelax)_$(model.Θquench)BS$(model.BatchSize).csv"
 
     rng=MersenneTwister(Threads.threadid()+time_ns())
 
@@ -43,7 +43,7 @@ function phy_update(path::String,model::tV_Hubbard_Para_,s::Array{UInt8,3},Sweep
         for lt in axes(s,3)
             #####################################################################
                 # println(lt)
-                if norm(G-Gτ(model,s,lt-1))>ERROR
+                if norm(G-Gτ(model,s,lt-1))/norm(G)>ERROR
                     error("Wrap-$(lt)   :   $(norm(G-Gτ(model,s,lt-1))) , $(norm(G)) , $(norm(Gτ(model,s,lt-1))) ")
                 end
             #####################################################################
@@ -55,13 +55,13 @@ function phy_update(path::String,model::tV_Hubbard_Para_,s::Array{UInt8,3},Sweep
             for j in reverse(axes(s,2))
                 for i in axes(s,1)
                     x,y=model.nnidx[i,j]
-                    tmpN[x]=model.η[s[i,j,lt]]
-                    tmpN[y]=-model.η[s[i,j,lt]]
+                    tmpN[x]= model.α[lt] * model.η[s[i,j,lt]]
+                    tmpN[y]=-model.α[lt] * model.η[s[i,j,lt]]
                 end
                 tmpN.= exp.(tmpN)
                 WrapV!(tmpNN,G,tmpN,view(model.UV,:,:,j),"B")
 
-                UpdatePhyLayer!(rng,j,view(s,:,j,lt),model,UPD,Phy)
+                UpdatePhyLayer!(rng,j,view(s,:,j,lt),lt,model,UPD,Phy)
                 ####################################################################
                     # print("*")
                     # GG=model.eK*Gτ(model,s,lt-1)*model.eKinv
@@ -69,8 +69,8 @@ function phy_update(path::String,model::tV_Hubbard_Para_,s::Array{UInt8,3},Sweep
                     #     E=zeros(model.Ns)
                     #     for ii in 1:size(s)[1]
                     #         x,y=model.nnidx[ii,jj]
-                    #         E[x]=model.η[s[ii,jj,lt]]
-                    #         E[y]=-model.η[s[ii,jj,lt]]
+                    #         E[x]= model.α[lt] * model.η[s[ii,jj,lt]]
+                    #         E[y]=-model.α[lt] * model.η[s[ii,jj,lt]]
                     #     end
                     #     GG=model.UV[:,:,jj]*Diagonal(exp.(E))*model.UV[:,:,jj]' *GG* model.UV[:,:,jj]*Diagonal(exp.(-E))*model.UV[:,:,jj]'
                     # end
@@ -115,16 +115,16 @@ function phy_update(path::String,model::tV_Hubbard_Para_,s::Array{UInt8,3},Sweep
 
         for lt in reverse(axes(s,3))
             #####################################################################
-                # if norm(G-Gτ(model,s,lt))>ERROR
-                #     error("Wrap-$(lt)   :   $(norm(G-Gτ(model,s,lt+1)))")
-                # end
+                if norm(G-Gτ(model,s,lt))/norm(G)>ERROR
+                    error("Wrap-$(lt)   :   $(norm(G-Gτ(model,s,lt-1))) , $(norm(G)) , $(norm(Gτ(model,s,lt-1))) ")
+                end
             ######################################################################
             for j in axes(s,2)
-                UpdatePhyLayer!(rng,j,view(s,:,j,lt),model,UPD,Phy)
+                UpdatePhyLayer!(rng,j,view(s,:,j,lt),lt,model,UPD,Phy)
                 for i in axes(s,1)
                     x,y=model.nnidx[i,j]
-                    tmpN[x]=model.η[s[i,j,lt]]
-                    tmpN[y]=-model.η[s[i,j,lt]]
+                    tmpN[x]=model.α[lt] * model.η[s[i,j,lt]]
+                    tmpN[y]=-model.α[lt] * model.η[s[i,j,lt]]
                 end
                 tmpN.=exp.(.-tmpN)
                 WrapV!(tmpNN,G,tmpN,view(model.UV,:,:,j),"B")
@@ -178,12 +178,12 @@ function phy_update(path::String,model::tV_Hubbard_Para_,s::Array{UInt8,3},Sweep
     return s
 end 
 
-function UpdatePhyLayer!(rng,j,s,model::tV_Hubbard_Para_,UPD::UpdateBuffer_,Phy::PhyBuffer_)
+function UpdatePhyLayer!(rng,j,s,lt,model::tV_Hubbard_Para_,UPD::UpdateBuffer_,Phy::PhyBuffer_)
     for i in axes(s,1)
         x,y=model.nnidx[i,j]
         UPD.subidx.=[x,y]
         sx = rand(rng, model.samplers_dict[s[i]])
-        p=get_r!(UPD,model.η[sx]- model.η[s[i]],Phy.G)
+        p=get_r!(UPD,model.α[lt] * (model.η[sx]- model.η[s[i]]),Phy.G)
         p*=model.γ[sx]/model.γ[s[i]]
         if p<-1e-3
             println("Negative Sign: $(p)")
@@ -211,8 +211,8 @@ function phy_measure(model::tV_Hubbard_Para_,Phy::PhyBuffer_,lt,s)
             for j in axes(s,2)
                 for i in axes(s,1)
                     x,y=model.nnidx[i,j]
-                    tmpN[x]=model.η[s[i,j,t]]
-                    tmpN[y]=-model.η[s[i,j,t]]
+                    tmpN[x]= model.α[t] * model.η[s[i,j,t]]
+                    tmpN[y]=-model.α[t] * model.η[s[i,j,t]]
                 end
                 tmpN.=exp.(.-tmpN)
 
@@ -231,8 +231,8 @@ function phy_measure(model::tV_Hubbard_Para_,Phy::PhyBuffer_,lt,s)
             for j in reverse(axes(s,2))
                 for i in axes(s,1)
                     x,y=model.nnidx[i,j]
-                    tmpN[x]=model.η[s[i,j,t]]
-                    tmpN[y]=-model.η[s[i,j,t]]
+                    tmpN[x]= model.α[t] * model.η[s[i,j,t]]
+                    tmpN[y]=-model.α[t] * model.η[s[i,j,t]]
                 end
                 tmpN.= exp.(tmpN)
                 WrapV!(tmpNN,G0,tmpN,view(model.UV,:,:,j),"B")
@@ -241,9 +241,9 @@ function phy_measure(model::tV_Hubbard_Para_,Phy::PhyBuffer_,lt,s)
         end
     end
     #####################################################################
-    # if norm(G0-Gτ(model,s,div(model.Nt,2)))>1e-7
-    #     error("record error lt=$(lt) : $(norm(G0-Gτ(model,s,div(model.Nt,2))))")
-    # end
+    if norm(G0-Gτ(model,s,div(model.Nt,2)))>1e-7
+        error("record error lt=$(lt) : $(norm(G0-Gτ(model,s,div(model.Nt,2))))")
+    end
     #####################################################################
     mul!(tmpNN,model.HalfeK,G0)
     mul!(G0,tmpNN,model.HalfeKinv)
@@ -255,7 +255,6 @@ function phy_measure(model::tV_Hubbard_Para_,Phy::PhyBuffer_,lt,s)
         x,y=model.nnidx[k]
         Ev+=(1-G0[x,x])*(1-G0[y,y])-G0[x,y]*G0[y,x]
     end
-    Ev*=model.Hv
 
     if occursin("HoneyComb", model.Lattice)
         for rx in 1:model.site[1]

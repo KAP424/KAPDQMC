@@ -23,7 +23,6 @@ struct tU_Hubbard_Para_
     Nt::Int64
     K::Array{Float64,2}
     BatchSize::Int64
-    WrapTime::Int64
     Δt::Float64
     α::Vector{Float64}
     γ::Vector{Float64}
@@ -38,11 +37,11 @@ struct tU_Hubbard_Para_
 end
 
 function tU_Hubbard_Para(;Ht, Hu1, Hu2, Δt, Θrelax, Θquench,Lattice::String, site, BatchSize, Initial::String)
-    Nt = 2 * cld(Θrelax, Δt) + 2*cld(Θquench, Δt)
+    Nt = 2 * cld(Θrelax+Θquench, Δt)
     ΔU = (Hu1 - Hu2) / Θquench*Δt
     Hu = vcat(fill(Hu1, round(Int,Θrelax/Δt)), reverse( collect(Hu2:ΔU:Hu1) ) , collect(Hu2:ΔU:Hu1) , fill(Hu1, round(Int,Θrelax/Δt)) )
-    WrapTime = div(BatchSize, 2)
-    
+    @assert norm(reverse(Hu)-Hu) < 1e-10 "HU profile is not symmetric!"
+
     α = sqrt.(Δt .* Hu ./ 2)
     γ = [1 + sqrt(6) / 3, 1 + sqrt(6) / 3, 1 - sqrt(6) / 3, 1 - sqrt(6) / 3]
     η = [sqrt(2 * (3 - sqrt(6))), -sqrt(2 * (3 - sqrt(6))), sqrt(2 * (3 + sqrt(6))), -sqrt(2 * (3 + sqrt(6)))]
@@ -101,7 +100,7 @@ function tU_Hubbard_Para(;Ht, Hu1, Hu2, Δt, Θrelax, Θquench,Lattice::String, 
         samplers_dict[excluded] = Random.Sampler(rng, allowed)
     end
 
-    return tU_Hubbard_Para_(Lattice, Ht, Hu1,Hu2, site, Θrelax, Θquench, Ns, Nt, K, BatchSize, WrapTime, Δt, α, γ, η, Pt, HalfeK, eK, HalfeKinv, eKinv, nodes,samplers_dict)
+    return tU_Hubbard_Para_(Lattice, Ht, Hu1,Hu2, site, Θrelax, Θquench, Ns, Nt, K, BatchSize, Δt, α, γ, η, Pt, HalfeK, eK, HalfeKinv, eKinv, nodes,samplers_dict)
 end
 
 function PhyBuffer(Ns,NN)

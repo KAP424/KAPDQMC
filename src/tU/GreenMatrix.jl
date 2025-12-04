@@ -19,7 +19,7 @@ function BM_F!(tmpN,tmpNN,BM,model::tU_Hubbard_Para_, s::Array{UInt8, 2}, idx::I
     end
     for lt in model.nodes[idx] + 1:model.nodes[idx + 1]
         @inbounds @simd for i in 1:model.Ns
-            tmpN[i] =  cis( model.α *model.η[s[i, lt]])
+            tmpN[i] =  cis( model.α[lt] *model.η[s[i, lt]])
         end
         mul!(tmpNN,model.eK, BM)
         mul!(BM,Diagonal(tmpN), tmpNN)
@@ -39,7 +39,7 @@ function BMinv_F!(tmpN,tmpNN,BM,model::tU_Hubbard_Para_, s::Array{UInt8, 2}, idx
 
     for lt in model.nodes[idx] + 1:model.nodes[idx + 1]
         @inbounds for i in 1:model.Ns
-            tmpN[i] =  cis( -model.α *model.η[s[i, lt]])
+            tmpN[i] =  cis( -model.α[lt] *model.η[s[i, lt]])
         end
         mul!(tmpNN,BM, model.eKinv)
         mul!(BM,tmpNN,Diagonal(tmpN))
@@ -98,7 +98,7 @@ function Gτ(model::tU_Hubbard_Para_,s::Array{UInt8,2},τ::Int64)::Array{Complex
     counter=0
     for i in model.Nt:-1:τ+1
         D=[model.η[x] for x in s[:,i]]
-        BL=BL*diagm(exp.(1im*model.α.*D))*model.eK
+        BL=BL*diagm(exp.(1im*model.α[i].*D))*model.eK
         counter+=1
         if counter==model.BatchSize
             counter=0
@@ -108,7 +108,7 @@ function Gτ(model::tU_Hubbard_Para_,s::Array{UInt8,2},τ::Int64)::Array{Complex
     counter=0
     for i in 1:1:τ
         D=[model.η[x] for x in s[:,i]]
-        BR=diagm(exp.(1im*model.α.*D))*model.eK*BR
+        BR=diagm(exp.(1im*model.α[i].*D))*model.eK*BR
         counter+=1
         if counter==model.BatchSize
             counter=0
@@ -143,7 +143,7 @@ function G4(model::tU_Hubbard_Para_,s::Array{UInt8,2},τ1::Int64,τ2::Int64)
         counter=0
         for i in 1:τ2
             D=[model.η[x] for x in s[:,i]]
-            UR[1,:,:]=diagm(exp.(1im*model.α.*D))*model.eK*UR[1,:,:]
+            UR[1,:,:]=diagm(exp.(1im*model.α[i].*D))*model.eK*UR[1,:,:]
             counter+=1
             if counter==model.BatchSize
                 counter=0
@@ -156,7 +156,7 @@ function G4(model::tU_Hubbard_Para_,s::Array{UInt8,2},τ1::Int64,τ2::Int64)
         counter=0
         for i in model.Nt:-1:τ1+1
             D=[model.η[x] for x in s[:,i]]
-            UL[end,:,:]=UL[end,:,:]*diagm(exp.(1im*model.α.*D))*model.eK
+            UL[end,:,:]=UL[end,:,:]*diagm(exp.(1im*model.α[i].*D))*model.eK
             counter+=1
             if counter==model.BatchSize
                 counter=0
@@ -171,8 +171,8 @@ function G4(model::tU_Hubbard_Para_,s::Array{UInt8,2},τ1::Int64,τ2::Int64)
             BBsInv[i,:,:]=I(model.Ns)
             for j in 1:model.BatchSize
                 D=[model.η[x] for x in s[:,τ2+(i-1)*model.BatchSize+j]]
-                BBs[i,:,:]=diagm(exp.(1im*model.α.*D))*model.eK*BBs[i,:,:]
-                BBsInv[i,:,:]=BBsInv[i,:,:]*model.eKinv*diagm(exp.(-1im*model.α.*D))
+                BBs[i,:,:]=diagm(exp.(1im*model.α[τ2+(i-1)*model.BatchSize+j].*D))*model.eK*BBs[i,:,:]
+                BBsInv[i,:,:]=BBsInv[i,:,:]*model.eKinv*diagm(exp.(-1im*model.α[τ2+(i-1)*model.BatchSize+j].*D))
             end
         end
     
@@ -180,8 +180,8 @@ function G4(model::tU_Hubbard_Para_,s::Array{UInt8,2},τ1::Int64,τ2::Int64)
         BBsInv[end,:,:]=I(model.Ns)
         for j in τ2+(size(BBs)[1]-1)*model.BatchSize+1:τ1
             D=[model.η[x] for x in s[:,j]]
-            BBs[end,:,:]=diagm(exp.(1im*model.α.*D))*model.eK*BBs[end,:,:]
-            BBsInv[end,:,:]=BBsInv[end,:,:]*model.eKinv*diagm(exp.(-1im*model.α.*D))
+            BBs[end,:,:]=diagm(exp.(1im*model.α[j].*D))*model.eK*BBs[end,:,:]
+            BBsInv[end,:,:]=BBsInv[end,:,:]*model.eKinv*diagm(exp.(-1im*model.α[j].*D))
         end
     
         for i in 1:size(BBs)[1]

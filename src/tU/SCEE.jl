@@ -17,7 +17,7 @@ function ctrl_SCEEicr(path::String,model::tU_Hubbard_Para_,indexA::Vector{Int64}
         elseif model.Lattice=="HoneyComb60" "HC" 
         elseif model.Lattice=="HoneyComb120" "HC120" 
         else error("Lattice: $(model.Lattice) is not allowed !") end    
-    file="$(path)/tUSCEE$(name)_t$(model.Ht)U$(model.Hu)size$(model.site)Δt$(model.Δt)Θ$(model.Θ)N$(Nλ)BS$(model.BatchSize).csv"
+    file="$(path)/tUSCEE$(name)_t$(model.Ht)U$(model.Hu1)_$(model.Hu2)size$(model.site)Δt$(model.Δt)Θ$(model.Θrelax)_$(model.Θquench)N$(Nλ)BS$(model.BatchSize).csv"
     rng=MersenneTwister(Threads.threadid()+time_ns())
     
     atexit() do 
@@ -86,8 +86,8 @@ function ctrl_SCEEicr(path::String,model::tU_Hubbard_Para_,indexA::Vector{Int64}
         # println("\n ====== Sweep $loop / $Sweeps ======")
         for lt in 1:model.Nt
             @inbounds @simd for iii in 1:Ns
-                @fastmath tmpN[iii] = cis( model.α *model.η[ss[1][iii, lt]] ) 
-                @fastmath tmpN_[iii] = cis( model.α *model.η[ss[2][iii, lt]] ) 
+                @fastmath tmpN[iii] = cis( model.α[lt] *model.η[ss[1][iii, lt]] ) 
+                @fastmath tmpN_[iii] = cis( model.α[lt] *model.η[ss[2][iii, lt]] ) 
             end
 
             WrapKV!(tmpNN,model.eK,model.eKinv,tmpN,Gt01,"Forward", "L")
@@ -116,7 +116,7 @@ function ctrl_SCEEicr(path::String,model::tU_Hubbard_Para_,indexA::Vector{Int64}
             end
             #####################################################################
 
-            UpdateSCEELayer!(rng,view(ss[1],:,lt),view(ss[2],:,lt),G1,G2,A,B,model,UPD,SCEE,λ)
+            UpdateSCEELayer!(rng,view(ss[1],:,lt),view(ss[2],:,lt),lt,G1,G2,A,B,model,UPD,SCEE,λ)
 
             ##------------------------------------------------------------------------
             tmpO+=(A.detg/B.detg)^(1/Nλ)
@@ -182,7 +182,7 @@ function ctrl_SCEEicr(path::String,model::tU_Hubbard_Para_,indexA::Vector{Int64}
             end
             #####################################################################
             
-            UpdateSCEELayer!(rng,view(ss[1],:,lt),view(ss[2],:,lt),G1,G2,A,B,model,UPD,SCEE,λ)
+            UpdateSCEELayer!(rng,view(ss[1],:,lt),view(ss[2],:,lt),lt,G1,G2,A,B,model,UPD,SCEE,λ)
 
             ##------------------------------------------------------------------------
             tmpO+=(A.detg/B.detg)^(1/Nλ)
@@ -222,8 +222,8 @@ function ctrl_SCEEicr(path::String,model::tU_Hubbard_Para_,indexA::Vector{Int64}
                 get_ABGM!(G1,G2,A,B,SCEE,model.nodes,idx,"Backward")
             else
                 @inbounds @simd for iii in 1:Ns
-                    @fastmath tmpN[iii] = cis(- model.α *model.η[ss[1][iii, lt]] ) 
-                    @fastmath tmpN_[iii] = cis(- model.α *model.η[ss[2][iii, lt]] ) 
+                    @fastmath tmpN[iii] = cis(- model.α[lt] *model.η[ss[1][iii, lt]] ) 
+                    @fastmath tmpN_[iii] = cis(- model.α[lt] *model.η[ss[2][iii, lt]] ) 
                 end
     
                 WrapKV!(tmpNN,model.eK,model.eKinv,tmpN,Gt01,"Backward", "L")
@@ -258,14 +258,14 @@ function get_ABGM!(G1::G4Buffer_,G2::G4Buffer_,A::AreaBuffer_,B::AreaBuffer_,SCE
     LAPACK.getri!(B.gmInv, B.ipiv)
 end 
 
-function UpdateSCEELayer!(rng,s1,s2,G1::G4Buffer_,G2::G4Buffer_,A::AreaBuffer_,B::AreaBuffer_,model::tU_Hubbard_Para_,UPD::UpdateBuffer_,SCEE::SCEEBuffer_,λ)
+function UpdateSCEELayer!(rng,s1,s2,lt,G1::G4Buffer_,G2::G4Buffer_,A::AreaBuffer_,B::AreaBuffer_,model::tU_Hubbard_Para_,UPD::UpdateBuffer_,SCEE::SCEEBuffer_,λ)
     for i in axes(s1,1)
         UPD.subidx=[i]
 
         # update s1
         begin
             sx = rand(rng,  model.samplers_dict[s1[i]])
-            p=get_r!(UPD,model.α * (model.η[sx]- model.η[s1[i]]),G1.Gt)
+            p=get_r!(UPD,model.α[lt] * (model.η[sx]- model.η[s1[i]]),G1.Gt)
             p*=model.γ[sx]/model.γ[s1[i]]
 
             detTau_A=abs2(get_abTau1!(A,UPD,G2.G0,G1.Gt0,G1.G0t))
@@ -286,7 +286,7 @@ function UpdateSCEELayer!(rng,s1,s2,G1::G4Buffer_,G2::G4Buffer_,A::AreaBuffer_,B
         # update ss[2]
         begin
             sx = rand(rng,  model.samplers_dict[s2[i]])
-            p=get_r!(UPD,model.α * (model.η[sx]- model.η[s2[i]]),G2.Gt)
+            p=get_r!(UPD,model.α[lt] * (model.η[sx]- model.η[s2[i]]),G2.Gt)
             p*=model.γ[sx]/model.γ[s2[i]]
 
             detTau_A=abs2(get_abTau2!(A,UPD,G1.G0,G2.Gt0,G2.G0t))

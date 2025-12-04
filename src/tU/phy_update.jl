@@ -13,7 +13,7 @@ function phy_update(path::String, model::tU_Hubbard_Para_, s::Array{UInt8, 2},Sw
     elseif model.Lattice=="HoneyComb60" "HC" 
     elseif model.Lattice=="HoneyComb120" "HC120" 
     else error("Lattice: $(model.Lattice) is not allowed !") end  
-    file="$(path)/tUphy$(name)_t$(model.Ht)U$(model.Hu)size$(model.site)Δt$(model.Δt)Θ$(model.Θ)BS$(model.BatchSize).csv"
+    file="$(path)/tUphy$(name)_t$(model.Ht)U$(model.Hu1)_$(model.Hu2)size$(model.site)Δt$(model.Δt)Θ$(model.Θrelax)_$(model.Θquench)BS$(model.BatchSize).csv"
 
     Ns=model.Ns
     ns=div(Ns, 2)
@@ -48,11 +48,11 @@ function phy_update(path::String, model::tU_Hubbard_Para_, s::Array{UInt8, 2},Sw
             #####################################################################
 
             @inbounds @simd for iii in 1:Ns
-                tmpN[iii] =@fastmath cis( model.α *model.η[s[iii,lt]] ) 
+                tmpN[iii] =@fastmath cis( model.α[lt] *model.η[s[iii,lt]] ) 
             end
             WrapKV!(tmpNN,model.eK,model.eKinv,tmpN,G,"Forward", "B")
 
-            UpdatePhyLayer!(rng,view(s,:,lt),model,UPD,Phy)
+            UpdatePhyLayer!(rng,view(s,:,lt),lt,model,UPD,Phy)
             # ---------------------------------------------------------------------------------------------------------
             # record physical quantities
             if record && 0<=(Θidx-idx)<=1
@@ -95,7 +95,7 @@ function phy_update(path::String, model::tU_Hubbard_Para_, s::Array{UInt8, 2},Sw
             end
             #####################################################################
 
-            UpdatePhyLayer!(rng,view(s,:,lt),model,UPD,Phy)
+            UpdatePhyLayer!(rng,view(s,:,lt),lt,model,UPD,Phy)
             # ---------------------------------------------------------------------------------------------------------
             # record physical quantities
             if record && 0<=(idx-Θidx)<=1
@@ -110,7 +110,7 @@ function phy_update(path::String, model::tU_Hubbard_Para_, s::Array{UInt8, 2},Sw
             end
             # ---------------------------------------------------------------------------------------------------------
             @inbounds @simd for iii in 1:Ns
-                tmpN[iii] =@fastmath cis(-model.α *model.η[s[iii,lt]] ) 
+                tmpN[iii] =@fastmath cis(-model.α[lt] *model.η[s[iii,lt]] ) 
             end
             WrapKV!(tmpNN,model.eK,model.eKinv,tmpN,G,"Backward", "B")
             
@@ -150,22 +150,22 @@ function phy_measure(model::tU_Hubbard_Para_,lt,s,G,tmpNN,tmpN)
     if lt>model.Nt/2
         for t in lt:-1:div(model.Nt,2)+1
             for i in axes(s,1)
-                tmpN[i]=cis(-model.α * model.η[s[i,t]])
+                tmpN[i]=cis(-model.α[t] * model.η[s[i,t]])
             end
             WrapKV!(tmpNN,model.eK,model.eKinv,tmpN,G0,"Backward", "B")
         end
     else
         for t in lt+1:div(model.Nt,2)
             for i in axes(s,1)
-                tmpN[i]=cis(model.α * model.η[s[i,t]])
+                tmpN[i]=cis(model.α[t] * model.η[s[i,t]])
             end
             WrapKV!(tmpNN,model.eK,model.eKinv,tmpN,G0,"Forward","B")
         end
     end
-    #####################################################################
-    # if norm(G0-Gτ(model,s,div(model.Nt,2)))>1e-7
-    #     error("record error lt=$(lt) : $(norm(G0-Gτ(model,s,div(model.Nt,2))))")
-    # end
+    ####################################################################
+    if norm(G0-Gτ(model,s,div(model.Nt,2)))>1e-7
+        error("record error lt=$(lt) : $(norm(G0-Gτ(model,s,div(model.Nt,2))))")
+    end
     #####################################################################
     mul!(tmpNN,model.HalfeK,G0)
     mul!(G0,tmpNN,model.HalfeKinv)
@@ -176,7 +176,7 @@ function phy_measure(model::tU_Hubbard_Para_,lt,s,G,tmpNN,tmpN)
         Eu+=(1-G0[i,i])*adjoint(G0[i,i])
     end
     @assert imag(Eu)<1e-8 "Eu get imaginary part! $(Eu)" 
-    Eu=model.Hu*real(Eu)
+    Eu=real(Eu)
 
     # @assert sum(abs.(imag(diag(G0))))<1e-8 "G0 diag get imaginary part! $(norm(imag(diag(G0))))"
 
@@ -242,11 +242,11 @@ function phy_measure(model::tU_Hubbard_Para_,lt,s,G,tmpNN,tmpN)
     return Ek,Eu,CDW0,CDW1,SDW0,SDW1
 end
 
-function UpdatePhyLayer!(rng,s,model::tU_Hubbard_Para_,UPD::UpdateBuffer_,Phy::PhyBuffer_)
+function UpdatePhyLayer!(rng,s,lt,model::tU_Hubbard_Para_,UPD::UpdateBuffer_,Phy::PhyBuffer_)
     for i in eachindex(s)
         UPD.subidx = [i]
         sx = rand(rng,  model.samplers_dict[s[i]])
-        p = get_r!(UPD,model.α*( model.η[sx] - model.η[s[i]]), Phy.G)
+        p = get_r!(UPD,model.α[lt]*( model.η[sx] - model.η[s[i]]), Phy.G)
         p*= model.γ[sx] / model.γ[s[i]]
         if rand(rng) < p
             Gupdate!(Phy,UPD)

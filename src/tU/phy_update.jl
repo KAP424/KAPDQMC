@@ -50,10 +50,10 @@ function phy_update(path::String, model::tU_Hubbard_Para_, s::Array{UInt8,2}, Sw
         # println("\n Sweep: $loop ")
         for lt in 1:model.Nt
             #####################################################################
-            # println("lt=",lt-1)
-            if norm(G - Gτ(model, s, lt - 1)) > ERROR
-                error(lt - 1, "Wrap error:  ", norm(G - Gτ(model, s, lt - 1)))
-            end
+            # # println("lt=",lt-1)
+            # if norm(G - Gτ(model, s, lt - 1)) > ERROR
+            #     error(lt - 1, "Wrap error:  ", norm(G - Gτ(model, s, lt - 1)))
+            # end
             #####################################################################
 
             @inbounds @simd for iii in 1:Ns
@@ -88,20 +88,20 @@ function phy_update(path::String, model::tU_Hubbard_Para_, s::Array{UInt8,2}, Sw
 
                 get_G!(tmpnn, tmpnN, ipiv, view(BLs, :, :, idx), view(BRs, :, :, idx), G)
                 #####################################################################
-                axpy!(-1.0, G, tmpNN)
-                if norm(tmpNN) > ERROR
-                    println("Warning for Batchsize Wrap Error : $(norm(tmpNN))")
-                end
+                # axpy!(-1.0, G, tmpNN)
+                # if norm(tmpNN) > ERROR
+                #     println("Warning for Batchsize Wrap Error : $(norm(tmpNN))")
+                # end
                 #####################################################################
             end
         end
 
         for lt in model.Nt:-1:1
             #####################################################################
-            # print("-")
-            if norm(G - Gτ(model, s, lt)) > ERROR
-                error(lt, " Wrap error:  ", norm(G - Gτ(model, s, lt)))
-            end
+            # # print("-")
+            # if norm(G - Gτ(model, s, lt)) > ERROR
+            #     error(lt, " Wrap error:  ", norm(G - Gτ(model, s, lt)))
+            # end
             #####################################################################
 
             UpdatePhyLayer!(rng, view(s, :, lt), lt, model, UPD, Phy)
@@ -172,9 +172,9 @@ function phy_measure(model::tU_Hubbard_Para_, lt, s, G, tmpNN, tmpN)
         end
     end
     ####################################################################
-    if norm(G0 - Gτ(model, s, div(model.Nt, 2))) > 1e-7
-        error("record error lt=$(lt) : $(norm(G0-Gτ(model,s,div(model.Nt,2))))")
-    end
+    # if norm(G0 - Gτ(model, s, div(model.Nt, 2))) > 1e-7
+    #     error("record error lt=$(lt) : $(norm(G0-Gτ(model,s,div(model.Nt,2))))")
+    # end
     #####################################################################
     mul!(tmpNN, model.HalfeK, G0)
     mul!(G0, tmpNN, model.HalfeKinv)

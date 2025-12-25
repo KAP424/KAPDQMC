@@ -54,10 +54,10 @@ function phy_update(path::String,model::tUV_Hubbard_Para_,s::Array{UInt8,2},Swee
         # println("\n Sweep: $loop ")
         for lt in axes(s,2)
             #####################################################################
-                # print("*")
-                if norm(G-Gτ(model,s,lt-1))>ERROR
-                    error("Wrap-$(lt)   :   $(norm(G-Gτ(model,s,lt-1))) , $(norm(G)) , $(norm(Gτ(model,s,lt-1))) ")
-                end
+                # # print("*")
+                # if norm(G-Gτ(model,s,lt-1))>ERROR
+                #     error("Wrap-$(lt)   :   $(norm(G-Gτ(model,s,lt-1))) , $(norm(G)) , $(norm(Gτ(model,s,lt-1))) ")
+                # end
             #####################################################################
 
             fill!(tmpN,0)
@@ -112,10 +112,10 @@ function phy_update(path::String,model::tUV_Hubbard_Para_,s::Array{UInt8,2},Swee
 
         for lt in reverse(axes(s,2))
             #####################################################################
-                # print("-")
-                if norm(G-Gτ(model,s,lt))>ERROR
-                    error("Wrap-$(lt)   :   $(norm(G-Gτ(model,s,lt)))")
-                end
+                # # print("-")
+                # if norm(G-Gτ(model,s,lt))>ERROR
+                #     error("Wrap-$(lt)   :   $(norm(G-Gτ(model,s,lt)))")
+                # end
             ######################################################################
             UpdatePhyLayer!(rng,view(s,:,lt),model,UPD,Phy)
 

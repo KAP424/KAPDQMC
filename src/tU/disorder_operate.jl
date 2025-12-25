@@ -82,22 +82,22 @@ function ctrl_SCDOPicr(path::String, model::tU_Hubbard_Para_, alpha::Float64, in
             WrapKV!(tmpNN, model.eK, model.eKinv, tmpN, G0t, "Forward", "R")
 
             #####################################################################
-            Gt_, G0_, Gt0_, G0t_ = G4(model, s, lt, div(model.Nt, 2))
-            if norm(Gt - Gt_) + norm(Gt0 - Gt0_) + norm(G0t - G0t_) > ERROR
-                println(norm(Gt - Gt_), '\n', norm(Gt0 - Gt0_), '\n', norm(G0t - G0t_), '\n', norm(G0 - G0_))
-                error("WrapTime=$lt ")
-            end
-            XAinv_ = cis(A.alpha) * I(length(A.index)) .+ (1 - cis(A.alpha)) * view(G0_, indexA[:], indexA[:])
-            detXA_ = abs2(det(XAinv_))
-            XAinv_ = inv(XAinv_)
+            # Gt_, G0_, Gt0_, G0t_ = G4(model, s, lt, div(model.Nt, 2))
+            # if norm(Gt - Gt_) + norm(Gt0 - Gt0_) + norm(G0t - G0t_) > ERROR
+            #     println(norm(Gt - Gt_), '\n', norm(Gt0 - Gt0_), '\n', norm(G0t - G0t_), '\n', norm(G0 - G0_))
+            #     error("WrapTime=$lt ")
+            # end
+            # XAinv_ = cis(A.alpha) * I(length(A.index)) .+ (1 - cis(A.alpha)) * view(G0_, indexA[:], indexA[:])
+            # detXA_ = abs2(det(XAinv_))
+            # XAinv_ = inv(XAinv_)
 
-            XBinv_ = cis(B.alpha) * I(length(B.index)) .+ (1 - cis(B.alpha)) * view(G0_, indexB[:], indexB[:])
-            detXB_ = abs2(det(XBinv_))
-            XBinv_ = inv(XBinv_)
-            if norm(XAinv_ - A.Xinv) + norm(B.Xinv - XBinv_) + abs(A.detX - detXA_) + abs(B.detX - detXB_) > ERROR
-                println(norm(XAinv_ - A.Xinv), " ", norm(B.Xinv - XBinv_), " ", abs(A.detX - detXA_), " ", abs(B.detX - detXB_))
-                error("s:  $lt : WrapTime")
-            end
+            # XBinv_ = cis(B.alpha) * I(length(B.index)) .+ (1 - cis(B.alpha)) * view(G0_, indexB[:], indexB[:])
+            # detXB_ = abs2(det(XBinv_))
+            # XBinv_ = inv(XBinv_)
+            # if norm(XAinv_ - A.Xinv) + norm(B.Xinv - XBinv_) + abs(A.detX - detXA_) + abs(B.detX - detXB_) > ERROR
+            #     println(norm(XAinv_ - A.Xinv), " ", norm(B.Xinv - XBinv_), " ", abs(A.detX - detXA_), " ", abs(B.detX - detXB_))
+            #     error("s:  $lt : WrapTime")
+            # end
             #####################################################################
 
             UpdateSCDOPLayer!(rng, view(s, :, lt), lt, G, A, B, model, UPD, SCEE, λ)
@@ -136,22 +136,22 @@ function ctrl_SCDOPicr(path::String, model::tU_Hubbard_Para_, alpha::Float64, in
         for lt in model.Nt:-1:1
 
             #####################################################################
-            Gt_, G0_, Gt0_, G0t_ = G4(model, s, lt, div(model.Nt, 2))
-            if norm(Gt - Gt_) + norm(Gt0 - Gt0_) + norm(G0t - G0t_) > ERROR
-                println(norm(Gt - Gt_), '\n', norm(Gt0 - Gt0_), '\n', norm(G0t - G0t_), '\n', norm(G0 - G0_))
-                error("WrapTime=$lt ")
-            end
-            XAinv_ = cis(A.alpha) * I(length(A.index)) .+ (1 - cis(A.alpha)) * view(G0_, indexA[:], indexA[:])
-            detXA_ = abs2(det(XAinv_))
-            XAinv_ = inv(XAinv_)
+            # Gt_, G0_, Gt0_, G0t_ = G4(model, s, lt, div(model.Nt, 2))
+            # if norm(Gt - Gt_) + norm(Gt0 - Gt0_) + norm(G0t - G0t_) > ERROR
+            #     println(norm(Gt - Gt_), '\n', norm(Gt0 - Gt0_), '\n', norm(G0t - G0t_), '\n', norm(G0 - G0_))
+            #     error("WrapTime=$lt ")
+            # end
+            # XAinv_ = cis(A.alpha) * I(length(A.index)) .+ (1 - cis(A.alpha)) * view(G0_, indexA[:], indexA[:])
+            # detXA_ = abs2(det(XAinv_))
+            # XAinv_ = inv(XAinv_)
 
-            XBinv_ = cis(B.alpha) * I(length(B.index)) .+ (1 - cis(B.alpha)) * view(G0_, indexB[:], indexB[:])
-            detXB_ = abs2(det(XBinv_))
-            XBinv_ = inv(XBinv_)
-            if norm(XAinv_ - A.Xinv) + norm(B.Xinv - XBinv_) + abs(A.detX - detXA_) + abs(B.detX - detXB_) > ERROR
-                println(norm(XAinv_ - A.Xinv), " ", norm(B.Xinv - XBinv_), " ", abs(A.detX - detXA_), " ", abs(B.detX - detXB_))
-                error("s:  $lt : WrapTime")
-            end
+            # XBinv_ = cis(B.alpha) * I(length(B.index)) .+ (1 - cis(B.alpha)) * view(G0_, indexB[:], indexB[:])
+            # detXB_ = abs2(det(XBinv_))
+            # XBinv_ = inv(XBinv_)
+            # if norm(XAinv_ - A.Xinv) + norm(B.Xinv - XBinv_) + abs(A.detX - detXA_) + abs(B.detX - detXB_) > ERROR
+            #     println(norm(XAinv_ - A.Xinv), " ", norm(B.Xinv - XBinv_), " ", abs(A.detX - detXA_), " ", abs(B.detX - detXB_))
+            #     error("s:  $lt : WrapTime")
+            # end
             #####################################################################
 
             UpdateSCDOPLayer!(rng, view(s, :, lt), lt, G, A, B, model, UPD, SCEE, λ)

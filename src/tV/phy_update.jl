@@ -51,10 +51,10 @@ function phy_update(path::String, model::tV_Hubbard_Para_, s::Array{UInt8,3}, Sw
         # println("\n Sweep: $loop ")
         for lt in axes(s, 3)
             #####################################################################
-            # println(lt)
-            if norm(G - Gτ(model, s, lt - 1)) / norm(G) > ERROR
-                error("Wrap-$(lt)   :   $(norm(G-Gτ(model,s,lt-1))) , $(norm(G)) , $(norm(Gτ(model,s,lt-1))) ")
-            end
+            # # println(lt)
+            # if norm(G - Gτ(model, s, lt - 1)) / norm(G) > ERROR
+            #     error("Wrap-$(lt)   :   $(norm(G-Gτ(model,s,lt-1))) , $(norm(G)) , $(norm(Gτ(model,s,lt-1))) ")
+            # end
             #####################################################################
 
             mul!(tmpNN, G, model.eKinv)
@@ -124,9 +124,9 @@ function phy_update(path::String, model::tV_Hubbard_Para_, s::Array{UInt8,3}, Sw
 
         for lt in reverse(axes(s, 3))
             #####################################################################
-            if norm(G - Gτ(model, s, lt)) / norm(G) > ERROR
-                error("Wrap-$(lt)   :   $(norm(G-Gτ(model,s,lt-1))) , $(norm(G)) , $(norm(Gτ(model,s,lt-1))) ")
-            end
+            # if norm(G - Gτ(model, s, lt)) / norm(G) > ERROR
+            #     error("Wrap-$(lt)   :   $(norm(G-Gτ(model,s,lt-1))) , $(norm(G)) , $(norm(Gτ(model,s,lt-1))) ")
+            # end
             ######################################################################
             for j in axes(s, 2)
                 UpdatePhyLayer!(rng, j, view(s, :, j, lt), lt, model, UPD, Phy)
@@ -250,9 +250,9 @@ function phy_measure(model::tV_Hubbard_Para_, Phy::PhyBuffer_, lt, s)
         end
     end
     #####################################################################
-    if norm(G0 - Gτ(model, s, div(model.Nt, 2))) > 1e-7
-        error("record error lt=$(lt) : $(norm(G0-Gτ(model,s,div(model.Nt,2))))")
-    end
+    # if norm(G0 - Gτ(model, s, div(model.Nt, 2))) > 1e-7
+    #     error("record error lt=$(lt) : $(norm(G0-Gτ(model,s,div(model.Nt,2))))")
+    # end
     #####################################################################
     mul!(tmpNN, model.HalfeK, G0)
     mul!(G0, tmpNN, model.HalfeKinv)

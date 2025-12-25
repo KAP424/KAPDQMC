@@ -57,4 +57,17 @@ mutable struct AreaBuffer_{T<:Number}
 	ipiv::Vector{LAPACK.BlasInt}        # length ns
 end
 
+mutable struct DOPBuffer_{T<:Number}
+    alpha::Float64
+    index::Vector{Int64}          # length nA
+    detX::Float64
+    Xinv::Matrix{T}           # nA x nA
+    NN::Matrix{T}              # nA x nA
+    Nz::Matrix{T}              # nA x 2
+    zN::Matrix{T}              # 2 x nA
+    a::Matrix{T}               # nA x 2
+    b::Matrix{T}               # 2 x nA
+    Tau::Matrix{T}             # 2 x 2
+	ipiv::Vector{LAPACK.BlasInt}        # length ns
+end
 

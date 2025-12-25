@@ -1,14 +1,14 @@
 # using SU(2) ±1,±2 HS transformation
 mutable struct UpdateBuffer_
-    r::Matrix{ComplexF64}                  
-    subidx::Vector{Int64}      
+    r::Matrix{ComplexF64}
+    subidx::Vector{Int64}
 end
 
 function UpdateBuffer()
     return UpdateBuffer_(
         Matrix{ComplexF64}(undef, 1, 1),
         [0],
-    )    
+    )
 end
 
 struct tU_Hubbard_Para_
@@ -33,14 +33,20 @@ struct tU_Hubbard_Para_
     HalfeKinv::Array{Float64,2}
     eKinv::Array{Float64,2}
     nodes::Vector{Int64}
-    samplers_dict::Dict{UInt8, Random.Sampler}
+    samplers_dict::Dict{UInt8,Random.Sampler}
 end
 
-function tU_Hubbard_Para(;Ht, Hu1, Hu2, Δt, Θrelax, Θquench,Lattice::String, site, BatchSize, Initial::String)
-    Nt = 2 * cld(Θrelax+Θquench, Δt)
-    ΔU = (Hu1 - Hu2) / Θquench*Δt
-    Hu = vcat(fill(Hu1, round(Int,Θrelax/Δt)), reverse( collect(Hu2:ΔU:Hu1) ) , collect(Hu2:ΔU:Hu1) , fill(Hu1, round(Int,Θrelax/Δt)) )
-    @assert norm(reverse(Hu)-Hu) < 1e-10 "HU profile is not symmetric!"
+function tU_Hubbard_Para(; Ht, Hu1, Hu2, Δt, Θrelax, Θquench, Lattice::String, site, BatchSize, Initial::String)
+    Nt = round(Int, 2 * cld(Θrelax + Θquench, Δt))
+    if (Θquench > 0.0) & (abs(Hu1 - Hu2) > 0)
+        ΔU = (Hu1 - Hu2) / Θquench * Δt
+        Hu = vcat(fill(Hu1, round(Int, Θrelax / Δt)), reverse(collect(Hu2:ΔU:Hu1)), collect(Hu2:ΔU:Hu1), fill(Hu1, round(Int, Θrelax / Δt)))
+    else
+        @assert (Hu1 == Hu2) & (Θquench < 1e-7) "For Θquench=0, Hu1 must equal Hu2"
+        Hu = Hu1 .* ones(Float64, Nt)
+    end
+
+    @assert norm(reverse(Hu) - Hu) < 1e-10 "HU profile is not symmetric!"
 
     α = sqrt.(Δt .* Hu ./ 2)
     γ = [1 + sqrt(6) / 3, 1 + sqrt(6) / 3, 1 - sqrt(6) / 3, 1 - sqrt(6) / 3]
@@ -49,11 +55,11 @@ function tU_Hubbard_Para(;Ht, Hu1, Hu2, Δt, Θrelax, Θquench,Lattice::String, 
     K = K_Matrix(Lattice, site)
     Ns = size(K, 1)
 
-    E, V = LAPACK.syevd!('V', 'L',Ht*K[:,:])
-    HalfeK=V*Diagonal(exp.(-Δt.*E./2))*V'
-    eK=V*Diagonal(exp.(-Δt.*E))*V'
-    HalfeKinv=V*Diagonal(exp.(Δt.*E./2))*V'
-    eKinv=V*Diagonal(exp.(Δt.*E))*V'
+    E, V = LAPACK.syevd!('V', 'L', Ht * K[:, :])
+    HalfeK = V * Diagonal(exp.(-Δt .* E ./ 2)) * V'
+    eK = V * Diagonal(exp.(-Δt .* E)) * V'
+    HalfeKinv = V * Diagonal(exp.(Δt .* E ./ 2)) * V'
+    eKinv = V * Diagonal(exp.(Δt .* E)) * V'
 
     Pt = zeros(Float64, Ns, div(Ns, 2))  # 预分配 Pt
     if Initial == "H0"
@@ -67,54 +73,50 @@ function tU_Hubbard_Para(;Ht, Hu1, Hu2, Δt, Θrelax, Θquench,Lattice::String, 
                 KK[i, i] += μ * (-1)^(x + y)
             end
         end
-        E, V = LAPACK.syevd!('V', 'L',KK)
+        E, V = LAPACK.syevd!('V', 'L', KK)
         Pt .= V[:, 1:div(Ns, 2)]
-    elseif Initial=="V" 
+    elseif Initial == "V"
         if occursin("HoneyComb", Lattice)
-            for i in 1:div(Ns,2)
-                Pt[i*2,i]=1
+            for i in 1:div(Ns, 2)
+                Pt[i*2, i] = 1
             end
         else
-            count=1
+            count = 1
             for i in 1:Ns
-                x,y=i_xy(Lattice,site,i)
-                if (x+y)%2==1
-                    Pt[i,count]=1
-                    count+=1
+                x, y = i_xy(Lattice, site, i)
+                if (x + y) % 2 == 1
+                    Pt[i, count] = 1
+                    count += 1
                 end
             end
         end
     end
-    
+
     if div(Nt, 2) % BatchSize == 0
         nodes = collect(0:BatchSize:Nt)
     else
-        nodes = vcat(0, reverse(collect(div(Nt, 2) - BatchSize:-BatchSize:1)), collect(div(Nt, 2):BatchSize:Nt), Nt)
+        nodes = vcat(0, reverse(collect(div(Nt, 2)-BatchSize:-BatchSize:1)), collect(div(Nt, 2):BatchSize:Nt), Nt)
     end
 
-    rng=MersenneTwister(Threads.threadid()+time_ns())
+    rng = MersenneTwister(Threads.threadid() + time_ns())
     elements = (1, 2, 3, 4)
-    samplers_dict = Dict{UInt8, Random.Sampler}()
+    samplers_dict = Dict{UInt8,Random.Sampler}()
     for excluded in elements
         allowed = [i for i in elements if i != excluded]
         samplers_dict[excluded] = Random.Sampler(rng, allowed)
     end
 
-    return tU_Hubbard_Para_(Lattice, Ht, Hu1,Hu2, site, Θrelax, Θquench, Ns, Nt, K, BatchSize, Δt, α, γ, η, Pt, HalfeK, eK, HalfeKinv, eKinv, nodes,samplers_dict)
+    return tU_Hubbard_Para_(Lattice, Ht, Hu1, Hu2, site, Θrelax, Θquench, Ns, Nt, K, BatchSize, Δt, α, γ, η, Pt, HalfeK, eK, HalfeKinv, eKinv, nodes, samplers_dict)
 end
 
-function PhyBuffer(Ns,NN)
-    ns = div(Ns,2)
+function PhyBuffer(Ns, NN)
+    ns = div(Ns, 2)
     return PhyBuffer_(
         Vector{ComplexF64}(undef, ns),
-        Vector{LAPACK.BlasInt}(undef, ns),
-
-        Matrix{ComplexF64}(undef, Ns, Ns),
+        Vector{LAPACK.BlasInt}(undef, ns), Matrix{ComplexF64}(undef, Ns, Ns),
         Matrix{ComplexF64}(undef, Ns, Ns),
         Array{ComplexF64}(undef, ns, Ns, NN),
-        Array{ComplexF64}(undef, Ns, ns, NN),
-
-        Vector{ComplexF64}(undef, Ns),
+        Array{ComplexF64}(undef, Ns, ns, NN), Vector{ComplexF64}(undef, Ns),
         Matrix{ComplexF64}(undef, Ns, Ns),
         Matrix{ComplexF64}(undef, Ns, ns),
         Matrix{ComplexF64}(undef, ns, ns),
@@ -126,7 +128,7 @@ end
 # Buffers for SCEE workflow
 
 function SCEEBuffer(Ns)
-    ns=div(Ns, 2)
+    ns = div(Ns, 2)
     return SCEEBuffer_(
         Matrix{ComplexF64}(I, Ns, Ns),
         Vector{ComplexF64}(undef, Ns),
@@ -142,15 +144,13 @@ function SCEEBuffer(Ns)
     )
 end
 
-function G4Buffer(Ns,NN)
-    ns=div(Ns, 2)
+function G4Buffer(Ns, NN)
+    ns = div(Ns, 2)
     return G4Buffer_(
         Matrix{ComplexF64}(undef, Ns, Ns),
         Matrix{ComplexF64}(undef, Ns, Ns),
         Matrix{ComplexF64}(undef, Ns, Ns),
-        Matrix{ComplexF64}(undef, Ns, Ns),
-
-        Array{ComplexF64,3}(undef, ns, Ns, NN),
+        Matrix{ComplexF64}(undef, Ns, Ns), Array{ComplexF64,3}(undef, ns, Ns, NN),
         Array{ComplexF64,3}(undef, Ns, ns, NN),
         Array{ComplexF64,3}(undef, Ns, Ns, NN),
         Array{ComplexF64,3}(undef, Ns, Ns, NN),
@@ -173,4 +173,19 @@ function AreaBuffer(index)
     )
 end
 
-
+function DOPBuffer(alpha, index)
+    nA = length(index)
+    return DOPBuffer_(
+        alpha,
+        index,
+        0.0,
+        Matrix{ComplexF64}(undef, nA, nA),
+        Matrix{ComplexF64}(undef, nA, nA),
+        Matrix{ComplexF64}(undef, nA, 1),
+        Matrix{ComplexF64}(undef, 1, nA),
+        Matrix{ComplexF64}(undef, nA, 1),
+        Matrix{ComplexF64}(undef, 1, nA),
+        Matrix{ComplexF64}(undef, 1, 1),
+        Vector{LAPACK.BlasInt}(undef, nA),
+    )
+end

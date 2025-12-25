@@ -49,12 +49,41 @@ function GMupdate!(A::AreaBuffer_)
     mul!(A.NN, A.Nz, A.zN)
     axpy!(-1.0, A.NN, A.gmInv)
 end
+function GMupdate!(A::DOPBuffer_)
+    mul!(A.Nz, A.Xinv,A.a )
+    inv22!(A.Tau)
+    mul!(A.zN,A.Tau,A.b)
+    mul!(A.NN, A.Nz, A.zN)
+    axpy!(-1.0, A.NN, A.Xinv)
+end
+
+
+"""
+    Return det(X)
+    Update s and overwrite a , b , Tau.
+        a = (1-e^{i alpha}) ⋅ G0t(:,subidx) ⋅ r
+        b = Gt0[subidx,:] ⋅ Xinv
+        Tau = b ⋅ a + I
+    with r ≡ inv(r) ⋅ Δ
+    ------------------------------------------------------------------------------
+"""
+function get_abTau!(A::DOPBuffer_,UPD::UpdateBuffer_,G::G4Buffer_)
+    mul!(A.a,view(G.G0t,A.index,UPD.subidx),UPD.r)
+    lmul!(1.0 - cis(A.alpha), A.a)
+    mul!(A.b, view(G.Gt0,UPD.subidx,A.index), A.Xinv)
+    mul!(A.Tau, A.b, A.a)
+    for i in diagind(A.Tau)
+        A.Tau[i] += 1
+    end
+    return det(A.Tau)
+end
 
 """
     Return det(Tau)
     Update s1 and overwrite a , b , Tau.
         a = G0t1(:,subidx) ⋅ r
         b = Gt01[subidx,:] ⋅ (2G02-I) ⋅ gmInv
+        Tau = b ⋅ a + I
     with r ≡ inv(r) ⋅ Δ
     Warning : G02 here !!!  Gt01,G0t1
     ------------------------------------------------------------------------------
@@ -81,6 +110,7 @@ end
     Update s2 and overwrite a , b , Tau.
         a = (2G01-I) ⋅ G0t2(:,subidx)
         b = r ⋅ Gt02[subidx,:] ⋅ gmInv
+        Tau = b ⋅ a + I
     with r ≡ inv(r) ⋅ Δ
     Warning : G01 here !!!  Gt02,G0t2
     ------------------------------------------------------------------------------

@@ -21,93 +21,99 @@ struct tUV_Hubbard_Para_
     eK::Array{Float64,2}
     HalfeKinv::Array{Float64,2}
     eKinv::Array{Float64,2}
-    nnidx::Matrix{Tuple{Int64, Int64}}
+    nnidx::Matrix{Tuple{Int64,Int64}}
     nodes::Vector{Int64}
-    samplers_dict::Dict{UInt8, Random.Sampler}
+    samplers_dict::Dict{UInt8,Random.Sampler}
 end
 
 
-function tUV_Hubbard_Para(;Ht,Hu,Hv,Lattice::String,site,Δt,Θ,BatchSize,Initial::String)
-    K=K_Matrix(Lattice,site)
-    Ns=size(K,1)
+function tUV_Hubbard_Para(; Ht, Hu, Hv, Lattice::String, site, Δt, Θ, BatchSize, Initial::String)
 
-    E,V=LAPACK.syevd!('V', 'L',-Ht.*K[:,:])
-    HalfeK=V*Diagonal(exp.(-Δt.*E./2))*V'
-    eK=V*Diagonal(exp.(-Δt.*E))*V'
-    HalfeKinv=V*Diagonal(exp.(Δt.*E./2))*V'
-    eKinv=V*Diagonal(exp.(Δt.*E))*V'
+    K = K_Matrix(Lattice, site)
+    Ns = size(K, 1)
 
-    Pt=zeros(Float64,Ns,div(Ns,2))
-    if Initial=="H0"
-        KK=K[:,:]
+    E, V = LAPACK.syevd!('V', 'L', -Ht .* K[:, :])
+    HalfeK = V * Diagonal(exp.(-Δt .* E ./ 2)) * V'
+    eK = V * Diagonal(exp.(-Δt .* E)) * V'
+    HalfeKinv = V * Diagonal(exp.(Δt .* E ./ 2)) * V'
+    eKinv = V * Diagonal(exp.(Δt .* E)) * V'
+
+    Pt = zeros(Float64, Ns, div(Ns, 2))
+    if Initial == "H0"
+        KK = K[:, :]
         # 交错化学势，打开gap，去兼并
-        μ=1e-5
+        μ = 1e-5
         if occursin("HoneyComb", Lattice)
-            KK+=μ*Diagonal(repeat([-1, 1], div(Ns, 2)))
-        elseif Lattice=="SQUARE"
+            KK += μ * Diagonal(repeat([-1, 1], div(Ns, 2)))
+        elseif Lattice == "SQUARE"
             for i in 1:Ns
-                x,y=i_xy(Lattice,site,i)
-                KK[i,i]+=μ*(-1)^(x+y)
+                x, y = i_xy(Lattice, site, i)
+                KK[i, i] += μ * (-1)^(x + y)
             end
         end
 
         # hopping 扰动，避免能级简并
         # KK[KK .!= 0] .+=( rand(size(KK)...) * 1e-3)[KK.!= 0]
         # KK=(KK+KK')./2
-        
-        E,V=LAPACK.syevd!('V', 'L',KK[:,:])
-        Pt.=V[:,div(Ns,2)+1:end]
-    elseif Initial=="V" 
+
+        E, V = LAPACK.syevd!('V', 'L', KK[:, :])
+        Pt .= V[:, div(Ns, 2)+1:end]
+    elseif Initial == "V"
         if occursin("HoneyComb", Lattice)
-            for i in 1:div(Ns,2)
-                Pt[i*2-1,i]=1
+            for i in 1:div(Ns, 2)
+                Pt[i*2-1, i] = 1
             end
         else
-            count=1
+            count = 1
             for i in 1:Ns
-                x,y=i_xy(Lattice,site,i)
-                if (x+y)%2==1
-                    Pt[i,count]=1
-                    count+=1
+                x, y = i_xy(Lattice, site, i)
+                if (x + y) % 2 == 1
+                    Pt[i, count] = 1
+                    count += 1
                 end
             end
         end
     end
-    Pt=HalfeKinv*Pt
+    Pt = HalfeKinv * Pt
 
-    Nt=2*cld(Θ,Δt)
+    Nt = 2 * cld(Θ, Δt)
     γ = [1 + sqrt(6) / 3, 1 + sqrt(6) / 3, 1 - sqrt(6) / 3, 1 - sqrt(6) / 3]
-    
-    z=if Lattice=="SQUARE" 4.0 elseif occursin("HoneyComb", Lattice) 3.0 end
-    Type = Hu>0 ? ComplexF64 : Float64
-    g= Hu>0 ? Hu/z/2+sqrt(Hu^2/z^2/4-Hv^2) : Hu/z/2-sqrt(Hu^2/z^2/4-Hv^2)
-    a= g==0 ? 0 : Hv/g
-    η = sqrt(abs(Δt * g)).*[sqrt(3 - sqrt(6)), -sqrt(3 - sqrt(6)), sqrt(3 + sqrt(6)), -sqrt(3 + sqrt(6))]
 
-    tmp=nnidx_F(Lattice,site)
-    nnidx=Matrix{Tuple{Int64, Int64}}(undef, Ns, size(tmp,2))
-    for i in axes(tmp,1)
-        for j in axes(tmp,2)
-            nnidx[2*i-1,j]=tmp[i,j]
-            nnidx[2*i,j]=reverse(tmp[i,j])
+    z = if Lattice == "SQUARE"
+        4.0
+    elseif occursin("HoneyComb", Lattice)
+        3.0
+    end
+    @assert Hu^2 > 4 * z^2 * Hv^2 "For stability, require U^2 > 4 z^2 V^2"
+    Type = Hu > 0 ? ComplexF64 : Float64
+    g = Hu > 0 ? Hu / z / 2 + sqrt(Hu^2 / z^2 / 4 - Hv^2) : Hu / z / 2 - sqrt(Hu^2 / z^2 / 4 - Hv^2)
+    a = g == 0 ? 0 : Hv / g
+    η = sqrt(abs(Δt * g)) .* [sqrt(3 - sqrt(6)), -sqrt(3 - sqrt(6)), sqrt(3 + sqrt(6)), -sqrt(3 + sqrt(6))]
+
+    tmp = nnidx_F(Lattice, site)
+    nnidx = Matrix{Tuple{Int64,Int64}}(undef, Ns, size(tmp, 2))
+    for i in axes(tmp, 1)
+        for j in axes(tmp, 2)
+            nnidx[2*i-1, j] = tmp[i, j]
+            nnidx[2*i, j] = reverse(tmp[i, j])
         end
     end
 
     if div(Nt, 2) % BatchSize == 0
         nodes = collect(0:BatchSize:Nt)
     else
-        nodes = vcat(0, reverse(collect(div(Nt, 2) - BatchSize:-BatchSize:1)), collect(div(Nt, 2):BatchSize:Nt), Nt)
+        nodes = vcat(0, reverse(collect(div(Nt, 2)-BatchSize:-BatchSize:1)), collect(div(Nt, 2):BatchSize:Nt), Nt)
     end
 
-    rng=MersenneTwister(Threads.threadid()+time_ns())
+    rng = MersenneTwister(Threads.threadid() + time_ns())
     elements = (1, 2, 3, 4)
-    samplers_dict = Dict{UInt8, Random.Sampler}()
+    samplers_dict = Dict{UInt8,Random.Sampler}()
     for excluded in elements
         allowed = [i for i in elements if i != excluded]
         samplers_dict[excluded] = Random.Sampler(rng, allowed)
     end
 
-    return tUV_Hubbard_Para_(Lattice,Ht,Hu,Hv,a,Type,site,Θ,Ns,Nt,K,BatchSize,Δt,γ,η,Pt,HalfeK,eK,HalfeKinv,eKinv,nnidx,nodes,samplers_dict)
+    return tUV_Hubbard_Para_(Lattice, Ht, Hu, Hv, a, Type, site, Θ, Ns, Nt, K, BatchSize, Δt, γ, η, Pt, HalfeK, eK, HalfeKinv, eKinv, nnidx, nodes, samplers_dict)
 
 end
 
@@ -135,17 +141,13 @@ end
 # ---------------------------------------------------------------------------------------
 
 function PhyBuffer(::Type{T}, Ns, NN) where {T<:Number}
-    ns = div(Ns,2)
+    ns = div(Ns, 2)
     return PhyBuffer_(
         Vector{T}(undef, ns),
-        Vector{LAPACK.BlasInt}(undef, ns),
-
-        Matrix{T}(undef, Ns, Ns),
+        Vector{LAPACK.BlasInt}(undef, ns), Matrix{T}(undef, Ns, Ns),
         Matrix{T}(undef, Ns, Ns),
         Array{T}(undef, ns, Ns, NN),
-        Array{T}(undef, Ns, ns, NN),
-
-        Vector{T}(undef, Ns),
+        Array{T}(undef, Ns, ns, NN), Vector{T}(undef, Ns),
         Matrix{T}(undef, Ns, Ns),
         Matrix{T}(undef, Ns, ns),
         Matrix{T}(undef, ns, ns),
@@ -157,7 +159,7 @@ end
 
 
 function SCEEBuffer(::Type{T}, Ns) where {T<:Number}
-    ns=div(Ns, 2)
+    ns = div(Ns, 2)
     return SCEEBuffer_(
         Matrix{T}(I, Ns, Ns),
         Vector{T}(undef, Ns),
@@ -173,15 +175,13 @@ function SCEEBuffer(::Type{T}, Ns) where {T<:Number}
     )
 end
 
-function G4Buffer(::Type{T}, Ns,NN) where {T<:Number}
-    ns=div(Ns, 2)
+function G4Buffer(::Type{T}, Ns, NN) where {T<:Number}
+    ns = div(Ns, 2)
     return G4Buffer_(
         Matrix{T}(undef, Ns, Ns),
         Matrix{T}(undef, Ns, Ns),
         Matrix{T}(undef, Ns, Ns),
-        Matrix{T}(undef, Ns, Ns),
-
-        Array{T,3}(undef, ns, Ns, NN),
+        Matrix{T}(undef, Ns, Ns), Array{T,3}(undef, ns, Ns, NN),
         Array{T,3}(undef, Ns, ns, NN),
         Array{T,3}(undef, Ns, Ns, NN),
         Array{T,3}(undef, Ns, Ns, NN),

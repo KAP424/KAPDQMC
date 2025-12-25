@@ -22,8 +22,8 @@ using .tUDQMC: tU_Hubbard_Para
 include("tV/tVDQMC.jl")
 using .tVDQMC: tV_Hubbard_Para
 
-# include("tUV/tUVDQMC.jl")
-# using .tUVDQMC: tUV_Hubbard_Para
+include("tUV/tUVDQMC.jl")
+using .tUVDQMC: tUV_Hubbard_Para
 
 export tU_Hubbard_Para, tV_Hubbard_Para, tUV_Hubbard_Para
 export Initial_s, phy_update, ctrl_SCEEicr, ctrl_SCDOPicr

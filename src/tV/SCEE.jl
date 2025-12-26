@@ -29,15 +29,6 @@ function ctrl_SCEEicr(path::String, model::tV_Hubbard_Para_, indexA::Vector{Int6
     end
     rng = MersenneTwister(Threads.threadid() + time_ns())
 
-    atexit() do
-        if record
-            lock(LOCK) do
-                open(file, "a") do io
-                    writedlm(io, O', ',')
-                end
-            end
-        end
-    end
 
     Gt1, G01, Gt01, G0t1, BLMs1, BRMs1, BMs1, BMsinv1 =
         G1.Gt, G1.G0, G1.Gt0, G1.G0t, G1.BLMs, G1.BRMs, G1.BMs, G1.BMinvs
@@ -428,6 +419,15 @@ function ctrl_SCEEicr(path::String, model::tV_Hubbard_Para_, indexA::Vector{Int6
         O[loop+1] = tmpO / counter
         tmpO = counter = 0
     end
+
+    if record
+        lock(LOCK) do
+            open(file, "a") do io
+                writedlm(io, O', ',')
+            end
+        end
+    end
+
     return ss
 end
 

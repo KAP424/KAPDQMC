@@ -28,17 +28,6 @@ function ctrl_SCDOPicr(path::String, model::tU_Hubbard_Para_, alpha::Float64, in
     end
     rng = MersenneTwister(Threads.threadid() + time_ns())
 
-    atexit() do
-        if record
-            lock(LOCK) do
-                open(file, "a") do io
-                    writedlm(io, O', ',')
-                end
-            end
-        end
-        # writedlm("$(path)ss/SS$(name)_t$(model.Ht)U$(model.Hu)size$(model.site)Δt$(model.Δt)Θ$(model.Θ)λ$(Int(round(Nλ*λ))).csv", [ss[1] ss[2]],",")
-    end
-
     Gt, Gt0, G0t, BLMs, BRMs, BMs, BMsinv = G.Gt, G.Gt0, G.G0t, G.BLMs, G.BRMs, G.BMs, G.BMinvs
     tmpN, tmpNN, tmpNn, tmpnN, tau = SCEE.N, SCEE.NN, SCEE.Nn, SCEE.nN, SCEE.tau
 
@@ -195,6 +184,14 @@ function ctrl_SCDOPicr(path::String, model::tU_Hubbard_Para_, alpha::Float64, in
         O[loop+1] = tmpO / counter
         tmpO = 0.0
         counter = 0
+    end
+
+    if record
+        lock(LOCK) do
+            open(file, "a") do io
+                writedlm(io, O', ',')
+            end
+        end
     end
 
     return s

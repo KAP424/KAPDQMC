@@ -30,16 +30,7 @@ function ctrl_SCEEicr(path::String, model::tU_Hubbard_Para_, indexA::Vector{Int6
 
     rng = MersenneTwister(Threads.threadid() + time_ns())
 
-    atexit() do
-        if record
-            lock(LOCK) do
-                open(file, "a") do io
-                    writedlm(io, O', ',')
-                end
-            end
-        end
-        # writedlm("$(path)ss/SS$(name)_t$(model.Ht)U$(model.Hu)size$(model.site)Δt$(model.Δt)Θ$(model.Θ)λ$(Int(round(Nλ*λ))).csv", [ss[1] ss[2]],",")
-    end
+
 
     Gt1, Gt01, G0t1, BLMs1, BRMs1, BMs1, BMsinv1 =
         G1.Gt, G1.Gt0, G1.G0t, G1.BLMs, G1.BRMs, G1.BMs, G1.BMinvs
@@ -249,6 +240,14 @@ function ctrl_SCEEicr(path::String, model::tU_Hubbard_Para_, indexA::Vector{Int6
         O[loop+1] = tmpO / counter
         tmpO = 0.0
         counter = 0
+    end
+
+    if record
+        lock(LOCK) do
+            open(file, "a") do io
+                writedlm(io, O', ',')
+            end
+        end
     end
 
     return ss

@@ -78,11 +78,13 @@ function tV_Hubbard_Para(; Ht, Hv1, Hv2, Δt, Θrelax, Θquench, Lattice::String
     Nt = round(Int, 2 * cld(Θrelax + Θquench, Δt))
     if (Θquench > 0) & (abs(Hv1 - Hv2) > 0)
         ΔU = (Hv1 - Hv2) / Θquench * Δt
-        Hv = vcat(fill(Hv1, round(Int, Θrelax / Δt)), reverse(collect(Hv2:ΔU:Hv1)), collect(Hv2:ΔU:Hv1), fill(Hv1, round(Int, Θrelax / Δt)))
+        Hv = vcat(fill(Hv1, round(Int, Θrelax / Δt)), reverse(collect(Hv2:ΔU:Hv1-ΔU/2)), collect(Hv2:ΔU:Hv1-ΔU/2), fill(Hv1, round(Int, Θrelax / Δt)))
     else
         @assert (Hv1 == Hv2) & (Θquench < 1e-7) "For Θquench=0, Hv1 must equal Hv2"
         Hv = Hv1 .* ones(Float64, Nt)
     end
+
+    @assert length(Hv) == Nt "Length of Hv profile does not match Nt!"
     @assert norm(reverse(Hv) - Hv) < 1e-10 "HV profile is not symmetric!"
 
     α = sqrt.(Δt .* Hv ./ 2)

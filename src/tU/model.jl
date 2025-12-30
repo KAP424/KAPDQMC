@@ -40,13 +40,14 @@ function tU_Hubbard_Para(; Ht, Hu1, Hu2, Δt, Θrelax, Θquench, Lattice::String
     Nt = round(Int, 2 * cld(Θrelax + Θquench, Δt))
     if (Θquench > 0.0) & (abs(Hu1 - Hu2) > 0)
         ΔU = (Hu1 - Hu2) / Θquench * Δt
-        Hu = vcat(fill(Hu1, round(Int, Θrelax / Δt)), reverse(collect(Hu2:ΔU:Hu1)), collect(Hu2:ΔU:Hu1), fill(Hu1, round(Int, Θrelax / Δt)))
+        Hu = vcat(fill(Hu1, round(Int, Θrelax / Δt)), reverse(collect(Hu2:ΔU:Hu1-ΔU/2)), collect(Hu2:ΔU:Hu1-ΔU/2), fill(Hu1, round(Int, Θrelax / Δt)))
     else
         @assert (Hu1 == Hu2) & (Θquench < 1e-7) "For Θquench=0, Hu1 must equal Hu2"
         Hu = Hu1 .* ones(Float64, Nt)
     end
 
     @assert norm(reverse(Hu) - Hu) < 1e-10 "HU profile is not symmetric!"
+    @assert length(Hu) == Nt "Length of Hu profile does not match Nt!"
 
     α = sqrt.(Δt .* Hu ./ 2)
     γ = [1 + sqrt(6) / 3, 1 + sqrt(6) / 3, 1 - sqrt(6) / 3, 1 - sqrt(6) / 3]

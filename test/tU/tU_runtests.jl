@@ -1,4 +1,4 @@
-push!(LOAD_PATH, "C:/Users/admin/Desktop/JuliaDQMC/code/KAPDQMC/src/")
+push!(LOAD_PATH, "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\")
 using KAPDQMC
 using Test
 using Random
@@ -9,7 +9,7 @@ using LinearAlgebra
 
     rng = MersenneTwister(1234)
 
-    model = tU_Hubbard_Para(Ht=1.0, Hu1=4.0, Hu2=0.0, Θrelax=1.0, Θquench=1.0, Lattice="HoneyComb120", site=[3, 3], Δt=0.1, BatchSize=10, Initial="H0")
+    model = tU_Hubbard_Para(Ht=1.0, Hu1=1.0, Hu2=2.0, Θrelax=0.0, Θquench=0.2, Lattice="HoneyComb120", site=[3, 3], Δt=0.1, BatchSize=10, Initial="H0")
 
     s = Initial_s(model, rng)
 

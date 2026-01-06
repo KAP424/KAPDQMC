@@ -1,4 +1,4 @@
-function Free_G!(t1, t2, G, Lattice, site, Θ, Initial, ns)
+function Free_G!(t1, t2, G, Lattice, site, Θ, Initial, filling_num)
     """
     input:
         Lattice: "HoneyComb" or "SQUARE"
@@ -13,7 +13,8 @@ function Free_G!(t1, t2, G, Lattice, site, Θ, Initial, ns)
     K2 = nnnK_Matrix(Lattice, site)
     K = t1 .* K1 .+ t2 .* K2
     Ns = size(K)[1]
-    # ns=div(Ns, 2)
+
+    ns = round(Int, Ns * filling_num)
 
     Δt = 0.1
     Nt = Int(round(Θ / Δt))
@@ -22,18 +23,18 @@ function Free_G!(t1, t2, G, Lattice, site, Θ, Initial, ns)
     if Initial == "H0"
         KK = Matrix{Float64}(K)
 
-        KK[KK.!=0] .+= (rand(size(KK)...)*1e-1)[KK.!=0]
-        KK = (KK + KK') ./ 2
+        # KK[KK.!=0] .+= (rand(size(KK)...)*1e-1)[KK.!=0]
+        # KK = (KK + KK') ./ 2
 
-        # μ=1e-4
-        # if occursin("HoneyComb", Lattice)
-        #     KK+=μ*Diagonal(repeat([-1, 1], div(Ns, 2)))
-        # elseif Lattice=="SQUARE"
-        #     for i in 1:Ns
-        #         x,y=i_xy(Lattice,site,i)
-        #         KK[i,i]+=μ*(-1)^(x+y)
-        #     end
-        # end
+        μ = 1e-4
+        if occursin("HoneyComb", Lattice)
+            KK += μ * Diagonal(repeat([-1, 1], div(Ns, 2)))
+        elseif Lattice == "SQUARE"
+            for i in 1:Ns
+                x, y = i_xy(Lattice, site, i)
+                KK[i, i] += μ * (-1)^(x + y)
+            end
+        end
 
         E, V = LAPACK.syevd!('V', 'L', KK)
         Pt = V[:, 1:ns]
@@ -57,7 +58,7 @@ function Free_G!(t1, t2, G, Lattice, site, Θ, Initial, ns)
         end
     end
 
-    E, V = LAPACK.syevd!('V', 'L', K[:, :])
+    E, V = LAPACK.syevd!('V', 'L', K)
     eK = V * Diagonal(exp.(-Δt .* E)) * V'
 
     BL = Array{Float64}(undef, ns, Ns)

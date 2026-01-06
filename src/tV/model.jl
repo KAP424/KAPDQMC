@@ -75,10 +75,12 @@ function tV_Hubbard_Para(; Ht, Hv1, Hv2, Δt, Θrelax, Θquench, Lattice::String
     end
     Pt = HalfeKinv * Pt
 
-    Nt = round(Int, 2 * cld(Θrelax + Θquench, Δt))
+    Nt = round(Int, 2 * (Θrelax + Θquench) / Δt)
     if (Θquench > 0) & (abs(Hv1 - Hv2) > 0)
-        ΔU = (Hv1 - Hv2) / Θquench * Δt
-        Hv = vcat(fill(Hv1, round(Int, Θrelax / Δt)), reverse(collect(Hv2:ΔU:Hv1-ΔU/2)), collect(Hv2:ΔU:Hv1-ΔU/2), fill(Hv1, round(Int, Θrelax / Δt)))
+        Hv = LinRange(Hv1, Hv2, round(Int, Θquench / Δt) + 1)[2:end]
+        Hv = vcat(fill(Hv1, round(Int, Θrelax / Δt)), collect(Hv), reverse(collect(Hv)), fill(Hv1, round(Int, Θrelax / Δt)))
+        # ΔU = (Hv1 - Hv2) / Θquench * Δt
+        # Hv = vcat(fill(Hv1, round(Int, Θrelax / Δt)), reverse(collect(Hv2:ΔU:Hv1-ΔU/2)), collect(Hv2:ΔU:Hv1-ΔU/2), fill(Hv1, round(Int, Θrelax / Δt)))
     else
         @assert (Hv1 == Hv2) & (Θquench < 1e-7) "For Θquench=0, Hv1 must equal Hv2"
         Hv = Hv1 .* ones(Float64, Nt)

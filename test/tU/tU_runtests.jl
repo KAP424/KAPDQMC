@@ -9,7 +9,7 @@ using LinearAlgebra
 
     rng = MersenneTwister(1234)
 
-    model = tU_Hubbard_Para(Ht=1.0, Hu1=1.0, Hu2=2.0, Θrelax=0.0, Θquench=0.2, Lattice="HoneyComb120", site=[3, 3], Δt=0.1, BatchSize=10, Initial="H0")
+    model = tU_Hubbard_Para(Ht=1.0, Hu1=0.0, Hu2=3.8, Θrelax=0.0, Θquench=0.1, Lattice="HoneyComb120", site=[3, 3], Δt=0.1, BatchSize=10, Initial="H0")
 
     s = Initial_s(model, rng)
 

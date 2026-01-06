@@ -37,10 +37,12 @@ struct tU_Hubbard_Para_
 end
 
 function tU_Hubbard_Para(; Ht, Hu1, Hu2, Δt, Θrelax, Θquench, Lattice::String, site, BatchSize, Initial::String)
-    Nt = round(Int, 2 * cld(Θrelax + Θquench, Δt))
+    Nt = round(Int, 2 * (Θrelax + Θquench) / Δt)
     if (Θquench > 0.0) & (abs(Hu1 - Hu2) > 0)
-        ΔU = (Hu1 - Hu2) / Θquench * Δt
-        Hu = vcat(fill(Hu1, round(Int, Θrelax / Δt)), reverse(collect(Hu2:ΔU:Hu1-ΔU/2)), collect(Hu2:ΔU:Hu1-ΔU/2), fill(Hu1, round(Int, Θrelax / Δt)))
+        # ΔU = (Hu1 - Hu2) / Θquench * Δt
+        # Hu22 = vcat(fill(Hu1, round(Int, Θrelax / Δt)), reverse(collect(Hu2:ΔU:Hu1-ΔU/2)), collect(Hu2:ΔU:Hu1-ΔU/2), fill(Hu1, round(Int, Θrelax / Δt)))
+        Hu = LinRange(Hu1, Hu2, round(Int, Θquench / Δt) + 1)[2:end]
+        Hu = vcat(fill(Hu1, round(Int, Θrelax / Δt)), collect(Hu), reverse(collect(Hu)), fill(Hu1, round(Int, Θrelax / Δt)))
     else
         @assert (Hu1 == Hu2) & (Θquench < 1e-7) "For Θquench=0, Hu1 must equal Hu2"
         Hu = Hu1 .* ones(Float64, Nt)

@@ -2,11 +2,11 @@
     No Return. Overwrite G = G - G · inv(r) ⋅ Δ · (I-G)
     ------------------------------------------------------------------------------
 """
-function Gupdate!(Phy::PhyBuffer_,UPD::UpdateBuffer_)
-    mul!(Phy.zN,UPD.r,view(Phy.G,UPD.subidx,:))
-    lmul!(-1.0,Phy.zN)
-    axpy!(1.0,UPD.r,view(Phy.zN,:,UPD.subidx))   # useful for GΘτ,Gτ
-    mul!(Phy.NN, view(Phy.G,:,UPD.subidx),Phy.zN)
+function Gupdate!(Phy::PhyBuffer_, UPD::UpdateBuffer_)
+    mul!(Phy.zN, UPD.r, view(Phy.G, UPD.subidx, :))
+    lmul!(-1.0, Phy.zN)
+    axpy!(1.0, UPD.r, view(Phy.zN, :, UPD.subidx))   # useful for GΘτ,Gτ
+    mul!(Phy.NN, view(Phy.G, :, UPD.subidx), Phy.zN)
     axpy!(-1.0, Phy.NN, Phy.G)
 end
 
@@ -20,19 +20,19 @@ end
     with r ≡ inv(r) ⋅ Δ
     ------------------------------------------------------------------------------
 """
-function G4update!(SCEE::SCEEBuffer_,UPD::UpdateBuffer_,G::G4Buffer_)
-    mul!(SCEE.zN,UPD.r,view(G.Gt0,UPD.subidx,:))   # useful for GΘ,GτΘ
-    mul!(SCEE.NN, view(G.G0t,:,UPD.subidx),SCEE.zN)
+function G4update!(SCEE::SCEEBuffer_, UPD::UpdateBuffer_, G::G4Buffer_)
+    mul!(SCEE.zN, UPD.r, view(G.Gt0, UPD.subidx, :))   # useful for GΘ,GτΘ
+    mul!(SCEE.NN, view(G.G0t, :, UPD.subidx), SCEE.zN)
     axpy!(1.0, SCEE.NN, G.G0)
-    mul!(SCEE.NN, view(G.Gt,:,UPD.subidx),SCEE.zN)
+    mul!(SCEE.NN, view(G.Gt, :, UPD.subidx), SCEE.zN)
     axpy!(1.0, SCEE.NN, G.Gt0)
 
-    mul!(SCEE.zN,UPD.r,view(G.Gt,UPD.subidx,:))
-    lmul!(-1.0,SCEE.zN)
-    axpy!(1.0,UPD.r,view(SCEE.zN,:,UPD.subidx))   # useful for GΘτ,Gτ
-    mul!(SCEE.NN, view(G.G0t,:,UPD.subidx),SCEE.zN)
+    mul!(SCEE.zN, UPD.r, view(G.Gt, UPD.subidx, :))
+    lmul!(-1.0, SCEE.zN)
+    axpy!(1.0, UPD.r, view(SCEE.zN, :, UPD.subidx))   # useful for GΘτ,Gτ
+    mul!(SCEE.NN, view(G.G0t, :, UPD.subidx), SCEE.zN)
     axpy!(-1.0, SCEE.NN, G.G0t)
-    mul!(SCEE.NN, view(G.Gt,:,UPD.subidx),SCEE.zN)
+    mul!(SCEE.NN, view(G.Gt, :, UPD.subidx), SCEE.zN)
     axpy!(-1.0, SCEE.NN, G.Gt)
 end
 
@@ -43,16 +43,16 @@ end
     ------------------------------------------------------------------------------
 """
 function GMupdate!(A::AreaBuffer_)
-    mul!(A.Nz, A.gmInv,A.a )
+    mul!(A.Nz, A.gmInv, A.a)
     inv22!(A.Tau)
-    mul!(A.zN,A.Tau,A.b)
+    mul!(A.zN, A.Tau, A.b)
     mul!(A.NN, A.Nz, A.zN)
     axpy!(-1.0, A.NN, A.gmInv)
 end
 function GMupdate!(A::DOPBuffer_)
-    mul!(A.Nz, A.Xinv,A.a )
+    mul!(A.Nz, A.Xinv, A.a)
     inv22!(A.Tau)
-    mul!(A.zN,A.Tau,A.b)
+    mul!(A.zN, A.Tau, A.b)
     mul!(A.NN, A.Nz, A.zN)
     axpy!(-1.0, A.NN, A.Xinv)
 end
@@ -67,10 +67,10 @@ end
     with r ≡ inv(r) ⋅ Δ
     ------------------------------------------------------------------------------
 """
-function get_abTau!(A::DOPBuffer_,UPD::UpdateBuffer_,G::G4Buffer_)
-    mul!(A.a,view(G.G0t,A.index,UPD.subidx),UPD.r)
+function get_abTau!(A::DOPBuffer_, UPD::UpdateBuffer_, G::G4Buffer_)
+    mul!(A.a, view(G.G0t, A.index, UPD.subidx), UPD.r)
     lmul!(1.0 - cis(A.alpha), A.a)
-    mul!(A.b, view(G.Gt0,UPD.subidx,A.index), A.Xinv)
+    mul!(A.b, view(G.Gt0, UPD.subidx, A.index), A.Xinv)
     mul!(A.Tau, A.b, A.a)
     for i in diagind(A.Tau)
         A.Tau[i] += 1
@@ -88,15 +88,15 @@ end
     Warning : G02 here !!!  Gt01,G0t1
     ------------------------------------------------------------------------------
 """
-function get_abTau1!(A::AreaBuffer_,UPD::UpdateBuffer_,G0,Gt0,G0t)
-    copyto!(A.NN, view(G0,A.index,A.index))
+function get_abTau1!(A::AreaBuffer_, UPD::UpdateBuffer_, G0, Gt0, G0t)
+    copyto!(A.NN, view(G0, A.index, A.index))
     lmul!(2.0, A.NN)
     for i in diagind(A.NN)
         A.NN[i] -= 1
     end
-    mul!(A.zN,view(Gt0,UPD.subidx,A.index),A.NN)
+    mul!(A.zN, view(Gt0, UPD.subidx, A.index), A.NN)
     mul!(A.b, A.zN, A.gmInv)
-    mul!(A.a,view(G0t,A.index,UPD.subidx),UPD.r)
+    mul!(A.a, view(G0t, A.index, UPD.subidx), UPD.r)
     mul!(A.Tau, A.b, A.a)
     for i in diagind(A.Tau)
         A.Tau[i] += 1
@@ -115,15 +115,15 @@ end
     Warning : G01 here !!!  Gt02,G0t2
     ------------------------------------------------------------------------------
 """
-function get_abTau2!(A::AreaBuffer_,UPD::UpdateBuffer_,G0,Gt0,G0t)
-    copyto!(A.NN , view(G0,A.index,A.index))
+function get_abTau2!(A::AreaBuffer_, UPD::UpdateBuffer_, G0, Gt0, G0t)
+    copyto!(A.NN, view(G0, A.index, A.index))
     lmul!(2.0, A.NN)
     for i in diagind(A.NN)
         A.NN[i] -= 1
     end
-    mul!(A.a,A.NN,view(G0t,A.index,UPD.subidx))
-    mul!(A.zN,UPD.r,view(Gt0,UPD.subidx,A.index))
-    mul!(A.b,A.zN,A.gmInv)
+    mul!(A.a, A.NN, view(G0t, A.index, UPD.subidx))
+    mul!(A.zN, UPD.r, view(Gt0, UPD.subidx, A.index))
+    mul!(A.b, A.zN, A.gmInv)
     mul!(A.Tau, A.b, A.a)
     for i in diagind(A.Tau)
         A.Tau[i] += 1
@@ -136,7 +136,7 @@ end
         G = I - BR ⋅ inv(BL ⋅ BR) ⋅ BL 
     ------------------------------------------------------------------------------
 """
-function get_G!(tmpnn,tmpnN,ipiv,BL,BR,G)
+function get_G!(tmpnn, tmpnN, ipiv, BL, BR, G)
     # 目标: 计算 G = I - BR * inv(BL * BR) * BL，避免显式求逆 (getri!)
     # 步骤:
     # 1. tmpnn ← M = BL * BR
@@ -156,58 +156,58 @@ function get_G!(tmpnn,tmpnN,ipiv,BL,BR,G)
     end
 end
 
-function G4!(SCEE::SCEEBuffer_,G::G4Buffer_,nodes::Vector{Int64},idx::Int64,direction="Forward")
-    Θidx=div(length(nodes),2)+1
+function G4!(SCEE::SCEEBuffer_, G::G4Buffer_, nodes::Vector{Int64}, idx::Int64, direction="Forward")
+    Θidx = div(length(nodes), 2) + 1
     BLMs, BRMs, BMs, BMinvs, Gt, G0, Gt0, G0t =
         G.BLMs, G.BRMs, G.BMs, G.BMinvs, G.Gt, G.G0, G.Gt0, G.G0t
     II, tmpnn, tmpnN, tmpNN, tmpNN_, ipiv =
         SCEE.II, SCEE.nn, SCEE.nN, SCEE.NN, SCEE.NN_, SCEE.ipiv
 
-    get_G!(tmpnn,tmpnN,ipiv,view(BLMs,:,:,idx),view(BRMs,:,:,idx),Gt)
-    if idx==Θidx
+    get_G!(tmpnn, tmpnN, ipiv, view(BLMs, :, :, idx), view(BRMs, :, :, idx), Gt)
+    if idx == Θidx
         G0 .= Gt
-        if direction=="Forward"
-            Gt0.= Gt
-            G0t.= Gt .- II 
-        elseif direction=="Backward"
-            Gt0.= Gt .- II
-            G0t.= Gt
+        if direction == "Forward"
+            Gt0 .= Gt
+            G0t .= Gt .- II
+        elseif direction == "Backward"
+            Gt0 .= Gt .- II
+            G0t .= Gt
         end
     else
-        get_G!(tmpnn,tmpnN,ipiv,view(BLMs,:,:,Θidx),view(BRMs,:,:,Θidx),G0)
-    
+        get_G!(tmpnn, tmpnN, ipiv, view(BLMs, :, :, Θidx), view(BRMs, :, :, Θidx), G0)
+
         Gt0 .= II
         G0t .= II
-        if idx<Θidx
+        if idx < Θidx
             for j in idx:Θidx-1
-                if j==idx
+                if j == idx
                     tmpNN_ .= Gt
                 else
-                    get_G!(tmpnn,tmpnN,ipiv,view(BLMs,:,:,j),view(BRMs,:,:,j),tmpNN_)
+                    get_G!(tmpnn, tmpnN, ipiv, view(BLMs, :, :, j), view(BRMs, :, :, j), tmpNN_)
                 end
-                mul!(tmpNN,tmpNN_, G0t)
-                mul!(G0t, view(BMs,:,:,j), tmpNN)
+                mul!(tmpNN, tmpNN_, G0t)
+                mul!(G0t, view(BMs, :, :, j), tmpNN)
                 tmpNN .= II .- tmpNN_
-                mul!(tmpNN_,Gt0, tmpNN)
-                mul!(Gt0, tmpNN_, view(BMinvs,:,:,j))
-                
+                mul!(tmpNN_, Gt0, tmpNN)
+                mul!(Gt0, tmpNN_, view(BMinvs, :, :, j))
+
             end
             lmul!(-1.0, Gt0)
         else
             for j in Θidx:idx-1
-                if j==Θidx
+                if j == Θidx
                     tmpNN_ .= G0
                 else
-                    get_G!(tmpnn,tmpnN,ipiv,view(BLMs,:,:,j),view(BRMs,:,:,j),tmpNN_)
+                    get_G!(tmpnn, tmpnN, ipiv, view(BLMs, :, :, j), view(BRMs, :, :, j), tmpNN_)
                 end
                 mul!(tmpNN, tmpNN_, Gt0)
-                mul!(Gt0, view(BMs,:,:,j), tmpNN)
+                mul!(Gt0, view(BMs, :, :, j), tmpNN)
                 tmpNN .= II .- tmpNN_
                 mul!(tmpNN_, G0t, tmpNN)
-                mul!(G0t, tmpNN_,view(BMinvs,:,:,j))
+                mul!(G0t, tmpNN_, view(BMinvs, :, :, j))
             end
             lmul!(-1.0, G0t)
-        end        
+        end
     end
 end
 

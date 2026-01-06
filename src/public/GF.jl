@@ -1,4 +1,4 @@
-function Free_G!(G, Lattice, site, Θ, Initial, ns)
+function Free_G!(t1, t2, G, Lattice, site, Θ, Initial, ns)
     """
     input:
         Lattice: "HoneyComb" or "SQUARE"
@@ -9,7 +9,9 @@ function Free_G!(G, Lattice, site, Θ, Initial, ns)
     对于得到H0初态(平衡态结果)
     必须要对H0加一个极其微弱的交错化学势,以去除基态简并,从而得到正确的结果
     """
-    K = K_Matrix(Lattice, site)
+    K1 = K_Matrix(Lattice, site)
+    K2 = nnnK_Matrix(Lattice, site)
+    K = t1 .* K1 .+ t2 .* K2
     Ns = size(K)[1]
     # ns=div(Ns, 2)
 

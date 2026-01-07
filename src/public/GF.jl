@@ -1,4 +1,4 @@
-function Free_G!(t1, t2, G, Lattice, site, Θ, Initial, filling_num)
+function Free_G!(t1, t2, Lattice, site, Initial, filling_num)
     """
     input:
         Lattice: "HoneyComb" or "SQUARE"
@@ -15,9 +15,6 @@ function Free_G!(t1, t2, G, Lattice, site, Θ, Initial, filling_num)
     Ns = size(K)[1]
 
     ns = round(Int, Ns * filling_num)
-
-    Δt = 0.1
-    Nt = Int(round(Θ / Δt))
 
     Pt = zeros(Float64, Ns, ns)  # 预分配 Pt
     if Initial == "H0"
@@ -58,50 +55,8 @@ function Free_G!(t1, t2, G, Lattice, site, Θ, Initial, filling_num)
         end
     end
 
-    E, V = LAPACK.syevd!('V', 'L', K)
-    eK = V * Diagonal(exp.(-Δt .* E)) * V'
-
-    BL = Array{Float64}(undef, ns, Ns)
-    BR = Array{Float64}(undef, Ns, ns)
-    tmpNn = Matrix{Float64}(undef, Ns, ns)
-    tmpnN = Matrix{Float64}(undef, ns, Ns)
-    tmpnn = Matrix{Float64}(undef, ns, ns)
-    tau = Vector{Float64}(undef, ns)
-    ipiv = Vector{LAPACK.BlasInt}(undef, ns)
-
-    BL .= Pt'
-    BR .= Pt
-
-    count = 0
-    for i in 1:Nt
-        mul!(tmpnN, BL, eK)
-        BL .= tmpnN
-
-        mul!(tmpNn, eK, BR)
-        BR .= tmpNn
-
-        count += 1
-        if count == 10
-            LAPACK.gerqf!(BL, tau)
-            LAPACK.orgrq!(BL, tau, ns)
-
-            LAPACK.geqrf!(BR, tau)
-            LAPACK.orgqr!(BR, tau, ns)
-            count = 0
-        end
-
-    end
-
-    mul!(tmpnn, BL, BR)
-    LAPACK.getrf!(tmpnn, ipiv)
-    LAPACK.getri!(tmpnn, ipiv)
-    mul!(tmpNn, BR, tmpnn)
-    mul!(G, tmpNn, BL)
-    lmul!(-1.0, G)
-    for i in diagind(G)
-        G[i] += 1
-    end
-
+    BL = copy(Pt')
+    BR = copy(Pt)
     return BL, BR
 
 end

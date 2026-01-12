@@ -28,7 +28,7 @@ struct tV_Hubbard_Para_
 end
 
 function tV_Hubbard_Para(; Ht, Hv1, Hv2, Δt, Θrelax, Θquench, Lattice::String, site, BatchSize, Initial::String)
-    K = K_Matrix(Lattice, site)
+    K = nnK_Matrix(Lattice, site)
     Ns = size(K, 1)
 
     E, V = LAPACK.syevd!('V', 'L', -Ht .* K[:, :])

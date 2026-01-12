@@ -1,4 +1,4 @@
-push!(LOAD_PATH, "C:/Users/admin/Desktop/JuliaDQMC/code/KAPDQMC/src/")
+push!(LOAD_PATH, "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\")
 using KAPDQMC
 using Test
 using Random

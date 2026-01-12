@@ -9,9 +9,14 @@ function Free_G!(t1, t2, Lattice, site, Initial, filling_num)
     对于得到H0初态(平衡态结果)
     必须要对H0加一个极其微弱的交错化学势,以去除基态简并,从而得到正确的结果
     """
-    K1 = K_Matrix(Lattice, site)
+    if isa(t1, Tuple)
+        K1 = nnK_Matrix(Lattice, site, t1)
+    else
+        K1 = nnK_Matrix(Lattice, site, (t1, t1, t1))
+    end
+
     K2 = nnnK_Matrix(Lattice, site)
-    K = t1 .* K1 .+ t2 .* K2
+    K = K1 .+ t2 .* K2
     Ns = size(K)[1]
 
     ns = round(Int, Ns * filling_num)
@@ -20,18 +25,20 @@ function Free_G!(t1, t2, Lattice, site, Initial, filling_num)
     if Initial == "H0"
         KK = Matrix{Float64}(K)
 
-        # KK[KK.!=0] .+= (rand(size(KK)...)*1e-1)[KK.!=0]
-        # KK = (KK + KK') ./ 2
+        KK[KK.!=0] .+= (rand(size(KK)...)*1e-2)[KK.!=0]
+        KK = (KK + KK') ./ 2
 
-        μ = 1e-4
-        if occursin("HoneyComb", Lattice)
-            KK += μ * Diagonal(repeat([-1, 1], div(Ns, 2)))
-        elseif Lattice == "SQUARE"
-            for i in 1:Ns
-                x, y = i_xy(Lattice, site, i)
-                KK[i, i] += μ * (-1)^(x + y)
-            end
-        end
+        # μ = 0.1
+        # if occursin("HoneyComb", Lattice)
+        #     KK += μ * Diagonal(repeat([-1, 1], div(Ns, 2)))
+        # elseif Lattice == "SQUARE"
+        #     for i in 1:Ns
+        #         x, y = i_xy(Lattice, site, i)
+        #         KK[i, i] += μ * (-1)^(x + y)
+        #     end
+        # end
+
+        # KK += 1e-3 * μ * Diagonal(rand(Ns) .- 0.5)
 
         E, V = LAPACK.syevd!('V', 'L', KK)
         Pt = V[:, 1:ns]

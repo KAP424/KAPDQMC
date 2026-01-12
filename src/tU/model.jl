@@ -55,7 +55,7 @@ function tU_Hubbard_Para(; Ht, Hu1, Hu2, Δt, Θrelax, Θquench, Lattice::String
     γ = [1 + sqrt(6) / 3, 1 + sqrt(6) / 3, 1 - sqrt(6) / 3, 1 - sqrt(6) / 3]
     η = [sqrt(2 * (3 - sqrt(6))), -sqrt(2 * (3 - sqrt(6))), sqrt(2 * (3 + sqrt(6))), -sqrt(2 * (3 + sqrt(6)))]
 
-    K = K_Matrix(Lattice, site)
+    K = nnK_Matrix(Lattice, site)
     Ns = size(K, 1)
 
     E, V = LAPACK.syevd!('V', 'L', Ht * K[:, :])

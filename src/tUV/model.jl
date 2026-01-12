@@ -29,7 +29,7 @@ end
 
 function tUV_Hubbard_Para(; Ht, Hu, Hv, Lattice::String, site, Δt, Θ, BatchSize, Initial::String)
 
-    K = K_Matrix(Lattice, site)
+    K = nnK_Matrix(Lattice, site)
     Ns = size(K, 1)
 
     E, V = LAPACK.syevd!('V', 'L', -Ht .* K[:, :])

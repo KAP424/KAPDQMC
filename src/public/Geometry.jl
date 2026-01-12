@@ -1,9 +1,5 @@
 # 120° basis
 # PBC, OBC is not allowed
-module Geometry
-
-export nn2idx, xy_i, i_xy, K_Matrix, area_index, nnidx_F, nnn2idx, nnnK_Matrix
-
 
 function nnidx_F(Lattice, site)
     if Lattice == "SQUARE"
@@ -50,8 +46,7 @@ function nnidx_F(Lattice, site)
 end
 
 """
-输出所有nearest neighbor indices
-只需对一种site进行遍历
+nearest neighbor indices
 """
 function nn2idx(Lattice::String, site::Vector{Int64}, idx::Int64)
     if Lattice == "SQUARE"
@@ -141,7 +136,7 @@ function i_xy(Lattice::String, site::Vector{Int64}, i::Int64)
     end
 end
 
-function K_Matrix(Lattice::String, site::Vector{Int64})
+function nnK_Matrix(Lattice::String, site::Vector{Int64}, t=(1.0, 1.0, 1.0))  # t for three directions
     if Lattice == "SQUARE"
         Ns = prod(site)
         K = zeros(Float64, Ns, Ns)
@@ -153,8 +148,8 @@ function K_Matrix(Lattice::String, site::Vector{Int64})
 
     for i in 1:Ns
         nnidx = nn2idx(Lattice, site, i)
-        for idx in nnidx
-            K[i, idx] = 1
+        for j in eachindex(nnidx)
+            K[i, nnidx[j]] = t[j]
         end
     end
     return K
@@ -224,8 +219,7 @@ end
 
 
 """
-输出一半2nd nearest neighbor indices
-必须对所有site进行遍历，不能只对一种site进行计算
+next nearest neighbor indices
 """
 function nnn2idx(Lattice::String, site::Vector{Int64}, idx::Int64)
     if Lattice == "SQUARE"
@@ -237,7 +231,7 @@ function nnn2idx(Lattice::String, site::Vector{Int64}, idx::Int64)
             nnn[3] = xy_i(Lattice, site, mod1(x + 1, site[1]), mod1(y - 1, site[2]))
             nnn[4] = xy_i(Lattice, site, mod1(x - 1, site[1]), mod1(y - 1, site[2]))
         else
-            nnn = [mod1(idx - 2, site[1])]
+            nnn = [mod1(idx - 2, site[1]), mod1(idx + 2, site[1])]
         end
     elseif Lattice == "HoneyComb120"
         nnn = zeros(Int, 6)
@@ -281,6 +275,7 @@ function nnn2idx(Lattice::String, site::Vector{Int64}, idx::Int64)
     return nnn
 end
 
+
 function nnnK_Matrix(Lattice::String, site::Vector{Int64})
     if Lattice == "SQUARE"
         Ns = prod(site)
@@ -300,5 +295,54 @@ function nnnK_Matrix(Lattice::String, site::Vector{Int64})
     return K
 end
 
-
+"""
+the third nearest neighbor indices
+"""
+function n3n2idx(Lattice::String, site::Vector{Int64}, idx::Int64)
+    if Lattice == "HoneyComb120"
+        n3n = zeros(Int, 3)
+        x, y = i_xy(Lattice, site, idx)
+        if mod(idx, 2) == 1
+            n3n[1] = xy_i(Lattice, site, mod1(x + 1, site[1]), mod1(y + 1, site[2]))
+            n3n[2] = xy_i(Lattice, site, mod1(x + 1, site[1]), mod1(y - 1, site[2]))
+            n3n[3] = xy_i(Lattice, site, mod1(x - 1, site[1]), mod1(y - 1, site[2]))
+        else
+            n3n[1] = xy_i(Lattice, site, mod1(x + 1, site[1]), mod1(y + 1, site[2])) - 1
+            n3n[2] = xy_i(Lattice, site, mod1(x - 1, site[1]), mod1(y - 1, site[2])) - 1
+            n3n[3] = xy_i(Lattice, site, mod1(x - 1, site[1]), mod1(y + 1, site[2])) - 1
+        end
+    elseif Lattice == "HoneyComb60"
+        n3n = zeros(Int, 3)
+        x, y = i_xy(Lattice, site, idx)
+        if mod(idx, 2) == 1
+            n3n[1] = xy_i(Lattice, site, mod1(x + 1, site[1]), y)
+            n3n[2] = xy_i(Lattice, site, mod1(x - 1, site[1]), y)
+            n3n[3] = xy_i(Lattice, site, mod1(x + 1, site[1]), mod1(y - 2, site[2]))
+        else
+            n3n[1] = xy_i(Lattice, site, mod1(x - 1, site[1]), y) - 1
+            n3n[2] = xy_i(Lattice, site, mod1(x + 1, site[1]), y) - 1
+            n3n[3] = xy_i(Lattice, site, mod1(x - 1, site[1]), mod1(y + 2, site[2])) - 1
+        end
+    else
+        error("Lattice: $(Lattice) is not allowed !")
+    end
+    return n3n
 end
+
+function n3nK_Matrix(Lattice::String, site::Vector{Int64})
+    if occursin("HoneyComb", Lattice)
+        Ns = prod(site) * 2
+        K = zeros(Float64, Ns, Ns)
+    else
+        error("Lattice: $(Lattice) is not allowed !")
+    end
+
+    for i in 1:Ns
+        n3nidx = n3n2idx(Lattice, site, i)
+        for idx in n3nidx
+            K[i, idx] = 1
+        end
+    end
+    return K
+end
+

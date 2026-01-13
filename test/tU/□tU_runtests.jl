@@ -12,17 +12,15 @@ using LinearAlgebra
     model = tU_Hubbard_Para(Ht=1.0, Hu1=0.0, Hu2=3.8, Θrelax=0.0, Θquench=0.1, Lattice="SQUARE90",
         site=[3, 3], Δt=0.1, BatchSize=10, Initial="H0", flux=pi)
 
-    println(model.α)
-
     s = Initial_s(model, rng)
 
     s = phy_update(path, model, s, 10, true)
 
 
     L = model.site[2]
-    indexA = area_index(model.Lattice, model.site, ([1, 1], [div(L, 3), L]))
+    indexA = area_index(model.Lattice, model.site, ([1, 1], [div(L, 2), L]))
     # # HalfHalf
-    indexB = area_index(model.Lattice, model.site, ([1, 1], [div(L, 3), div(2 * L, 3)]))
+    indexB = area_index(model.Lattice, model.site, ([1, 1], [div(L, 2), div(L, 2)]))
     # println(indexB)
 
     λ = 0.5
@@ -48,9 +46,9 @@ using LinearAlgebra
 
 
     L = model.site[2]
-    indexA = area_index(model.Lattice, model.site, ([1, 1], [div(L, 3), L]))
+    indexA = area_index(model.Lattice, model.site, ([1, 1], [div(L, 2), L]))
     # # HalfHalf
-    indexB = area_index(model.Lattice, model.site, ([1, 1], [div(L, 3), div(2 * L, 3)]))
+    indexB = area_index(model.Lattice, model.site, ([1, 1], [div(L, 2), div(L, 2)]))
     # println(indexB)
 
     λ = 0.5

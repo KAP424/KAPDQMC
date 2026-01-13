@@ -6,7 +6,7 @@ Only work for two-dimensional binary lattices
     convert (x,y) coordinate to even index
 """
 function xy_i(site::Vector{Int64}, x::Int64, y::Int64)::Int64
-    if x > site[1] || y > site[2]
+    if 0 > x > site[1] || 0 > y > site[2]
         error("Error : Out of Lattice Range!")
     end
     return 2 * (x + (y - 1) * site[1])
@@ -16,8 +16,8 @@ Only work for two-dimensional binary lattices
     convert odd/even index to (x,y) coordinate
 """
 function i_xy(site::Vector{Int64}, i::Int64)
-    j = round(Int, i / 2)
-    return mod1(j, site[1]), round(Int, j / site[1])
+    j = Int(ceil(i / 2))
+    return mod1(j, site[1]), Int(ceil(j / site[1]))
 end
 
 
@@ -76,7 +76,6 @@ function nn2idx(Lattice::String, site::Vector{Int64}, idx::Int64)
         nn = [mod1(idx - 1, site[1]), mod1(idx + 1, site[1])]
         return nn
     end
-
     x, y = i_xy(site, idx)
     if Lattice == "SQUARE90"
         nn = zeros(Int, 4)
@@ -89,7 +88,7 @@ function nn2idx(Lattice::String, site::Vector{Int64}, idx::Int64)
             nn[1] = xy_i(site, mod1(x + 1, site[1]), y) - 1
             nn[2] = xy_i(site, x, mod1(y + 1, site[2])) - 1
             nn[3] = idx - 1
-            nn[3] = xy_i(site, mod1(x + 1, site[1]), mod1(y + 1, site[2])) - 1
+            nn[4] = xy_i(site, mod1(x + 1, site[1]), mod1(y + 1, site[2])) - 1
         end
     elseif Lattice == "SQUARE45"
         nn = zeros(Int, 4)
@@ -138,13 +137,16 @@ end
 flux only work for SQUARE
 anisotropy t only work for HoneyComb
 """
-function nnK_Matrix(Lattice::String, site::Vector{Int64}, t=(1.0, 1.0, 1.0), flux=0.0)  # t for three directions
+function nnK_Matrix(Lattice::String, site::Vector{Int64}; t=(1.0, 1.0, 1.0), flux=0.0)  # t for three directions
     flux1 = cis(flux / 4)
     flux2 = cis(-flux / 4)
 
     Ns = prod(site) * 2
-    K = zeros(Float64, Ns, Ns)
-
+    if flux == 0
+        K = zeros(Float64, Ns, Ns)
+    else
+        K = zeros(ComplexF64, Ns, Ns)
+    end
     if occursin("SQUARE", Lattice)
         for i in 1:Ns
             nnidx = nn2idx(Lattice, site, i)
@@ -162,6 +164,7 @@ function nnK_Matrix(Lattice::String, site::Vector{Int64}, t=(1.0, 1.0, 1.0), flu
             end
         end
     end
+    @assert norm(K - K') < 1e-8 "K is not Hermitian!"
     return K
 end
 

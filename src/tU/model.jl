@@ -21,22 +21,22 @@ struct tU_Hubbard_Para_
     Θquench::Float64
     Ns::Int64
     Nt::Int64
-    K::Array{Float64,2}
+    K::Array{ComplexF64,2}
     BatchSize::Int64
     Δt::Float64
     α::Vector{Float64}
     γ::Vector{Float64}
     η::Vector{Float64}
-    Pt::Array{Float64,2}
-    HalfeK::Array{Float64,2}
-    eK::Array{Float64,2}
-    HalfeKinv::Array{Float64,2}
-    eKinv::Array{Float64,2}
+    Pt::Array{ComplexF64,2}
+    HalfeK::Array{ComplexF64,2}
+    eK::Array{ComplexF64,2}
+    HalfeKinv::Array{ComplexF64,2}
+    eKinv::Array{ComplexF64,2}
     nodes::Vector{Int64}
     samplers_dict::Dict{UInt8,Random.Sampler}
 end
 
-function tU_Hubbard_Para(; Ht, Hu1, Hu2, Δt, Θrelax, Θquench, Lattice::String, site, BatchSize, Initial::String)
+function tU_Hubbard_Para(; Ht, Hu1, Hu2, Δt, Θrelax, Θquench, Lattice::String, site, BatchSize, Initial::String, flux=0.0)
     Nt = round(Int, 2 * (Θrelax + Θquench) / Δt)
     if (Θquench > 0.0) & (abs(Hu1 - Hu2) > 0)
         # ΔU = (Hu1 - Hu2) / Θquench * Δt
@@ -55,7 +55,7 @@ function tU_Hubbard_Para(; Ht, Hu1, Hu2, Δt, Θrelax, Θquench, Lattice::String
     γ = [1 + sqrt(6) / 3, 1 + sqrt(6) / 3, 1 - sqrt(6) / 3, 1 - sqrt(6) / 3]
     η = [sqrt(2 * (3 - sqrt(6))), -sqrt(2 * (3 - sqrt(6))), sqrt(2 * (3 + sqrt(6))), -sqrt(2 * (3 + sqrt(6)))]
 
-    K = nnK_Matrix(Lattice, site)
+    K = nnK_Matrix(Lattice, site, flux=flux)
     Ns = size(K, 1)
 
     E, V = LAPACK.syevd!('V', 'L', Ht * K[:, :])
@@ -64,34 +64,16 @@ function tU_Hubbard_Para(; Ht, Hu1, Hu2, Δt, Θrelax, Θquench, Lattice::String
     HalfeKinv = V * Diagonal(exp.(Δt .* E ./ 2)) * V'
     eKinv = V * Diagonal(exp.(Δt .* E)) * V'
 
-    Pt = zeros(Float64, Ns, div(Ns, 2))  # 预分配 Pt
+    Pt = zeros(ComplexF64, Ns, div(Ns, 2))  # 预分配 Pt
     if Initial == "H0"
         KK = copy(K)
         μ = 1e-5
-        if occursin("HoneyComb", Lattice)
-            KK .+= μ * diagm(repeat([-1, 1], div(Ns, 2)))
-        elseif Lattice == "SQUARE"
-            for i in 1:Ns
-                x, y = i_xy(Lattice, site, i)
-                KK[i, i] += μ * (-1)^(x + y)
-            end
-        end
+        KK .+= μ * diagm(repeat([-1, 1], div(Ns, 2)))
         E, V = LAPACK.syevd!('V', 'L', KK)
         Pt .= V[:, 1:div(Ns, 2)]
     elseif Initial == "V"
-        if occursin("HoneyComb", Lattice)
-            for i in 1:div(Ns, 2)
-                Pt[i*2, i] = 1
-            end
-        else
-            count = 1
-            for i in 1:Ns
-                x, y = i_xy(Lattice, site, i)
-                if (x + y) % 2 == 1
-                    Pt[i, count] = 1
-                    count += 1
-                end
-            end
+        for i in 1:div(Ns, 2)
+            Pt[i*2, i] = 1
         end
     end
 

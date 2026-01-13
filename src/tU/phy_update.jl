@@ -9,8 +9,10 @@ function phy_update(path::String, model::tU_Hubbard_Para_, s::Array{UInt8,2}, Sw
     Phy = PhyBuffer(model.Ns, NN)
     UPD = UpdateBuffer()
 
-    name = if model.Lattice == "SQUARE"
-        "□"
+    name = if model.Lattice == "SQUARE90"
+        "□90"
+    elseif model.Lattice == "SQUARE45"
+        "□45"
     elseif model.Lattice == "HoneyComb60"
         "HC"
     elseif model.Lattice == "HoneyComb120"
@@ -18,7 +20,7 @@ function phy_update(path::String, model::tU_Hubbard_Para_, s::Array{UInt8,2}, Sw
     else
         error("Lattice: $(model.Lattice) is not allowed !")
     end
-    if length(unique(model.α)) == 1
+    if model.Θquench == 0.0
         file = "$(path)/tUphy$(name)_t$(model.Ht)U$(model.Hu1)size$(model.site)Δt$(model.Δt)Θ$(model.Θrelax)BS$(model.BatchSize).csv"
     else
         file = "$(path)/tUphy$(name)_t$(model.Ht)U$(model.Hu1)_$(model.Hu2)size$(model.site)Δt$(model.Δt)Θ$(model.Θrelax)_$(model.Θquench)BS$(model.BatchSize).csv"
@@ -196,8 +198,8 @@ function phy_measure(model::tU_Hubbard_Para_, lt, s, G, tmpNN, tmpN)
                 tmp2 = 0.0     #<up down> <down up>
                 for ix in 1:model.site[1]
                     for iy in 1:model.site[2]
-                        idx1 = xy_i(model.Lattice, model.site, ix, iy) - 1
-                        idx2 = xy_i(model.Lattice, model.site, mod1(ix + rx, model.site[1]), mod1(iy + ry, model.site[2])) - 1
+                        idx1 = xy_i(model.site, ix, iy) - 1
+                        idx2 = xy_i(model.site, mod1(ix + rx, model.site[1]), mod1(iy + ry, model.site[2])) - 1
 
                         delta = idx1 == idx2 ? 1 : 0
 

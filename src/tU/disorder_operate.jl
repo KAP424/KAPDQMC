@@ -12,8 +12,10 @@ function ctrl_SCDOPicr(path::String, model::tU_Hubbard_Para_, alpha::Float64, in
     B = DOPBuffer(alpha, indexB)
     G = G4Buffer(model.Ns, NN)
 
-    name = if model.Lattice == "SQUARE"
-        "□"
+    name = if model.Lattice == "SQUARE90"
+        "□90"
+    elseif model.Lattice == "SQUARE45"
+        "□45"
     elseif model.Lattice == "HoneyComb60"
         "HC"
     elseif model.Lattice == "HoneyComb120"

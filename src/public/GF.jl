@@ -10,9 +10,9 @@ function Free_G!(t1, t2, Lattice, site, Initial, filling_num)
     必须要对H0加一个极其微弱的交错化学势,以去除基态简并,从而得到正确的结果
     """
     if isa(t1, Tuple)
-        K1 = nnK_Matrix(Lattice, site, t1)
+        K1 = nnK_Matrix(Lattice, site, t=t1)
     else
-        K1 = nnK_Matrix(Lattice, site, (t1, t1, t1))
+        K1 = nnK_Matrix(Lattice, site, t=(t1, t1, t1))
     end
 
     K2 = nnnK_Matrix(Lattice, site)
@@ -50,7 +50,7 @@ function Free_G!(t1, t2, Lattice, site, Initial, filling_num)
         else
             count = 1
             for i in 1:Ns
-                x, y = i_xy(Lattice, site, i)
+                x, y = i_xy(site, i)
                 if (x + y) % 2 == 1
                     Pt[i, count] = 1
                     count += 1

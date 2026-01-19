@@ -188,8 +188,8 @@ function area_index(Lattice::String, site::Vector{Int64}, area::Tuple{Vector{Int
         index = zeros(Int64, 2 * prod(area[2] - area[1] + [1, 1]))
         for lx in area[1][1]:area[2][1]
             for ly in area[1][2]:area[2][2]
-                index[counter] = xy_i(site, lx, ly) - 1
-                index[counter+1] = index[counter] + 1
+                index[counter] = xy_i(site, lx, ly)
+                index[counter+1] = index[counter] - 1
                 counter += 2
             end
         end

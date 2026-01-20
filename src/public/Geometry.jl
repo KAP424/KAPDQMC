@@ -93,15 +93,15 @@ function nn2idx(Lattice::String, site::Vector{Int64}, idx::Int64)
     elseif Lattice == "SQUARE45"
         nn = zeros(Int, 4)
         if mod(idx, 2) == 1
-            nn[1] = idx + 1
-            nn[2] = xy_i(site, mod1(x - 1, site[1]), mod1(y - 1, site[2]))
-            nn[3] = xy_i(site, x, mod1(y - 1, site[2]))
-            nn[4] = xy_i(site, mod1(x - 1, site[1]), y)
+            nn[1] = xy_i(site, mod1(x - 1, site[1]), y) #left
+            nn[2] = idx + 1     #right
+            nn[3] = xy_i(site, mod1(x - 1, site[1]), mod1(y + 1, site[2]))  #up
+            nn[4] = xy_i(site, x, mod1(y - 1, site[2])) #down
         else
-            nn[1] = xy_i(site, mod1(x + 1, site[1]), y) - 1
-            nn[2] = xy_i(site, x, mod1(y + 1, site[2])) - 1
-            nn[3] = idx - 1
-            nn[4] = xy_i(site, mod1(x + 1, site[1]), mod1(y + 1, site[2])) - 1
+            nn[1] = xy_i(site, x, mod1(y + 1, site[2])) - 1 #up
+            nn[2] = xy_i(site, mod1(x + 1, site[1]), mod1(y - 1, site[2])) - 1 #down
+            nn[3] = idx - 1 #left
+            nn[4] = xy_i(site, mod1(x + 1, site[1]), mod1(y, site[2])) - 1  #right
         end
     elseif Lattice == "HoneyComb120"
         nn = zeros(Int, 3)
@@ -176,10 +176,40 @@ function area_index(Lattice::String, site::Vector{Int64}, area::Tuple{Vector{Int
     if Lattice == "SQUARE45"
         counter = 1
         index = zeros(Int64, prod(area[2] - area[1] + [1, 1]))
-        for lx in area[1][1]:area[2][1]
-            for ly in area[1][2]:area[2][2]
-                index[counter] = xy_i(site, lx, ly)
-                counter += 1
+        Nx, Ny = area[2] - area[1] + [1, 1]
+        if Nx > 2 * site[1] || Ny > site[2]
+            error("Error : Out of Lattice Range!")
+        end
+        start = xy_i(site, area[1][1], area[1][2]) - 1
+        typeS = "A"
+        type = "A"
+        count = 1
+        index[count] = start
+        for y in 1:Ny
+            point = copy(start)
+            for x in 1:Nx-1
+                if type == "A"
+                    point = nn2idx(Lattice, site, point)[2]  # right
+                    type = "B"
+                elseif type == "B"
+                    point = nn2idx(Lattice, site, point)[4]  # right
+                    type = "A"
+                end
+                count += 1
+                index[count] = point
+            end
+            if y != Ny
+                if typeS == "A"
+                    start = nn2idx(Lattice, site, start)[3]  # up
+                    typeS = "B"
+                    type = "B"
+                elseif typeS == "B"
+                    start = nn2idx(Lattice, site, start)[1]  # up
+                    typeS = "A"
+                    type = "A"
+                end
+                count += 1
+                index[count] = start
             end
         end
         return index
@@ -188,8 +218,8 @@ function area_index(Lattice::String, site::Vector{Int64}, area::Tuple{Vector{Int
         index = zeros(Int64, 2 * prod(area[2] - area[1] + [1, 1]))
         for lx in area[1][1]:area[2][1]
             for ly in area[1][2]:area[2][2]
-                index[counter] = xy_i(site, lx, ly)
-                index[counter+1] = index[counter] - 1
+                index[counter] = xy_i(site, lx, ly) - 1
+                index[counter+1] = index[counter] + 1
                 counter += 2
             end
         end
@@ -354,4 +384,18 @@ function n3nK_Matrix(Lattice::String, site::Vector{Int64})
         end
     end
     return K
+end
+
+if PROGRAM_FILE == @__FILE__
+    Lattice = "SQUARE45"
+    site = [3, 6]
+    idx = area_index(Lattice, site, ([1, 1], [3, 3]))
+    println(nn2idx(Lattice, site, 1))
+    println((idx))
+
+    Lattice = "SQUARE90"
+    site = [4, 4]
+    idx = area_index(Lattice, site, ([1, 1], [2, 2]))
+    println(nn2idx(Lattice, site, 11))
+    println((idx))
 end

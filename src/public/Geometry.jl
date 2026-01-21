@@ -137,6 +137,44 @@ end
 flux only work for SQUARE
 anisotropy t only work for HoneyComb
 """
+# function nnK_Matrix(Lattice::String, site::Vector{Int64}; t=(1.0, 1.0, 1.0), flux=0.0)  # t for three directions
+#     flux1 = cis(flux / 4)
+#     flux2 = cis(-flux / 4)
+
+#     Ns = prod(site) * 2
+#     if flux == 0
+#         K = zeros(Float64, Ns, Ns)
+#     else
+#         K = zeros(ComplexF64, Ns, Ns)
+#     end
+#     if occursin("SQUARE", Lattice)
+#         for i in 1:Ns
+#             nnidx = nn2idx(Lattice, site, i)
+#             if mod(i, 2) == 1
+#                 K[i, nnidx[1]] = flux1
+#                 K[i, nnidx[2]] = flux1
+#                 K[i, nnidx[3]] = flux1
+#                 K[i, nnidx[4]] = flux1
+#             else
+#                 K[i, nnidx[1]] = flux2
+#                 K[i, nnidx[2]] = flux2
+#                 K[i, nnidx[3]] = flux2
+#                 K[i, nnidx[4]] = flux2
+#             end
+#         end
+
+#     elseif occursin("HoneyComb", Lattice)
+#         for i in 1:Ns
+#             nnidx = nn2idx(Lattice, site, i)
+#             for j in eachindex(nnidx)
+#                 K[i, nnidx[j]] = t[j]
+#             end
+#         end
+#     end
+#     @assert norm(K - K') < 1e-8 "K is not Hermitian!"
+#     return K
+# end
+
 function nnK_Matrix(Lattice::String, site::Vector{Int64}; t=(1.0, 1.0, 1.0), flux=0.0)  # t for three directions
     flux1 = cis(flux / 4)
     flux2 = cis(-flux / 4)
@@ -386,16 +424,47 @@ function n3nK_Matrix(Lattice::String, site::Vector{Int64})
     return K
 end
 
+
+function E_piflux(kx, ky, flux)
+    return 2 * (sqrt(cos(kx)^2 + cos(ky)^2 + 2 * cos(kx) * cos(ky) * cos(2 * flux / 4)))
+end
+
+function E_piflux2(kx, ky)
+    return 2 * (sqrt(cos(kx / 2)^2 + cos(ky)^2))
+end
+
 if PROGRAM_FILE == @__FILE__
-    Lattice = "SQUARE45"
-    site = [3, 6]
-    idx = area_index(Lattice, site, ([1, 1], [3, 3]))
-    println(nn2idx(Lattice, site, 1))
-    println((idx))
+    using LinearAlgebra
+    # Lattice = "SQUARE45"
+    # site = [3, 6]
+    # idx = area_index(Lattice, site, ([1, 1], [3, 3]))
+    # println(nn2idx(Lattice, site, 1))
+    # println((idx))
 
     Lattice = "SQUARE90"
-    site = [4, 4]
-    idx = area_index(Lattice, site, ([1, 1], [2, 2]))
-    println(nn2idx(Lattice, site, 11))
-    println((idx))
+    site = [50, 50]
+    # idx = area_index(Lattice, site, ([1, 1], [2, 2]))
+    # println(nn2idx(Lattice, site, 11))
+    # println((idx))
+
+    K = nnK_Matrix(Lattice, site, flux=π)
+    println(size(K))
+    E, V = LAPACK.syevd!('V', 'L', K[:, :])
+    println(length(E))
+
+    kx = (collect(1:1:site[1]) / site[1] .- 1 / 2) * 2π
+    ky = (collect(1:1:site[2]) / site[2] .- 1 / 2) * 2π
+    EE = zeros(Float64, length(kx), length(ky))
+    for i in eachindex(kx)
+        for j in eachindex(ky)
+            EE[i, j] = E_piflux(kx[i], ky[j], π)
+            # EE[i, j] = E_piflux2(kx[i], ky[j])
+        end
+    end
+    EE = sort(vec(EE))
+
+    # println(E[div(length(E), 2)+1:end])
+    # println(EE)
+
+    println(norm(E[div(length(E), 2)+1:end] - EE))
 end

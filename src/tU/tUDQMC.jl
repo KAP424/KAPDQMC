@@ -1,5 +1,5 @@
 module tUDQMC
-import ..KAPDQMC: phy_update, Initial_s, ctrl_SCEEicr, ctrl_SCDOPicr
+import ..KAPDQMC: phy_update, Initial_s, ctrl_SCEEicr, ctrl_SCDOPicr, ctrl_EEicr
 
 using ..KAPDQMC: nn2idx, xy_i, i_xy, nnK_Matrix, area_index, nnidx_F
 using ..KAPDQMC: PhyBuffer_, G4Buffer_, SCEEBuffer_, AreaBuffer_, DOPBuffer_
@@ -15,6 +15,7 @@ include("../public/Gupdate.jl")
 include("GreenMatrix.jl")
 include("phy_update.jl")
 include("SCEE.jl")
+include("EEicr.jl")
 include("disorder_operate.jl")
 
 export tU_Hubbard_Para

@@ -1,4 +1,4 @@
-function ctrl_SCEEicr(path::String, model::tU_Hubbard_Para_, index::Vector{Int64}, Sweeps::Int64, λ::Float64, Nλ::Int64, ss::Vector{Matrix{UInt8}}, record)
+function ctrl_EEicr(path::String, model::tU_Hubbard_Para_, index::Vector{Int64}, Sweeps::Int64, λ::Float64, Nλ::Int64, ss::Vector{Matrix{UInt8}}, record)
     ERROR = 1e-6
     global LOCK = ReentrantLock()
     Ns = model.Ns
@@ -24,9 +24,9 @@ function ctrl_SCEEicr(path::String, model::tU_Hubbard_Para_, index::Vector{Int64
         error("Lattice: $(model.Lattice) is not allowed !")
     end
     if model.Θquench == 0.0
-        file = "$(path)/tUSCEE$(name)_t$(model.Ht)U$(model.Hu1)size$(model.site)Δt$(model.Δt)Θ$(model.Θrelax)N$(Nλ)BS$(model.BatchSize).csv"
+        file = "$(path)/tUEE$(name)_t$(model.Ht)U$(model.Hu1)size$(model.site)Δt$(model.Δt)Θ$(model.Θrelax)N$(Nλ)BS$(model.BatchSize).csv"
     else
-        file = "$(path)/tUSCEE$(name)_t$(model.Ht)U$(model.Hu1)_$(model.Hu2)size$(model.site)Δt$(model.Δt)Θ$(model.Θrelax)_$(model.Θquench)N$(Nλ)BS$(model.BatchSize).csv"
+        file = "$(path)/tUEE$(name)_t$(model.Ht)U$(model.Hu1)_$(model.Hu2)size$(model.site)Δt$(model.Δt)Θ$(model.Θrelax)_$(model.Θquench)N$(Nλ)BS$(model.BatchSize).csv"
     end
 
     rng = MersenneTwister(Threads.threadid() + time_ns())
@@ -98,28 +98,25 @@ function ctrl_SCEEicr(path::String, model::tU_Hubbard_Para_, index::Vector{Int64
             WrapKV!(tmpNN, model.eK, model.eKinv, tmpN_, G0t2, "Forward", "R")
 
             #####################################################################
-            # Gt1_, G01_, Gt01_, G0t1_ = G4(model, ss[1], lt, div(model.Nt, 2))
-            # Gt2_, G02_, Gt02_, G0t2_ = G4(model, ss[2], lt, div(model.Nt, 2))
-            # if norm(Gt1 - Gt1_) + norm(Gt2 - Gt2_) + norm(Gt01 - Gt01_) + norm(Gt02 - Gt02_) + norm(G0t1 - G0t1_) + norm(G0t2 - G0t2_) > ERROR
-            #     println(norm(Gt1 - Gt1_), '\n', norm(Gt2 - Gt2_), '\n', norm(Gt01 - Gt01_), '\n', norm(Gt02 - Gt02_), '\n', norm(G0t1 - G0t1_), '\n', norm(G0t2 - G0t2_))
-            #     error("WrapTime=$lt ")
-            # end
-            # GM_A_ = GroverMatrix(G01_[indexA[:], indexA[:]], G02_[indexA[:], indexA[:]])
-            # gmInv_A_ = inv(GM_A_)
-            # GM_B_ = GroverMatrix(G01_[indexB[:], indexB[:]], G02_[indexB[:], indexB[:]])
-            # gmInv_B_ = inv(GM_B_)
-            # detg_A_ = abs2(det(GM_A_))
-            # detg_B_ = abs2(det(GM_B_))
-            # if norm(gmInv_A_ - A.gmInv) + norm(B.gmInv - gmInv_B_) + abs(A.detg - detg_A_) + abs(B.detg - detg_B_) > ERROR
-            #     println(norm(gmInv_A_ - A.gmInv), " ", norm(B.gmInv - gmInv_B_), " ", abs(A.detg - detg_A_), " ", abs(B.detg - detg_B_))
-            #     error("s2:  $lt : WrapTime")
-            # end
+            Gt1_, G01_, Gt01_, G0t1_ = G4(model, ss[1], lt, div(model.Nt, 2))
+            Gt2_, G02_, Gt02_, G0t2_ = G4(model, ss[2], lt, div(model.Nt, 2))
+            if norm(Gt1 - Gt1_) + norm(Gt2 - Gt2_) + norm(Gt01 - Gt01_) + norm(Gt02 - Gt02_) + norm(G0t1 - G0t1_) + norm(G0t2 - G0t2_) > ERROR
+                println(norm(Gt1 - Gt1_), '\n', norm(Gt2 - Gt2_), '\n', norm(Gt01 - Gt01_), '\n', norm(Gt02 - Gt02_), '\n', norm(G0t1 - G0t1_), '\n', norm(G0t2 - G0t2_))
+                error("WrapTime=$lt ")
+            end
+            GM_A_ = GroverMatrix(G01_[index[:], index[:]], G02_[index[:], index[:]])
+            gmInv_A_ = inv(GM_A_)
+            detg_A_ = abs2(det(GM_A_))
+            if norm(gmInv_A_ - A.gmInv) + abs(A.detg - detg_A_) > ERROR
+                println(norm(gmInv_A_ - A.gmInv), " ", abs(A.detg - detg_A_))
+                error("s2:  $lt : WrapTime")
+            end
             #####################################################################
 
-            UpdateSCEELayer!(rng, view(ss[1], :, lt), view(ss[2], :, lt), lt, G1, G2, A, B, model, UPD, SCEE, λ)
+            UpdateEELayer!(rng, view(ss[1], :, lt), view(ss[2], :, lt), lt, G1, G2, A, model, UPD, SCEE, λ)
 
             ##------------------------------------------------------------------------
-            tmpO += (A.detg / B.detg)^(1 / Nλ)
+            tmpO += (A.detg)^(1 / Nλ)
             counter += 1
             ##------------------------------------------------------------------------
 
@@ -154,7 +151,7 @@ function ctrl_SCEEicr(path::String, model::tU_Hubbard_Para_, index::Vector{Int64
                     LAPACK.orgrq!(tmpnN, tau, ns)
                     copyto!(view(BLMs2, :, :, i), tmpnN)
                 end
-                get_ABGM!(G1, G2, A, B, SCEE, model.nodes, idx, "Forward")
+                get_GM!(G1, G2, A, SCEE, model.nodes, idx, "Forward")
             end
 
         end
@@ -164,28 +161,25 @@ function ctrl_SCEEicr(path::String, model::tU_Hubbard_Para_, index::Vector{Int64
         for lt in model.Nt:-1:1
 
             #####################################################################
-            # Gt1_, G01_, Gt01_, G0t1_ = G4(model, ss[1], lt, div(model.Nt, 2))
-            # Gt2_, G02_, Gt02_, G0t2_ = G4(model, ss[2], lt, div(model.Nt, 2))
-            # if norm(Gt1 - Gt1_) + norm(Gt2 - Gt2_) + norm(Gt01 - Gt01_) + norm(Gt02 - Gt02_) + norm(G0t1 - G0t1_) + norm(G0t2 - G0t2_) > ERROR
-            #     println(norm(Gt1 - Gt1_), '\n', norm(Gt2 - Gt2_), '\n', norm(Gt01 - Gt01_), '\n', norm(Gt02 - Gt02_), '\n', norm(G0t1 - G0t1_), '\n', norm(G0t2 - G0t2_))
-            #     error("WrapTime=$lt ")
-            # end
-            # GM_A_ = GroverMatrix(G01_[indexA[:], indexA[:]], G02_[indexA[:], indexA[:]])
-            # gmInv_A_ = inv(GM_A_)
-            # GM_B_ = GroverMatrix(G01_[indexB[:], indexB[:]], G02_[indexB[:], indexB[:]])
-            # gmInv_B_ = inv(GM_B_)
-            # detg_A_ = abs2(det(GM_A_))
-            # detg_B_ = abs2(det(GM_B_))
-            # if norm(gmInv_A_ - A.gmInv) + norm(B.gmInv - gmInv_B_) + abs(A.detg - detg_A_) + abs(B.detg - detg_B_) > ERROR
-            #     println(norm(gmInv_A_ - A.gmInv), " ", norm(B.gmInv - gmInv_B_), " ", abs(A.detg - detg_A_), " ", abs(B.detg - detg_B_))
-            #     error("s2:  $lt : WrapTime")
-            # end
+            Gt1_, G01_, Gt01_, G0t1_ = G4(model, ss[1], lt, div(model.Nt, 2))
+            Gt2_, G02_, Gt02_, G0t2_ = G4(model, ss[2], lt, div(model.Nt, 2))
+            if norm(Gt1 - Gt1_) + norm(Gt2 - Gt2_) + norm(Gt01 - Gt01_) + norm(Gt02 - Gt02_) + norm(G0t1 - G0t1_) + norm(G0t2 - G0t2_) > ERROR
+                println(norm(Gt1 - Gt1_), '\n', norm(Gt2 - Gt2_), '\n', norm(Gt01 - Gt01_), '\n', norm(Gt02 - Gt02_), '\n', norm(G0t1 - G0t1_), '\n', norm(G0t2 - G0t2_))
+                error("WrapTime=$lt ")
+            end
+            GM_A_ = GroverMatrix(G01_[index[:], index[:]], G02_[index[:], index[:]])
+            gmInv_A_ = inv(GM_A_)
+            detg_A_ = abs2(det(GM_A_))
+            if norm(gmInv_A_ - A.gmInv) + abs(A.detg - detg_A_) > ERROR
+                println(norm(gmInv_A_ - A.gmInv), " ", abs(A.detg - detg_A_))
+                error("s2:  $lt : WrapTime")
+            end
             #####################################################################
 
-            UpdateSCEELayer!(rng, view(ss[1], :, lt), view(ss[2], :, lt), lt, G1, G2, A, B, model, UPD, SCEE, λ)
+            UpdateEELayer!(rng, view(ss[1], :, lt), view(ss[2], :, lt), lt, G1, G2, A, model, UPD, SCEE, λ)
 
             ##------------------------------------------------------------------------
-            tmpO += (A.detg / B.detg)^(1 / Nλ)
+            tmpO += (A.detg)^(1 / Nλ)
             counter += 1
             ##------------------------------------------------------------------------
 
@@ -219,7 +213,7 @@ function ctrl_SCEEicr(path::String, model::tU_Hubbard_Para_, index::Vector{Int64
                     LAPACK.orgqr!(tmpNn, tau, ns)
                     copyto!(view(BRMs2, :, :, i), tmpNn)
                 end
-                get_ABGM!(G1, G2, A, B, SCEE, model.nodes, idx, "Backward")
+                get_GM!(G1, G2, A, SCEE, model.nodes, idx, "Backward")
             else
                 @inbounds @simd for iii in 1:Ns
                     @fastmath tmpN[iii] = cis(-model.α[lt] * model.η[ss[1][iii, lt]])
@@ -260,4 +254,44 @@ function get_GM!(G1::G4Buffer_, G2::G4Buffer_, A::AreaBuffer_, SCEE::SCEEBuffer_
     A.detg = abs2(det(A.gmInv))
     LAPACK.getrf!(A.gmInv, A.ipiv)
     LAPACK.getri!(A.gmInv, A.ipiv)
+end
+
+function UpdateEELayer!(rng, s1, s2, lt, G1::G4Buffer_, G2::G4Buffer_, A::AreaBuffer_, model::tU_Hubbard_Para_, UPD::UpdateBuffer_, SCEE::SCEEBuffer_, λ)
+    for i in axes(s1, 1)
+        UPD.subidx = [i]
+
+        # update s1
+        begin
+            sx = rand(rng, model.samplers_dict[s1[i]])
+            p = get_r!(UPD, model.α[lt] * (model.η[sx] - model.η[s1[i]]), G1.Gt)
+            p *= model.γ[sx] / model.γ[s1[i]]
+
+            detTau_A = abs2(get_abTau1!(A, UPD, G2.G0, G1.Gt0, G1.G0t))
+
+            @fastmath p *= (detTau_A)^λ
+            if rand(rng) < p
+                A.detg *= detTau_A
+                GMupdate!(A)
+                G4update!(SCEE, UPD, G1)
+                s1[i] = sx
+            end
+        end
+
+        # update ss[2]
+        begin
+            sx = rand(rng, model.samplers_dict[s2[i]])
+            p = get_r!(UPD, model.α[lt] * (model.η[sx] - model.η[s2[i]]), G2.Gt)
+            p *= model.γ[sx] / model.γ[s2[i]]
+
+            detTau_A = abs2(get_abTau2!(A, UPD, G1.G0, G2.Gt0, G2.G0t))
+
+            @fastmath p *= (detTau_A)^λ
+            if rand(rng) < p
+                A.detg *= detTau_A
+                GMupdate!(A)
+                G4update!(SCEE, UPD, G2)
+                s2[i] = sx
+            end
+        end
+    end
 end

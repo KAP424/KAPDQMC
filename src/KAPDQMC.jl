@@ -13,6 +13,7 @@ export Free_G!, GroverMatrix, GroverMatrix!
 function phy_update end
 function Initial_s end
 function ctrl_SCEEicr end
+function ctrl_EEicr end
 function ctrl_SCDOPicr end
 
 include("tU/tUDQMC.jl")
@@ -25,7 +26,7 @@ include("tUV/tUVDQMC.jl")
 using .tUVDQMC: tUV_Hubbard_Para
 
 export tU_Hubbard_Para, tV_Hubbard_Para, tUV_Hubbard_Para
-export Initial_s, phy_update, ctrl_SCEEicr, ctrl_SCDOPicr
+export Initial_s, phy_update, ctrl_SCEEicr, ctrl_EEicr, ctrl_SCDOPicr
 end
 
 

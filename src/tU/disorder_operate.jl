@@ -44,8 +44,8 @@ function ctrl_SCDOPicr(path::String, model::tU_Hubbard_Para_, alpha::Float64, in
         BMinv_F!(tmpN, tmpNN, view(BMsinv, :, :, idx), model, s, idx)
     end
 
-    transpose!(view(BLMs, :, :, NN), model.Pt)
-    copyto!(view(BRMs, :, :, 1), model.Pt)
+    BLMs[:, :, NN] .= model.Pt'
+    BRMs[:, :, 1] .= model.Pt
 
     for i in 1:NN-1
         mul!(tmpnN, view(BLMs, :, :, NN - i + 1), view(BMs, :, :, NN - i))

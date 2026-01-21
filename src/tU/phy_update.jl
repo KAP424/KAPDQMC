@@ -36,8 +36,8 @@ function phy_update(path::String, model::tU_Hubbard_Para_, s::Array{UInt8,2}, Sw
     Ek = Eu = CDW0 = CDW1 = SDW0 = SDW1 = 0.0
     counter = 0
 
-    copyto!(view(BRs, :, :, 1), model.Pt)
-    transpose!(view(BLs, :, :, NN), model.Pt)
+    BRs[:, :, 1] .= model.Pt
+    BLs[:, :, NN] .= model.Pt'
     for idx in NN-1:-1:1
         BM_F!(tmpN, tmpNN, BM, model, s, idx)
         mul!(tmpnN, view(BLs, :, :, idx + 1), BM)

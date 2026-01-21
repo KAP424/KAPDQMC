@@ -1,4 +1,4 @@
-function ctrl_SCEEicr(path::String, model::tU_Hubbard_Para_, indexA::Vector{Int64}, indexB::Vector{Int64}, Sweeps::Int64, λ::Float64, Nλ::Int64, ss::Vector{Matrix{UInt8}}, record)
+function ctrl_SCEEicr(path::String, model::tU_Hubbard_Para_, index::Vector{Int64}, Sweeps::Int64, λ::Float64, Nλ::Int64, ss::Vector{Matrix{UInt8}}, record)
     ERROR = 1e-6
     global LOCK = ReentrantLock()
     Ns = model.Ns
@@ -8,8 +8,7 @@ function ctrl_SCEEicr(path::String, model::tU_Hubbard_Para_, indexA::Vector{Int6
 
     UPD = UpdateBuffer()
     SCEE = SCEEBuffer(model.Ns)
-    A = AreaBuffer(indexA)
-    B = AreaBuffer(indexB)
+    A = AreaBuffer(index)
     G1 = G4Buffer(model.Ns, NN)
     G2 = G4Buffer(model.Ns, NN)
 
@@ -58,7 +57,6 @@ function ctrl_SCEEicr(path::String, model::tU_Hubbard_Para_, indexA::Vector{Int6
 
     BLMs2[:, :, NN] .= model.Pt'
     BRMs2[:, :, 1] .= model.Pt
-
     for i in 1:NN-1
         mul!(tmpnN, view(BLMs1, :, :, NN - i + 1), view(BMs1, :, :, NN - i))
         LAPACK.gerqf!(tmpnN, tau)
@@ -83,7 +81,7 @@ function ctrl_SCEEicr(path::String, model::tU_Hubbard_Para_, indexA::Vector{Int6
     end
 
     idx = 1
-    get_ABGM!(G1, G2, A, B, SCEE, model.nodes, idx, "Forward")
+    get_GM!(G1, G2, A, SCEE, model.nodes, idx, "Forward")
     for loop in 1:Sweeps
         # println("\n ====== Sweep $loop / $Sweeps ======")
         for lt in 1:model.Nt
@@ -102,13 +100,6 @@ function ctrl_SCEEicr(path::String, model::tU_Hubbard_Para_, indexA::Vector{Int6
             #####################################################################
             # Gt1_, G01_, Gt01_, G0t1_ = G4(model, ss[1], lt, div(model.Nt, 2))
             # Gt2_, G02_, Gt02_, G0t2_ = G4(model, ss[2], lt, div(model.Nt, 2))
-            # Gtt = zeros(ComplexF64, Ns, Ns)
-            # get_G!(SCEE.nn, tmpnN, SCEE.ipiv, view(BLMs1, :, :, idx), view(BRMs1, :, :, idx), Gtt)
-            # WrapKV!(tmpNN, model.eK, model.eKinv, tmpN, Gtt, "Forward", "B")
-            # # println(norm(Gtt - Gt1_))
-            # # # Gτ 和 G4 一致
-            # # Gttt = Gτ(model, ss[1], lt)
-            # # println(norm(Gttt - Gt1_))
             # if norm(Gt1 - Gt1_) + norm(Gt2 - Gt2_) + norm(Gt01 - Gt01_) + norm(Gt02 - Gt02_) + norm(G0t1 - G0t1_) + norm(G0t2 - G0t2_) > ERROR
             #     println(norm(Gt1 - Gt1_), '\n', norm(Gt2 - Gt2_), '\n', norm(Gt01 - Gt01_), '\n', norm(Gt02 - Gt02_), '\n', norm(G0t1 - G0t1_), '\n', norm(G0t2 - G0t2_))
             #     error("WrapTime=$lt ")
@@ -261,64 +252,12 @@ function ctrl_SCEEicr(path::String, model::tU_Hubbard_Para_, indexA::Vector{Int6
     return ss
 end
 
-function get_ABGM!(G1::G4Buffer_, G2::G4Buffer_, A::AreaBuffer_, B::AreaBuffer_, SCEE::SCEEBuffer_, nodes, idx, direction::String="Backward")
+
+function get_GM!(G1::G4Buffer_, G2::G4Buffer_, A::AreaBuffer_, SCEE::SCEEBuffer_, nodes, idx, direction::String="Backward")
     G4!(SCEE, G1, nodes, idx, direction)
     G4!(SCEE, G2, nodes, idx, direction)
     GroverMatrix!(A.gmInv, view(G1.G0, A.index, A.index), view(G2.G0, A.index, A.index))
     A.detg = abs2(det(A.gmInv))
     LAPACK.getrf!(A.gmInv, A.ipiv)
     LAPACK.getri!(A.gmInv, A.ipiv)
-
-    GroverMatrix!(B.gmInv, view(G1.G0, B.index, B.index), view(G2.G0, B.index, B.index))
-    B.detg = abs2(det(B.gmInv))
-    LAPACK.getrf!(B.gmInv, B.ipiv)
-    LAPACK.getri!(B.gmInv, B.ipiv)
-end
-
-function UpdateSCEELayer!(rng, s1, s2, lt, G1::G4Buffer_, G2::G4Buffer_, A::AreaBuffer_, B::AreaBuffer_, model::tU_Hubbard_Para_, UPD::UpdateBuffer_, SCEE::SCEEBuffer_, λ)
-    for i in axes(s1, 1)
-        UPD.subidx = [i]
-
-        # update s1
-        begin
-            sx = rand(rng, model.samplers_dict[s1[i]])
-            p = get_r!(UPD, model.α[lt] * (model.η[sx] - model.η[s1[i]]), G1.Gt)
-            p *= model.γ[sx] / model.γ[s1[i]]
-
-            detTau_A = abs2(get_abTau1!(A, UPD, G2.G0, G1.Gt0, G1.G0t))
-            detTau_B = abs2(get_abTau1!(B, UPD, G2.G0, G1.Gt0, G1.G0t))
-
-            @fastmath p *= (detTau_A)^λ * (detTau_B)^(1 - λ)
-            if rand(rng) < p
-                A.detg *= detTau_A
-                B.detg *= detTau_B
-
-                GMupdate!(A)
-                GMupdate!(B)
-                G4update!(SCEE, UPD, G1)
-                s1[i] = sx
-            end
-        end
-
-        # update ss[2]
-        begin
-            sx = rand(rng, model.samplers_dict[s2[i]])
-            p = get_r!(UPD, model.α[lt] * (model.η[sx] - model.η[s2[i]]), G2.Gt)
-            p *= model.γ[sx] / model.γ[s2[i]]
-
-            detTau_A = abs2(get_abTau2!(A, UPD, G1.G0, G2.Gt0, G2.G0t))
-            detTau_B = abs2(get_abTau2!(B, UPD, G1.G0, G2.Gt0, G2.G0t))
-
-            @fastmath p *= (detTau_A)^λ * (detTau_B)^(1 - λ)
-            if rand(rng) < p
-                A.detg *= detTau_A
-                B.detg *= detTau_B
-
-                GMupdate!(A)
-                GMupdate!(B)
-                G4update!(SCEE, UPD, G2)
-                s2[i] = sx
-            end
-        end
-    end
 end

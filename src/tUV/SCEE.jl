@@ -48,12 +48,11 @@ function ctrl_SCEEicr(path::String, model::tUV_Hubbard_Para_, indexA::Vector{Int
         # @assert norm(view(BMs1,:,:,idx)*view(BMsinv1,:,:,idx)-I(Ns))<1e-8 "BM1 inv error at idx=$idx"
     end
 
-    transpose!(view(BLMs1, :, :, NN), model.Pt)
-    copyto!(view(BRMs1, :, :, 1), model.Pt)
+    BLMs1[:, :, NN] .= model.Pt'
+    BRMs1[:, :, 1] .= model.Pt
 
-    transpose!(view(BLMs2, :, :, NN), model.Pt)
-    copyto!(view(BRMs2, :, :, 1), model.Pt)
-
+    BLMs2[:, :, NN] .= model.Pt'
+    BRMs2[:, :, 1] .= model.Pt
 
     # 没办法优化BL和BR的初始化，只能先全部算出来
     for i in 1:NN-1

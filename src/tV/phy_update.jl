@@ -33,8 +33,8 @@ function phy_update(path::String, model::tV_Hubbard_Para_, s::Array{UInt8,3}, Sw
         Phy.G, Phy.BLs, Phy.BRs, Phy.N, Phy.NN, Phy.nn, Phy.nN, Phy.Nn, Phy.tau, Phy.ipiv, Phy.BM
 
 
-    copyto!(view(BRs, :, :, 1), model.Pt)
-    transpose!(view(BLs, :, :, NN), model.Pt)
+    BRs[:, :, 1] .= model.Pt
+    BLs[:, :, NN] .= model.Pt'
 
     for idx in NN-1:-1:1
         BM_F!(tmpN, tmpNN, BM, model, s, idx)

@@ -51,12 +51,11 @@ function ctrl_SCEEicr(path::String, model::tV_Hubbard_Para_, indexA::Vector{Int6
         # @assert norm(view(BMs1,:,:,idx)*view(BMsinv1,:,:,idx)-I(Ns))<1e-8 "BM1 inv error at idx=$idx"
     end
 
-    transpose!(view(BLMs1, :, :, NN), model.Pt)
-    copyto!(view(BRMs1, :, :, 1), model.Pt)
+    BLMs1[:, :, NN] .= model.Pt'
+    BRMs1[:, :, 1] .= model.Pt
 
-    transpose!(view(BLMs2, :, :, NN), model.Pt)
-    copyto!(view(BRMs2, :, :, 1), model.Pt)
-
+    BLMs2[:, :, NN] .= model.Pt'
+    BRMs2[:, :, 1] .= model.Pt
 
     # 没办法优化BL和BR的初始化，只能先全部算出来
     for i in 1:NN-1
@@ -88,7 +87,7 @@ function ctrl_SCEEicr(path::String, model::tV_Hubbard_Para_, indexA::Vector{Int6
     for loop in 1:Sweeps
         # println("\n ====== Sweep $loop / $Sweeps ======")
         for lt in 1:model.Nt
-            # #####################################################################
+            #####################################################################
             # #     # # println("\n WrapTime check at lt=$lt")
             # Gt1_, G01_, Gt01_, G0t1_ = G4(model, ss[1], lt - 1, div(model.Nt, 2), "Forward")
             # Gt2_, G02_, Gt02_, G0t2_ = G4(model, ss[2], lt - 1, div(model.Nt, 2), "Forward")
@@ -106,7 +105,7 @@ function ctrl_SCEEicr(path::String, model::tV_Hubbard_Para_, indexA::Vector{Int6
             #     println(norm(gmInv_A_ - A.gmInv), " ", norm(B.gmInv - gmInv_B_), " ", abs(A.detg - detg_A_), " ", abs(B.detg - detg_B_))
             #     error("s2:  $lt : WrapTime")
             # end
-            # #####################################################################
+            #####################################################################
 
             WrapK!(tmpNN, G1, model.eK, model.eKinv)
             WrapK!(tmpNN, G2, model.eK, model.eKinv)
@@ -133,52 +132,52 @@ function ctrl_SCEEicr(path::String, model::tV_Hubbard_Para_, indexA::Vector{Int6
 
                 # update
                 UpdateSCEELayer!(rng, j, view(ss[1], :, j, lt), view(ss[2], :, j, lt), lt, G1, G2, A, B, model, UPD, SCEE, λ)
-                # # #####################################################################
-                #     print('-')
-                #     Gt1_,G01_,Gt01_,G0t1_=G4(model,ss[1],lt-1,div(model.Nt,2),"Forward")
-                #     Gt2_,G02_,Gt02_,G0t2_=G4(model,ss[2],lt-1,div(model.Nt,2),"Forward")
-                #     Gt1_=model.eK*Gt1_*model.eKinv
-                #     Gt01_=model.eK*Gt01_
-                #     G0t1_=G0t1_*model.eKinv
-                #     Gt2_=model.eK*Gt2_*model.eKinv
-                #     Gt02_=model.eK*Gt02_
-                #     G0t2_=G0t2_*model.eKinv
+                #####################################################################
+                # print('-')
+                # Gt1_, G01_, Gt01_, G0t1_ = G4(model, ss[1], lt - 1, div(model.Nt, 2), "Forward")
+                # Gt2_, G02_, Gt02_, G0t2_ = G4(model, ss[2], lt - 1, div(model.Nt, 2), "Forward")
+                # Gt1_ = model.eK * Gt1_ * model.eKinv
+                # Gt01_ = model.eK * Gt01_
+                # G0t1_ = G0t1_ * model.eKinv
+                # Gt2_ = model.eK * Gt2_ * model.eKinv
+                # Gt02_ = model.eK * Gt02_
+                # G0t2_ = G0t2_ * model.eKinv
 
-                #     GM_A_=GroverMatrix(G01_[indexA[:],indexA[:]],G02_[indexA[:],indexA[:]])
-                #     gmInv_A_=inv(GM_A_)
-                #     GM_B_=GroverMatrix(G01_[indexB[:],indexB[:]],G02_[indexB[:],indexB[:]])
-                #     gmInv_B_=inv(GM_B_)
-                #     detg_A_=det(GM_A_)
-                #     detg_B_=det(GM_B_)
+                # GM_A_ = GroverMatrix(G01_[indexA[:], indexA[:]], G02_[indexA[:], indexA[:]])
+                # gmInv_A_ = inv(GM_A_)
+                # GM_B_ = GroverMatrix(G01_[indexB[:], indexB[:]], G02_[indexB[:], indexB[:]])
+                # gmInv_B_ = inv(GM_B_)
+                # detg_A_ = det(GM_A_)
+                # detg_B_ = det(GM_B_)
 
-                #     for jj in 3:-1:j
-                #         E=zeros(model.Ns)
-                #         E_=zeros(model.Ns)
-                #         for ii in 1:size(ss[1])[1]
-                #             x,y=model.nnidx[ii,jj]
-                #             E[x]= model.α[lt] * model.η[ss[1][ii,jj,lt]]
-                #             E[y]=-model.α[lt] * model.η[ss[1][ii,jj,lt]]
-                #             E_[x]= model.α[lt] * model.η[ss[2][ii,jj,lt]]
-                #             E_[y]=-model.α[lt] * model.η[ss[2][ii,jj,lt]]
-                #         end
-                #         Gt1_=model.UV[:,:,jj]*Diagonal(exp.(E))*model.UV[:,:,jj] *Gt1_* model.UV[:,:,jj]*Diagonal(exp.(-E))*model.UV[:,:,jj]
-                #         Gt01_=model.UV[:,:,jj]*Diagonal(exp.(E))*model.UV[:,:,jj]*Gt01_
-                #         G0t1_=G0t1_*model.UV[:,:,jj]*Diagonal(exp.(-E))*model.UV[:,:,jj]
-                #         Gt2_=model.UV[:,:,jj]*Diagonal(exp.(E_))*model.UV[:,:,jj] *Gt2_* model.UV[:,:,jj]*Diagonal(exp.(-E_))*model.UV[:,:,jj]
-                #         Gt02_=model.UV[:,:,jj]*Diagonal(exp.(E_))*model.UV[:,:,jj]*Gt02_
-                #         G0t2_=G0t2_*model.UV[:,:,jj]*Diagonal(exp.(-E_))*model.UV[:,:,jj]
+                # for jj in 3:-1:j
+                #     E = zeros(model.Ns)
+                #     E_ = zeros(model.Ns)
+                #     for ii in 1:size(ss[1])[1]
+                #         x, y = model.nnidx[ii, jj]
+                #         E[x] = model.α[lt] * model.η[ss[1][ii, jj, lt]]
+                #         E[y] = -model.α[lt] * model.η[ss[1][ii, jj, lt]]
+                #         E_[x] = model.α[lt] * model.η[ss[2][ii, jj, lt]]
+                #         E_[y] = -model.α[lt] * model.η[ss[2][ii, jj, lt]]
                 #     end
+                #     Gt1_ = model.UV[:, :, jj] * Diagonal(exp.(E)) * model.UV[:, :, jj] * Gt1_ * model.UV[:, :, jj] * Diagonal(exp.(-E)) * model.UV[:, :, jj]
+                #     Gt01_ = model.UV[:, :, jj] * Diagonal(exp.(E)) * model.UV[:, :, jj] * Gt01_
+                #     G0t1_ = G0t1_ * model.UV[:, :, jj] * Diagonal(exp.(-E)) * model.UV[:, :, jj]
+                #     Gt2_ = model.UV[:, :, jj] * Diagonal(exp.(E_)) * model.UV[:, :, jj] * Gt2_ * model.UV[:, :, jj] * Diagonal(exp.(-E_)) * model.UV[:, :, jj]
+                #     Gt02_ = model.UV[:, :, jj] * Diagonal(exp.(E_)) * model.UV[:, :, jj] * Gt02_
+                #     G0t2_ = G0t2_ * model.UV[:, :, jj] * Diagonal(exp.(-E_)) * model.UV[:, :, jj]
+                # end
 
-                #     if norm(Gt1-Gt1_)+norm(G01-G01_)+norm(Gt01-Gt01_)+norm(G0t1-G0t1_)+
-                #         norm(Gt2-Gt2_)+norm(G02-G02_)+norm(Gt02-Gt02_)+norm(G0t2-G0t2_)+
-                #     norm(gmInv_A_-A.gmInv)+norm(B.gmInv-gmInv_B_)+abs(A.detg-detg_A_)+abs(B.detg-detg_B_)>ERROR
+                # if norm(Gt1 - Gt1_) + norm(G01 - G01_) + norm(Gt01 - Gt01_) + norm(G0t1 - G0t1_) +
+                #    norm(Gt2 - Gt2_) + norm(G02 - G02_) + norm(Gt02 - Gt02_) + norm(G0t2 - G0t2_) +
+                #    norm(gmInv_A_ - A.gmInv) + norm(B.gmInv - gmInv_B_) + abs(A.detg - detg_A_) + abs(B.detg - detg_B_) > ERROR
 
-                #         println('\n',norm(Gt1-Gt1_),'\n',norm(G01-G01_),'\n',norm(Gt01-Gt01_),'\n',norm(G0t1-G0t1_))
-                #         println('\n',norm(Gt2-Gt2_),'\n',norm(G02-G02_),'\n',norm(Gt02-Gt02_),'\n',norm(G0t2-G0t2_))
-                #         println(norm(gmInv_A_-A.gmInv)," ",norm(B.gmInv-gmInv_B_)," ",abs(A.detg-detg_A_)," ",abs(B.detg-detg_B_))
-                #         error("s1:  $lt  $j:,,,asdasdasd")
-                #     end
-                # # ######################################################################
+                #     println('\n', norm(Gt1 - Gt1_), '\n', norm(G01 - G01_), '\n', norm(Gt01 - Gt01_), '\n', norm(G0t1 - G0t1_))
+                #     println('\n', norm(Gt2 - Gt2_), '\n', norm(G02 - G02_), '\n', norm(Gt02 - Gt02_), '\n', norm(G0t2 - G0t2_))
+                #     println(norm(gmInv_A_ - A.gmInv), " ", norm(B.gmInv - gmInv_B_), " ", abs(A.detg - detg_A_), " ", abs(B.detg - detg_B_))
+                #     error("s1:  $lt  $j:,,,asdasdasd")
+                # end
+                ######################################################################
             end
 
             ##------------------------------------------------------------------------

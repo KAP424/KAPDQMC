@@ -63,6 +63,7 @@ function tU_Hubbard_Para(; Ht, Hu1, Hu2, Δt, Θrelax, Θquench, Lattice::String
     eK = V * Diagonal(exp.(-Δt .* E)) * V'
     HalfeKinv = V * Diagonal(exp.(Δt .* E ./ 2)) * V'
     eKinv = V * Diagonal(exp.(Δt .* E)) * V'
+    @assert norm(eK * eKinv - I(size(eK, 1))) < 1e-10 "eK*eKinv does not equal identity!"
 
     Pt = zeros(ComplexF64, Ns, div(Ns, 2))  # 预分配 Pt
     if Initial == "H0"

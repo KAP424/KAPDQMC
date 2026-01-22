@@ -5,19 +5,34 @@
 Only work for two-dimensional binary lattices
     convert (x,y) coordinate to even index
 """
-function xy_i(site::Vector{Int64}, x::Int64, y::Int64)::Int64
-    if 0 > x > site[1] || 0 > y > site[2]
-        error("Error : Out of Lattice Range!")
+function xy_i(Lattice::String, site::Vector{Int64}, x::Int64, y::Int64)::Int64
+    if Lattice == "SQUARE90" || Lattice == "HoneyComb120" || Lattice == "HoneyComb60"
+        if 0 > x > site[1] || 0 > y > site[2]
+            error("Error : Out of Lattice Range!")
+        end
+        return 2 * (x + (y - 1) * site[1])
+    elseif Lattice == "SQUARE45"
+        if 0 > x > site[1] || 0 > y > site[2]
+            error("Error : Out of Lattice Range!")
+        end
+        return x + (y - 1) * site[1]
+    else
+        error("Lattice: $(Lattice) is not allowed !")
     end
-    return 2 * (x + (y - 1) * site[1])
 end
 """
 Only work for two-dimensional binary lattices
     convert odd/even index to (x,y) coordinate
 """
-function i_xy(site::Vector{Int64}, i::Int64)
-    j = Int(ceil(i / 2))
-    return mod1(j, site[1]), Int(ceil(j / site[1]))
+function i_xy(Lattice::String, site::Vector{Int64}, i::Int64)
+    if Lattice == "SQUARE90" || Lattice == "HoneyComb120" || Lattice == "HoneyComb60"
+        j = Int(ceil(i / 2))
+        return mod1(j, site[1]), Int(ceil(j / site[1]))
+    elseif Lattice == "SQUARE45"
+        return mod1(i, site[1]), Int(ceil(i / site[1]))
+    else
+        error("Lattice: $(Lattice) is not allowed !")
+    end
 end
 
 
@@ -76,43 +91,36 @@ function nn2idx(Lattice::String, site::Vector{Int64}, idx::Int64)
         nn = [mod1(idx - 1, site[1]), mod1(idx + 1, site[1])]
         return nn
     end
-    x, y = i_xy(site, idx)
+    x, y = i_xy(Lattice, site, idx)
     if Lattice == "SQUARE90"
         nn = zeros(Int, 4)
         if mod(idx, 2) == 1
-            nn[1] = idx + 1     # down
-            nn[2] = xy_i(site, mod1(x - 1, site[1]), mod1(y - 1, site[2]))  #up
-            nn[3] = xy_i(site, x, mod1(y - 1, site[2]))
-            nn[4] = xy_i(site, mod1(x - 1, site[1]), y)
+            nn[1] = xy_i(Lattice, site, mod1(x - 1, site[1]), mod1(y - 1, site[2]))  #up
+            nn[2] = idx + 1     # down
+            nn[3] = xy_i(Lattice, site, mod1(x - 1, site[1]), y) #left
+            nn[4] = xy_i(Lattice, site, x, mod1(y - 1, site[2])) #right
         else
-            nn[1] = xy_i(site, mod1(x + 1, site[1]), y) - 1
-            nn[2] = xy_i(site, x, mod1(y + 1, site[2])) - 1
-            nn[3] = idx - 1     # up
-            nn[4] = xy_i(site, mod1(x + 1, site[1]), mod1(y + 1, site[2])) - 1  #down
+            nn[1] = idx - 1     # up
+            nn[2] = xy_i(Lattice, site, mod1(x + 1, site[1]), mod1(y + 1, site[2])) - 1  #down
+            nn[3] = xy_i(Lattice, site, x, mod1(y + 1, site[2])) - 1 #left
+            nn[4] = xy_i(Lattice, site, mod1(x + 1, site[1]), y) - 1 #right
         end
     elseif Lattice == "SQUARE45"
         nn = zeros(Int, 4)
-        if mod(idx, 2) == 1
-            nn[1] = xy_i(site, mod1(x - 1, site[1]), y) #left
-            nn[2] = idx + 1     #right
-            nn[3] = xy_i(site, mod1(x - 1, site[1]), mod1(y + 1, site[2]))  #up
-            nn[4] = xy_i(site, x, mod1(y - 1, site[2])) #down
-        else
-            nn[1] = xy_i(site, x, mod1(y + 1, site[2])) - 1 #up
-            nn[2] = xy_i(site, mod1(x + 1, site[1]), mod1(y - 1, site[2])) - 1 #down
-            nn[3] = idx - 1 #left
-            nn[4] = xy_i(site, mod1(x + 1, site[1]), mod1(y, site[2])) - 1  #right
-        end
+        nn[1] = xy_i(Lattice, site, x, mod1(y + 1, site[2]))    #up
+        nn[2] = xy_i(Lattice, site, x, mod1(y - 1, site[2]))    #down
+        nn[3] = xy_i(Lattice, site, mod1(x - 1, site[1]), y)    #left
+        nn[4] = xy_i(Lattice, site, mod1(x + 1, site[1]), y)    #right
     elseif Lattice == "HoneyComb120"
         nn = zeros(Int, 3)
         if mod(idx, 2) == 1
             nn[1] = idx + 1
-            nn[2] = xy_i(site, mod1(x + 1, site[1]), y)
-            nn[3] = xy_i(site, x, mod1(y - 1, site[2]))
+            nn[2] = xy_i(Lattice, site, mod1(x + 1, site[1]), y)
+            nn[3] = xy_i(Lattice, site, x, mod1(y - 1, site[2]))
         else
             nn[1] = idx - 1
-            nn[2] = xy_i(site, x, mod1(y + 1, site[2])) - 1
-            nn[3] = xy_i(site, mod1(x - 1, site[1]), y) - 1
+            nn[2] = xy_i(Lattice, site, x, mod1(y + 1, site[2])) - 1
+            nn[3] = xy_i(Lattice, site, mod1(x - 1, site[1]), y) - 1
         end
 
     elseif Lattice == "HoneyComb60"
@@ -141,28 +149,42 @@ function nnK_Matrix(Lattice::String, site::Vector{Int64}; t=(1.0, 1.0, 1.0), flu
     flux1 = cis(flux / 4)
     flux2 = cis(-flux / 4)
 
-    Ns = prod(site) * 2
+    if Lattice == "SQUARE45"
+        Ns = prod(site)
+    else
+        Ns = prod(site) * 2
+    end
     K = zeros(ComplexF64, Ns, Ns)
     if occursin("SQUARE", Lattice)
         for i in 1:Ns
             nnidx = nn2idx(Lattice, site, i)
-            # if mod(i, 2) == 1
-            #     K[i, nnidx[1]] = -1
-            #     K[i, nnidx[2]] = 1
-            #     K[i, nnidx[3]] = 1
-            #     K[i, nnidx[4]] = 1
-            # else
-            #     K[i, nnidx[1]] = 1
-            #     K[i, nnidx[2]] = 1
-            #     K[i, nnidx[3]] = -1
-            #     K[i, nnidx[4]] = 1
-            # end
-            K[i, nnidx[1]] = flux1
-            K[i, nnidx[2]] = flux1
-            K[i, nnidx[3]] = flux2
-            K[i, nnidx[4]] = flux2
+            if Lattice == "SQUARE90"
+                if mod(i, 2) == 1
+                    K[i, nnidx[1]] = flux1
+                    K[i, nnidx[2]] = flux1
+                    K[i, nnidx[3]] = flux2
+                    K[i, nnidx[4]] = flux2
+                else
+                    K[i, nnidx[1]] = flux2
+                    K[i, nnidx[2]] = flux2
+                    K[i, nnidx[3]] = flux1
+                    K[i, nnidx[4]] = flux1
+                end
+            elseif Lattice == "SQUARE45"
+                x, y = i_xy(Lattice, site, i)
+                if mod(x + y, 2) == 1
+                    K[i, nnidx[1]] = flux1
+                    K[i, nnidx[2]] = flux1
+                    K[i, nnidx[3]] = flux2
+                    K[i, nnidx[4]] = flux2
+                else
+                    K[i, nnidx[1]] = flux2
+                    K[i, nnidx[2]] = flux2
+                    K[i, nnidx[3]] = flux1
+                    K[i, nnidx[4]] = flux1
+                end
+            end
         end
-
     elseif occursin("HoneyComb", Lattice)
         for i in 1:Ns
             nnidx = nn2idx(Lattice, site, i)
@@ -183,40 +205,10 @@ function area_index(Lattice::String, site::Vector{Int64}, area::Tuple{Vector{Int
     if Lattice == "SQUARE45"
         counter = 1
         index = zeros(Int64, prod(area[2] - area[1] + [1, 1]))
-        Nx, Ny = area[2] - area[1] + [1, 1]
-        if Nx > 2 * site[1] || Ny > site[2]
-            error("Error : Out of Lattice Range!")
-        end
-        start = xy_i(site, area[1][1], area[1][2]) - 1
-        typeS = "A"
-        type = "A"
-        count = 1
-        index[count] = start
-        for y in 1:Ny
-            point = copy(start)
-            for x in 1:Nx-1
-                if type == "A"
-                    point = nn2idx(Lattice, site, point)[2]  # right
-                    type = "B"
-                elseif type == "B"
-                    point = nn2idx(Lattice, site, point)[4]  # right
-                    type = "A"
-                end
-                count += 1
-                index[count] = point
-            end
-            if y != Ny
-                if typeS == "A"
-                    start = nn2idx(Lattice, site, start)[3]  # up
-                    typeS = "B"
-                    type = "B"
-                elseif typeS == "B"
-                    start = nn2idx(Lattice, site, start)[1]  # up
-                    typeS = "A"
-                    type = "A"
-                end
-                count += 1
-                index[count] = start
+        for ly in area[1][2]:area[2][2]
+            for lx in area[1][1]:area[2][1]
+                index[counter] = xy_i(Lattice, site, lx, ly)
+                counter += 1
             end
         end
         return index
@@ -225,7 +217,7 @@ function area_index(Lattice::String, site::Vector{Int64}, area::Tuple{Vector{Int
         index = zeros(Int64, 2 * prod(area[2] - area[1] + [1, 1]))
         for lx in area[1][1]:area[2][1]
             for ly in area[1][2]:area[2][2]
-                index[counter] = xy_i(site, lx, ly) - 1
+                index[counter] = xy_i(Lattice, site, lx, ly) - 1
                 index[counter+1] = index[counter] + 1
                 counter += 2
             end
@@ -236,10 +228,9 @@ function area_index(Lattice::String, site::Vector{Int64}, area::Tuple{Vector{Int
         if area[1][1] == -1
             if Lattice == "HoneyComb60"
                 println("zigzag")
-                index = collect(4:2:xy_i(site, L - 1, 1))
-
+                index = collect(4:2:xy_i(Lattice, site, L - 1, 1))
                 for i in 2:div(2 * L, 3)
-                    index = vcat(collect(xy_i(site, 2, i)-1:1:xy_i(site, L - i, i)), index)
+                    index = vcat(collect(xy_i(Lattice, site, 2, i)-1:1:xy_i(Lattice, site, L - i, i)), index)
                 end
                 return index
             else
@@ -251,10 +242,10 @@ function area_index(Lattice::String, site::Vector{Int64}, area::Tuple{Vector{Int
                 index = Vector{Int64}()
                 println("beared")
                 for i in 2:div(2 * L, 3)
-                    index = vcat(xy_i(site, 2, i) - 1, index)
-                    index = vcat(collect(xy_i(site, 3, i)-1:1:xy_i(site, L - i + 1, i)-1), index)
+                    index = vcat(xy_i(Lattice, site, 2, i) - 1, index)
+                    index = vcat(collect(xy_i(Lattice, site, 3, i)-1:1:xy_i(Lattice, site, L - i + 1, i)-1), index)
                 end
-                index = vcat(xy_i(site, 2, div(2 * L, 3) + 1) - 1, index)
+                index = vcat(xy_i(Lattice, site, 2, div(2 * L, 3) + 1) - 1, index)
                 return index
             else
                 error("beared Only for HoneyComb60°")
@@ -264,7 +255,7 @@ function area_index(Lattice::String, site::Vector{Int64}, area::Tuple{Vector{Int
             index = zeros(Int64, 2 * prod(area[2] - area[1] + [1, 1]))
             for lx in area[1][1]:area[2][1]
                 for ly in area[1][2]:area[2][2]
-                    index[counter] = xy_i(site, lx, ly) - 1
+                    index[counter] = xy_i(Lattice, site, lx, ly) - 1
                     index[counter+1] = index[counter] + 1
                     counter += 2
                 end
@@ -282,39 +273,39 @@ next nearest neighbor indices
 function nnn2idx(Lattice::String, site::Vector{Int64}, idx::Int64)
     if Lattice == "HoneyComb120"
         nnn = zeros(Int, 6)
-        x, y = i_xy(site, idx)
+        x, y = i_xy(Lattice, site, idx)
         if mod(idx, 2) == 1
-            nnn[1] = xy_i(site, x, mod1(y + 1, site[2])) - 1
-            nnn[2] = xy_i(site, mod1(x + 1, site[1]), y) - 1
-            nnn[3] = xy_i(site, mod1(x + 1, site[1]), mod1(y + 1, site[2])) - 1
-            nnn[4] = xy_i(site, mod1(x - 1, site[1]), y) - 1
-            nnn[5] = xy_i(site, mod1(x - 1, site[1]), mod1(y - 1, site[2])) - 1
-            nnn[6] = xy_i(site, x, mod1(y - 1, site[2])) - 1
+            nnn[1] = xy_i(Lattice, site, x, mod1(y + 1, site[2])) - 1
+            nnn[2] = xy_i(Lattice, site, mod1(x + 1, site[1]), y) - 1
+            nnn[3] = xy_i(Lattice, site, mod1(x + 1, site[1]), mod1(y + 1, site[2])) - 1
+            nnn[4] = xy_i(Lattice, site, mod1(x - 1, site[1]), y) - 1
+            nnn[5] = xy_i(Lattice, site, mod1(x - 1, site[1]), mod1(y - 1, site[2])) - 1
+            nnn[6] = xy_i(Lattice, site, x, mod1(y - 1, site[2])) - 1
         else
-            nnn[1] = xy_i(site, x, mod1(y + 1, site[2]))
-            nnn[2] = xy_i(site, mod1(x + 1, site[1]), y)
-            nnn[3] = xy_i(site, mod1(x + 1, site[1]), mod1(y + 1, site[2]))
-            nnn[4] = xy_i(site, mod1(x - 1, site[1]), y)
-            nnn[5] = xy_i(site, mod1(x - 1, site[1]), mod1(y - 1, site[2]))
-            nnn[6] = xy_i(site, x, mod1(y - 1, site[2]))
+            nnn[1] = xy_i(Lattice, site, x, mod1(y + 1, site[2]))
+            nnn[2] = xy_i(Lattice, site, mod1(x + 1, site[1]), y)
+            nnn[3] = xy_i(Lattice, site, mod1(x + 1, site[1]), mod1(y + 1, site[2]))
+            nnn[4] = xy_i(Lattice, site, mod1(x - 1, site[1]), y)
+            nnn[5] = xy_i(Lattice, site, mod1(x - 1, site[1]), mod1(y - 1, site[2]))
+            nnn[6] = xy_i(Lattice, site, x, mod1(y - 1, site[2]))
         end
     elseif Lattice == "HoneyComb60"
         nnn = zeros(Int, 3)
-        x, y = i_xy(site, idx)
+        x, y = i_xy(Lattice, site, idx)
         if mod(idx, 2) == 1
-            nnn[1] = xy_i(site, x, mod1(y + 1, site[2])) - 1
-            nnn[2] = xy_i(site, mod1(x + 1, site[1]), y) - 1
-            nnn[3] = xy_i(site, mod1(x + 1, site[1]), mod1(y - 1, site[2])) - 1
-            nnn[4] = xy_i(site, mod1(x - 1, site[1]), y) - 1
-            nnn[5] = xy_i(site, mod1(x - 1, site[1]), mod1(y + 1, site[2])) - 1
-            nnn[6] = xy_i(site, x, mod1(y - 1, site[2])) - 1
+            nnn[1] = xy_i(Lattice, site, x, mod1(y + 1, site[2])) - 1
+            nnn[2] = xy_i(Lattice, site, mod1(x + 1, site[1]), y) - 1
+            nnn[3] = xy_i(Lattice, site, mod1(x + 1, site[1]), mod1(y - 1, site[2])) - 1
+            nnn[4] = xy_i(Lattice, site, mod1(x - 1, site[1]), y) - 1
+            nnn[5] = xy_i(Lattice, site, mod1(x - 1, site[1]), mod1(y + 1, site[2])) - 1
+            nnn[6] = xy_i(Lattice, site, x, mod1(y - 1, site[2])) - 1
         else
-            nnn[1] = xy_i(site, x, mod1(y + 1, site[2]))
-            nnn[2] = xy_i(site, mod1(x + 1, site[1]), y)
-            nnn[3] = xy_i(site, mod1(x + 1, site[1]), mod1(y - 1, site[2]))
-            nnn[4] = xy_i(site, mod1(x - 1, site[1]), y)
-            nnn[5] = xy_i(site, mod1(x - 1, site[1]), mod1(y + 1, site[2]))
-            nnn[6] = xy_i(site, x, mod1(y - 1, site[2]))
+            nnn[1] = xy_i(Lattice, site, x, mod1(y + 1, site[2]))
+            nnn[2] = xy_i(Lattice, site, mod1(x + 1, site[1]), y)
+            nnn[3] = xy_i(Lattice, site, mod1(x + 1, site[1]), mod1(y - 1, site[2]))
+            nnn[4] = xy_i(Lattice, site, mod1(x - 1, site[1]), y)
+            nnn[5] = xy_i(Lattice, site, mod1(x - 1, site[1]), mod1(y + 1, site[2]))
+            nnn[6] = xy_i(Lattice, site, x, mod1(y - 1, site[2]))
         end
     else
         error("Lattice: $(Lattice) is not allowed !")
@@ -348,27 +339,27 @@ the third nearest neighbor indices
 function n3n2idx(Lattice::String, site::Vector{Int64}, idx::Int64)
     if Lattice == "HoneyComb120"
         n3n = zeros(Int, 3)
-        x, y = i_xy(site, idx)
+        x, y = i_xy(Lattice, site, idx)
         if mod(idx, 2) == 1
-            n3n[1] = xy_i(site, mod1(x + 1, site[1]), mod1(y + 1, site[2]))
-            n3n[2] = xy_i(site, mod1(x + 1, site[1]), mod1(y - 1, site[2]))
-            n3n[3] = xy_i(site, mod1(x - 1, site[1]), mod1(y - 1, site[2]))
+            n3n[1] = xy_i(Lattice, site, mod1(x + 1, site[1]), mod1(y + 1, site[2]))
+            n3n[2] = xy_i(Lattice, site, mod1(x + 1, site[1]), mod1(y - 1, site[2]))
+            n3n[3] = xy_i(Lattice, site, mod1(x - 1, site[1]), mod1(y - 1, site[2]))
         else
-            n3n[1] = xy_i(site, mod1(x + 1, site[1]), mod1(y + 1, site[2])) - 1
-            n3n[2] = xy_i(site, mod1(x - 1, site[1]), mod1(y - 1, site[2])) - 1
-            n3n[3] = xy_i(site, mod1(x - 1, site[1]), mod1(y + 1, site[2])) - 1
+            n3n[1] = xy_i(Lattice, site, mod1(x + 1, site[1]), mod1(y + 1, site[2])) - 1
+            n3n[2] = xy_i(Lattice, site, mod1(x - 1, site[1]), mod1(y - 1, site[2])) - 1
+            n3n[3] = xy_i(Lattice, site, mod1(x - 1, site[1]), mod1(y + 1, site[2])) - 1
         end
     elseif Lattice == "HoneyComb60"
         n3n = zeros(Int, 3)
-        x, y = i_xy(site, idx)
+        x, y = i_xy(Lattice, site, idx)
         if mod(idx, 2) == 1
-            n3n[1] = xy_i(site, mod1(x + 1, site[1]), y)
-            n3n[2] = xy_i(site, mod1(x - 1, site[1]), y)
-            n3n[3] = xy_i(site, mod1(x + 1, site[1]), mod1(y - 2, site[2]))
+            n3n[1] = xy_i(Lattice, site, mod1(x + 1, site[1]), y)
+            n3n[2] = xy_i(Lattice, site, mod1(x - 1, site[1]), y)
+            n3n[3] = xy_i(Lattice, site, mod1(x + 1, site[1]), mod1(y - 2, site[2]))
         else
-            n3n[1] = xy_i(site, mod1(x - 1, site[1]), y) - 1
-            n3n[2] = xy_i(site, mod1(x + 1, site[1]), y) - 1
-            n3n[3] = xy_i(site, mod1(x - 1, site[1]), mod1(y + 2, site[2])) - 1
+            n3n[1] = xy_i(Lattice, site, mod1(x - 1, site[1]), y) - 1
+            n3n[2] = xy_i(Lattice, site, mod1(x + 1, site[1]), y) - 1
+            n3n[3] = xy_i(Lattice, site, mod1(x - 1, site[1]), mod1(y + 2, site[2])) - 1
         end
     else
         error("Lattice: $(Lattice) is not allowed !")
@@ -405,13 +396,15 @@ end
 if PROGRAM_FILE == @__FILE__
     using LinearAlgebra
     Lattice = "SQUARE45"
-    site = [3, 6]
+    site = [6, 6]
     idx = area_index(Lattice, site, ([1, 1], [6, 3]))
+    K = nnK_Matrix(Lattice, site, flux=π)
     # println(nn2idx(Lattice, site, 1))
     println((idx))
 
-    # Lattice = "SQUARE90"
-    # site = [4, 4]
+    Lattice = "SQUARE90"
+    site = [4, 4]
+    K = nnK_Matrix(Lattice, site, flux=π)
     # idx = area_index(Lattice, site, ([1, 1], [4, 2]))
     # println(nn2idx(Lattice, site, 11))
     # println((idx))

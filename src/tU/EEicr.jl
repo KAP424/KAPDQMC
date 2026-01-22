@@ -98,19 +98,19 @@ function ctrl_EEicr(path::String, model::tU_Hubbard_Para_, index::Vector{Int64},
             WrapKV!(tmpNN, model.eK, model.eKinv, tmpN_, G0t2, "Forward", "R")
 
             #####################################################################
-            Gt1_, G01_, Gt01_, G0t1_ = G4(model, ss[1], lt, div(model.Nt, 2))
-            Gt2_, G02_, Gt02_, G0t2_ = G4(model, ss[2], lt, div(model.Nt, 2))
-            if norm(Gt1 - Gt1_) + norm(Gt2 - Gt2_) + norm(Gt01 - Gt01_) + norm(Gt02 - Gt02_) + norm(G0t1 - G0t1_) + norm(G0t2 - G0t2_) > ERROR
-                println(norm(Gt1 - Gt1_), '\n', norm(Gt2 - Gt2_), '\n', norm(Gt01 - Gt01_), '\n', norm(Gt02 - Gt02_), '\n', norm(G0t1 - G0t1_), '\n', norm(G0t2 - G0t2_))
-                error("WrapTime=$lt ")
-            end
-            GM_A_ = GroverMatrix(G01_[index[:], index[:]], G02_[index[:], index[:]])
-            gmInv_A_ = inv(GM_A_)
-            detg_A_ = abs2(det(GM_A_))
-            if norm(gmInv_A_ - A.gmInv) + abs(A.detg - detg_A_) > ERROR
-                println(norm(gmInv_A_ - A.gmInv), " ", abs(A.detg - detg_A_))
-                error("s2:  $lt : WrapTime")
-            end
+            # Gt1_, G01_, Gt01_, G0t1_ = G4(model, ss[1], lt, div(model.Nt, 2))
+            # Gt2_, G02_, Gt02_, G0t2_ = G4(model, ss[2], lt, div(model.Nt, 2))
+            # if norm(Gt1 - Gt1_) + norm(Gt2 - Gt2_) + norm(Gt01 - Gt01_) + norm(Gt02 - Gt02_) + norm(G0t1 - G0t1_) + norm(G0t2 - G0t2_) > ERROR
+            #     println(norm(Gt1 - Gt1_), '\n', norm(Gt2 - Gt2_), '\n', norm(Gt01 - Gt01_), '\n', norm(Gt02 - Gt02_), '\n', norm(G0t1 - G0t1_), '\n', norm(G0t2 - G0t2_))
+            #     error("WrapTime=$lt ")
+            # end
+            # GM_A_ = GroverMatrix(G01_[index[:], index[:]], G02_[index[:], index[:]])
+            # gmInv_A_ = inv(GM_A_)
+            # detg_A_ = abs2(det(GM_A_))
+            # if norm(gmInv_A_ - A.gmInv) + abs(A.detg - detg_A_) > ERROR
+            #     println(norm(gmInv_A_ - A.gmInv), " ", abs(A.detg - detg_A_))
+            #     error("s2:  $lt : WrapTime")
+            # end
             #####################################################################
 
             UpdateEELayer!(rng, view(ss[1], :, lt), view(ss[2], :, lt), lt, G1, G2, A, model, UPD, SCEE, λ)
@@ -161,19 +161,19 @@ function ctrl_EEicr(path::String, model::tU_Hubbard_Para_, index::Vector{Int64},
         for lt in model.Nt:-1:1
 
             #####################################################################
-            Gt1_, G01_, Gt01_, G0t1_ = G4(model, ss[1], lt, div(model.Nt, 2))
-            Gt2_, G02_, Gt02_, G0t2_ = G4(model, ss[2], lt, div(model.Nt, 2))
-            if norm(Gt1 - Gt1_) + norm(Gt2 - Gt2_) + norm(Gt01 - Gt01_) + norm(Gt02 - Gt02_) + norm(G0t1 - G0t1_) + norm(G0t2 - G0t2_) > ERROR
-                println(norm(Gt1 - Gt1_), '\n', norm(Gt2 - Gt2_), '\n', norm(Gt01 - Gt01_), '\n', norm(Gt02 - Gt02_), '\n', norm(G0t1 - G0t1_), '\n', norm(G0t2 - G0t2_))
-                error("WrapTime=$lt ")
-            end
-            GM_A_ = GroverMatrix(G01_[index[:], index[:]], G02_[index[:], index[:]])
-            gmInv_A_ = inv(GM_A_)
-            detg_A_ = abs2(det(GM_A_))
-            if norm(gmInv_A_ - A.gmInv) + abs(A.detg - detg_A_) > ERROR
-                println(norm(gmInv_A_ - A.gmInv), " ", abs(A.detg - detg_A_))
-                error("s2:  $lt : WrapTime")
-            end
+            # Gt1_, G01_, Gt01_, G0t1_ = G4(model, ss[1], lt, div(model.Nt, 2))
+            # Gt2_, G02_, Gt02_, G0t2_ = G4(model, ss[2], lt, div(model.Nt, 2))
+            # if norm(Gt1 - Gt1_) + norm(Gt2 - Gt2_) + norm(Gt01 - Gt01_) + norm(Gt02 - Gt02_) + norm(G0t1 - G0t1_) + norm(G0t2 - G0t2_) > ERROR
+            #     println(norm(Gt1 - Gt1_), '\n', norm(Gt2 - Gt2_), '\n', norm(Gt01 - Gt01_), '\n', norm(Gt02 - Gt02_), '\n', norm(G0t1 - G0t1_), '\n', norm(G0t2 - G0t2_))
+            #     error("WrapTime=$lt ")
+            # end
+            # GM_A_ = GroverMatrix(G01_[index[:], index[:]], G02_[index[:], index[:]])
+            # gmInv_A_ = inv(GM_A_)
+            # detg_A_ = abs2(det(GM_A_))
+            # if norm(gmInv_A_ - A.gmInv) + abs(A.detg - detg_A_) > ERROR
+            #     println(norm(gmInv_A_ - A.gmInv), " ", abs(A.detg - detg_A_))
+            #     error("s2:  $lt : WrapTime")
+            # end
             #####################################################################
 
             UpdateEELayer!(rng, view(ss[1], :, lt), view(ss[2], :, lt), lt, G1, G2, A, model, UPD, SCEE, λ)

@@ -38,42 +38,7 @@ function tV_Hubbard_Para(; Ht, Hv1, Hv2, Δt, Θrelax, Θquench, Lattice::String
     eKinv = V * Diagonal(exp.(Δt .* E)) * V'
 
     Pt = zeros(Float64, Ns, div(Ns, 2))
-    if Initial == "H0"
-        KK = K[:, :]
-        # 交错化学势，打开gap，去兼并
-        μ = 1e-3
-        if occursin("HoneyComb", Lattice)
-            KK += μ * Diagonal(repeat([-1, 1], div(Ns, 2)))
-        elseif Lattice == "SQUARE"
-            for i in 1:Ns
-                x, y = i_xy(Lattice, site, i)
-                KK[i, i] += μ * (-1)^(x + y)
-            end
-        end
-
-        # hopping 扰动，避免能级简并
-        # KK[KK .!= 0] .+=( rand(size(KK)...) * 1e-3)[KK.!= 0]
-        # KK=(KK+KK')./2
-
-        E, V = LAPACK.syevd!('V', 'L', KK[:, :])
-        Pt .= V[:, div(Ns, 2)+1:end]
-    elseif Initial == "V"
-        if occursin("HoneyComb", Lattice)
-            for i in 1:div(Ns, 2)
-                Pt[i*2-1, i] = 1
-            end
-        else
-            count = 1
-            for i in 1:Ns
-                x, y = i_xy(Lattice, site, i)
-                if (x + y) % 2 == 1
-                    Pt[i, count] = 1
-                    count += 1
-                end
-            end
-        end
-    end
-    Pt = HalfeKinv * Pt
+    Initial_Pt!(Lattice, Initial, Pt, K)
 
     Nt = round(Int, 2 * (Θrelax + Θquench) / Δt)
     if (Θquench > 0) & (abs(Hv1 - Hv2) > 0)

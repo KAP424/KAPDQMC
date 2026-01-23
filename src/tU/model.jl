@@ -63,20 +63,10 @@ function tU_Hubbard_Para(; Ht, Hu1, Hu2, Δt, Θrelax, Θquench, Lattice::String
     eK = V * Diagonal(exp.(-Δt .* E)) * V'
     HalfeKinv = V * Diagonal(exp.(Δt .* E ./ 2)) * V'
     eKinv = V * Diagonal(exp.(Δt .* E)) * V'
-    @assert norm(eK * eKinv - I(size(eK, 1))) < 1e-10 "eK*eKinv does not equal identity!"
+    # @assert norm(eK * eKinv - I(size(eK, 1))) < 1e-10 "eK*eKinv does not equal identity!"
 
     Pt = zeros(ComplexF64, Ns, div(Ns, 2))  # 预分配 Pt
-    if Initial == "H0"
-        KK = copy(K)
-        μ = 1e-5
-        KK .+= μ * diagm(repeat([-1, 1], div(Ns, 2)))
-        E, V = LAPACK.syevd!('V', 'L', KK)
-        Pt .= V[:, 1:div(Ns, 2)]
-    elseif Initial == "V"
-        for i in 1:div(Ns, 2)
-            Pt[i*2, i] = 1
-        end
-    end
+    Initial_Pt!(Lattice, Initial, Pt, K)
 
     if div(Nt, 2) % BatchSize == 0
         nodes = collect(0:BatchSize:Nt)

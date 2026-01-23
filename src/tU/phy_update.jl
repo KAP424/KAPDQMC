@@ -1,6 +1,7 @@
 
 
 function phy_update(path::String, model::tU_Hubbard_Para_, s::Array{UInt8,2}, Sweeps::Int64, record::Bool=false)
+    model.Pt = model.HalfeKinv * model.Pt
     global LOCK = ReentrantLock()
     ERROR = 1e-6
 

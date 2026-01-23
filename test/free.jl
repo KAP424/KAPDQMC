@@ -32,7 +32,7 @@ for i in eachindex(L)
     # HalfHalf
     indexB = area_index(Lattice, site, ([1, 1], [div(L[i], 2), div(L[i], 2)]))
 
-    K = nnK_Matrix(Lattice, site, flux=flux)
+    K = nnK_Matrix(Lattice, site, flux=flux,opt="y")
 
     E, V = LAPACK.syevd!('V', 'L', copy(K))
     eK = V * Diagonal(exp.(-Δt .* E)) * V'

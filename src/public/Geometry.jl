@@ -1,5 +1,34 @@
-# 120° basis
-# PBC, OBC is not allowed
+# Only PBC, OBC is not allowed
+
+function Initial_Pt!(Lattice, Initial, Pt, K)
+    Ns = size(K, 1)
+    if Initial == "H0"
+        KK = copy(K)
+        μ = 1e-5
+        KK .+= μ * diagm(repeat([-1, 1], div(Ns, 2)))
+        E, V = LAPACK.syevd!('V', 'L', KK)
+        Pt .= V[:, 1:div(Ns, 2)]
+    elseif Initial == "V"
+        if Lattice == "SQUARE90" || Lattice == "HoneyComb120" || Lattice == "HoneyComb60"
+            for i in 1:div(Ns, 2)
+                Pt[i*2, i] = 1
+            end
+        elseif Lattice == "SQUARE45"
+            count = 1
+            for i in 1:Ns
+                x, y = i_xy(Lattice, site, i)
+                if (x + y) % 2 == 1
+                    Pt[i, count] = 1
+                    count += 1
+                    if count > div(Ns, 2)
+                        break
+                    end
+                end
+            end
+        end
+    end
+
+end
 
 """
 Only work for two-dimensional binary lattices
@@ -127,13 +156,13 @@ function nn2idx(Lattice::String, site::Vector{Int64}, idx::Int64)
         nn = zeros(Int, 3)
         if mod(idx, 2) == 1
             nn[1] = idx + 1
-            nn[2] = xy_i(site, mod1(x + 1, site[1]), mod1(y - 1, site[2]))
-            nn[3] = xy_i(site, x, mod1(y - 1, site[2]))
+            nn[2] = xy_i(Lattice, site, mod1(x + 1, site[1]), mod1(y - 1, site[2]))
+            nn[3] = xy_i(Lattice, site, x, mod1(y - 1, site[2]))
 
         else
             nn[1] = idx - 1
-            nn[2] = xy_i(site, x, mod1(y + 1, site[2])) - 1
-            nn[3] = xy_i(site, mod1(x - 1, site[1]), mod1(y + 1, site[2])) - 1
+            nn[2] = xy_i(Lattice, site, x, mod1(y + 1, site[2])) - 1
+            nn[3] = xy_i(Lattice, site, mod1(x - 1, site[1]), mod1(y + 1, site[2])) - 1
         end
     else
         error("Lattice: $(Lattice) is not allowed !")
@@ -142,10 +171,11 @@ function nn2idx(Lattice::String, site::Vector{Int64}, idx::Int64)
 end
 
 """
-flux only work for SQUARE
+flux only work for SQUARE: 
+    two options: "xy" and "y" for flux choices
 anisotropy t only work for HoneyComb
 """
-function nnK_Matrix(Lattice::String, site::Vector{Int64}; t=(1.0, 1.0, 1.0), flux=0.0)  # t for three directions
+function nnK_Matrix(Lattice::String, site::Vector{Int64}; t=(1.0, 1.0, 1.0), flux=0.0, opt="xy")  # t for three directions
     flux1 = cis(flux / 4)
     flux2 = cis(-flux / 4)
 
@@ -159,16 +189,30 @@ function nnK_Matrix(Lattice::String, site::Vector{Int64}; t=(1.0, 1.0, 1.0), flu
         for i in 1:Ns
             nnidx = nn2idx(Lattice, site, i)
             if Lattice == "SQUARE90"
-                if mod(i, 2) == 1
-                    K[i, nnidx[1]] = flux1
-                    K[i, nnidx[2]] = flux1
-                    K[i, nnidx[3]] = flux2
-                    K[i, nnidx[4]] = flux2
-                else
-                    K[i, nnidx[1]] = flux2
-                    K[i, nnidx[2]] = flux2
-                    K[i, nnidx[3]] = flux1
-                    K[i, nnidx[4]] = flux1
+                if opt == "xy"
+                    if mod(i, 2) == 1
+                        K[i, nnidx[1]] = flux1
+                        K[i, nnidx[2]] = flux1
+                        K[i, nnidx[3]] = flux2
+                        K[i, nnidx[4]] = flux2
+                    else
+                        K[i, nnidx[1]] = flux2
+                        K[i, nnidx[2]] = flux2
+                        K[i, nnidx[3]] = flux1
+                        K[i, nnidx[4]] = flux1
+                    end
+                elseif opt == "y"
+                    if mod(i, 2) == 1
+                        K[i, nnidx[1]] = cis(flux)
+                        K[i, nnidx[2]] = 1.0
+                        K[i, nnidx[3]] = 1.0
+                        K[i, nnidx[4]] = 1.0
+                    else
+                        K[i, nnidx[1]] = 1.0
+                        K[i, nnidx[2]] = cis(flux)
+                        K[i, nnidx[3]] = 1.0
+                        K[i, nnidx[4]] = 1.0
+                    end
                 end
             elseif Lattice == "SQUARE45"
                 x, y = i_xy(Lattice, site, i)

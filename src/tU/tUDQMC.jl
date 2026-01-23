@@ -1,7 +1,7 @@
 module tUDQMC
 import ..KAPDQMC: phy_update, Initial_s, ctrl_SCEEicr, ctrl_SCDOPicr, ctrl_EEicr
 
-using ..KAPDQMC: nn2idx, xy_i, i_xy, nnK_Matrix, area_index, nnidx_F
+using ..KAPDQMC: nn2idx, xy_i, i_xy, nnK_Matrix, area_index, nnidx_F, Initial_Pt!
 using ..KAPDQMC: PhyBuffer_, G4Buffer_, SCEEBuffer_, AreaBuffer_, DOPBuffer_
 using ..KAPDQMC: inv22!, GroverMatrix, GroverMatrix!
 

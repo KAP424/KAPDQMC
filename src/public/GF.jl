@@ -50,7 +50,7 @@ function Free_G!(t1, t2, Lattice, site, Initial, filling_num)
         else
             count = 1
             for i in 1:Ns
-                x, y = i_xy(site, i)
+                x, y = i_xy(Lattice, site, i)
                 if (x + y) % 2 == 1
                     Pt[i, count] = 1
                     count += 1

@@ -2,7 +2,7 @@ module KAPDQMC
 using LinearAlgebra, LinearAlgebra.BLAS, LinearAlgebra.LAPACK
 
 include("public/Geometry.jl")
-export area_index, nnK_Matrix, i_xy, xy_i, nnn2idx, nnnK_Matrix, n3n2idx, n3nK_Matrix
+export area_index, nnK_Matrix, i_xy, xy_i, nnn2idx, nnnK_Matrix, n3n2idx, n3nK_Matrix,Initial_Pt!
 
 include("public/Buffer.jl")
 

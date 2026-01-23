@@ -42,7 +42,7 @@ using LinearAlgebra
     # # ------------------------------------------------------------------------------------------------------------------------------------------------------
 
     model = tU_Hubbard_Para(Ht=1.0, Hu1=4.0, Hu2=4.0, Θrelax=1.0, Θquench=0.0, Lattice="SQUARE45",
-        site=[3, 6], Δt=0.1, BatchSize=5, Initial="H0", flux=π)
+        site=[4, 6], Δt=0.1, BatchSize=5, Initial="H0", flux=π)
 
     L = model.site[2]
     indexA = area_index(model.Lattice, model.site, ([1, 1], [L, div(L, 2)]))

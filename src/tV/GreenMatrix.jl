@@ -73,7 +73,7 @@ end
         r ≡ inv(r) ⋅ ̇Δ .
     ------------------------------------------------------------------------------
 """
-function get_r!(UPD::UpdateBuffer_, Δs::Float64, Gt::Matrix{Float64})
+function get_r!(UPD::UpdateBuffer_, Δs::Float64, Gt)
     UPD.tmp2 .= Δs .* [1.0, -1.0]
     UPD.tmp2 .= exp.(UPD.tmp2) .- 1
     mul!(UPD.r, UPD.uv, Diagonal(UPD.tmp2))
@@ -97,7 +97,7 @@ end
     Only wrap interaction part 
     ------------------------------------------------------------------------------
 """
-function WrapV!(tmpNN::Matrix{Float64}, G::Matrix{Float64}, D::Vector{Float64}, UV::SubArray{Float64,2,Array{Float64,3}}, LR::String)
+function WrapV!(tmpNN, G, D, UV::SubArray{Float64,2,Array{Float64,3}}, LR::String)
     if LR == "L"
         mul!(tmpNN, UV, G)
         mul!(G, Diagonal(D), tmpNN)
@@ -122,9 +122,9 @@ end
 # Below is just used for debug
 
 "equal time Green function"
-function Gτ(model::tV_Hubbard_Para_, s::Array{UInt8,3}, τ::Int64)::Array{Float64,2}
-    BL::Array{Float64,2} = model.Pt'[:, :]
-    BR::Array{Float64,2} = model.Pt[:, :]
+function Gτ(model::tV_Hubbard_Para_, s::Array{UInt8,3}, τ::Int64)::Array{ComplexF64,2}
+    BL::Array{ComplexF64,2} = model.Pt'[:, :]
+    BR::Array{ComplexF64,2} = model.Pt[:, :]
 
     E = zeros(model.Ns)
     counter = 0
@@ -198,13 +198,12 @@ end
 "displaced Green function G(τ₁,τ₂)"
 function G4(model::tV_Hubbard_Para_, s::Array{UInt8,3}, τ1::Int64, τ2::Int64, direction="Forward")
     if τ1 > τ2
-        BBs = zeros(Float64, cld(τ1 - τ2, model.BatchSize), model.Ns, model.Ns)
-        BBsInv = zeros(Float64, size(BBs))
+        BBs = zeros(ComplexF64, cld(τ1 - τ2, model.BatchSize), model.Ns, model.Ns)
+        BBsInv = zeros(ComplexF64, size(BBs))
 
-        UL = zeros(Float64, 1 + size(BBs)[1], div(model.Ns, 2), model.Ns)
-        UR = zeros(Float64, size(UL)[1], model.Ns, div(model.Ns, 2))
-        G = zeros(Float64, size(UL)[1], model.Ns, model.Ns)
-
+        UL = zeros(ComplexF64, 1 + size(BBs)[1], div(model.Ns, 2), model.Ns)
+        UR = zeros(ComplexF64, size(UL)[1], model.Ns, div(model.Ns, 2))
+        G = zeros(ComplexF64, size(UL)[1], model.Ns, model.Ns)
         UL[end, :, :] = model.Pt'[:, :]
         UR[1, :, :] = model.Pt[:, :]
 

@@ -1,7 +1,6 @@
 function ctrl_SCEEicr(path::String, model::tV_Hubbard_Para_, indexA::Vector{Int64}, indexB::Vector{Int64}, Sweeps::Int64, λ::Float64, Nλ::Int64, ss::Vector{Array{UInt8,3}}, record)
     global LOCK = ReentrantLock()
-    ERROR = 1e-6
-    # WrapErr = Matrix{Float64}(undef, model.Ns, model.Ns)
+    ERROR = 1e-5
 
     NN = length(model.nodes)
     Θidx = div(NN, 2) + 1
@@ -217,41 +216,12 @@ function ctrl_SCEEicr(path::String, model::tV_Hubbard_Para_, indexA::Vector{Int6
                     copyto!(view(BLMs2, :, :, i), tmpnN)
                 end
 
-                #####################################################################
-                # if lt != div(model.Nt,2)
-                #     copyto!(WrapErr, Gt1)
-                #     axpy!(1.0, Gt2, WrapErr)
-                #     axpy!(1.0, G01, WrapErr)
-                #     axpy!(1.0, G02, WrapErr)
-                #     axpy!(1.0, Gt01, WrapErr)
-                #     axpy!(1.0, Gt02, WrapErr)
-                #     axpy!(1.0, G0t1, WrapErr)
-                #     axpy!(1.0, G0t2, WrapErr)
-                # end
-                #####################################################################
                 get_ABGM!(G1, G2, A, B, SCEE, model.nodes, idx, "Forward")
-                #####################################################################
-                # if lt != div(model.Nt,2)
-                #     axpy!(-1.0, Gt1, WrapErr)
-                #     axpy!(-1.0, Gt2, WrapErr)
-                #     axpy!(-1.0, G01, WrapErr)
-                #     axpy!(-1.0, G02, WrapErr)
-                #     axpy!(-1.0, Gt01, WrapErr)
-                #     axpy!(-1.0, Gt02, WrapErr)
-                #     axpy!(-1.0, G0t1, WrapErr)
-                #     axpy!(-1.0, G0t2, WrapErr)
-                #     tmp=norm(WrapErr)
-                #     if tmp>ERROR
-                #         println("Forward WrapTime error for at lt=$lt : $tmp")
-                #     end
-                # end
-                #####################################################################
             end
         end
 
 
         for lt in model.Nt:-1:1
-
             #####################################################################
             # Gt1_, G01_, Gt01_, G0t1_ = G4(model, ss[1], lt, div(model.Nt, 2), "Backward")
             # Gt2_, G02_, Gt02_, G0t2_ = G4(model, ss[2], lt, div(model.Nt, 2), "Backward")
@@ -275,50 +245,50 @@ function ctrl_SCEEicr(path::String, model::tV_Hubbard_Para_, indexA::Vector{Int6
                 # update
                 UpdateSCEELayer!(rng, j, view(ss[1], :, j, lt), view(ss[2], :, j, lt), lt, G1, G2, A, B, model, UPD, SCEE, λ)
                 # #####################################################################
-                #     print('*')
-                #     Gt1_,G01_,Gt01_,G0t1_=G4(model,ss[1],lt-1,div(model.Nt,2),"Forward")
-                #     Gt2_,G02_,Gt02_,G0t2_=G4(model,ss[2],lt-1,div(model.Nt,2),"Forward")
-                #     Gt1_=model.eK*Gt1_*model.eKinv
-                #     Gt01_=model.eK*Gt01_
-                #     G0t1_=G0t1_*model.eKinv
-                #     Gt2_=model.eK*Gt2_*model.eKinv
-                #     Gt02_=model.eK*Gt02_
-                #     G0t2_=G0t2_*model.eKinv
+                # print('*')
+                # Gt1_, G01_, Gt01_, G0t1_ = G4(model, ss[1], lt - 1, div(model.Nt, 2), "Forward")
+                # Gt2_, G02_, Gt02_, G0t2_ = G4(model, ss[2], lt - 1, div(model.Nt, 2), "Forward")
+                # Gt1_ = model.eK * Gt1_ * model.eKinv
+                # Gt01_ = model.eK * Gt01_
+                # G0t1_ = G0t1_ * model.eKinv
+                # Gt2_ = model.eK * Gt2_ * model.eKinv
+                # Gt02_ = model.eK * Gt02_
+                # G0t2_ = G0t2_ * model.eKinv
 
-                #     GM_A_=GroverMatrix(G01_[indexA[:],indexA[:]],G02_[indexA[:],indexA[:]])
-                #     gmInv_A_=inv(GM_A_)
-                #     GM_B_=GroverMatrix(G01_[indexB[:],indexB[:]],G02_[indexB[:],indexB[:]])
-                #     gmInv_B_=inv(GM_B_)
-                #     detg_A_=det(GM_A_)
-                #     detg_B_=det(GM_B_)
+                # GM_A_ = GroverMatrix(G01_[indexA[:], indexA[:]], G02_[indexA[:], indexA[:]])
+                # gmInv_A_ = inv(GM_A_)
+                # GM_B_ = GroverMatrix(G01_[indexB[:], indexB[:]], G02_[indexB[:], indexB[:]])
+                # gmInv_B_ = inv(GM_B_)
+                # detg_A_ = det(GM_A_)
+                # detg_B_ = det(GM_B_)
 
-                #     for jj in 3:-1:j
-                #         E=zeros(model.Ns)
-                #         E_=zeros(model.Ns)
-                #         for ii in 1:size(ss[1])[1]
-                #             x,y=model.nnidx[ii,jj]
-                #             E[x]= model.α[lt] * model.η[ss[1][ii,jj,lt]]
-                #             E[y]=-model.α[lt] * model.η[ss[1][ii,jj,lt]]
-                #             E_[x]= model.α[lt] * model.η[ss[2][ii,jj,lt]]
-                #             E_[y]=-model.α[lt] * model.η[ss[2][ii,jj,lt]]
-                #         end
-                #         Gt1_=model.UV[:,:,jj]*Diagonal(exp.(E))*model.UV[:,:,jj] *Gt1_* model.UV[:,:,jj]*Diagonal(exp.(-E))*model.UV[:,:,jj]
-                #         Gt01_=model.UV[:,:,jj]*Diagonal(exp.(E))*model.UV[:,:,jj]*Gt01_
-                #         G0t1_=G0t1_*model.UV[:,:,jj]*Diagonal(exp.(-E))*model.UV[:,:,jj]
-                #         Gt2_=model.UV[:,:,jj]*Diagonal(exp.(E_))*model.UV[:,:,jj] *Gt2_* model.UV[:,:,jj]*Diagonal(exp.(-E_))*model.UV[:,:,jj]
-                #         Gt02_=model.UV[:,:,jj]*Diagonal(exp.(E_))*model.UV[:,:,jj]*Gt02_
-                #         G0t2_=G0t2_*model.UV[:,:,jj]*Diagonal(exp.(-E_))*model.UV[:,:,jj]
+                # for jj in 3:-1:j
+                #     E = zeros(model.Ns)
+                #     E_ = zeros(model.Ns)
+                #     for ii in 1:size(ss[1])[1]
+                #         x, y = model.nnidx[ii, jj]
+                #         E[x] = model.α[lt] * model.η[ss[1][ii, jj, lt]]
+                #         E[y] = -model.α[lt] * model.η[ss[1][ii, jj, lt]]
+                #         E_[x] = model.α[lt] * model.η[ss[2][ii, jj, lt]]
+                #         E_[y] = -model.α[lt] * model.η[ss[2][ii, jj, lt]]
                 #     end
+                #     Gt1_ = model.UV[:, :, jj] * Diagonal(exp.(E)) * model.UV[:, :, jj] * Gt1_ * model.UV[:, :, jj] * Diagonal(exp.(-E)) * model.UV[:, :, jj]
+                #     Gt01_ = model.UV[:, :, jj] * Diagonal(exp.(E)) * model.UV[:, :, jj] * Gt01_
+                #     G0t1_ = G0t1_ * model.UV[:, :, jj] * Diagonal(exp.(-E)) * model.UV[:, :, jj]
+                #     Gt2_ = model.UV[:, :, jj] * Diagonal(exp.(E_)) * model.UV[:, :, jj] * Gt2_ * model.UV[:, :, jj] * Diagonal(exp.(-E_)) * model.UV[:, :, jj]
+                #     Gt02_ = model.UV[:, :, jj] * Diagonal(exp.(E_)) * model.UV[:, :, jj] * Gt02_
+                #     G0t2_ = G0t2_ * model.UV[:, :, jj] * Diagonal(exp.(-E_)) * model.UV[:, :, jj]
+                # end
 
-                #     if norm(Gt1-Gt1_)+norm(G01-G01_)+norm(Gt01-Gt01_)+norm(G0t1-G0t1_)+
-                #         norm(Gt2-Gt2_)+norm(G02-G02_)+norm(Gt02-Gt02_)+norm(G0t2-G0t2_)+
-                #     norm(gmInv_A_-A.gmInv)+norm(B.gmInv-gmInv_B_)+abs(A.detg-detg_A_)+abs(B.detg-detg_B_)>ERROR
+                # if norm(Gt1 - Gt1_) + norm(G01 - G01_) + norm(Gt01 - Gt01_) + norm(G0t1 - G0t1_) +
+                #    norm(Gt2 - Gt2_) + norm(G02 - G02_) + norm(Gt02 - Gt02_) + norm(G0t2 - G0t2_) +
+                #    norm(gmInv_A_ - A.gmInv) + norm(B.gmInv - gmInv_B_) + abs(A.detg - detg_A_) + abs(B.detg - detg_B_) > ERROR
 
-                #         println('\n',norm(Gt1-Gt1_),'\n',norm(G01-G01_),'\n',norm(Gt01-Gt01_),'\n',norm(G0t1-G0t1_))
-                #         println('\n',norm(Gt2-Gt2_),'\n',norm(G02-G02_),'\n',norm(Gt02-Gt02_),'\n',norm(G0t2-G0t2_))
-                #         println(norm(gmInv_A_-A.gmInv)," ",norm(B.gmInv-gmInv_B_)," ",abs(A.detg-detg_A_)," ",abs(B.detg-detg_B_))
-                #         error("s1:  $lt  $j:,,,asdasdasd")
-                #     end
+                #     println('\n', norm(Gt1 - Gt1_), '\n', norm(G01 - G01_), '\n', norm(Gt01 - Gt01_), '\n', norm(G0t1 - G0t1_))
+                #     println('\n', norm(Gt2 - Gt2_), '\n', norm(G02 - G02_), '\n', norm(Gt02 - Gt02_), '\n', norm(G0t2 - G0t2_))
+                #     println(norm(gmInv_A_ - A.gmInv), " ", norm(B.gmInv - gmInv_B_), " ", abs(A.detg - detg_A_), " ", abs(B.detg - detg_B_))
+                #     error("s1:  $lt  $j:,,,asdasdasd")
+                # end
                 # ######################################################################
 
                 for i in axes(ss[1], 1)
@@ -379,38 +349,7 @@ function ctrl_SCEEicr(path::String, model::tV_Hubbard_Para_, indexA::Vector{Int6
                     LAPACK.orgqr!(tmpNn, tau)
                     copyto!(view(BRMs2, :, :, i), tmpNn)
                 end
-
-                # #####################################################################
-                #     if lt-1 != div(model.Nt,2)
-                #         copyto!(WrapErr, Gt1)
-                #         axpy!(1.0, Gt2, WrapErr)
-                #         axpy!(1.0, G01, WrapErr)
-                #         axpy!(1.0, G02, WrapErr)
-                #         axpy!(1.0, Gt01, WrapErr)
-                #         axpy!(1.0, Gt02, WrapErr)
-                #         axpy!(1.0, G0t1, WrapErr)
-                #         axpy!(1.0, G0t2, WrapErr)
-                #     end
-                # #####################################################################
-
                 get_ABGM!(G1, G2, A, B, SCEE, model.nodes, idx, "Backward")
-
-                # #####################################################################
-                #     if lt-1 != div(model.Nt,2)
-                #         axpy!(-1.0, Gt1, WrapErr)
-                #         axpy!(-1.0, Gt2, WrapErr)
-                #         axpy!(-1.0, G01, WrapErr)
-                #         axpy!(-1.0, G02, WrapErr)
-                #         axpy!(-1.0, Gt01, WrapErr)
-                #         axpy!(-1.0, Gt02, WrapErr)
-                #         axpy!(-1.0, G0t1, WrapErr)
-                #         axpy!(-1.0, G0t2, WrapErr)
-                #         tmp=norm(WrapErr)
-                #         if tmp>ERROR
-                #             println("Backward WrapTime error for at lt=$(lt-1) : $tmp")
-                #         end
-                #     end
-                # #####################################################################
             end
         end
 
@@ -431,8 +370,37 @@ function ctrl_SCEEicr(path::String, model::tV_Hubbard_Para_, indexA::Vector{Int6
 end
 
 function get_ABGM!(G1::G4Buffer_, G2::G4Buffer_, A::AreaBuffer_, B::AreaBuffer_, SCEE::SCEEBuffer_, nodes, idx, direction::String="Backward")
+    #####################################################################
+    # WrapErr = zeros(ComplexF64, size(G1.Gt))
+    # if idx != div(length(nodes), 2)
+    #     copyto!(WrapErr, G1.Gt)
+    #     axpy!(1.0, G1.G0, WrapErr)
+    #     axpy!(1.0, G1.G0t, WrapErr)
+    #     axpy!(1.0, G1.Gt0, WrapErr)
+    #     axpy!(1.0, G2.Gt, WrapErr)
+    #     axpy!(1.0, G2.G0, WrapErr)
+    #     axpy!(1.0, G2.G0t, WrapErr)
+    #     axpy!(1.0, G2.Gt0, WrapErr)
+    # end
+    #####################################################################
     G4!(SCEE, G1, nodes, idx, direction)
     G4!(SCEE, G2, nodes, idx, direction)
+    #####################################################################
+    # if idx != div(length(nodes), 2)
+    #     axpy!(-1.0, G1.Gt, WrapErr)
+    #     axpy!(-1.0, G2.Gt, WrapErr)
+    #     axpy!(-1.0, G1.G0, WrapErr)
+    #     axpy!(-1.0, G2.G0, WrapErr)
+    #     axpy!(-1.0, G1.G0t, WrapErr)
+    #     axpy!(-1.0, G2.G0t, WrapErr)
+    #     axpy!(-1.0, G1.Gt0, WrapErr)
+    #     axpy!(-1.0, G2.Gt0, WrapErr)
+    #     tmp = norm(WrapErr)
+    #     if tmp > 1e-6
+    #         println("Forward WrapTime error for at node: $idx")
+    #     end
+    # end
+    #####################################################################
     GroverMatrix!(A.gmInv, view(G1.G0, A.index, A.index), view(G2.G0, A.index, A.index))
     A.detg = det(A.gmInv)
     LAPACK.getrf!(A.gmInv, A.ipiv)
@@ -459,7 +427,10 @@ function UpdateSCEELayer!(rng, j, s1, s2, lt, G1::G4Buffer_, G2::G4Buffer_, A::A
             detTau_B = get_abTau1!(B, UPD, G2.G0, G1.Gt0, G1.G0t)
 
             @fastmath p *= (detTau_A)^λ * (detTau_B)^(1 - λ)
-            if rand(rng) < p
+            if imag(p) > 1e-6 || real(p) < 0
+                println("Warning: negative p=$p at lt=$lt, j=$j, i=$i")
+            end
+            if rand(rng) < abs(p)
                 A.detg *= detTau_A
                 B.detg *= detTau_B
 
@@ -478,9 +449,12 @@ function UpdateSCEELayer!(rng, j, s1, s2, lt, G1::G4Buffer_, G2::G4Buffer_, A::A
 
             detTau_A = get_abTau2!(A, UPD, G1.G0, G2.Gt0, G2.G0t)
             detTau_B = get_abTau2!(B, UPD, G1.G0, G2.Gt0, G2.G0t)
-
+            
             @fastmath p *= (detTau_A)^λ * (detTau_B)^(1 - λ)
-            if rand(rng) < p
+            if imag(p) > 1e-6 || real(p) < 0
+                println("Warning: negative p=$p at lt=$lt, j=$j, i=$i")
+            end
+            if rand(rng) < abs(p)
                 A.detg *= detTau_A
                 B.detg *= detTau_B
 
@@ -506,7 +480,7 @@ end
     Only wrap Kinetic part forward direction  
     ------------------------------------------------------------------------------
 """
-function WrapK!(tmpNN::Matrix{Float64}, G::G4Buffer_, eK::Matrix{Float64}, eKinv::Matrix{Float64})
+function WrapK!(tmpNN, G::G4Buffer_, eK, eKinv)
     mul!(tmpNN, G.Gt, eKinv)
     mul!(G.Gt, eK, tmpNN)
 

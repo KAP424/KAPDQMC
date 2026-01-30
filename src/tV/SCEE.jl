@@ -12,8 +12,10 @@ function ctrl_SCEEicr(path::String, model::tV_Hubbard_Para_, indexA::Vector{Int6
     G1 = G4Buffer(model.Ns, NN)
     G2 = G4Buffer(model.Ns, NN)
 
-    name = if model.Lattice == "SQUARE"
-        "□"
+    name = if model.Lattice == "SQUARE90"
+        "□90"
+    elseif model.Lattice == "SQUARE45"
+        "□45"
     elseif model.Lattice == "HoneyComb60"
         "HC"
     elseif model.Lattice == "HoneyComb120"
@@ -449,7 +451,7 @@ function UpdateSCEELayer!(rng, j, s1, s2, lt, G1::G4Buffer_, G2::G4Buffer_, A::A
 
             detTau_A = get_abTau2!(A, UPD, G1.G0, G2.Gt0, G2.G0t)
             detTau_B = get_abTau2!(B, UPD, G1.G0, G2.Gt0, G2.G0t)
-            
+
             @fastmath p *= (detTau_A)^λ * (detTau_B)^(1 - λ)
             if imag(p) > 1e-6 || real(p) < 0
                 println("Warning: negative p=$p at lt=$lt, j=$j, i=$i")

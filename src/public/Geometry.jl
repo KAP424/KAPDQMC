@@ -66,7 +66,7 @@ end
 
 
 function nnidx_F(Lattice, site)
-    if Lattice == "SQUARE"
+    if Lattice == "SQUARE45"
         Ns = prod(site)
         if length(site) == 1
             nnidx = fill((0, 0), div(Ns, 2), 2)
@@ -94,9 +94,9 @@ function nnidx_F(Lattice, site)
                 end
             end
         end
-    elseif occursin("HoneyComb", Lattice)
+    elseif Lattice == "SQUARE90" || occursin("HoneyComb", Lattice)
         Ns = prod(site) * 2
-        nnidx = fill((0, 0), div(Ns, 2), 3)
+        nnidx = fill((0, 0), div(Ns, 2), length(nn2idx(Lattice, site, 1)))
         count = 1
         for i in 1:2:Ns
             nn = nn2idx(Lattice, site, i)

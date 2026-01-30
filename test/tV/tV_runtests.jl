@@ -31,7 +31,7 @@ using LinearAlgebra
 
     # ------------------------------------------------------------------------------------------------------------------------------------------------------
 
-    model = tV_Hubbard_Para(Ht=1.0, Hv1=1.0, Hv2=1.0, Θrelax=3.0, Θquench=0.0, Lattice="HoneyComb120",
+    model = tV_Hubbard_Para(Ht=1.0, Hv1=1.0, Hv2=1.0, Θrelax=3.0, Θquench=0.0, Lattice="SQUARE90",
         site=[3, 3], Δt=0.05, BatchSize=5, Initial="H0", flux=0)
 
     s = Initial_s(model, rng)

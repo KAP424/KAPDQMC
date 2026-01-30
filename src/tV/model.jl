@@ -233,6 +233,7 @@ if abspath(PROGRAM_FILE) == @__FILE__
     end
 end
 
+# undeveloped 
 function DOPBuffer(alpha, index)
     nA = length(index)
     return DOPBuffer_(

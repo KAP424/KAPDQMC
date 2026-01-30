@@ -1,5 +1,5 @@
 function phy_update(path::String, model::tUV_Hubbard_Para_, s::Array{UInt8,2}, Sweeps::Int64, record::Bool)
-    model.Pt = model.HalfeKinv * model.Pt
+    Pt_sym = model.HalfeKinv * model.Pt
     @assert size(s, 1) == length(model.nnidx) "size of s $(size(s)) and nnidx $(length(model.nnidx)) not match!"
     @assert size(s, 2) == model.Nt "size of s and nnidx not match!"
     global LOCK = ReentrantLock()
@@ -42,8 +42,8 @@ function phy_update(path::String, model::tUV_Hubbard_Para_, s::Array{UInt8,2}, S
     tmpnn = Phy.nn
     tmpnN = Phy.nN
 
-    BRs[:, :, 1] .= model.Pt
-    BLs[:, :, NN] .= model.Pt'
+    BRs[:, :, 1] .= Pt_sym
+    BLs[:, :, NN] .= Pt_sym'
 
     for idx in NN-1:-1:1
         BM_F!(tmpN, tmpNN, BM, model, s, idx)

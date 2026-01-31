@@ -1,3 +1,5 @@
+# turn off symmetric HS decomposition when debuging
+
 function phy_update(path::String, model::tV_Hubbard_Para_, s::Array{UInt8,3}, Sweeps::Int64, record::Bool)
     T = model.flux == 0.0 ? Float64 : ComplexF64
     global LOCK = ReentrantLock()
@@ -25,7 +27,6 @@ function phy_update(path::String, model::tV_Hubbard_Para_, s::Array{UInt8,3}, Sw
 
     G, BLs, BRs, tmpN, tmpNN, tmpnn, tmpnN, tmpNn, tau, ipiv, BM =
         Phy.G, Phy.BLs, Phy.BRs, Phy.N, Phy.NN, Phy.nn, Phy.nN, Phy.Nn, Phy.tau, Phy.ipiv, Phy.BM
-
 
     BRs[:, :, 1] .= model.HalfeKinv * model.Pt
     BLs[:, :, NN] .= model.Pt' * model.HalfeK

@@ -1,4 +1,4 @@
-
+# turn off symmetric HS decomposition when debuging
 
 function phy_update(path::String, model::tU_Hubbard_Para_, s::Array{UInt8,2}, Sweeps::Int64, record::Bool=false)
     global LOCK = ReentrantLock()

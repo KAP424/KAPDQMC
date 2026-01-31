@@ -1,3 +1,5 @@
+# turn off symmetric HS decomposition when debuging
+
 function phy_update(path::String, model::tUV_Hubbard_Para_, s::Array{UInt8,2}, Sweeps::Int64, record::Bool)
     @assert size(s, 1) == length(model.nnidx) "size of s $(size(s)) and nnidx $(length(model.nnidx)) not match!"
     @assert size(s, 2) == model.Nt "size of s and nnidx not match!"

@@ -1,7 +1,6 @@
 
 
 function phy_update(path::String, model::tU_Hubbard_Para_, s::Array{UInt8,2}, Sweeps::Int64, record::Bool=false)
-    Pt_sym = model.HalfeKinv * model.Pt
     global LOCK = ReentrantLock()
     ERROR = 1e-6
 
@@ -28,8 +27,8 @@ function phy_update(path::String, model::tU_Hubbard_Para_, s::Array{UInt8,2}, Sw
     Ek = Eu = CDW0 = CDW1 = SDW0 = SDW1 = 0.0
     counter = 0
 
-    BRs[:, :, 1] .= Pt_sym
-    BLs[:, :, NN] .= Pt_sym'
+    BRs[:, :, 1] .= model.HalfeKinv * model.Pt
+    BLs[:, :, NN] .= model.Pt' * model.HalfeK
     for idx in NN-1:-1:1
         BM_F!(tmpN, tmpNN, BM, model, s, idx)
         mul!(tmpnN, view(BLs, :, :, idx + 1), BM)

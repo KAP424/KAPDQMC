@@ -28,7 +28,7 @@ function phy_update(path::String, model::tV_Hubbard_Para_, s::Array{UInt8,3}, Sw
 
 
     BRs[:, :, 1] .= model.HalfeKinv * model.Pt
-    BLs[:, :, NN] .= model.Pt' * model.HalfeKinv
+    BLs[:, :, NN] .= model.Pt' * model.HalfeK
 
     for idx in NN-1:-1:1
         BM_F!(tmpN, tmpNN, BM, model, s, idx)
@@ -248,8 +248,8 @@ function phy_measure(model::tV_Hubbard_Para_, Phy::PhyBuffer_, lt, s)
     #     error("record error lt=$(lt) : $(norm(G0-Gτ(model,s,div(model.Nt,2))))")
     # end
     #####################################################################
-    # mul!(tmpNN, model.HalfeK, G0)
-    # mul!(G0, tmpNN, model.HalfeKinv)
+    mul!(tmpNN, model.HalfeK, G0)
+    mul!(G0, tmpNN, model.HalfeKinv)
     # G0=model.HalfeK* G0 *model.HalfeKinv
 
     Ek = model.Ht * sum(model.K .* G0)

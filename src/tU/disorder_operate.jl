@@ -12,17 +12,8 @@ function ctrl_SCDOPicr(path::String, model::tU_Hubbard_Para_, alpha::Float64, in
     B = DOPBuffer(alpha, indexB)
     G = G4Buffer(model.Ns, NN)
 
-    name = if model.Lattice == "SQUARE90"
-        "□90"
-    elseif model.Lattice == "SQUARE45"
-        "□45"
-    elseif model.Lattice == "HoneyComb60"
-        "HC"
-    elseif model.Lattice == "HoneyComb120"
-        "HC120"
-    else
-        error("Lattice: $(model.Lattice) is not allowed !")
-    end
+    name = name_Lattice(model.Lattice)
+
     if length(unique(model.α)) == 1
         file = "$(path)/tUSCDOP$(name)_t$(model.Ht)U$(model.Hu1)size$(model.site)Δt$(model.Δt)Θ$(model.Θrelax)N$(Nλ)BS$(model.BatchSize).csv"
     else

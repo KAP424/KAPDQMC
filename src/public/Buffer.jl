@@ -1,21 +1,21 @@
 # Buffers for phy_update workflow
 
 mutable struct PhyBuffer_{T<:Number}
-	tau::Vector{T}
-	ipiv::Vector{LAPACK.BlasInt}
+    tau::Vector{T}
+    ipiv::Vector{LAPACK.BlasInt}
 
-	G::Matrix{T}
-	BM::Matrix{T}
-	BLs::Array{T,3}
-	BRs::Array{T,3}
+    G::Matrix{T}
+    BM::Matrix{T}
+    BLs::Array{T,3}
+    BRs::Array{T,3}
 
-	# temporaries
+    # temporaries
     N::Vector{T}
-	NN::Matrix{T}
-	Nn::Matrix{T}
-	nn::Matrix{T}
-	nN::Matrix{T}
-	zN::Matrix{T}  
+    NN::Matrix{T}
+    Nn::Matrix{T}
+    nn::Matrix{T}
+    nN::Matrix{T}
+    zN::Matrix{T}
 end
 
 # Buffers for SCEE workflow
@@ -35,18 +35,18 @@ mutable struct SCEEBuffer_{T<:Number}
     N::Vector{T}                 # Ns
     N_::Vector{T}                # Ns
     zN::Matrix{T}                # 2 x Ns
-    nn::Matrix{T}             
-    NN::Matrix{T}             
-    NN_::Matrix{T}            
-    Nn::Matrix{T}             
-    nN::Matrix{T}             
+    nn::Matrix{T}
+    NN::Matrix{T}
+    NN_::Matrix{T}
+    Nn::Matrix{T}
+    nN::Matrix{T}
     ipiv::Vector{LAPACK.BlasInt}        # length ns
-	tau::Vector{T}                # length ns
+    tau::Vector{T}                # length ns
 end
 
-mutable struct AreaBuffer_{T<:Number}
+mutable struct AreaBuffer_{T<:Number,Tdetg<:Number}
     index::Vector{Int64}          # length nA
-    detg::Float64
+    detg::Tdetg
     gmInv::Matrix{T}          # nA x nA
     NN::Matrix{T}              # nA x nA
     Nz::Matrix{T}              # nA x 2
@@ -54,7 +54,7 @@ mutable struct AreaBuffer_{T<:Number}
     a::Matrix{T}               # nA x 2
     b::Matrix{T}               # 2 x nA
     Tau::Matrix{T}             # 2 x 2
-	ipiv::Vector{LAPACK.BlasInt}        # length ns
+    ipiv::Vector{LAPACK.BlasInt}        # length ns
 end
 
 mutable struct DOPBuffer_{T<:Number}
@@ -68,6 +68,8 @@ mutable struct DOPBuffer_{T<:Number}
     a::Matrix{T}               # nA x 2
     b::Matrix{T}               # 2 x nA
     Tau::Matrix{T}             # 2 x 2
-	ipiv::Vector{LAPACK.BlasInt}        # length ns
+    ipiv::Vector{LAPACK.BlasInt}        # length ns
 end
+
+
 

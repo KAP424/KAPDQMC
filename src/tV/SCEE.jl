@@ -1,28 +1,20 @@
 function ctrl_SCEEicr(path::String, model::tV_Hubbard_Para_, indexA::Vector{Int64}, indexB::Vector{Int64}, Sweeps::Int64, λ::Float64, Nλ::Int64, ss::Vector{Array{UInt8,3}}, record)
+    T = model.flux == 0.0 ? Float64 : ComplexF64
     global LOCK = ReentrantLock()
     ERROR = 1e-5
 
     NN = length(model.nodes)
     Θidx = div(NN, 2) + 1
 
-    UPD = UpdateBuffer()
-    SCEE = SCEEBuffer(model.Ns)
-    A = AreaBuffer(indexA)
-    B = AreaBuffer(indexB)
-    G1 = G4Buffer(model.Ns, NN)
-    G2 = G4Buffer(model.Ns, NN)
+    UPD = UpdateBuffer(T)
+    SCEE = SCEEBuffer(T, model.Ns)
+    A = AreaBuffer(T, indexA)
+    B = AreaBuffer(T, indexB)
+    G1 = G4Buffer(T, model.Ns, NN)
+    G2 = G4Buffer(T, model.Ns, NN)
 
-    name = if model.Lattice == "SQUARE90"
-        "□90"
-    elseif model.Lattice == "SQUARE45"
-        "□45"
-    elseif model.Lattice == "HoneyComb60"
-        "HC"
-    elseif model.Lattice == "HoneyComb120"
-        "HC120"
-    else
-        error("Lattice: $(model.Lattice) is not allowed !")
-    end
+    name = name_Lattice(model.Lattice)
+
     if length(unique(model.α)) == 1
         file = "$(path)/tVSCEE$(name)_t$(model.Ht)V$(model.Hv1)size$(model.site)Δt$(model.Δt)Θ$(model.Θrelax)N$(Nλ)BS$(model.BatchSize).csv"
     else
@@ -31,10 +23,10 @@ function ctrl_SCEEicr(path::String, model::tV_Hubbard_Para_, indexA::Vector{Int6
     rng = MersenneTwister(Threads.threadid() + time_ns())
 
 
-    Gt1, G01, Gt01, G0t1, BLMs1, BRMs1, BMs1, BMsinv1 =
-        G1.Gt, G1.G0, G1.Gt0, G1.G0t, G1.BLMs, G1.BRMs, G1.BMs, G1.BMinvs
-    Gt2, G02, Gt02, G0t2, BLMs2, BRMs2, BMs2, BMsinv2 =
-        G2.Gt, G2.G0, G2.Gt0, G2.G0t, G2.BLMs, G2.BRMs, G2.BMs, G2.BMinvs
+    Gt1, Gt01, G0t1, BLMs1, BRMs1, BMs1, BMsinv1 =
+        G1.Gt, G1.Gt0, G1.G0t, G1.BLMs, G1.BRMs, G1.BMs, G1.BMinvs
+    Gt2, Gt02, G0t2, BLMs2, BRMs2, BMs2, BMsinv2 =
+        G2.Gt, G2.Gt0, G2.G0t, G2.BLMs, G2.BRMs, G2.BMs, G2.BMinvs
 
     # 预分配临时数组
     tmpN, tmpN_, tmpNN, tmpNn, tmpnN, tau = SCEE.N, SCEE.N_, SCEE.NN, SCEE.Nn, SCEE.nN, SCEE.tau
@@ -151,7 +143,7 @@ function ctrl_SCEEicr(path::String, model::tV_Hubbard_Para_, indexA::Vector{Int6
                 # detg_A_ = det(GM_A_)
                 # detg_B_ = det(GM_B_)
 
-                # for jj in 3:-1:j
+                # for jj in size(model.nnidx, 2):-1:j
                 #     E = zeros(model.Ns)
                 #     E_ = zeros(model.Ns)
                 #     for ii in 1:size(ss[1])[1]
@@ -264,7 +256,7 @@ function ctrl_SCEEicr(path::String, model::tV_Hubbard_Para_, indexA::Vector{Int6
                 # detg_A_ = det(GM_A_)
                 # detg_B_ = det(GM_B_)
 
-                # for jj in 3:-1:j
+                # for jj in size(model.nnidx, 2):-1:j
                 #     E = zeros(model.Ns)
                 #     E_ = zeros(model.Ns)
                 #     for ii in 1:size(ss[1])[1]

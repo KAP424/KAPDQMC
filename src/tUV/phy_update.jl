@@ -11,15 +11,8 @@ function phy_update(path::String, model::tUV_Hubbard_Para_, s::Array{UInt8,2}, S
     Phy = PhyBuffer(model.Type, model.Ns, NN)
     Θidx = div(NN, 2) + 1
 
-    name = if model.Lattice == "SQUARE"
-        "□"
-    elseif model.Lattice == "HoneyComb60"
-        "HC"
-    elseif model.Lattice == "HoneyComb120"
-        "HC120"
-    else
-        error("Lattice: $(model.Lattice) is not allowed !")
-    end
+    name = name_Lattice(model.Lattice)
+
     file = "$(path)/tUVphy$(name)_t$(model.Ht)U$(model.U)V$(model.V)size$(model.site)Δt$(model.Δt)Θ$(model.Θ)BS$(model.BatchSize).csv"
 
     rng = MersenneTwister(Threads.threadid() + time_ns())

@@ -13,15 +13,8 @@ function ctrl_SCEEicr(path::String, model::tUV_Hubbard_Para_, indexA::Vector{Int
     G1 = G4Buffer(model.Type, model.Ns, NN)
     G2 = G4Buffer(model.Type, model.Ns, NN)
 
-    name = if model.Lattice == "SQUARE"
-        "□"
-    elseif model.Lattice == "HoneyComb60"
-        "HC60"
-    elseif model.Lattice == "HoneyComb120"
-        "HC120"
-    else
-        error("Lattice: $(model.Lattice) is not allowed !")
-    end
+    name = name_Lattice(model.Lattice)
+
     file = "$(path)/tUVSCEE$(name)_t$(model.Ht)U$(model.U)V$(model.V)size$(model.site)Δt$(model.Δt)Θ$(model.Θ)N$(Nλ)BS$(model.BatchSize).csv"
     rng = MersenneTwister(Threads.threadid() + time_ns())
 

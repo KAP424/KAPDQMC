@@ -10,17 +10,8 @@ function phy_update(path::String, model::tU_Hubbard_Para_, s::Array{UInt8,2}, Sw
     Phy = PhyBuffer(model.Ns, NN)
     UPD = UpdateBuffer()
 
-    name = if model.Lattice == "SQUARE90"
-        "□90"
-    elseif model.Lattice == "SQUARE45"
-        "□45"
-    elseif model.Lattice == "HoneyComb60"
-        "HC"
-    elseif model.Lattice == "HoneyComb120"
-        "HC120"
-    else
-        error("Lattice: $(model.Lattice) is not allowed !")
-    end
+    name = name_Lattice(model.Lattice)
+
     if model.Θquench == 0.0
         file = "$(path)/tUphy$(name)_t$(model.Ht)U$(model.Hu1)size$(model.site)Δt$(model.Δt)Θ$(model.Θrelax)BS$(model.BatchSize).csv"
     else

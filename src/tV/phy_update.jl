@@ -1,22 +1,15 @@
 function phy_update(path::String, model::tV_Hubbard_Para_, s::Array{UInt8,3}, Sweeps::Int64, record::Bool)
-    Pt_sym = model.HalfeKinv * model.Pt
+    T = model.flux == 0.0 ? Float64 : ComplexF64
     global LOCK = ReentrantLock()
     ERROR = 1e-6
 
-    UPD = UpdateBuffer()
+    UPD = UpdateBuffer(T)
     NN = length(model.nodes)
-    Phy = PhyBuffer(model.Ns, NN)
+    Phy = PhyBuffer(T, model.Ns, NN)
     Θidx = div(NN, 2) + 1
 
-    name = if model.Lattice == "SQUARE"
-        "□"
-    elseif model.Lattice == "HoneyComb60"
-        "HC"
-    elseif model.Lattice == "HoneyComb120"
-        "HC120"
-    else
-        error("Lattice: $(model.Lattice) is not allowed !")
-    end
+    name = name_Lattice(model.Lattice)
+
     if length(unique(model.α)) == 1
         file = "$(path)/tVphy$(name)_t$(model.Ht)V$(model.Hv1)size$(model.site)Δt$(model.Δt)Θ$(model.Θrelax)BS$(model.BatchSize).csv"
     else
@@ -34,8 +27,8 @@ function phy_update(path::String, model::tV_Hubbard_Para_, s::Array{UInt8,3}, Sw
         Phy.G, Phy.BLs, Phy.BRs, Phy.N, Phy.NN, Phy.nn, Phy.nN, Phy.Nn, Phy.tau, Phy.ipiv, Phy.BM
 
 
-    BRs[:, :, 1] .= Pt_sym
-    BLs[:, :, NN] .= Pt_sym'
+    BRs[:, :, 1] .= model.HalfeKinv * model.Pt
+    BLs[:, :, NN] .= model.Pt' * model.HalfeKinv
 
     for idx in NN-1:-1:1
         BM_F!(tmpN, tmpNN, BM, model, s, idx)
@@ -74,19 +67,19 @@ function phy_update(path::String, model::tV_Hubbard_Para_, s::Array{UInt8,3}, Sw
                 UpdatePhyLayer!(rng, j, view(s, :, j, lt), lt, model, UPD, Phy)
                 ####################################################################
                 # print("*")
-                # GG=model.eK*Gτ(model,s,lt-1)*model.eKinv
-                # for jj in 3:-1:j
-                #     E=zeros(model.Ns)
+                # GG = model.eK * Gτ(model, s, lt - 1) * model.eKinv
+                # for jj in size(model.nnidx, 2):-1:j
+                #     E = zeros(model.Ns)
                 #     for ii in 1:size(s)[1]
-                #         x,y=model.nnidx[ii,jj]
-                #         E[x]= model.α[lt] * model.η[s[ii,jj,lt]]
-                #         E[y]=-model.α[lt] * model.η[s[ii,jj,lt]]
+                #         x, y = model.nnidx[ii, jj]
+                #         E[x] = model.α[lt] * model.η[s[ii, jj, lt]]
+                #         E[y] = -model.α[lt] * model.η[s[ii, jj, lt]]
                 #     end
-                #     GG=model.UV[:,:,jj]*Diagonal(exp.(E))*model.UV[:,:,jj]' *GG* model.UV[:,:,jj]*Diagonal(exp.(-E))*model.UV[:,:,jj]'
+                #     GG = model.UV[:, :, jj] * Diagonal(exp.(E)) * model.UV[:, :, jj]' * GG * model.UV[:, :, jj] * Diagonal(exp.(-E)) * model.UV[:, :, jj]'
                 # end
-                # if(norm(G-GG)>ERROR)
+                # if (norm(G - GG) > ERROR)
                 #     println("lt=$(lt) j=$(j)")
-                #     error(j," update error: ",norm(G-GG),"  lt=",lt)
+                #     error(j, " update error: ", norm(G - GG), "  lt=", lt)
                 # end
                 ####################################################################
             end
@@ -255,8 +248,8 @@ function phy_measure(model::tV_Hubbard_Para_, Phy::PhyBuffer_, lt, s)
     #     error("record error lt=$(lt) : $(norm(G0-Gτ(model,s,div(model.Nt,2))))")
     # end
     #####################################################################
-    mul!(tmpNN, model.HalfeK, G0)
-    mul!(G0, tmpNN, model.HalfeKinv)
+    # mul!(tmpNN, model.HalfeK, G0)
+    # mul!(G0, tmpNN, model.HalfeKinv)
     # G0=model.HalfeK* G0 *model.HalfeKinv
 
     Ek = model.Ht * sum(model.K .* G0)

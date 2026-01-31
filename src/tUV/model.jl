@@ -11,7 +11,7 @@ struct tUV_Hubbard_Para_
     Θ::Float64
     Ns::Int64
     Nt::Int64
-    K::Array{Float64,2}
+    K::Array{ComplexF64,2}
     BatchSize::Int64
     Δt::Float64
     γ::Vector{Float64}

@@ -1,6 +1,7 @@
-# using density channel ±1,±2 HS transformation
+# using hopping channel ±1,±2 HS transformation
+# add DataType choice: flux=0 Float64, flux≠0 ComplexF64
 
-struct tV_Hubbard_Para_
+struct tV_Hubbard_Para_{T<:Number}
     Lattice::String
     Ht::Float64
     Hv1::Float64
@@ -16,18 +17,21 @@ struct tV_Hubbard_Para_
     α::Vector{Float64}
     γ::Vector{Float64}
     η::Vector{Float64}
-    Pt::Array{ComplexF64,2}
-    HalfeK::Array{ComplexF64,2}
-    eK::Array{ComplexF64,2}
-    HalfeKinv::Array{ComplexF64,2}
-    eKinv::Array{ComplexF64,2}
+    Pt::Array{T,2}
+    HalfeK::Array{T,2}
+    eK::Array{T,2}
+    HalfeKinv::Array{T,2}
+    eKinv::Array{T,2}
     nnidx::Matrix{Tuple{Int64,Int64}}
     nodes::Vector{Int64}
     UV::Array{Float64,3}
     samplers_dict::Dict{UInt8,Random.Sampler}
+    flux::Float64
 end
 
 function tV_Hubbard_Para(; Ht, Hv1, Hv2, Δt, Θrelax, Θquench, Lattice::String, site, BatchSize, Initial::String, flux=0.0)
+    T = flux == 0.0 ? Float64 : ComplexF64
+
     K = nnK_Matrix(Lattice, site, flux=flux)
     Ns = size(K, 1)
 
@@ -37,7 +41,7 @@ function tV_Hubbard_Para(; Ht, Hv1, Hv2, Δt, Θrelax, Θquench, Lattice::String
     HalfeKinv = V * Diagonal(exp.(Δt .* E ./ 2)) * V'
     eKinv = V * Diagonal(exp.(Δt .* E)) * V'
 
-    Pt = zeros(ComplexF64, Ns, div(Ns, 2))
+    Pt = zeros(T, Ns, div(Ns, 2))
     Initial_Pt!(Lattice, Initial, Pt, K)
 
     Nt = round(Int, 2 * (Θrelax + Θquench) / Δt)
@@ -58,13 +62,13 @@ function tV_Hubbard_Para(; Ht, Hv1, Hv2, Δt, Θrelax, Θquench, Lattice::String
     γ = [1 + sqrt(6) / 3, 1 + sqrt(6) / 3, 1 - sqrt(6) / 3, 1 - sqrt(6) / 3]
     η = [sqrt(2 * (3 - sqrt(6))), -sqrt(2 * (3 - sqrt(6))), sqrt(2 * (3 + sqrt(6))), -sqrt(2 * (3 + sqrt(6)))]
 
-    nnidx = nnidx_F(Lattice, site)
     if div(Nt, 2) % BatchSize == 0
         nodes = collect(0:BatchSize:Nt)
     else
         nodes = vcat(0, reverse(collect(div(Nt, 2)-BatchSize:-BatchSize:1)), collect(div(Nt, 2):BatchSize:Nt), Nt)
     end
 
+    nnidx = nnidx_F(Lattice, site)
     UV = zeros(Float64, Ns, Ns, size(nnidx, 2))
     for j in axes(nnidx, 2)
         for i in axes(nnidx, 1)
@@ -82,27 +86,29 @@ function tV_Hubbard_Para(; Ht, Hv1, Hv2, Δt, Θrelax, Θquench, Lattice::String
         samplers_dict[excluded] = Random.Sampler(rng, allowed)
     end
 
-    return tV_Hubbard_Para_(Lattice, Ht, Hv1, Hv2, site, Θrelax, Θquench, Ns, Nt, K, BatchSize, Δt, α, γ, η, Pt, HalfeK, eK, HalfeKinv, eKinv, nnidx, nodes, UV, samplers_dict)
+    return tV_Hubbard_Para_{T}(Lattice, Ht, Hv1, Hv2, site, Θrelax, Θquench, Ns,
+        Nt, K, BatchSize, Δt, α, γ, η, Pt,
+        HalfeK, eK, HalfeKinv, eKinv, nnidx, nodes, UV, samplers_dict, flux)
 
 end
 
-mutable struct UpdateBuffer_
+mutable struct UpdateBuffer_{T<:Number}
     uv::Matrix{Float64}      # 2 x 2
-    tmp22::Matrix{ComplexF64}   # 2 x 2
-    tmp2::Vector{ComplexF64}    # length 2
-    r::Matrix{ComplexF64}       # 2 x 2
-    Δ::Matrix{ComplexF64}       # 2 x 2
+    tmp22::Matrix{T}   # 2 x 2
+    tmp2::Vector{T}    # length 2
+    r::Matrix{T}       # 2 x 2
+    Δ::Matrix{T}       # 2 x 2
     subidx::Vector{Int64}  # length 2
 end
 
-function UpdateBuffer()
+function UpdateBuffer(T)
     uv = [-2^0.5/2 -2^0.5/2; -2^0.5/2 2^0.5/2]
     return UpdateBuffer_(
         uv,
-        Matrix{ComplexF64}(undef, 2, 2),
-        Vector{ComplexF64}(undef, 2),
-        Matrix{ComplexF64}(undef, 2, 2),
-        Matrix{ComplexF64}(undef, 2, 2),
+        Matrix{T}(undef, 2, 2),
+        Vector{T}(undef, 2),
+        Matrix{T}(undef, 2, 2),
+        Matrix{T}(undef, 2, 2),
         Vector{Int64}(undef, 2),
     )
 end
@@ -110,83 +116,86 @@ end
 
 # ---------------------------------------------------------------------------------------
 
-function PhyBuffer(Ns, NN)
+function PhyBuffer(T, Ns, NN)
     ns = div(Ns, 2)
     return PhyBuffer_(
-        Vector{ComplexF64}(undef, ns),
-        Vector{LAPACK.BlasInt}(undef, ns), Matrix{ComplexF64}(undef, Ns, Ns),
-        Matrix{ComplexF64}(undef, Ns, Ns),
-        Array{ComplexF64}(undef, ns, Ns, NN),
-        Array{ComplexF64}(undef, Ns, ns, NN), Vector{ComplexF64}(undef, Ns),
-        Matrix{ComplexF64}(undef, Ns, Ns),
-        Matrix{ComplexF64}(undef, Ns, ns),
-        Matrix{ComplexF64}(undef, ns, ns),
-        Matrix{ComplexF64}(undef, ns, Ns),
-        Matrix{ComplexF64}(undef, 2, Ns),
+        Vector{T}(undef, ns),
+        Vector{LAPACK.BlasInt}(undef, ns),
+        Matrix{T}(undef, Ns, Ns),
+        Matrix{T}(undef, Ns, Ns),
+        Array{T}(undef, ns, Ns, NN),
+        Array{T}(undef, Ns, ns, NN),
+        Vector{T}(undef, Ns),
+        Matrix{T}(undef, Ns, Ns),
+        Matrix{T}(undef, Ns, ns),
+        Matrix{T}(undef, ns, ns),
+        Matrix{T}(undef, ns, Ns),
+        Matrix{T}(undef, 2, Ns),
     )
 end
 # ---------------------------------------------------------------------------------------
 
-function SCEEBuffer(Ns)
+function SCEEBuffer(T, Ns)
     ns = div(Ns, 2)
     return SCEEBuffer_(
-        Matrix{ComplexF64}(I, Ns, Ns),
-        Vector{ComplexF64}(undef, Ns),
-        Vector{ComplexF64}(undef, Ns),
-        Matrix{ComplexF64}(undef, 2, Ns),
-        Matrix{ComplexF64}(undef, ns, ns),
-        Matrix{ComplexF64}(undef, Ns, Ns),
-        Matrix{ComplexF64}(undef, Ns, Ns),
-        Matrix{ComplexF64}(undef, Ns, ns),
-        Matrix{ComplexF64}(undef, ns, Ns),
+        Matrix{T}(I, Ns, Ns),
+        Vector{T}(undef, Ns),
+        Vector{T}(undef, Ns),
+        Matrix{T}(undef, 2, Ns),
+        Matrix{T}(undef, ns, ns),
+        Matrix{T}(undef, Ns, Ns),
+        Matrix{T}(undef, Ns, Ns),
+        Matrix{T}(undef, Ns, ns),
+        Matrix{T}(undef, ns, Ns),
         Vector{LAPACK.BlasInt}(undef, ns),
-        Vector{ComplexF64}(undef, ns),
+        Vector{T}(undef, ns),
     )
 end
 
-function G4Buffer(Ns, NN)
+function G4Buffer(T, Ns, NN)
     ns = div(Ns, 2)
     return G4Buffer_(
-        Matrix{ComplexF64}(undef, Ns, Ns),
-        Matrix{ComplexF64}(undef, Ns, Ns),
-        Matrix{ComplexF64}(undef, Ns, Ns),
-        Matrix{ComplexF64}(undef, Ns, Ns), Array{ComplexF64,3}(undef, ns, Ns, NN),
-        Array{ComplexF64,3}(undef, Ns, ns, NN),
-        Array{ComplexF64,3}(undef, Ns, Ns, NN),
-        Array{ComplexF64,3}(undef, Ns, Ns, NN),
+        Matrix{T}(undef, Ns, Ns),
+        Matrix{T}(undef, Ns, Ns),
+        Matrix{T}(undef, Ns, Ns),
+        Matrix{T}(undef, Ns, Ns),
+        Array{T,3}(undef, ns, Ns, NN),
+        Array{T,3}(undef, Ns, ns, NN),
+        Array{T,3}(undef, Ns, Ns, NN),
+        Array{T,3}(undef, Ns, Ns, NN),
     )
 end
 
-function AreaBuffer(index)
+function AreaBuffer(T, index)
     nA = length(index)
     return AreaBuffer_(
         index,
-        0.0,
-        Matrix{ComplexF64}(undef, nA, nA),
-        Matrix{ComplexF64}(undef, nA, nA),
-        Matrix{ComplexF64}(undef, nA, 2),
-        Matrix{ComplexF64}(undef, 2, nA),
-        Matrix{ComplexF64}(undef, nA, 2),
-        Matrix{ComplexF64}(undef, 2, nA),
-        Matrix{ComplexF64}(undef, 2, 2),
+        zero(T),
+        Matrix{T}(undef, nA, nA),
+        Matrix{T}(undef, nA, nA),
+        Matrix{T}(undef, nA, 2),
+        Matrix{T}(undef, 2, nA),
+        Matrix{T}(undef, nA, 2),
+        Matrix{T}(undef, 2, nA),
+        Matrix{T}(undef, 2, 2),
         Vector{LAPACK.BlasInt}(undef, nA),
     )
 end
 
 # undeveloped 
-function DOPBuffer(alpha, index)
+function DOPBuffer(T, alpha, index)
     nA = length(index)
     return DOPBuffer_(
         alpha,
         index,
-        0.0,
-        Matrix{ComplexF64}(undef, nA, nA),
-        Matrix{ComplexF64}(undef, nA, nA),
-        Matrix{ComplexF64}(undef, nA, 1),
-        Matrix{ComplexF64}(undef, 1, nA),
-        Matrix{ComplexF64}(undef, nA, 1),
-        Matrix{ComplexF64}(undef, 1, nA),
-        Matrix{ComplexF64}(undef, 1, 1),
+        zero(ComplexF64),
+        Matrix{T}(undef, nA, nA),
+        Matrix{T}(undef, nA, nA),
+        Matrix{T}(undef, nA, 1),
+        Matrix{T}(undef, 1, nA),
+        Matrix{T}(undef, nA, 1),
+        Matrix{T}(undef, 1, nA),
+        Matrix{T}(undef, 1, 1),
         Vector{LAPACK.BlasInt}(undef, nA),
     )
 end

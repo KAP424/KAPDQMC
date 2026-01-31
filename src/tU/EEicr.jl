@@ -12,17 +12,8 @@ function ctrl_EEicr(path::String, model::tU_Hubbard_Para_, index::Vector{Int64},
     G1 = G4Buffer(model.Ns, NN)
     G2 = G4Buffer(model.Ns, NN)
 
-    name = if model.Lattice == "SQUARE90"
-        "□90"
-    elseif model.Lattice == "SQUARE45"
-        "□45"
-    elseif model.Lattice == "HoneyComb60"
-        "HC"
-    elseif model.Lattice == "HoneyComb120"
-        "HC120"
-    else
-        error("Lattice: $(model.Lattice) is not allowed !")
-    end
+    name = name_Lattice(model.Lattice)
+
     if model.Θquench == 0.0
         file = "$(path)/tUEE$(name)_t$(model.Ht)U$(model.Hu1)size$(model.site)Δt$(model.Δt)Θ$(model.Θrelax)N$(Nλ)BS$(model.BatchSize).csv"
     else

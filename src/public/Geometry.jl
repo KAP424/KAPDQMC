@@ -310,6 +310,19 @@ function area_index(Lattice::String, site::Vector{Int64}, area::Tuple{Vector{Int
 
 end
 
+function name_Lattice(Lattice::String)
+    if Lattice == "SQUARE90"
+        return "□90"
+    elseif Lattice == "SQUARE45"
+        return "□45"
+    elseif Lattice == "HoneyComb60"
+        return "HC60"
+    elseif Lattice == "HoneyComb120"
+        return "HC120"
+    else
+        error("Lattice: $(Lattice) is not allowed !")
+    end
+end
 
 """
 next nearest neighbor indices

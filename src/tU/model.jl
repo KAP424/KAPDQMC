@@ -34,6 +34,7 @@ struct tU_Hubbard_Para_
     eKinv::Array{ComplexF64,2}
     nodes::Vector{Int64}
     samplers_dict::Dict{UInt8,Random.Sampler}
+    flux::Float64
 end
 
 function tU_Hubbard_Para(; Ht, Hu1, Hu2, Δt, Θrelax, Θquench, Lattice::String, site, BatchSize, Initial::String, flux=0.0)
@@ -82,7 +83,9 @@ function tU_Hubbard_Para(; Ht, Hu1, Hu2, Δt, Θrelax, Θquench, Lattice::String
         samplers_dict[excluded] = Random.Sampler(rng, allowed)
     end
 
-    return tU_Hubbard_Para_(Lattice, Ht, Hu1, Hu2, site, Θrelax, Θquench, Ns, Nt, K, BatchSize, Δt, α, γ, η, Pt, HalfeK, eK, HalfeKinv, eKinv, nodes, samplers_dict)
+    return tU_Hubbard_Para_(Lattice, Ht, Hu1, Hu2, site, Θrelax, Θquench,
+        Ns, Nt, K, BatchSize, Δt, α, γ, η,
+        Pt, HalfeK, eK, HalfeKinv, eKinv, nodes, samplers_dict, flux)
 end
 
 function PhyBuffer(Ns, NN)

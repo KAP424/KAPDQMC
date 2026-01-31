@@ -4,6 +4,8 @@
 # Not developed !!!
 
 function ctrl_SCDOPicr(path::String, model::tV_Hubbard_Para_, alpha::Float64, indexA::Vector{Int64}, indexB::Vector{Int64}, Sweeps::Int64, λ::Float64, Nλ::Int64, s::Array{UInt8,3}, record)
+    T = flux == 0.0 ? Float64 : ComplexF64
+
     ERROR = 1e-6
     global LOCK = ReentrantLock()
     Ns = model.Ns
@@ -11,21 +13,14 @@ function ctrl_SCDOPicr(path::String, model::tV_Hubbard_Para_, alpha::Float64, in
     NN = length(model.nodes)
     Θidx = div(NN, 2) + 1
 
-    UPD = UpdateBuffer()
-    SCEE = SCEEBuffer(model.Ns)
-    A = DOPBuffer(alpha, indexA)
-    B = DOPBuffer(alpha, indexB)
-    G = G4Buffer(model.Ns, NN)
+    UPD = UpdateBuffer(T)
+    SCEE = SCEEBuffer(T, model.Ns)
+    A = DOPBuffer(T, alpha, indexA)
+    B = DOPBuffer(T, alpha, indexB)
+    G = G4Buffer(T, model.Ns, NN)
 
-    name = if model.Lattice == "SQUARE"
-        "□"
-    elseif model.Lattice == "HoneyComb60"
-        "HC"
-    elseif model.Lattice == "HoneyComb120"
-        "HC120"
-    else
-        error("Lattice: $(model.Lattice) is not allowed !")
-    end
+    name = name_Lattice(model.Lattice)
+
     file = "$(path)/tVSCDOP$(name)_t$(model.Ht)V$(model.Hv1)_$(model.Hv2)size$(model.site)Δt$(model.Δt)Θ$(model.Θrelax)_$(model.Θquench)N$(Nλ)BS$(model.BatchSize).csv"
     rng = MersenneTwister(Threads.threadid() + time_ns())
 

@@ -230,6 +230,9 @@ function nnK_Matrix(Lattice::String, site::Vector{Int64}; t=(1.0, 1.0, 1.0), flu
             end
         end
     elseif occursin("HoneyComb", Lattice)
+        if flux != 0.0
+            error("Warning: flux is not implemented for HoneyComb lattice!")
+        end
         for i in 1:Ns
             nnidx = nn2idx(Lattice, site, i)
             for j in eachindex(nnidx)

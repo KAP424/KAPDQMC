@@ -32,7 +32,7 @@ end
 function tV_Hubbard_Para(; Ht, Hv1, Hv2, Δt, Θrelax, Θquench, Lattice::String, site, BatchSize, Initial::String, flux=0.0)
     T = flux == 0.0 ? Float64 : ComplexF64
 
-    K = nnK_Matrix(Lattice, site, flux=flux)
+    K = nnK_Matrix(Lattice, site, flux=flux, opt="y")
     Ns = size(K, 1)
 
     E, V = LAPACK.syevd!('V', 'L', -Ht .* K[:, :])

@@ -31,21 +31,24 @@ using LinearAlgebra
 
     # ------------------------------------------------------------------------------------------------------------------------------------------------------
 
-    model = tV_Hubbard_Para(Ht=1.0, Hv1=1.0, Hv2=1.0, Θrelax=2.0, Θquench=0.0,
-        Lattice="SQUARE90", site=[6, 6], Δt=0.05, BatchSize=5, Initial="H0", flux=0)
+    model = tV_Hubbard_Para(Ht=1.0, Hv1=1.0, Hv2=1.0, Θrelax=1.0, Θquench=0.0,
+        Lattice="SQUARE90", site=[3, 3], Δt=0.05, BatchSize=5, Initial="V", flux=π)
+    # println((model.eK))
 
     s = Initial_s(model, rng)
+    println(size(s))
 
-    s=phy_update(path,model,s,10,true)
+    s = phy_update(path, model, s, 2, false)
+    # s = phy_update(path, model, s, 80, true)
 
-    L = model.site[2]
-    indexA = area_index(model.Lattice, model.site, ([1, 1], [div(L, 3), L]))
-    # # HalfHalf
-    indexB = area_index(model.Lattice, model.site, ([1, 1], [div(L, 3), div(2 * L, 3)]))
-    # println(indexB)
-    ss = [copy(s), copy(s)]
-    λ = 0.5
-    Nλ = 2
+    # L = model.site[2]
+    # indexA = area_index(model.Lattice, model.site, ([1, 1], [div(L, 3), L]))
+    # # # HalfHalf
+    # indexB = area_index(model.Lattice, model.site, ([1, 1], [div(L, 3), div(2 * L, 3)]))
+    # # println(indexB)
+    # ss = [copy(s), copy(s)]
+    # λ = 0.5
+    # Nλ = 2
 
     # s = ctrl_SCDOPicr(path, model, π / 2, indexA, indexB, 20, λ, Nλ, s, true)
 

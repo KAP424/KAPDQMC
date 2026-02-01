@@ -152,7 +152,6 @@ function phy_update(path::String, model::tV_Hubbard_Para_, s::Array{UInt8,3}, Sw
                 LAPACK.gerqf!(tmpnN, tau)
                 LAPACK.orgrq!(tmpnN, tau)
                 copyto!(view(BLs, :, :, idx), tmpnN)
-                # BL .= Matrix(qr(( BL * BM )').Q)'
 
                 # copyto!(tmpNN , G)
 
@@ -189,10 +188,10 @@ function UpdatePhyLayer!(rng, j, s, lt, model::tV_Hubbard_Para_, UPD::UpdateBuff
         sx = rand(rng, model.samplers_dict[s[i]])
         p = get_r!(UPD, model.α[lt] * (model.η[sx] - model.η[s[i]]), Phy.G)
         p *= model.γ[sx] / model.γ[s[i]]
-        if p < -1e-3
+        # if real(p) < 0 || abs(imag(p)) > 1e-6
             println("Negative Sign: $(p)")
-        end
-        if rand(rng) < p
+        # end
+        if rand(rng) < real(p)
             Gupdate!(Phy, UPD)
             s[i] = sx
         end
@@ -206,7 +205,7 @@ function phy_measure(model::tV_Hubbard_Para_, Phy::PhyBuffer_, lt, s)
     G0 = Phy.G[:, :]
     tmpN = Phy.N
     tmpNN = Phy.NN
-    tmp = zeros(Float64, 4)
+    tmp = zeros(ComplexF64, 4)
     R0 = zeros(Float64, 4)
     R1 = zeros(Float64, 4)
 
@@ -259,8 +258,11 @@ function phy_measure(model::tV_Hubbard_Para_, Phy::PhyBuffer_, lt, s)
         x, y = model.nnidx[k]
         Ev += (1 - G0[x, x]) * (1 - G0[y, y]) - G0[x, y] * G0[y, x]
     end
+    @assert abs(imag(Ek)) + abs(imag(Ev)) < 1e-10 "Complex emergence in Ek or Ev"
+    Ek = real(Ek)
+    Ev = real(Ev)
 
-    if occursin("HoneyComb", model.Lattice)
+    if occursin("HoneyComb", model.Lattice) || model.Lattice == "SQUARE90"
         for rx in 1:model.site[1]
             for ry in 1:model.site[2]
                 fill!(tmp, 0.0)
@@ -268,25 +270,21 @@ function phy_measure(model::tV_Hubbard_Para_, Phy::PhyBuffer_, lt, s)
                     for iy in 1:model.site[2]
                         idx1 = xy_i(model.Lattice, model.site, ix, iy) - 1
                         idx2 = xy_i(model.Lattice, model.site, mod1(ix + rx, model.site[1]), mod1(iy + ry, model.site[2])) - 1
-                        if idx1 == idx2
-                            tmp[1] += (1 - G0[idx1, idx1])
-                            tmp[2] += (1 - G0[idx1+1, idx1+1])
-                            # tmp[1]+=(1-G0[idx1,idx1]) * (1-G0[idx2,idx2]) - G0[idx1,idx2]*G0[idx2,idx1]
-                            # tmp[2]+=(1-G0[idx1+1,idx1+1]) * (1-G0[idx2+1,idx2+1]) - G0[idx1+1,idx2+1]*G0[idx2+1,idx1+1]
-                        else
-                            tmp[1] += (1 - G0[idx1, idx1]) * (1 - G0[idx2, idx2]) - G0[idx1, idx2] * G0[idx2, idx1]
-                            tmp[2] += (1 - G0[idx1+1, idx1+1]) * (1 - G0[idx2+1, idx2+1]) - G0[idx1+1, idx2+1] * G0[idx2+1, idx1+1]
-                        end
-                        tmp[3] += (1 - G0[idx1+1, idx1+1]) * (1 - G0[idx2, idx2]) - G0[idx1+1, idx2] * G0[idx2, idx1+1]
-                        tmp[4] += (1 - G0[idx1, idx1]) * (1 - G0[idx2+1, idx2+1]) - G0[idx1, idx2+1] * G0[idx2+1, idx1]
+                        delta = idx1 == idx2 ? 1 : 0
+                        tmp[1] += (1 - G0[idx1, idx1]) * (1 - G0[idx2, idx2]) + (delta - G0[idx2, idx1]) * G0[idx1, idx2]
+                        tmp[2] += (1 - G0[idx1+1, idx1+1]) * (1 - G0[idx2+1, idx2+1]) + (delta - G0[idx2+1, idx1+1]) * G0[idx1+1, idx2+1]
+                        tmp[3] += (1 - G0[idx1+1, idx1+1]) * (1 - G0[idx2, idx2]) - G0[idx2, idx1+1] * G0[idx1+1, idx2]
+                        tmp[4] += (1 - G0[idx1, idx1]) * (1 - G0[idx2+1, idx2+1]) - G0[idx2+1, idx1] * G0[idx1, idx2+1]
                     end
                 end
+                @assert norm(imag(tmp)) < 1e-10 "Complex emergence in R0 or R1"
+                tmp .= real.(tmp)
                 axpy!(1, tmp, R0)
                 axpy!(cos(2 * π / model.site[1] * rx + 2 * π / model.site[2] * ry), tmp, R1)
             end
         end
-        lmul!(4 / model.Ns^2, R0)
-        lmul!(4 / model.Ns^2, R1)
+        lmul!(1 / model.Ns^2, R0)
+        lmul!(1 / model.Ns^2, R1)
     elseif model.Lattice == "SQUARE"
         for rx in 1:model.site[1]
             for ry in 1:model.site[2]

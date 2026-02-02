@@ -184,7 +184,13 @@ function nnK_Matrix(Lattice::String, site::Vector{Int64}; t=(1.0, 1.0, 1.0), flu
     else
         Ns = prod(site) * 2
     end
-    K = zeros(ComplexF64, Ns, Ns)
+
+    if flux != 0.0 && opt != "y"
+        K = zeros(ComplexF64, Ns, Ns)
+    else
+        K = zeros(Float64, Ns, Ns)
+    end
+
     if occursin("SQUARE", Lattice)
         for i in 1:Ns
             nnidx = nn2idx(Lattice, site, i)

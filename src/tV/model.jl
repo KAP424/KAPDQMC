@@ -11,7 +11,7 @@ struct tV_Hubbard_Para_{T<:Number}
     Θquench::Float64
     Ns::Int64
     Nt::Int64
-    K::Array{ComplexF64,2}
+    K::Array{T,2}
     BatchSize::Int64
     Δt::Float64
     α::Vector{Float64}
@@ -29,13 +29,16 @@ struct tV_Hubbard_Para_{T<:Number}
     flux::Float64
 end
 
-function tV_Hubbard_Para(; Ht, Hv1, Hv2, Δt, Θrelax, Θquench, Lattice::String, site, BatchSize, Initial::String, flux=0.0)
-    T = flux == 0.0 ? Float64 : ComplexF64
+function tV_Hubbard_Para(; Ht, Hv1, Hv2, Δt, Θrelax, Θquench, Lattice::String, site, BatchSize, Initial::String, flux=0.0, opt="xy")
+    T = flux != 0.0 && opt != "y" ? ComplexF64 : Float64
 
-    K = nnK_Matrix(Lattice, site, flux=flux, opt="y")
+    K = nnK_Matrix(Lattice, site, flux=flux, opt=opt)
     Ns = size(K, 1)
 
     E, V = LAPACK.syevd!('V', 'L', -Ht .* K[:, :])
+    if abs(E[div(Ns, 2)] - E[div(Ns, 2)+1]) > 1e-10
+        @warn "Warning: The non-interacting system may be gapped!"
+    end
     HalfeK = V * Diagonal(exp.(-Δt .* E ./ 2)) * V'
     eK = V * Diagonal(exp.(-Δt .* E)) * V'
     HalfeKinv = V * Diagonal(exp.(Δt .* E ./ 2)) * V'
@@ -48,8 +51,6 @@ function tV_Hubbard_Para(; Ht, Hv1, Hv2, Δt, Θrelax, Θquench, Lattice::String
     if (Θquench > 0) & (abs(Hv1 - Hv2) > 0)
         Hv = LinRange(Hv1, Hv2, round(Int, Θquench / Δt) + 1)[2:end]
         Hv = vcat(fill(Hv1, round(Int, Θrelax / Δt)), collect(Hv), reverse(collect(Hv)), fill(Hv1, round(Int, Θrelax / Δt)))
-        # ΔU = (Hv1 - Hv2) / Θquench * Δt
-        # Hv = vcat(fill(Hv1, round(Int, Θrelax / Δt)), reverse(collect(Hv2:ΔU:Hv1-ΔU/2)), collect(Hv2:ΔU:Hv1-ΔU/2), fill(Hv1, round(Int, Θrelax / Δt)))
     else
         @assert (Hv1 == Hv2) & (Θquench < 1e-7) "For Θquench=0, Hv1 must equal Hv2"
         Hv = Hv1 .* ones(Float64, Nt)

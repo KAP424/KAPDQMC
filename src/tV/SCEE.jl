@@ -1,5 +1,5 @@
 function ctrl_SCEEicr(path::String, model::tV_Hubbard_Para_, indexA::Vector{Int64}, indexB::Vector{Int64}, Sweeps::Int64, λ::Float64, Nλ::Int64, ss::Vector{Array{UInt8,3}}, record)
-    T = model.flux == 0.0 ? Float64 : ComplexF64
+    T = typeof(model.K[1, 1])
     global LOCK = ReentrantLock()
     ERROR = 1e-5
 

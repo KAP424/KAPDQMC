@@ -7,7 +7,7 @@ using LinearAlgebra
 @testset "KAPDQMC.jl" begin
     path = "test/tV/"
 
-    rng = MersenneTwister(1234)
+    rng = MersenneTwister(time_ns())
 
     # model = tV_Hubbard_Para(Ht=1.0, Hv1=0.1, Hv2=1.0, Θrelax=0.0, Θquench=1.0, Lattice="HoneyComb120", site=[3, 3], Δt=0.1, BatchSize=5, Initial="H0")
 
@@ -31,14 +31,14 @@ using LinearAlgebra
 
     # ------------------------------------------------------------------------------------------------------------------------------------------------------
 
-    model = tV_Hubbard_Para(Ht=1.0, Hv1=1.0, Hv2=1.0, Θrelax=1.0, Θquench=0.0,
-        Lattice="SQUARE90", site=[3, 3], Δt=0.05, BatchSize=5, Initial="V", flux=π)
+    model = tV_Hubbard_Para(Ht=1.0, Hv1=1.28, Hv2=1.28, Θrelax=8.0, Θquench=0.0,
+        Lattice="SQUARE90", site=[12, 12], Δt=0.05, BatchSize=5, Initial="V", flux=π, opt="y")
     # println((model.eK))
 
     s = Initial_s(model, rng)
     println(size(s))
 
-    s = phy_update(path, model, s, 2, false)
+    # s = phy_update(path, model, s, 2, false)
     # s = phy_update(path, model, s, 80, true)
 
     # L = model.site[2]

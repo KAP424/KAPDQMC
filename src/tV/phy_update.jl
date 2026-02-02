@@ -1,7 +1,7 @@
 # turn off symmetric HS decomposition when debuging
 
 function phy_update(path::String, model::tV_Hubbard_Para_, s::Array{UInt8,3}, Sweeps::Int64, record::Bool)
-    T = model.flux == 0.0 ? Float64 : ComplexF64
+    T = typeof(model.K[1, 1])
     global LOCK = ReentrantLock()
     ERROR = 1e-6
 
@@ -188,9 +188,9 @@ function UpdatePhyLayer!(rng, j, s, lt, model::tV_Hubbard_Para_, UPD::UpdateBuff
         sx = rand(rng, model.samplers_dict[s[i]])
         p = get_r!(UPD, model.α[lt] * (model.η[sx] - model.η[s[i]]), Phy.G)
         p *= model.γ[sx] / model.γ[s[i]]
-        # if real(p) < 0 || abs(imag(p)) > 1e-6
+        if real(p) < 0 || abs(imag(p)) > 1e-6
             println("Negative Sign: $(p)")
-        # end
+        end
         if rand(rng) < real(p)
             Gupdate!(Phy, UPD)
             s[i] = sx

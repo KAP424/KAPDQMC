@@ -23,10 +23,10 @@ function ctrl_SCEEicr(path::String, model::tV_Hubbard_Para_, indexA::Vector{Int6
     rng = MersenneTwister(Threads.threadid() + time_ns())
 
 
-    Gt1, Gt01, G0t1, BLMs1, BRMs1, BMs1, BMsinv1 =
-        G1.Gt, G1.Gt0, G1.G0t, G1.BLMs, G1.BRMs, G1.BMs, G1.BMinvs
-    Gt2, Gt02, G0t2, BLMs2, BRMs2, BMs2, BMsinv2 =
-        G2.Gt, G2.Gt0, G2.G0t, G2.BLMs, G2.BRMs, G2.BMs, G2.BMinvs
+    Gt1, G01, Gt01, G0t1, BLMs1, BRMs1, BMs1, BMsinv1 =
+        G1.Gt, G1.G0, G1.Gt0, G1.G0t, G1.BLMs, G1.BRMs, G1.BMs, G1.BMinvs
+    Gt2, G02, Gt02, G0t2, BLMs2, BRMs2, BMs2, BMsinv2 =
+        G2.Gt, G2.G0, G2.Gt0, G2.G0t, G2.BLMs, G2.BRMs, G2.BMs, G2.BMinvs
 
     # 预分配临时数组
     tmpN, tmpN_, tmpNN, tmpNn, tmpnN, tau = SCEE.N, SCEE.N_, SCEE.NN, SCEE.Nn, SCEE.nN, SCEE.tau
@@ -81,7 +81,7 @@ function ctrl_SCEEicr(path::String, model::tV_Hubbard_Para_, indexA::Vector{Int6
         # println("\n ====== Sweep $loop / $Sweeps ======")
         for lt in 1:model.Nt
             #####################################################################
-            # #     # # println("\n WrapTime check at lt=$lt")
+            #     # # println("\n WrapTime check at lt=$lt")
             # Gt1_, G01_, Gt01_, G0t1_ = G4(model, ss[1], lt - 1, div(model.Nt, 2), "Forward")
             # Gt2_, G02_, Gt02_, G0t2_ = G4(model, ss[2], lt - 1, div(model.Nt, 2), "Forward")
             # if norm(Gt1 - Gt1_) + norm(Gt2 - Gt2_) + norm(Gt01 - Gt01_) + norm(Gt02 - Gt02_) + norm(G0t1 - G0t1_) + norm(G0t2 - G0t2_) > ERROR

@@ -6,3 +6,6 @@ Todolist:
 Initial_s(): special for HoneyComb and SQUARE90 lattice in t-V model
 
 t-V model adjust for SQUARE90 lattice
+
+
+laptop

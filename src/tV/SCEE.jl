@@ -391,7 +391,7 @@ function get_ABGM!(G1::G4Buffer_, G2::G4Buffer_, A::AreaBuffer_, B::AreaBuffer_,
     #     axpy!(-1.0, G2.Gt0, WrapErr)
     #     tmp = norm(WrapErr)
     #     if tmp > 1e-6
-    #         println("Forward WrapTime error for at node: $idx")
+    #         println("Forward WrapTime error for at node $idx : $tmp")
     #     end
     # end
     #####################################################################

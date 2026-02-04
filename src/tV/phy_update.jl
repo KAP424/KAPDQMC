@@ -102,17 +102,16 @@ function phy_update(path::String, model::tV_Hubbard_Para_, s::Array{UInt8,3}, Sw
                 LAPACK.orgqr!(tmpNn, tau)
                 copyto!(view(BRs, :, :, idx), tmpNn)
 
-                # copyto!(tmpNN , G)
+                # copyto!(tmpNN, G)
 
                 get_G!(tmpnn, tmpnN, ipiv, view(BLs, :, :, idx), view(BRs, :, :, idx), G)
 
                 #------------------------------------------------------------------#
-                # axpy!(-1.0, G, tmpNN)  
-                # if norm(tmpNN)>1e-7
+                # axpy!(-1.0, G, tmpNN)
+                # if norm(tmpNN) > 1e-7
                 #     println("Warning for Batchsize Wrap Error : $(norm(tmpNN))")
                 # end
-                #------------------------------------------------------------------#
-
+                #-------------------------------------------------------------------
             end
 
         end

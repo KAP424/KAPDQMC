@@ -1,7 +1,7 @@
-function Initial_s(model::tV_Hubbard_Para_, rng::MersenneTwister)::Array{UInt8,3}
+function Initial_s(model, rng::MersenneTwister)::Array{UInt8,3}
     sp = Random.Sampler(rng, [1, 2, 3, 4])
-    a, b = size(model.nnidx)
-    s = zeros(UInt8, a, b, model.Nt)
+
+    s = zeros(UInt8, div(model.Ns, 3), 3, model.Nt)
 
     for i in eachindex(s)
         s[i] = rand(rng, sp)
@@ -9,7 +9,7 @@ function Initial_s(model::tV_Hubbard_Para_, rng::MersenneTwister)::Array{UInt8,3
     return s
 end
 
-function BM_F!(tmpN, tmpNN, BM, model::tV_Hubbard_Para_, s::Array{UInt8,3}, idx::Int64)
+function BM_F!(tmpN, tmpNN, BM, model::SO3_Hubbard_Para_, s::Array{UInt8,3}, idx::Int64)
     """
     不包头包尾
     """
@@ -23,13 +23,14 @@ function BM_F!(tmpN, tmpNN, BM, model::tV_Hubbard_Para_, s::Array{UInt8,3}, idx:
     for lt in model.nodes[idx]+1:model.nodes[idx+1]
         mul!(BM, model.eK, tmpNN)
         for j in reverse(axes(s, 2))
+            fill!(tmpN, 0)
             for i in axes(s, 1)
-                x, y = model.nnidx[i, j]
-                tmpN[x] = model.α[lt] * model.η[s[i, j, lt]]
-                tmpN[y] = -model.α[lt] * model.η[s[i, j, lt]]
+                x, y = model.bondidx[i, j]
+                tmpN[x] = -model.α[lt] * model.η[s[i, j, lt]]
+                tmpN[y] = model.α[lt] * model.η[s[i, j, lt]]
             end
             tmpN .= exp.(tmpN)
-            mul!(tmpNN, view(model.UV, :, :, j), BM)
+            mul!(tmpNN, view(model.UV, :, :, j)', BM)
             mul!(BM, Diagonal(tmpN), tmpNN)
             mul!(tmpNN, view(model.UV, :, :, j), BM)
             copyto!(BM, tmpNN)
@@ -37,7 +38,7 @@ function BM_F!(tmpN, tmpNN, BM, model::tV_Hubbard_Para_, s::Array{UInt8,3}, idx:
     end
 end
 
-function BMinv_F!(tmpN, tmpNN, BM, model::tV_Hubbard_Para_, s::Array{UInt8,3}, idx::Int64)
+function BMinv_F!(tmpN, tmpNN, BM, model::SO3_Hubbard_Para_, s::Array{UInt8,3}, idx::Int64)
     """
     不包头包尾
     """
@@ -51,16 +52,17 @@ function BMinv_F!(tmpN, tmpNN, BM, model::tV_Hubbard_Para_, s::Array{UInt8,3}, i
     for lt in model.nodes[idx]+1:model.nodes[idx+1]
         mul!(BM, tmpNN, model.eKinv)
         for j in reverse(axes(s, 2))
+            fill!(tmpN, 0)
             for i in axes(s, 1)
-                x, y = model.nnidx[i, j]
+                x, y = model.bondidx[i, j]
                 tmpN[x] = model.α[lt] * model.η[s[i, j, lt]]
                 tmpN[y] = -model.α[lt] * model.η[s[i, j, lt]]
             end
-            tmpN .= exp.(.-tmpN)
+            tmpN .= exp.(tmpN)
 
             mul!(tmpNN, BM, view(model.UV, :, :, j))
             mul!(BM, tmpNN, Diagonal(tmpN))
-            mul!(tmpNN, BM, view(model.UV, :, :, j))
+            mul!(tmpNN, BM, view(model.UV, :, :, j)')
             copyto!(BM, tmpNN)
         end
     end
@@ -73,21 +75,22 @@ end
         r ≡ inv(r) ⋅ ̇Δ .
     ------------------------------------------------------------------------------
 """
-function get_r!(UPD::UpdateBuffer_, Δs::Float64, Gt)
-    UPD.tmp2 .= Δs .* [1.0, -1.0]
+function get_r!(UPD, Δs::Float64, Gt)
+    UPD.tmp2 .= Δs .* [-1.0, 1.0]
     UPD.tmp2 .= exp.(UPD.tmp2) .- 1
     mul!(UPD.r, UPD.uv, Diagonal(UPD.tmp2))
-    mul!(UPD.Δ, UPD.r, UPD.uv)
+    mul!(UPD.Δ, UPD.r, UPD.uv')
     mul!(UPD.r, UPD.Δ, view(Gt, UPD.subidx, UPD.subidx))
     axpby!(1.0, UPD.Δ, -1.0, UPD.r)   # r = I + Δ ⋅ (I - Gt1[subidx,subidx])
     UPD.r[1, 1] += 1
     UPD.r[2, 2] += 1
-    p = det(UPD.r)
+    p = abs2(det(UPD.r))
     # redefine r=inv(r) ⋅ ̇Δ 
     inv22!(UPD.tmp22, UPD.r)
     mul!(UPD.r, UPD.tmp22, UPD.Δ)
     return p
 end
+
 
 """
     Overwrite G according to UV , D and option LR
@@ -97,58 +100,48 @@ end
     Only wrap interaction part 
     ------------------------------------------------------------------------------
 """
-function WrapV!(tmpNN, G, D, UV::SubArray{Float64,2,Array{Float64,3}}, LR::String)
+function WrapV!(tmpNN, G, D, UV::SubArray{ComplexF64,2,Array{ComplexF64,3}}, LR::String)
     if LR == "L"
-        mul!(tmpNN, UV, G)
+        mul!(tmpNN, UV', G)
         mul!(G, Diagonal(D), tmpNN)
         mul!(tmpNN, UV, G)
         copyto!(G, tmpNN)
     elseif LR == "R"
         mul!(tmpNN, G, UV)
         mul!(G, tmpNN, Diagonal(D))
-        mul!(tmpNN, G, UV)
+        mul!(tmpNN, G, UV')
         copyto!(G, tmpNN)
     elseif LR == "B"
-        mul!(tmpNN, UV, G)
+        mul!(tmpNN, UV', G)
         mul!(G, tmpNN, UV)
         mul!(tmpNN, Diagonal(D), G)
         D .= 1 ./ D
         mul!(G, tmpNN, Diagonal(D))
         mul!(tmpNN, UV, G)
-        mul!(G, tmpNN, UV)
+        mul!(G, tmpNN, UV')
     end
 end
+
 
 # Below is just used for debug
 
 "equal time Green function"
-function Gτ(model::tV_Hubbard_Para_, s::Array{UInt8,3}, τ::Int64)
+function Gτ(model::SO3_Hubbard_Para_, s::Array{UInt8,3}, τ::Int64)
     BL = model.Pt'[:, :]
     BR = model.Pt[:, :]
 
-    E = zeros(model.Ns)
+    E = zeros(ComplexF64, model.Ns)
     counter = 0
     for lt in model.Nt:-1:τ+1
         for j in axes(s, 2)
             fill!(E, 0.0)
             for i in axes(s, 1)
-                x, y = model.nnidx[i, j]
-                E[x] = model.α[lt] * model.η[s[i, j, lt]]
-                E[y] = -model.α[lt] * model.η[s[i, j, lt]]
+                x, y = model.bondidx[i, j]
+                E[x] = -model.α[lt] * model.η[s[i, j, lt]]
+                E[y] = model.α[lt] * model.η[s[i, j, lt]]
             end
-            BL = BL * model.UV[:, :, j] * Diagonal(exp.(E)) * model.UV[:, :, j]
-
-            #####################################################################
-            # V=zeros(Float64,model.Ns,model.Ns)
-            # for i in 1:size(s)[2]
-            #     x,y=model.nnidx[i,j]
-            #     V[x,y]=V[y,x]=s[lt,i,j]
-            # end
-            # tmp=model.UV[:,:,j]'*diagm(E)*model.UV[:,:,j]
-            # if norm(tmp-V)>1e-6
-            #     println("diagnose error")
-            # end
-            #####################################################################
+            BL = BL * model.UV[:, :, j] * Diagonal(exp.(E)) * model.UV[:, :, j]'
+            # @assert norm(Diagonal(exp.(E)) - I(model.Ns)) < 1e-5 "Diagonal(exp.(E)) should be close to identity when α is small!"
         end
         BL = BL * model.eK
         counter += 1
@@ -163,22 +156,12 @@ function Gτ(model::tV_Hubbard_Para_, s::Array{UInt8,3}, τ::Int64)
         for j in reverse(axes(s, 2))
             fill!(E, 0.0)
             for i in axes(s, 1)
-                x, y = model.nnidx[i, j]
-                E[x] = model.α[lt] * model.η[s[i, j, lt]]
-                E[y] = -model.α[lt] * model.η[s[i, j, lt]]
+                x, y = model.bondidx[i, j]
+                E[x] = -model.α[lt] * model.η[s[i, j, lt]]
+                E[y] = model.α[lt] * model.η[s[i, j, lt]]
             end
-            BR = model.UV[:, :, j] * Diagonal(exp.(E)) * model.UV[:, :, j] * BR
-            #####################################################################
-            # V=zeros(Float64,model.Ns,model.Ns)
-            # for i in 1:size(s)[2]
-            #     x,y=model.nnidx[i,j]
-            #     V[x,y]=V[y,x]=s[lt,i,j]
-            # end
-            # tmp=model.UV[:,:,j]'*diagm(E)*model.UV[:,:,j]
-            # if norm(tmp-V)>1e-6
-            #     println("diagnose error")
-            # end
-            #####################################################################
+            BR = model.UV[:, :, j] * Diagonal(exp.(E)) * model.UV[:, :, j]' * BR
+            # @assert norm(Diagonal(exp.(E)) - I(model.Ns)) < 1e-5 "Diagonal(exp.(E)) should be close to identity when α is small!"
         end
         counter += 1
         if counter == model.BatchSize
@@ -196,7 +179,7 @@ end
 
 
 "displaced Green function G(τ₁,τ₂)"
-function G4(model::tV_Hubbard_Para_, s::Array{UInt8,3}, τ1::Int64, τ2::Int64, direction="Forward")
+function G4(model::SO3_Hubbard_Para_, s::Array{UInt8,3}, τ1::Int64, τ2::Int64, direction="Forward")
     if τ1 > τ2
         BBs = zeros(ComplexF64, cld(τ1 - τ2, model.BatchSize), model.Ns, model.Ns)
         BBsInv = zeros(ComplexF64, size(BBs))
@@ -213,7 +196,7 @@ function G4(model::tV_Hubbard_Para_, s::Array{UInt8,3}, τ1::Int64, τ2::Int64, 
             for j in reverse(axes(s, 2))
                 E = zeros(model.Ns)
                 for i in axes(s, 1)
-                    x, y = model.nnidx[i, j]
+                    x, y = model.bondidx[i, j]
                     E[x] = model.α[lt] * model.η[s[i, j, lt]]
                     E[y] = -model.α[lt] * model.η[s[i, j, lt]]
                 end
@@ -233,7 +216,7 @@ function G4(model::tV_Hubbard_Para_, s::Array{UInt8,3}, τ1::Int64, τ2::Int64, 
             for j in axes(s, 2)
                 E = zeros(model.Ns)
                 for i in axes(s, 1)
-                    x, y = model.nnidx[i, j]
+                    x, y = model.bondidx[i, j]
                     E[x] = model.α[lt] * model.η[s[i, j, lt]]
                     E[y] = -model.α[lt] * model.η[s[i, j, lt]]
                 end
@@ -258,7 +241,7 @@ function G4(model::tV_Hubbard_Para_, s::Array{UInt8,3}, τ1::Int64, τ2::Int64, 
                 for j in reverse(axes(s, 2))
                     E = zeros(model.Ns)
                     for i in axes(s, 1)
-                        x, y = model.nnidx[i, j]
+                        x, y = model.bondidx[i, j]
                         E[x] = model.α[τ2+(lt-1)*model.BatchSize+lt2] * model.η[s[i, j, τ2+(lt-1)*model.BatchSize+lt2]]
                         E[y] = -model.α[τ2+(lt-1)*model.BatchSize+lt2] * model.η[s[i, j, τ2+(lt-1)*model.BatchSize+lt2]]
                     end
@@ -277,7 +260,7 @@ function G4(model::tV_Hubbard_Para_, s::Array{UInt8,3}, τ1::Int64, τ2::Int64, 
             for j in reverse(axes(s, 2))
                 E = zeros(model.Ns)
                 for i in axes(s, 1)
-                    x, y = model.nnidx[i, j]
+                    x, y = model.bondidx[i, j]
                     E[x] = model.α[lt] * model.η[s[i, j, lt]]
                     E[y] = -model.α[lt] * model.η[s[i, j, lt]]
                 end

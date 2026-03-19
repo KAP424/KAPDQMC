@@ -121,7 +121,7 @@ if abspath(PROGRAM_FILE) == @__FILE__
     rng = MersenneTwister(1234)
 
     model = tV_Hubbard_Para(Ht=1.0, Hv1=1.0, Hv2=1.0, Θrelax=3.0, Θquench=0.0,
-        Lattice="SQUARE90", site=[3, 3], Δt=0.05, BatchSize=5, Initial="H0", flux=π)
+        Lattice="SQUARE90", site=[4, 4], Δt=0.05, BatchSize=5, Initial="H0", flux=π)
     println("$(model.Lattice) Hubbard model initialized.")
 
     lt = 1
@@ -143,8 +143,8 @@ if abspath(PROGRAM_FILE) == @__FILE__
                 tmpV[y, x] = model.η[s[i, j, lt]]
             end
             tmpVV[j, :, :] = tmpV[:, :]
-            @assert norm(model.UV[:, :, j] * Diagonal(tmpN) * model.UV[:, :, j]' - tmpV) < 1e-5
-            @assert norm(model.UV[:, :, j]' * model.UV[:, :, j] - I(model.Ns)) < 1e-5
+            @assert norm(model.UV[:, :, j] * Diagonal(tmpN) * model.UV[:, :, j] - tmpV) < 1e-5
+            @assert norm(model.UV[:, :, j] * model.UV[:, :, j] - I(model.Ns)) < 1e-5
             # specially: UV'=UV
             @assert norm(model.UV[:, :, j] - model.UV[:, :, j]') < 1e-5
         end

@@ -7,7 +7,7 @@ using ..KAPDQMC: inv22!, GroverMatrix, GroverMatrix!
 
 using LinearAlgebra, LinearAlgebra.BLAS, LinearAlgebra.LAPACK
 using DelimitedFiles, Random
-using Printf
+const Printf = Base.Printf
 
 # 扩展父模块统一 API：导入 `phy_update` 并在本模块中添加方法
 
@@ -16,6 +16,7 @@ include("../public/Gupdate.jl")
 include("GreenMatrix.jl")
 include("phy_update.jl")
 include("SCEE.jl")
+include("SO3algebra.jl")
 # include("EEicr.jl")
 # include("disorder_operate.jl")
 

@@ -9,7 +9,7 @@ using LinearAlgebra
     rng = MersenneTwister(time_ns())
 
     Lattice = "HoneyComb120"
-    site = [3, 3]
+    site = [6, 6]
 
     model = SO3_Hubbard_Para(Ht=1.0, HJ1=1.0, HJ2=1.0,
         Θrelax=1.5, Θquench=0.0, Lattice=Lattice, site=site, Δt=0.1, BatchSize=5, Initial="H0")

@@ -1,11 +1,13 @@
 # using SU(2) ±1,±2 HS transformation
 mutable struct UpdateBuffer_
+    acc::Int64
     r::Matrix{ComplexF64}
     subidx::Vector{Int64}
 end
 
 function UpdateBuffer()
     return UpdateBuffer_(
+        0,
         Matrix{ComplexF64}(undef, 1, 1),
         [0],
     )

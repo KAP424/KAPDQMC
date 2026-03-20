@@ -278,15 +278,15 @@ function G4(model::SO3_Hubbard_Para_, s::Array{UInt8,3}, τ1::Int64, τ2::Int64,
             G[i, :, :] = I(model.Ns) - UR[i, :, :] * inv(UL[i, :, :] * UR[i, :, :]) * UL[i, :, :]
 
             #####################################################################
-            # if i <size(G)[1]
-            #     if norm(Gτ(model,s,τ2+(i-1)*model.BatchSize)-G[i,:,:])>1e-3
-            #         error("$i Gt:  $(norm(Gτ(model,s,τ2+(i-1)*model.BatchSize)-G[i,:,:]))")
-            #     end
-            # else
-            #     if norm(Gτ(model,s,τ1)-G[i,:,:])>1e-3
-            #         error("$i Gt:  $(norm(Gτ(model,s,τ1)-G[i,:,:]))")
-            #     end
-            # end
+            if i <size(G)[1]
+                if norm(Gτ(model,s,τ2+(i-1)*model.BatchSize)-G[i,:,:])>1e-3
+                    error("$i Gt:  $(norm(Gτ(model,s,τ2+(i-1)*model.BatchSize)-G[i,:,:]))")
+                end
+            else
+                if norm(Gτ(model,s,τ1)-G[i,:,:])>1e-3
+                    error("$i Gt:  $(norm(Gτ(model,s,τ1)-G[i,:,:]))")
+                end
+            end
             #####################################################################
         end
 

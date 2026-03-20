@@ -2,6 +2,7 @@
 
 function phy_update(path::String, model::tV_Hubbard_Para_, s::Array{UInt8,3}, Sweeps::Int64, record::Bool)
     T = typeof(model.K[1, 1])
+    TTT = time_ns()
     global LOCK = ReentrantLock()
     ERROR = 1e-6
 
@@ -177,6 +178,13 @@ function phy_update(path::String, model::tV_Hubbard_Para_, s::Array{UInt8,3}, Sw
             counter = 0
         end
     end
+    if record
+        TTT = round(Int, (time_ns() - TTT) / 1e9)
+        hour = TTT ÷ 3600
+        minite = (TTT % 3600) ÷ 60
+        second = TTT % 60
+        println("      acc = ", round(100 * UPD.acc / prod(size(s)) / Sweeps / 2, digits=2), "%", "  $(Sweeps) Sweep finished in ", @sprintf("%02d:%02d:%02d", hour, minite, second))
+    end
     return s
 end
 
@@ -191,6 +199,7 @@ function UpdatePhyLayer!(rng, j, s, lt, model::tV_Hubbard_Para_, UPD::UpdateBuff
             println("Negative Sign: $(p)")
         end
         if rand(rng) < real(p)
+            UPD.acc += 1
             Gupdate!(Phy, UPD)
             s[i] = sx
         end

@@ -30,7 +30,7 @@ function SO3Initial_Pt!(Lattice, Initial, Pt, K)
             end
         end
     elseif Initial == "HJ"
-        
+
     else
         error("Initial state $Initial not supported!")
     end
@@ -176,6 +176,7 @@ function SO3_Hubbard_Para(; Ht, HJ1, HJ2, Δt, Θrelax, Θquench, Lattice::Strin
 end
 
 mutable struct UpdateBuffer_
+    acc::Int64
     uv::Matrix{ComplexF64}      # 2 x 2
     tmp22::Matrix{ComplexF64}   # 2 x 2
     tmp2::Vector{ComplexF64}    # length 2
@@ -187,6 +188,7 @@ end
 function UpdateBuffer()
     uv = [1 1; -1im 1im] / sqrt(2)
     return UpdateBuffer_(
+        0,
         uv,
         Matrix{ComplexF64}(undef, 2, 2),
         Vector{ComplexF64}(undef, 2),

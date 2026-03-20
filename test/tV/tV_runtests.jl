@@ -40,7 +40,7 @@ using LinearAlgebra
     println(size(s))
 
     # s = phy_update(path, model, s, 2, false)
-    # s = phy_update(path, model, s, 80, true)
+    s = phy_update(path, model, s, 20, true)
 
     L = model.site[2]
     indexA = area_index(model.Lattice, model.site, ([1, 1], [div(L, 2), L]))
@@ -54,6 +54,6 @@ using LinearAlgebra
     # s = ctrl_SCDOPicr(path, model, π / 2, indexA, indexB, 20, λ, Nλ, s, true)
 
     # # println(@btime ctrl_SCEEicr($path,$model,$indexA,$indexB,$Sweeps,$λ,$Nλ,$ss,$true) )
-    ss = ctrl_SCEEicr(path, model, indexA, indexB, 1, λ, Nλ, ss, false)
+    ss = ctrl_SCEEicr(path, model, indexA, indexB, 3, λ, Nλ, ss, true)
 
 end

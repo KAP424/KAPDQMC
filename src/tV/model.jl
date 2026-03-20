@@ -94,6 +94,7 @@ function tV_Hubbard_Para(; Ht, Hv1, Hv2, Δt, Θrelax, Θquench, Lattice::String
 end
 
 mutable struct UpdateBuffer_{T<:Number}
+    acc::Int64
     uv::Matrix{Float64}      # 2 x 2
     tmp22::Matrix{T}   # 2 x 2
     tmp2::Vector{T}    # length 2
@@ -105,6 +106,7 @@ end
 function UpdateBuffer(T)
     uv = [-2^0.5/2 -2^0.5/2; -2^0.5/2 2^0.5/2]
     return UpdateBuffer_(
+        0,
         uv,
         Matrix{T}(undef, 2, 2),
         Vector{T}(undef, 2),

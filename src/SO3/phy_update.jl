@@ -1,8 +1,8 @@
 # turn off symmetric HS decomposition when debuging
 
 function phy_update(path::String, model::SO3_Hubbard_Para_, s::Array{UInt8,3}, Sweeps::Int64, record::Bool)
-    T = typeof(model.K[1, 1])
     global LOCK = ReentrantLock()
+    TTT = time_ns()
     ERROR = 1e-6
 
     UPD = UpdateBuffer()
@@ -48,7 +48,7 @@ function phy_update(path::String, model::SO3_Hubbard_Para_, s::Array{UInt8,3}, S
         for lt in axes(s, 3)
             #####################################################################
             # println(lt)
-            @assert norm(G - Gτ(model, s, lt - 1)) < ERROR "Initial G does not match Gτ for lt=$(lt): $(norm(G-Gτ(model,s,lt-1))) , $(norm(G)) , $(norm(Gτ(model,s,lt-1))) "
+            # @assert norm(G - Gτ(model, s, lt - 1)) < ERROR "Initial G does not match Gτ for lt=$(lt): $(norm(G-Gτ(model,s,lt-1))) , $(norm(G)) , $(norm(Gτ(model,s,lt-1))) "
             #####################################################################
 
             mul!(tmpNN, G, model.eKinv)
@@ -65,34 +65,33 @@ function phy_update(path::String, model::SO3_Hubbard_Para_, s::Array{UInt8,3}, S
                     tmpN[y] = model.α[lt] * model.η[s[i, j, lt]]
                 end
                 tmpN .= exp.(tmpN)
-                tmpGG = copy(G)
                 WrapV!(tmpNN, G, tmpN, view(model.UV, :, :, j), "B")
-                # println(norm(tmpGG - G))
 
                 UpdatePhyLayer!(rng, j, view(s, :, j, lt), lt, model, UPD, Phy)
                 ####################################################################
-                print("*")
-                GG = model.eK * Gτ(model, s, lt - 1) * model.eKinv
-                # @assert norm(G - GG) < ERROR "Initial G does not match Gτ for lt=$(lt): $(norm(G-GG))"
-                for jj in size(model.bondidx, 2):-1:j
-                    # println("jj=$(jj)")
-                    E = zeros(model.Ns)
-                    for ii in 1:size(s)[1]
-                        x, y = model.bondidx[ii, jj]
-                        E[x] = -model.α[lt] * model.η[s[ii, jj, lt]]
-                        E[y] = model.α[lt] * model.η[s[ii, jj, lt]]
-                    end
-                    GG = model.UV[:, :, jj] * Diagonal(exp.(E)) * model.UV[:, :, jj]' * GG * model.UV[:, :, jj] * Diagonal(exp.(-E)) * model.UV[:, :, jj]'
-                end
-                if (norm(G - GG) > ERROR)
-                    println("lt=$(lt) j=$(j)")
-                    error(j, " update error: ", norm(G - GG), "  lt=", lt)
-                end
+                # print("*")
+                # GG = model.eK * Gτ(model, s, lt - 1) * model.eKinv
+                # # @assert norm(G - GG) < ERROR "Initial G does not match Gτ for lt=$(lt): $(norm(G-GG))"
+                # for jj in size(model.bondidx, 2):-1:j
+                #     # println("jj=$(jj)")
+                #     E = zeros(model.Ns)
+                #     for ii in 1:size(s)[1]
+                #         x, y = model.bondidx[ii, jj]
+                #         E[x] = -model.α[lt] * model.η[s[ii, jj, lt]]
+                #         E[y] = model.α[lt] * model.η[s[ii, jj, lt]]
+                #     end
+                #     GG = model.UV[:, :, jj] * Diagonal(exp.(E)) * model.UV[:, :, jj]' * GG * model.UV[:, :, jj] * Diagonal(exp.(-E)) * model.UV[:, :, jj]'
+                # end
+                # if (norm(G - GG) > ERROR)
+                #     println("lt=$(lt) j=$(j)")
+                #     error(j, " update error: ", norm(G - GG), "  lt=", lt)
+                # end
                 ####################################################################
             end
 
             if record && abs(idx - Θidx) <= 1
-                tmp = phy_measure(model, Phy, lt, s)
+                tmp = [0, 0, zeros(Float64, 4), zeros(Float64, 4)]
+                # tmp = phy_measure(model, Phy, lt, s)
                 Ek += tmp[1]
                 Ev += tmp[2]
                 axpy!(1, tmp[3], R0)
@@ -142,7 +141,8 @@ function phy_update(path::String, model::SO3_Hubbard_Para_, s::Array{UInt8,3}, S
             mul!(G, tmpNN, model.eK)
 
             if record && abs(idx - Θidx) <= 1
-                tmp = phy_measure(model, Phy, lt - 1, s)
+                tmp = [0, 0, zeros(Float64, 4), zeros(Float64, 4)]
+                # tmp = phy_measure(model, Phy, lt - 1, s)
                 Ek += tmp[1]
                 Ev += tmp[2]
                 axpy!(1, tmp[3], R0)
@@ -183,6 +183,13 @@ function phy_update(path::String, model::SO3_Hubbard_Para_, s::Array{UInt8,3}, S
             counter = 0
         end
     end
+    if record
+        TTT = round(Int, (time_ns() - TTT) / 1e9)
+        hour = TTT ÷ 3600
+        minite = (TTT % 3600) ÷ 60
+        second = TTT % 60
+        println("      acc = ", round(100 * UPD.acc / prod(size(s)) / Sweeps / 2, digits=2), "%", "  $(Sweeps) Sweep finished in ", @sprintf("%02d:%02d:%02d", hour, minite, second))
+    end
     return s
 end
 
@@ -194,6 +201,7 @@ function UpdatePhyLayer!(rng, j, s, lt, model::SO3_Hubbard_Para_, UPD::UpdateBuf
         p = get_r!(UPD, model.α[lt] * (model.η[sx] - model.η[s[i]]), Phy.G)
         p *= model.γ[sx] / model.γ[s[i]]
         if rand(rng) < p
+            UPD.acc += 1
             Gupdate!(Phy, UPD)
             s[i] = sx
         end

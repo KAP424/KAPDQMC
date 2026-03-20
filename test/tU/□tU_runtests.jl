@@ -47,17 +47,17 @@ using LinearAlgebra
     L = model.site[2]
     indexA = area_index(model.Lattice, model.site, ([1, 1], [L, div(L, 2)]))
     # # HalfHalf
-    # indexB = area_index(model.Lattice, model.site, ([1, 1], [div(L, 2), div(L, 2)]))
+    indexB = area_index(model.Lattice, model.site, ([1, 1], [div(L, 2), div(L, 2)]))
 
     s = Initial_s(model, rng)
     ss = [copy(s), copy(s)]
 
 
     # # println(@btime ctrl_SCEEicr($path,$model,$indexA,$indexB,$Sweeps,$λ,$Nλ,$ss,$true) )
-    # ss = ctrl_SCEEicr(path, model, indexA, indexB, 2, λ, Nλ, ss, true)
-    ss = ctrl_EEicr(path, model, indexA, 2, λ, Nλ, ss, true)
+    ss = ctrl_SCEEicr(path, model, indexA, indexB, 2, λ, Nλ, ss, true)
+    # ss = ctrl_EEicr(path, model, indexA, 2, λ, Nλ, ss, true)
 
-    # s = phy_update(path, model, s, 10, true)
+    s = phy_update(path, model, s, 10, true)
 
 
     # L = model.site[2]

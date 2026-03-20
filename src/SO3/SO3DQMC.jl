@@ -7,6 +7,7 @@ using ..KAPDQMC: inv22!, GroverMatrix, GroverMatrix!
 
 using LinearAlgebra, LinearAlgebra.BLAS, LinearAlgebra.LAPACK
 using DelimitedFiles, Random
+using Printf
 
 # 扩展父模块统一 API：导入 `phy_update` 并在本模块中添加方法
 
@@ -18,6 +19,6 @@ include("SCEE.jl")
 # include("EEicr.jl")
 # include("disorder_operate.jl")
 
-export SO3_Hubbard_Para
+export SO3_Hubbard_Para, SO3Initial_Pt!, nnK_Matrix4so3
 end
 

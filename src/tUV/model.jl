@@ -83,6 +83,7 @@ function tUV_Hubbard_Para(; Ht, Hu, Hv, Lattice::String, site, Δt, Θ, BatchSiz
 end
 
 mutable struct UpdateBuffer_{T<:Number}
+    acc::Int64
     a::Float64
     tmp22::Matrix{T}          # 2×2
     tmp2::Vector{T}           # length 2
@@ -93,6 +94,7 @@ end
 
 function UpdateBuffer(::Type{T}) where {T<:Number}
     return UpdateBuffer_{T}(
+        0,
         0.0,
         Matrix{T}(undef, 2, 2),
         Vector{T}(undef, 2),

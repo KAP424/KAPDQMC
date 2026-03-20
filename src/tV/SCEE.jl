@@ -1,6 +1,7 @@
 function ctrl_SCEEicr(path::String, model::tV_Hubbard_Para_, indexA::Vector{Int64}, indexB::Vector{Int64}, Sweeps::Int64, λ::Float64, Nλ::Int64, ss::Vector{Array{UInt8,3}}, record)
     T = typeof(model.K[1, 1])
     global LOCK = ReentrantLock()
+    TTT = time_ns()
     ERROR = 1e-5
 
     NN = length(model.nodes)
@@ -353,6 +354,12 @@ function ctrl_SCEEicr(path::String, model::tV_Hubbard_Para_, indexA::Vector{Int6
     end
 
     if record
+        TTT = round(Int, (time_ns() - TTT) / 1e9)
+        hour = TTT ÷ 3600
+        minite = (TTT % 3600) ÷ 60
+        second = TTT % 60
+        println("      λ=$λ  acc = ", round(100 * UPD.acc / prod(size(ss[1])) / Sweeps / 4, digits=2), "%", "  $(Sweeps) Sweep finished in ", @sprintf("%02d:%02d:%02d", hour, minite, second))
+
         lock(LOCK) do
             open(file, "a") do io
                 writedlm(io, O', ',')
@@ -425,6 +432,7 @@ function UpdateSCEELayer!(rng, j, s1, s2, lt, G1::G4Buffer_, G2::G4Buffer_, A::A
                 println("Warning: negative p=$p at lt=$lt, j=$j, i=$i")
             end
             if rand(rng) < abs(p)
+                UPD.acc += 1
                 A.detg *= detTau_A
                 B.detg *= detTau_B
 
@@ -449,6 +457,7 @@ function UpdateSCEELayer!(rng, j, s1, s2, lt, G1::G4Buffer_, G2::G4Buffer_, A::A
                 println("Warning: negative p=$p at lt=$lt, j=$j, i=$i")
             end
             if rand(rng) < abs(p)
+                UPD.acc += 1
                 A.detg *= detTau_A
                 B.detg *= detTau_B
 

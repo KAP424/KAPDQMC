@@ -6,12 +6,12 @@ function ctrl_SCEEicr(path::String, model::SO3_Hubbard_Para_, indexA::Vector{Int
     NN = length(model.nodes)
     Θidx = div(NN, 2) + 1
 
-    UPD = UpdateBuffer(T)
-    SCEE = SCEEBuffer(T, model.Ns)
-    A = AreaBuffer(T, indexA)
-    B = AreaBuffer(T, indexB)
-    G1 = G4Buffer(T, model.Ns, NN)
-    G2 = G4Buffer(T, model.Ns, NN)
+    UPD = UpdateBuffer()
+    SCEE = SCEEBuffer(model.Ns)
+    A = AreaBuffer(indexA)
+    B = AreaBuffer(indexB)
+    G1 = G4Buffer(model.Ns, NN)
+    G2 = G4Buffer(model.Ns, NN)
 
     name = name_Lattice(model.Lattice)
 
@@ -81,23 +81,23 @@ function ctrl_SCEEicr(path::String, model::SO3_Hubbard_Para_, indexA::Vector{Int
         # println("\n ====== Sweep $loop / $Sweeps ======")
         for lt in 1:model.Nt
             #####################################################################
-            #     # # println("\n WrapTime check at lt=$lt")
-            # Gt1_, G01_, Gt01_, G0t1_ = G4(model, ss[1], lt - 1, div(model.Nt, 2), "Forward")
-            # Gt2_, G02_, Gt02_, G0t2_ = G4(model, ss[2], lt - 1, div(model.Nt, 2), "Forward")
-            # if norm(Gt1 - Gt1_) + norm(Gt2 - Gt2_) + norm(Gt01 - Gt01_) + norm(Gt02 - Gt02_) + norm(G0t1 - G0t1_) + norm(G0t2 - G0t2_) > ERROR
-            #     println(norm(Gt1 - Gt1_), ' ', norm(Gt2 - Gt2_), '\n', norm(G01 - G01_), ' ', norm(G02 - G02_), '\n', norm(Gt01 - Gt01_), ' ', norm(Gt02 - Gt02_), '\n', norm(G0t1 - G0t1_), ' ', norm(G0t2 - G0t2_))
-            #     error("$lt : WrapTime")
-            # end
-            # GM_A_ = GroverMatrix(G01_[indexA[:], indexA[:]], G02_[indexA[:], indexA[:]])
-            # gmInv_A_ = inv(GM_A_)
-            # GM_B_ = GroverMatrix(G01_[indexB[:], indexB[:]], G02_[indexB[:], indexB[:]])
-            # gmInv_B_ = inv(GM_B_)
-            # detg_A_ = det(GM_A_)
-            # detg_B_ = det(GM_B_)
-            # if norm(gmInv_A_ - A.gmInv) + norm(B.gmInv - gmInv_B_) + abs(A.detg - detg_A_) + abs(B.detg - detg_B_) > ERROR
-            #     println(norm(gmInv_A_ - A.gmInv), " ", norm(B.gmInv - gmInv_B_), " ", abs(A.detg - detg_A_), " ", abs(B.detg - detg_B_))
-            #     error("s2:  $lt : WrapTime")
-            # end
+                # # println("\n WrapTime check at lt=$lt")
+            Gt1_, G01_, Gt01_, G0t1_ = G4(model, ss[1], lt - 1, div(model.Nt, 2), "Forward")
+            Gt2_, G02_, Gt02_, G0t2_ = G4(model, ss[2], lt - 1, div(model.Nt, 2), "Forward")
+            if norm(Gt1 - Gt1_) + norm(Gt2 - Gt2_) + norm(Gt01 - Gt01_) + norm(Gt02 - Gt02_) + norm(G0t1 - G0t1_) + norm(G0t2 - G0t2_) > ERROR
+                println(norm(Gt1 - Gt1_), ' ', norm(Gt2 - Gt2_), '\n', norm(G01 - G01_), ' ', norm(G02 - G02_), '\n', norm(Gt01 - Gt01_), ' ', norm(Gt02 - Gt02_), '\n', norm(G0t1 - G0t1_), ' ', norm(G0t2 - G0t2_))
+                error("$lt : WrapTime")
+            end
+            GM_A_ = GroverMatrix(G01_[indexA[:], indexA[:]], G02_[indexA[:], indexA[:]])
+            gmInv_A_ = inv(GM_A_)
+            GM_B_ = GroverMatrix(G01_[indexB[:], indexB[:]], G02_[indexB[:], indexB[:]])
+            gmInv_B_ = inv(GM_B_)
+            detg_A_ = det(GM_A_)
+            detg_B_ = det(GM_B_)
+            if norm(gmInv_A_ - A.gmInv) + norm(B.gmInv - gmInv_B_) + abs(A.detg - detg_A_) + abs(B.detg - detg_B_) > ERROR
+                println(norm(gmInv_A_ - A.gmInv), " ", norm(B.gmInv - gmInv_B_), " ", abs(A.detg - detg_A_), " ", abs(B.detg - detg_B_))
+                error("s2:  $lt : WrapTime")
+            end
             #####################################################################
 
             WrapK!(tmpNN, G1, model.eK, model.eKinv)
@@ -396,12 +396,12 @@ function get_ABGM!(G1::G4Buffer_, G2::G4Buffer_, A::AreaBuffer_, B::AreaBuffer_,
     # end
     #####################################################################
     GroverMatrix!(A.gmInv, view(G1.G0, A.index, A.index), view(G2.G0, A.index, A.index))
-    A.detg = det(A.gmInv)
+    A.detg = abs2(det(A.gmInv))
     LAPACK.getrf!(A.gmInv, A.ipiv)
     LAPACK.getri!(A.gmInv, A.ipiv)
 
     GroverMatrix!(B.gmInv, view(G1.G0, B.index, B.index), view(G2.G0, B.index, B.index))
-    B.detg = det(B.gmInv)
+    B.detg = abs2(det(B.gmInv))
     LAPACK.getrf!(B.gmInv, B.ipiv)
     LAPACK.getri!(B.gmInv, B.ipiv)
 end

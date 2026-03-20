@@ -29,6 +29,10 @@ function SO3Initial_Pt!(Lattice, Initial, Pt, K)
                 end
             end
         end
+    elseif Initial == "HJ"
+        
+    else
+        error("Initial state $Initial not supported!")
     end
 
 end

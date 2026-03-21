@@ -39,7 +39,7 @@ struct tU_Hubbard_Para_
     flux::Float64
 end
 
-function tU_Hubbard_Para(; Ht, Hu1, Hu2, Δt, Θrelax, Θquench, Lattice::String, site, BatchSize, Initial::String, flux=0.0)
+function tU_Hubbard_Para(; Ht, Hu1, Hu2, Δt, Θrelax, Θquench, Lattice::String, site, BatchSize, Initial::String, flux=0.0, opt="xy")
     Nt = round(Int, 2 * (Θrelax + Θquench) / Δt)
     if (Θquench > 0.0) & (abs(Hu1 - Hu2) > 0)
         # ΔU = (Hu1 - Hu2) / Θquench * Δt
@@ -58,7 +58,7 @@ function tU_Hubbard_Para(; Ht, Hu1, Hu2, Δt, Θrelax, Θquench, Lattice::String
     γ = [1 + sqrt(6) / 3, 1 + sqrt(6) / 3, 1 - sqrt(6) / 3, 1 - sqrt(6) / 3]
     η = [sqrt(2 * (3 - sqrt(6))), -sqrt(2 * (3 - sqrt(6))), sqrt(2 * (3 + sqrt(6))), -sqrt(2 * (3 + sqrt(6)))]
 
-    K = nnK_Matrix(Lattice, site, flux=flux)
+    K = nnK_Matrix(Lattice, site, flux=flux, opt=opt)
     Ns = size(K, 1)
 
     E, V = LAPACK.syevd!('V', 'L', Ht * K[:, :])

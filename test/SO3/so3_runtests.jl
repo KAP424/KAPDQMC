@@ -12,7 +12,7 @@ using LinearAlgebra
     site = [6, 6]
 
     model = SO3_Hubbard_Para(Ht=1.0, HJ1=1.0, HJ2=1.0,
-        Θrelax=1.5, Θquench=0.0, Lattice=Lattice, site=site, Δt=0.1, BatchSize=5, Initial="H0")
+        Θrelax=1.5, Θquench=0.0, Lattice=Lattice, site=site, Δt=0.1, BatchSize=5, Initial="HJ")
     # @assert norm(model.α) < 1e-10 "α should be zero when HJ1 and HJ2 are zero!"
 
     s = Initial_s(model, rng)

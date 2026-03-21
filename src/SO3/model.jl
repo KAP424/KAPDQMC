@@ -43,7 +43,6 @@ function SO3_Hubbard_Para(; Ht, HJ1, HJ2, Δt, Θrelax, Θquench, Lattice::Strin
 
     Pt = zeros(ComplexF64, Ns, div(Ns, 2))
     SO3Initial_Pt!(Lattice, Initial, Pt, K)
-    @assert norm(Pt' * Pt - I(div(Ns, 2))) < 1e-10 "Pt is not unitary!"
 
     Nt = round(Int, 2 * (Θrelax + Θquench) / Δt)
     if (Θquench > 0) & (abs(HJ1 - HJ2) > 0)

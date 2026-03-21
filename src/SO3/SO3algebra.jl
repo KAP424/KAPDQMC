@@ -17,25 +17,33 @@ function SO3Initial_Pt!(Lattice, Initial, Pt, K)
                 count += 3
             end
         elseif Lattice == "SQUARE45"
-            count = 1
-            for i in 1:Ns
-                x, y = i_xy(Lattice, site, i)
-                if (x + y) % 2 == 1
-                    Pt[i, count] = 1
-                    count += 1
-                    if count > div(Ns, 2)
-                        break
-                    end
-                end
-            end
+            # count = 1
+            # for i in 1:Ns
+            #     x, y = i_xy(Lattice, site, i)
+            #     if (x + y) % 2 == 1
+            #         Pt[i, count] = 1
+            #         count += 1
+            #         if count > div(Ns, 2)
+            #             break
+            #         end
+            #     end
+            # end
+            error("Initial state $Initial not supported for Lattice $Lattice!")
         end
     elseif Initial == "HJ"
-
+        for i in 1:div(Ns, 6)
+            if i % 2 == 1
+                Pt[diagind(Pt)[3*(i-1)+1:3*i]] .= [1, -1im, 1]
+            else
+                Pt[diagind(Pt)[3*(i-1)+1:3*i]] .= [1, 1im, 1]
+            end
+        end
     else
         error("Initial state $Initial not supported!")
     end
-
+    @assert norm(Pt' * Pt - I(div(Ns, 2))) < 1e-10 "Pt is not unitary!"
 end
+
 
 function so3Tindex(site, bond)
     if bond == 1

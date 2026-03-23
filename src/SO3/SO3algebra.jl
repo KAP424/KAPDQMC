@@ -45,17 +45,16 @@ function SO3Initial_Pt!(Lattice, Initial, Pt, K)
 end
 
 
-function so3Tindex(site, bond)
-    if bond == 1
-        return (site - 1) * 3 + 2, (site - 1) * 3 + 3
-    elseif bond == 2
-        return (site - 1) * 3 + 1, (site - 1) * 3 + 3
-    elseif bond == 3
-        return (site - 1) * 3 + 1, (site - 1) * 3 + 2
+function so3bondTidx_F(Lattice, site)
+    function so3bondTidx(i, bond)
+        if bond == 1
+            return (i - 1) * 3 + 2, (i - 1) * 3 + 3
+        elseif bond == 2
+            return (i - 1) * 3 + 1, (i - 1) * 3 + 3
+        elseif bond == 3
+            return (i - 1) * 3 + 1, (i - 1) * 3 + 2
+        end
     end
-end
-
-function so3Tindex_F(Lattice, site)
     if occursin("HoneyComb", Lattice)
         Ns = 2 * prod(site)
     end
@@ -63,7 +62,7 @@ function so3Tindex_F(Lattice, site)
 
     for i in 1:Ns
         for bond in 1:3
-            nnidx[i, bond] = so3Tindex(i, bond)
+            nnidx[i, bond] = so3bondTidx(i, bond)
         end
     end
     return nnidx
@@ -86,5 +85,30 @@ function nnK_Matrix4so3(Lattice, site, flux=0.0, opt="xy")
         error("Lattice $Lattice not supported!")
     end
     return K
+end
+
+function xyzσTidx(Lattice, site, x, y, z, σ)
+    """
+    [x,y]: site coordinate
+    z: A/B sublattice index (1,2)
+    σ: flavor type (1,2,3)
+    """
+    idx = xy_i(Lattice, site, x, y)
+    if z == 1
+        idx -= 1
+    end
+    idx = 3 * idx - 3 + σ
+    return idx
+end
+
+function so3area_index(Lattice::String, site::Vector{Int64}, area::Tuple{Vector{Int64},Vector{Int64}})::Vector{Int64}
+    index = area_index(Lattice, site, area)
+    so3index = zeros(Int64, 3 * length(index))
+    for i in eachindex(index)
+        for σ in 1:3
+            so3index[3*(i-1)+σ] = 3 * index[i] - 3 + σ
+        end
+    end
+    return so3index
 end
 

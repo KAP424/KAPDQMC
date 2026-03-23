@@ -20,9 +20,7 @@ function phy_update(path::String, model::SO3_Hubbard_Para_, s::Array{UInt8,3}, S
 
     rng = MersenneTwister(Threads.threadid() + time_ns())
 
-    Ek = Ev = 0.0
-    R0 = zeros(Float64, 4)
-    R1 = zeros(Float64, 4)
+    PHY_RECORD = zeros(5)
     counter = 0
 
     G, BLs, BRs, tmpN, tmpNN, tmpnn, tmpnN, tmpNn, tau, ipiv, BM =
@@ -47,14 +45,12 @@ function phy_update(path::String, model::SO3_Hubbard_Para_, s::Array{UInt8,3}, S
         # println("\n Sweep: $loop ")
         for lt in axes(s, 3)
             #####################################################################
-            # println(lt)
+            # # println(lt)
             # @assert norm(G - Gτ(model, s, lt - 1)) < ERROR "Initial G does not match Gτ for lt=$(lt): $(norm(G-Gτ(model,s,lt-1))) , $(norm(G)) , $(norm(Gτ(model,s,lt-1))) "
             #####################################################################
 
             mul!(tmpNN, G, model.eKinv)
             mul!(G, model.eK, tmpNN)
-            # println(norm(G - Gτ(model, s, lt - 1)))
-            # println(norm(G - model.eK * Gτ(model, s, lt - 1) * model.eKinv))
             # @assert norm(model.eKinv * G * model.eK - Gτ(model, s, lt - 1)) < 1e-8 "12321312G does not match Gτ for lt=$(lt): $(norm(model.eKinv * G * model.eK - Gτ(model, s, lt - 1)))"
 
             for j in reverse(axes(s, 2))
@@ -71,7 +67,6 @@ function phy_update(path::String, model::SO3_Hubbard_Para_, s::Array{UInt8,3}, S
                 ####################################################################
                 # print("*")
                 # GG = model.eK * Gτ(model, s, lt - 1) * model.eKinv
-                # # @assert norm(G - GG) < ERROR "Initial G does not match Gτ for lt=$(lt): $(norm(G-GG))"
                 # for jj in size(model.bondidx, 2):-1:j
                 #     # println("jj=$(jj)")
                 #     E = zeros(model.Ns)
@@ -90,12 +85,7 @@ function phy_update(path::String, model::SO3_Hubbard_Para_, s::Array{UInt8,3}, S
             end
 
             if record && abs(idx - Θidx) <= 1
-                tmp = [0, 0, zeros(Float64, 4), zeros(Float64, 4)]
-                # tmp = phy_measure(model, Phy, lt, s)
-                Ek += tmp[1]
-                Ev += tmp[2]
-                axpy!(1, tmp[3], R0)
-                axpy!(1, tmp[4], R1)
+                PHY_RECORD .+= phy_measure(model, Phy, lt, s)
                 counter += 1
             end
 
@@ -120,15 +110,15 @@ function phy_update(path::String, model::SO3_Hubbard_Para_, s::Array{UInt8,3}, S
             end
 
         end
-
         for lt in reverse(axes(s, 3))
             #####################################################################
-            # if norm(G - Gτ(model, s, lt)) / norm(G) > ERROR
+            # if norm(G - Gτ(model, s, lt)) > ERROR
             #     error("Wrap-$(lt)   :   $(norm(G-Gτ(model,s,lt-1))) , $(norm(G)) , $(norm(Gτ(model,s,lt-1))) ")
             # end
             ######################################################################
             for j in axes(s, 2)
-                # UpdatePhyLayer!(rng, j, view(s, :, j, lt), lt, model, UPD, Phy)
+                UpdatePhyLayer!(rng, j, view(s, :, j, lt), lt, model, UPD, Phy)
+                fill!(tmpN, 0.0)
                 for i in axes(s, 1)
                     x, y = model.bondidx[i, j]
                     tmpN[x] = model.α[lt] * model.η[s[i, j, lt]]
@@ -141,12 +131,7 @@ function phy_update(path::String, model::SO3_Hubbard_Para_, s::Array{UInt8,3}, S
             mul!(G, tmpNN, model.eK)
 
             if record && abs(idx - Θidx) <= 1
-                tmp = [0, 0, zeros(Float64, 4), zeros(Float64, 4)]
-                # tmp = phy_measure(model, Phy, lt - 1, s)
-                Ek += tmp[1]
-                Ev += tmp[2]
-                axpy!(1, tmp[3], R0)
-                axpy!(1, tmp[4], R1)
+                PHY_RECORD .+= phy_measure(model, Phy, lt - 1, s)
                 counter += 1
             end
 
@@ -174,12 +159,10 @@ function phy_update(path::String, model::SO3_Hubbard_Para_, s::Array{UInt8,3}, S
         if record
             lock(LOCK) do
                 open(file, "a") do io
-                    writedlm(io, vcat([Ek, Ev], R0, R1)' ./ counter, ',')
+                    writedlm(io, PHY_RECORD' ./ counter, ',')
                 end
             end
-            Ek = Ev = 0.0
-            fill!(R0, 0.0)
-            fill!(R1, 0.0)
+            PHY_RECORD = zeros(5)
             counter = 0
         end
     end
@@ -208,6 +191,16 @@ function UpdatePhyLayer!(rng, j, s, lt, model::SO3_Hubbard_Para_, UPD::UpdateBuf
     end
 end
 
+function Correlation_Cal(G, i, j, k, l)
+    """
+    calculate the correlation <c†_i c_j c†_k c_l> = <c†_i c_j><c†_k c_l> + <c†_i c_l><c_j c†_k>
+    G_ij = c_i c†_j = δ_ij - c†_j c_i
+    """
+    ans = (Int(i == j) - G[j, i]) * (Int(k == l) - G[l, k]) + (Int(i == l) - G[l, i]) * G[j, k]
+    return 2 * real(ans)
+end
+
+
 function phy_measure(model::SO3_Hubbard_Para_, Phy::PhyBuffer_, lt, s)
     """
     (Ek,Ev,R0,R1)    
@@ -215,19 +208,17 @@ function phy_measure(model::SO3_Hubbard_Para_, Phy::PhyBuffer_, lt, s)
     G0 = Phy.G[:, :]
     tmpN = Phy.N
     tmpNN = Phy.NN
-    tmp = zeros(ComplexF64, 4)
-    R0 = zeros(Float64, 4)
-    R1 = zeros(Float64, 4)
 
     if lt > model.Nt / 2
         for t in lt:-1:div(model.Nt, 2)+1
             for j in axes(s, 2)
+                fill!(tmpN, 0.0)
                 for i in axes(s, 1)
                     x, y = model.bondidx[i, j]
                     tmpN[x] = model.α[t] * model.η[s[i, j, t]]
                     tmpN[y] = -model.α[t] * model.η[s[i, j, t]]
                 end
-                tmpN .= exp.(.-tmpN)
+                tmpN .= exp.(tmpN)
 
                 WrapV!(tmpNN, G0, tmpN, view(model.UV, :, :, j), "B")
                 # G0=model.UV[j,:,:]'*diagm(exp.(-E))*model.UV[j,:,:] *G0* model.UV[j,:,:]'*diagm(exp.(E))*model.UV[j,:,:]
@@ -242,10 +233,11 @@ function phy_measure(model::SO3_Hubbard_Para_, Phy::PhyBuffer_, lt, s)
             mul!(G0, model.eK, tmpNN)
             # G0=model.eK*G0*model.eKinv
             for j in reverse(axes(s, 2))
+                fill!(tmpN, 0.0)
                 for i in axes(s, 1)
                     x, y = model.bondidx[i, j]
-                    tmpN[x] = model.α[t] * model.η[s[i, j, t]]
-                    tmpN[y] = -model.α[t] * model.η[s[i, j, t]]
+                    tmpN[x] = -model.α[t] * model.η[s[i, j, t]]
+                    tmpN[y] = model.α[t] * model.η[s[i, j, t]]
                 end
                 tmpN .= exp.(tmpN)
                 WrapV!(tmpNN, G0, tmpN, view(model.UV, :, :, j), "B")
@@ -263,54 +255,80 @@ function phy_measure(model::SO3_Hubbard_Para_, Phy::PhyBuffer_, lt, s)
     # G0=model.HalfeK* G0 *model.HalfeKinv
 
     Ek = 2 * model.Ht * real(sum(model.K .* G0))
-    Ev = 0.0
-    for k in 1:length(model.bondidx)
-        x, y = model.bondidx[k]
-        Ev += (1 - G0[x, x]) * (1 - G0[y, y]) - G0[x, y] * G0[y, x]
-    end
-    Ek = real(Ek)
-    Ev = real(Ev)
+    EJ = 0.0
+    # for k in 1:length(model.bondidx)
+    #     x, y = model.bondidx[k]
+    #     Ev += (1 - G0[x, x]) * (1 - G0[y, y]) - G0[x, y] * G0[y, x]
+    # end
+    # Ek = real(Ek)
+    # Ev = real(Ev)
+
+    Rso3 = dRso3 = Ru1 = dRu1 = 0.0
 
     if occursin("HoneyComb", model.Lattice) || model.Lattice == "SQUARE90"
         for rx in 1:model.site[1]
             for ry in 1:model.site[2]
-                fill!(tmp, 0.0)
+                tmp1 = tmp2 = 0
                 for ix in 1:model.site[1]
                     for iy in 1:model.site[2]
-                        idx1 = xy_i(model.Lattice, model.site, ix, iy) - 1
-                        idx2 = xy_i(model.Lattice, model.site, mod1(ix + rx, model.site[1]), mod1(iy + ry, model.site[2])) - 1
-                        delta = idx1 == idx2 ? 1 : 0
-                        tmp[1] += (1 - G0[idx1, idx1]) * (1 - G0[idx2, idx2]) + (delta - G0[idx2, idx1]) * G0[idx1, idx2]
-                        tmp[2] += (1 - G0[idx1+1, idx1+1]) * (1 - G0[idx2+1, idx2+1]) + (delta - G0[idx2+1, idx1+1]) * G0[idx1+1, idx2+1]
-                        tmp[3] += (1 - G0[idx1+1, idx1+1]) * (1 - G0[idx2, idx2]) - G0[idx2, idx1+1] * G0[idx1+1, idx2]
-                        tmp[4] += (1 - G0[idx1, idx1]) * (1 - G0[idx2+1, idx2+1]) - G0[idx2+1, idx1] * G0[idx1, idx2+1]
+                        # SO3 order parameter
+                        for zi in 1:2
+                            for zj in 1:2
+                                # <sx ⋅ sx>
+                                # i -> iy, j -> iz, k -> jy, l -> jz 
+                                i = xyzσTidx(model.Lattice, model.site, ix, iy, zi, 2)
+                                j = xyzσTidx(model.Lattice, model.site, ix, iy, zi, 3)
+                                k = xyzσTidx(model.Lattice, model.site, mod1(ix + rx, model.site[1]), mod1(iy + ry, model.site[2]), zj, 2)
+                                l = xyzσTidx(model.Lattice, model.site, mod1(ix + rx, model.site[1]), mod1(iy + ry, model.site[2]), zj, 3)
+                                tmp1 -= (-1)^(zi + zj) * Correlation_Cal(G0, i, j, k, l)
+                                tmp1 -= (-1)^(zi + zj) * Correlation_Cal(G0, j, i, l, k)
+                                tmp1 += (-1)^(zi + zj) * Correlation_Cal(G0, i, j, l, k)
+                                tmp1 += (-1)^(zi + zj) * Correlation_Cal(G0, j, i, k, l)
+
+                                # <sy ⋅ sy>
+                                i = xyzσTidx(model.Lattice, model.site, ix, iy, zi, 1)
+                                j = xyzσTidx(model.Lattice, model.site, ix, iy, zi, 3)
+                                k = xyzσTidx(model.Lattice, model.site, mod1(ix + rx, model.site[1]), mod1(iy + ry, model.site[2]), zj, 1)
+                                l = xyzσTidx(model.Lattice, model.site, mod1(ix + rx, model.site[1]), mod1(iy + ry, model.site[2]), zj, 3)
+                                tmp1 -= (-1)^(zi + zj) * Correlation_Cal(G0, i, j, k, l)
+                                tmp1 -= (-1)^(zi + zj) * Correlation_Cal(G0, j, i, l, k)
+                                tmp1 += (-1)^(zi + zj) * Correlation_Cal(G0, i, j, l, k)
+                                tmp1 += (-1)^(zi + zj) * Correlation_Cal(G0, j, i, k, l)
+
+                                # <sz ⋅ sz>
+                                i = xyzσTidx(model.Lattice, model.site, ix, iy, zi, 1)
+                                j = xyzσTidx(model.Lattice, model.site, ix, iy, zi, 2)
+                                k = xyzσTidx(model.Lattice, model.site, mod1(ix + rx, model.site[1]), mod1(iy + ry, model.site[2]), zj, 1)
+                                l = xyzσTidx(model.Lattice, model.site, mod1(ix + rx, model.site[1]), mod1(iy + ry, model.site[2]), zj, 2)
+                                tmp1 -= (-1)^(zi + zj) * Correlation_Cal(G0, i, j, k, l)
+                                tmp1 -= (-1)^(zi + zj) * Correlation_Cal(G0, j, i, l, k)
+                                tmp1 += (-1)^(zi + zj) * Correlation_Cal(G0, i, j, l, k)
+                                tmp1 += (-1)^(zi + zj) * Correlation_Cal(G0, j, i, k, l)
+
+                                # U(1) order parameter
+                                for σ in 1:3
+                                    i = xyzσTidx(model.Lattice, model.site, ix, iy, zi, σ)
+                                    j = xyzσTidx(model.Lattice, model.site, mod1(ix + rx, model.site[1]), mod1(iy + ry, model.site[2]), zj, σ)
+                                    tmp2 += (-1)^(zi + zj) * adjoint(G0[i, j]) * (Int(i == j) - G0[j, i])
+                                end
+                            end
+                        end
                     end
                 end
-                @assert norm(imag(tmp)) < 1e-10 "Complex emergence in R0 or R1"
-                tmp .= real.(tmp)
-                axpy!(1, tmp, R0)
-                axpy!(cos(2 * π / model.site[1] * rx + 2 * π / model.site[2] * ry), tmp, R1)
+                Rso3 += tmp1
+                dRso3 += cos(2 * π / model.site[1] * rx + 2 * π / model.site[2] * ry) * tmp1
+                Ru1 += tmp2
+                dRu1 += cos(2 * π / model.site[1] * rx + 2 * π / model.site[2] * ry) * tmp2
             end
         end
-        lmul!(1 / model.Ns^2, R0)
-        lmul!(1 / model.Ns^2, R1)
-    elseif model.Lattice == "SQUARE"
-        for rx in 1:model.site[1]
-            for ry in 1:model.site[2]
-                tmp = 0
-                for ix in 1:model.site[1]
-                    for iy in 1:model.site[2]
-                        idx1 = ix + (iy - 1) * model.site[1]
-                        idx2 = mod1(rx + ix, model.site[1]) + mod((ry + iy - 1), model.site[2]) * model.site[1]
-                        tmp += (1 - G0[idx1, idx1]) * (1 - G0[idx2, idx2]) - G0[idx1, idx2] * G0[idx2, idx1]
-                    end
-                end
-                tmp /= prod(model.site)
-                R0 += tmp * cos(π * (rx + ry))
-                R1 += cos(π * (rx + ry) + 2 * π / model.site[1] * rx + 2 * π / model.site[2] * ry) * tmp
-            end
-        end
+        Rso3 /= 4 * prod(model.site)
+        dRso3 /= 4 * prod(model.site)
+        Ru1 /= 4 * prod(model.site)
+        dRu1 /= 4 * prod(model.site)
+        @assert abs(imag(Ru1)) < 1e-10 "Ru1 should be real, but got $(Ru1)"
+        @assert abs(imag(dRu1)) < 1e-10 "dRu1 should be real, but got $(dRu1)"
+    else
+        error("Measurement for Lattice $(model.Lattice) not implemented yet!")
     end
-    # 1-R1/R0
-    return Ek, Ev, R0, R1
+    return Ek, Rso3, dRso3, real(Ru1), real(dRu1)
 end

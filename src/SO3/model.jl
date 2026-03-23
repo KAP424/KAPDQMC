@@ -66,7 +66,7 @@ function SO3_Hubbard_Para(; Ht, HJ1, HJ2, Δt, Θrelax, Θquench, Lattice::Strin
         nodes = vcat(0, reverse(collect(div(Nt, 2)-BatchSize:-BatchSize:1)), collect(div(Nt, 2):BatchSize:Nt), Nt)
     end
 
-    bondidx = so3Tindex_F(Lattice, site)
+    bondidx = so3bondTidx_F(Lattice, site)
     UV = zeros(ComplexF64, Ns, Ns, 3)
     uv = [1 1; -1im 1im] / sqrt(2)
     for ns in 1:div(Ns, 3)

@@ -183,7 +183,7 @@ function phy_update(path::String, model::tV_Hubbard_Para_, s::Array{UInt8,3}, Sw
         hour = TTT ÷ 3600
         minite = (TTT % 3600) ÷ 60
         second = TTT % 60
-        println("      acc = ", round(100 * UPD.acc / prod(size(s)) / Sweeps / 2, digits=2), "%", "  $(Sweeps) Sweep finished in ", @sprintf("%02d:%02d:%02d", hour, minite, second))
+        println("      acc = ", round(100 * UPD.acc / prod(size(s)) / Sweeps / 2, digits=2), "%", "  $(Sweeps) Sweep finished in ", string(lpad(string(hour), 2, '0'), ":", lpad(string(minite), 2, '0'), ":", lpad(string(second), 2, '0')))
     end
     return s
 end
@@ -204,6 +204,14 @@ function UpdatePhyLayer!(rng, j, s, lt, model::tV_Hubbard_Para_, UPD::UpdateBuff
             s[i] = sx
         end
     end
+end
+
+function Correlation_Cal(G, i, j, k, l)
+    """
+    calculate the correlation <c†_i c_j c†_k c_l> = <c†_i c_j><c†_k c_l> + <c†_i c_l><c_j c†_k>
+    G_ij = c_i c†_j = δ_ij - c†_j c_i
+    """
+    return (Int(i == j) - G[j, i]) * (Int(k == l) - G[l, k]) + (Int(i == l) - G[l, i]) * G[j, k]
 end
 
 function phy_measure(model::tV_Hubbard_Para_, Phy::PhyBuffer_, lt, s)
@@ -278,11 +286,10 @@ function phy_measure(model::tV_Hubbard_Para_, Phy::PhyBuffer_, lt, s)
                     for iy in 1:model.site[2]
                         idx1 = xy_i(model.Lattice, model.site, ix, iy) - 1
                         idx2 = xy_i(model.Lattice, model.site, mod1(ix + rx, model.site[1]), mod1(iy + ry, model.site[2])) - 1
-                        delta = idx1 == idx2 ? 1 : 0
-                        tmp[1] += (1 - G0[idx1, idx1]) * (1 - G0[idx2, idx2]) + (delta - G0[idx2, idx1]) * G0[idx1, idx2]
-                        tmp[2] += (1 - G0[idx1+1, idx1+1]) * (1 - G0[idx2+1, idx2+1]) + (delta - G0[idx2+1, idx1+1]) * G0[idx1+1, idx2+1]
-                        tmp[3] += (1 - G0[idx1+1, idx1+1]) * (1 - G0[idx2, idx2]) - G0[idx2, idx1+1] * G0[idx1+1, idx2]
-                        tmp[4] += (1 - G0[idx1, idx1]) * (1 - G0[idx2+1, idx2+1]) - G0[idx2+1, idx1] * G0[idx1, idx2+1]
+                        tmp[1] += Correlation_Cal(G0, idx1, idx1, idx2, idx2)
+                        tmp[2] += Correlation_Cal(G0, idx1 + 1, idx1 + 1, idx2 + 1, idx2 + 1)
+                        tmp[3] += Correlation_Cal(G0, idx1 + 1, idx1 + 1, idx2, idx2)
+                        tmp[4] += Correlation_Cal(G0, idx1, idx1, idx2 + 1, idx2 + 1)
                     end
                 end
                 @assert norm(imag(tmp)) < 1e-10 "Complex emergence in R0 or R1"

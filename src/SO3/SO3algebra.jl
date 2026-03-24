@@ -1,4 +1,3 @@
-
 function SO3Initial_Pt!(Lattice, Initial, Pt, K)
     Ns = size(K, 1)
     if Initial == "H0"
@@ -31,13 +30,18 @@ function SO3Initial_Pt!(Lattice, Initial, Pt, K)
             error("Initial state $Initial not supported for Lattice $Lattice!")
         end
     elseif Initial == "HJ"
-        for i in 1:div(Ns, 6)
+        HJ = zeros(ComplexF64, size(K))
+        hJ = [0 1im 0; -1im 0 0; 0 0 0]
+        for i in 1:div(Ns, 3)
             if i % 2 == 1
-                Pt[diagind(Pt)[3*(i-1)+1:3*i]] .= [1, -1im, 1]
+                HJ[3*(i-1)+1:3*i, 3*(i-1)+1:3*i] .= hJ
             else
-                Pt[diagind(Pt)[3*(i-1)+1:3*i]] .= [1, 1im, 1]
+                HJ[3*(i-1)+1:3*i, 3*(i-1)+1:3*i] .= -hJ
             end
         end
+        HJ .+= 1e-5 * diagm(repeat([-1, -1, -1, 1, 1, 1], div(Ns, 6)))
+        E, V = LAPACK.syevd!('V', 'L', HJ)
+        Pt .= V[:, 1:div(Ns, 2)]
     else
         error("Initial state $Initial not supported!")
     end

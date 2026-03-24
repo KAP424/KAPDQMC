@@ -171,7 +171,7 @@ function phy_update(path::String, model::SO3_Hubbard_Para_, s::Array{UInt8,3}, S
         hour = TTT ÷ 3600
         minite = (TTT % 3600) ÷ 60
         second = TTT % 60
-        println("      acc = ", round(100 * UPD.acc / prod(size(s)) / Sweeps / 2, digits=2), "%", "  $(Sweeps) Sweep finished in ", @sprintf("%02d:%02d:%02d", hour, minite, second))
+        println("      acc = ", round(100 * UPD.acc / prod(size(s)) / Sweeps / 2, digits=2), "%", "  $(Sweeps) Sweep finished in ", string(lpad(string(hour), 2, '0'), ":", lpad(string(minite), 2, '0'), ":", lpad(string(second), 2, '0')))
     end
     return s
 end
@@ -250,8 +250,8 @@ function phy_measure(model::SO3_Hubbard_Para_, Phy::PhyBuffer_, lt, s)
     #     error("record error lt=$(lt) : $(norm(G0-Gτ(model,s,div(model.Nt,2))))")
     # end
     #####################################################################
-    mul!(tmpNN, model.HalfeK, G0)
-    mul!(G0, tmpNN, model.HalfeKinv)
+    # mul!(tmpNN, model.HalfeK, G0)
+    # mul!(G0, tmpNN, model.HalfeKinv)
     # G0=model.HalfeK* G0 *model.HalfeKinv
 
     Ek = 2 * model.Ht * real(sum(model.K .* G0))
@@ -263,7 +263,7 @@ function phy_measure(model::SO3_Hubbard_Para_, Phy::PhyBuffer_, lt, s)
     # Ek = real(Ek)
     # Ev = real(Ev)
 
-    Rso3 = dRso3 = Ru1 = dRu1 = 0.0
+    R0so3 = R1so3 = R0u1 = R1u1 = 0.0
 
     if occursin("HoneyComb", model.Lattice) || model.Lattice == "SQUARE90"
         for rx in 1:model.site[1]
@@ -315,20 +315,20 @@ function phy_measure(model::SO3_Hubbard_Para_, Phy::PhyBuffer_, lt, s)
                         end
                     end
                 end
-                Rso3 += tmp1
-                dRso3 += cos(2 * π / model.site[1] * rx + 2 * π / model.site[2] * ry) * tmp1
-                Ru1 += tmp2
-                dRu1 += cos(2 * π / model.site[1] * rx + 2 * π / model.site[2] * ry) * tmp2
+                R0so3 += tmp1
+                R1so3 += cos(2 * π / model.site[1] * rx + 2 * π / model.site[2] * ry) * tmp1
+                R0u1 += tmp2
+                R1u1 += cos(2 * π / model.site[1] * rx + 2 * π / model.site[2] * ry) * tmp2
             end
         end
-        Rso3 /= 4 * prod(model.site)
-        dRso3 /= 4 * prod(model.site)
-        Ru1 /= 4 * prod(model.site)
-        dRu1 /= 4 * prod(model.site)
-        @assert abs(imag(Ru1)) < 1e-10 "Ru1 should be real, but got $(Ru1)"
-        @assert abs(imag(dRu1)) < 1e-10 "dRu1 should be real, but got $(dRu1)"
+        R0so3 /= 4 * prod(model.site)
+        R1so3 /= 4 * prod(model.site)
+        R0u1 /= 4 * prod(model.site)
+        R1u1 /= 4 * prod(model.site)
+        @assert abs(imag(R0u1)) < 1e-10 "R0u1 should be real, but got $(R0u1)"
+        @assert abs(imag(R1u1)) < 1e-10 "R1u1 should be real, but got $(R1u1)"
     else
         error("Measurement for Lattice $(model.Lattice) not implemented yet!")
     end
-    return Ek, Rso3, dRso3, real(Ru1), real(dRu1)
+    return Ek, R0so3, R1so3, real(R0u1), real(R1u1)
 end

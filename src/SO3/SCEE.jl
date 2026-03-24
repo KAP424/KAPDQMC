@@ -360,7 +360,7 @@ function ctrl_SCEEicr(path::String, model::SO3_Hubbard_Para_, indexA::Vector{Int
         hour = TTT ÷ 3600
         minite = (TTT % 3600) ÷ 60
         second = TTT % 60
-        println("      λ=$λ  acc = ", round(100 * UPD.acc / prod(size(ss[1])) / Sweeps / 4, digits=2), "%", "  $(Sweeps) Sweep finished in ", @sprintf("%02d:%02d:%02d", hour, minite, second))
+        println("      λ=$λ  acc = ", round(100 * UPD.acc / prod(size(ss[1])) / Sweeps / 4, digits=2), "%", "  $(Sweeps) Sweep finished in ", string(lpad(string(hour), 2, '0'), ":", lpad(string(minite), 2, '0'), ":", lpad(string(second), 2, '0')))
         lock(LOCK) do
             open(file, "a") do io
                 writedlm(io, O', ',')

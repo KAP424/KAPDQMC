@@ -14,9 +14,12 @@ struct tV_Hubbard_Para_{T<:Number}
     K::Array{T,2}
     BatchSize::Int64
     Δt::Float64
-    α::Vector{Float64}
+    # α::Vector{Float64}
+    # η::Vector{Float64}
+    exp_αη_pos::Matrix{Float64}  # 大小: length(α) × 4
+    exp_αη_neg::Matrix{Float64}  # 大小: length(α) × 4
+    αη::Matrix{Float64}  # 大小: length(α) × 4
     γ::Vector{Float64}
-    η::Vector{Float64}
     Pt::Array{T,2}
     HalfeK::Array{T,2}
     eK::Array{T,2}
@@ -63,6 +66,13 @@ function tV_Hubbard_Para(; Ht, Hv1, Hv2, Δt, Θrelax, Θquench, Lattice::String
     γ = [1 + sqrt(6) / 3, 1 + sqrt(6) / 3, 1 - sqrt(6) / 3, 1 - sqrt(6) / 3]
     η = [sqrt(2 * (3 - sqrt(6))), -sqrt(2 * (3 - sqrt(6))), sqrt(2 * (3 + sqrt(6))), -sqrt(2 * (3 + sqrt(6)))]
 
+    # 预计算每个状态对应的指数值，避免重复计算
+    # exp(-α*η) 和 exp(α*η) 对于每个状态值是常数
+    # 状态值 s ∈ {1,2,3,4} 对应 model.η 的索引
+    exp_αη_neg = [exp(-i * j) for i in α, j in η]  # 大小: length(α) × 4
+    exp_αη_pos = [exp(i * j) for i in α, j in η]    # 大小: length(α) × 4
+    αη = [i * j for i in α, j in η]
+
     if div(Nt, 2) % BatchSize == 0
         nodes = collect(0:BatchSize:Nt)
     else
@@ -88,7 +98,7 @@ function tV_Hubbard_Para(; Ht, Hv1, Hv2, Δt, Θrelax, Θquench, Lattice::String
     end
 
     return tV_Hubbard_Para_{T}(Lattice, Ht, Hv1, Hv2, site, Θrelax, Θquench, Ns,
-        Nt, K, BatchSize, Δt, α, γ, η, Pt,
+        Nt, K, BatchSize, Δt, exp_αη_pos, exp_αη_neg, αη, γ, Pt,
         HalfeK, eK, HalfeKinv, eKinv, nnidx, nodes, UV, samplers_dict, flux)
 
 end

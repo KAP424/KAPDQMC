@@ -59,7 +59,7 @@ function SO3_Hubbard_Para(; Ht, HJ1, HJ2, Δt, Θrelax, Θquench, Lattice::Strin
     @assert length(HJ) == Nt "Length of HJ profile does not match Nt!"
     @assert norm(reverse(HJ) - HJ) < 1e-10 "HV profile is not symmetric!"
 
-    α = sqrt.(Δt .* HJ ./ 2)
+    α = sqrt.(Δt .* HJ)
     γ = [1 + sqrt(6) / 3, 1 + sqrt(6) / 3, 1 - sqrt(6) / 3, 1 - sqrt(6) / 3]
     η = [sqrt(2 * (3 - sqrt(6))), -sqrt(2 * (3 - sqrt(6))), sqrt(2 * (3 + sqrt(6))), -sqrt(2 * (3 + sqrt(6)))]
 
@@ -68,7 +68,6 @@ function SO3_Hubbard_Para(; Ht, HJ1, HJ2, Δt, Θrelax, Θquench, Lattice::Strin
     # 状态值 s ∈ {1,2,3,4} 对应 model.η 的索引
     exp_αη_neg = [exp(-i * j) for i in α, j in η]  # 大小: length(α) × 4
     exp_αη_pos = [exp(i * j) for i in α, j in η]    # 大小: length(α) × 4
-
     αη = [i * j for i in α, j in η]
 
     if div(Nt, 2) % BatchSize == 0

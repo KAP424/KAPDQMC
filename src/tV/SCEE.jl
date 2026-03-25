@@ -16,7 +16,7 @@ function ctrl_SCEEicr(path::String, model::tV_Hubbard_Para_, indexA::Vector{Int6
 
     name = name_Lattice(model.Lattice)
 
-    if length(unique(model.α)) == 1
+    if model.Hv1 == model.Hv2
         file = "$(path)/tVSCEE$(name)_t$(model.Ht)V$(model.Hv1)size$(model.site)Δt$(model.Δt)Θ$(model.Θrelax)N$(Nλ)BS$(model.BatchSize).csv"
     else
         file = "$(path)/tVSCEE$(name)_t$(model.Ht)V$(model.Hv1)_$(model.Hv2)size$(model.site)Δt$(model.Δt)Θ$(model.Θrelax)_$(model.Θquench)N$(Nλ)BS$(model.BatchSize).csv"
@@ -82,7 +82,7 @@ function ctrl_SCEEicr(path::String, model::tV_Hubbard_Para_, indexA::Vector{Int6
         # println("\n ====== Sweep $loop / $Sweeps ======")
         for lt in 1:model.Nt
             #####################################################################
-            #     # # println("\n WrapTime check at lt=$lt")
+            # # # println("\n WrapTime check at lt=$lt")
             # Gt1_, G01_, Gt01_, G0t1_ = G4(model, ss[1], lt - 1, div(model.Nt, 2), "Forward")
             # Gt2_, G02_, Gt02_, G0t2_ = G4(model, ss[2], lt - 1, div(model.Nt, 2), "Forward")
             # if norm(Gt1 - Gt1_) + norm(Gt2 - Gt2_) + norm(Gt01 - Gt01_) + norm(Gt02 - Gt02_) + norm(G0t1 - G0t1_) + norm(G0t2 - G0t2_) > ERROR
@@ -107,13 +107,11 @@ function ctrl_SCEEicr(path::String, model::tV_Hubbard_Para_, indexA::Vector{Int6
             for j in reverse(axes(ss[1], 2))
                 for i in axes(ss[1], 1)
                     x, y = model.nnidx[i, j]
-                    tmpN[x] = model.α[lt] * model.η[ss[1][i, j, lt]]
-                    tmpN[y] = -model.α[lt] * model.η[ss[1][i, j, lt]]
-                    tmpN_[x] = model.α[lt] * model.η[ss[2][i, j, lt]]
-                    tmpN_[y] = -model.α[lt] * model.η[ss[2][i, j, lt]]
+                    tmpN[x] = model.exp_αη_pos[lt, ss[1][i, j, lt]]
+                    tmpN[y] = model.exp_αη_neg[lt, ss[1][i, j, lt]]
+                    tmpN_[x] = model.exp_αη_pos[lt, ss[2][i, j, lt]]
+                    tmpN_[y] = model.exp_αη_neg[lt, ss[2][i, j, lt]]
                 end
-                tmpN .= exp.(tmpN)
-                tmpN_ .= exp.(tmpN_)
 
                 WrapV!(tmpNN, Gt01, tmpN, view(model.UV, :, :, j), "L")
                 WrapV!(tmpNN, Gt02, tmpN_, view(model.UV, :, :, j), "L")
@@ -149,17 +147,17 @@ function ctrl_SCEEicr(path::String, model::tV_Hubbard_Para_, indexA::Vector{Int6
                 #     E_ = zeros(model.Ns)
                 #     for ii in 1:size(ss[1])[1]
                 #         x, y = model.nnidx[ii, jj]
-                #         E[x] = model.α[lt] * model.η[ss[1][ii, jj, lt]]
-                #         E[y] = -model.α[lt] * model.η[ss[1][ii, jj, lt]]
-                #         E_[x] = model.α[lt] * model.η[ss[2][ii, jj, lt]]
-                #         E_[y] = -model.α[lt] * model.η[ss[2][ii, jj, lt]]
+                #         E[x] = model.exp_αη_pos[lt, ss[1][ii, jj, lt]]
+                #         E[y] = model.exp_αη_neg[lt, ss[1][ii, jj, lt]]
+                #         E_[x] = model.exp_αη_pos[lt, ss[2][ii, jj, lt]]
+                #         E_[y] = model.exp_αη_neg[lt, ss[2][ii, jj, lt]]
                 #     end
-                #     Gt1_ = model.UV[:, :, jj] * Diagonal(exp.(E)) * model.UV[:, :, jj] * Gt1_ * model.UV[:, :, jj] * Diagonal(exp.(-E)) * model.UV[:, :, jj]
-                #     Gt01_ = model.UV[:, :, jj] * Diagonal(exp.(E)) * model.UV[:, :, jj] * Gt01_
-                #     G0t1_ = G0t1_ * model.UV[:, :, jj] * Diagonal(exp.(-E)) * model.UV[:, :, jj]
-                #     Gt2_ = model.UV[:, :, jj] * Diagonal(exp.(E_)) * model.UV[:, :, jj] * Gt2_ * model.UV[:, :, jj] * Diagonal(exp.(-E_)) * model.UV[:, :, jj]
-                #     Gt02_ = model.UV[:, :, jj] * Diagonal(exp.(E_)) * model.UV[:, :, jj] * Gt02_
-                #     G0t2_ = G0t2_ * model.UV[:, :, jj] * Diagonal(exp.(-E_)) * model.UV[:, :, jj]
+                #     Gt1_ = model.UV[:, :, jj] * Diagonal(E) * model.UV[:, :, jj] * Gt1_ * model.UV[:, :, jj] * Diagonal(1.0 ./ E) * model.UV[:, :, jj]
+                #     Gt01_ = model.UV[:, :, jj] * Diagonal(E) * model.UV[:, :, jj] * Gt01_
+                #     G0t1_ = G0t1_ * model.UV[:, :, jj] * Diagonal(1.0 ./ E) * model.UV[:, :, jj]
+                #     Gt2_ = model.UV[:, :, jj] * Diagonal(E_) * model.UV[:, :, jj] * Gt2_ * model.UV[:, :, jj] * Diagonal(1.0 ./ E_) * model.UV[:, :, jj]
+                #     Gt02_ = model.UV[:, :, jj] * Diagonal(E_) * model.UV[:, :, jj] * Gt02_
+                #     G0t2_ = G0t2_ * model.UV[:, :, jj] * Diagonal(1.0 ./ E_) * model.UV[:, :, jj]
                 # end
 
                 # if norm(Gt1 - Gt1_) + norm(G01 - G01_) + norm(Gt01 - Gt01_) + norm(G0t1 - G0t1_) +
@@ -262,17 +260,17 @@ function ctrl_SCEEicr(path::String, model::tV_Hubbard_Para_, indexA::Vector{Int6
                 #     E_ = zeros(model.Ns)
                 #     for ii in 1:size(ss[1])[1]
                 #         x, y = model.nnidx[ii, jj]
-                #         E[x] = model.α[lt] * model.η[ss[1][ii, jj, lt]]
-                #         E[y] = -model.α[lt] * model.η[ss[1][ii, jj, lt]]
-                #         E_[x] = model.α[lt] * model.η[ss[2][ii, jj, lt]]
-                #         E_[y] = -model.α[lt] * model.η[ss[2][ii, jj, lt]]
+                #         E[x] = model.exp_αη_pos[lt, ss[1][ii, jj, lt]]
+                #         E[y] = model.exp_αη_neg[lt, ss[1][ii, jj, lt]]
+                #         E_[x] = model.exp_αη_pos[lt, ss[2][ii, jj, lt]]
+                #         E_[y] = model.exp_αη_neg[lt, ss[2][ii, jj, lt]]
                 #     end
-                #     Gt1_ = model.UV[:, :, jj] * Diagonal(exp.(E)) * model.UV[:, :, jj] * Gt1_ * model.UV[:, :, jj] * Diagonal(exp.(-E)) * model.UV[:, :, jj]
-                #     Gt01_ = model.UV[:, :, jj] * Diagonal(exp.(E)) * model.UV[:, :, jj] * Gt01_
-                #     G0t1_ = G0t1_ * model.UV[:, :, jj] * Diagonal(exp.(-E)) * model.UV[:, :, jj]
-                #     Gt2_ = model.UV[:, :, jj] * Diagonal(exp.(E_)) * model.UV[:, :, jj] * Gt2_ * model.UV[:, :, jj] * Diagonal(exp.(-E_)) * model.UV[:, :, jj]
-                #     Gt02_ = model.UV[:, :, jj] * Diagonal(exp.(E_)) * model.UV[:, :, jj] * Gt02_
-                #     G0t2_ = G0t2_ * model.UV[:, :, jj] * Diagonal(exp.(-E_)) * model.UV[:, :, jj]
+                #     Gt1_ = model.UV[:, :, jj] * Diagonal(E) * model.UV[:, :, jj] * Gt1_ * model.UV[:, :, jj] * Diagonal(1.0 ./ E) * model.UV[:, :, jj]
+                #     Gt01_ = model.UV[:, :, jj] * Diagonal(E) * model.UV[:, :, jj] * Gt01_
+                #     G0t1_ = G0t1_ * model.UV[:, :, jj] * Diagonal(1.0 ./ E) * model.UV[:, :, jj]
+                #     Gt2_ = model.UV[:, :, jj] * Diagonal(E_) * model.UV[:, :, jj] * Gt2_ * model.UV[:, :, jj] * Diagonal(1.0 ./ E_) * model.UV[:, :, jj]
+                #     Gt02_ = model.UV[:, :, jj] * Diagonal(E_) * model.UV[:, :, jj] * Gt02_
+                #     G0t2_ = G0t2_ * model.UV[:, :, jj] * Diagonal(1.0 ./ E_) * model.UV[:, :, jj]
                 # end
 
                 # if norm(Gt1 - Gt1_) + norm(G01 - G01_) + norm(Gt01 - Gt01_) + norm(G0t1 - G0t1_) +
@@ -288,13 +286,11 @@ function ctrl_SCEEicr(path::String, model::tV_Hubbard_Para_, indexA::Vector{Int6
 
                 for i in axes(ss[1], 1)
                     x, y = model.nnidx[i, j]
-                    tmpN[x] = model.α[lt] * model.η[ss[1][i, j, lt]]
-                    tmpN[y] = -model.α[lt] * model.η[ss[1][i, j, lt]]
-                    tmpN_[x] = model.α[lt] * model.η[ss[2][i, j, lt]]
-                    tmpN_[y] = -model.α[lt] * model.η[ss[2][i, j, lt]]
+                    tmpN[x] = model.exp_αη_neg[lt, ss[1][i, j, lt]]
+                    tmpN[y] = model.exp_αη_pos[lt, ss[1][i, j, lt]]
+                    tmpN_[x] = model.exp_αη_neg[lt, ss[2][i, j, lt]]
+                    tmpN_[y] = model.exp_αη_pos[lt, ss[2][i, j, lt]]
                 end
-                tmpN .= exp.(.-tmpN)
-                tmpN_ .= exp.(.-tmpN_)
 
                 WrapV!(tmpNN, Gt01, tmpN, view(model.UV, :, :, j), "L")
                 WrapV!(tmpNN, Gt02, tmpN_, view(model.UV, :, :, j), "L")
@@ -421,7 +417,7 @@ function UpdateSCEELayer!(rng, j, s1, s2, lt, G1::G4Buffer_, G2::G4Buffer_, A::A
         # update s1
         begin
             sx = rand(rng, model.samplers_dict[s1[i]])
-            p = get_r!(UPD, model.α[lt] * (model.η[sx] - model.η[s1[i]]), G1.Gt)
+            p = get_r!(UPD, model.αη[lt, sx] - model.αη[lt, s1[i]], G1.Gt)
             p *= model.γ[sx] / model.γ[s1[i]]
 
             detTau_A = get_abTau1!(A, UPD, G2.G0, G1.Gt0, G1.G0t)
@@ -446,7 +442,7 @@ function UpdateSCEELayer!(rng, j, s1, s2, lt, G1::G4Buffer_, G2::G4Buffer_, A::A
         # update ss[2]
         begin
             sx = rand(rng, model.samplers_dict[s2[i]])
-            p = get_r!(UPD, model.α[lt] * (model.η[sx] - model.η[s2[i]]), G2.Gt)
+            p = get_r!(UPD, model.αη[lt, sx] - model.αη[lt, s2[i]], G2.Gt)
             p *= model.γ[sx] / model.γ[s2[i]]
 
             detTau_A = get_abTau2!(A, UPD, G1.G0, G2.Gt0, G2.G0t)

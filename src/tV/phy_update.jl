@@ -13,7 +13,7 @@ function phy_update(path::String, model::tV_Hubbard_Para_, s::Array{UInt8,3}, Sw
 
     name = name_Lattice(model.Lattice)
 
-    if length(unique(model.α)) == 1
+    if model.Hv2 == model.Hv1
         file = "$(path)/tVphy$(name)_t$(model.Ht)V$(model.Hv1)size$(model.site)Δt$(model.Δt)Θ$(model.Θrelax)BS$(model.BatchSize).csv"
     else
         file = "$(path)/tVphy$(name)_t$(model.Ht)V$(model.Hv1)_$(model.Hv2)size$(model.site)Δt$(model.Δt)Θ$(model.Θrelax)_$(model.Θquench)BS$(model.BatchSize).csv"
@@ -29,8 +29,10 @@ function phy_update(path::String, model::tV_Hubbard_Para_, s::Array{UInt8,3}, Sw
     G, BLs, BRs, tmpN, tmpNN, tmpnn, tmpnN, tmpNn, tau, ipiv, BM =
         Phy.G, Phy.BLs, Phy.BRs, Phy.N, Phy.NN, Phy.nn, Phy.nN, Phy.Nn, Phy.tau, Phy.ipiv, Phy.BM
 
-    BRs[:, :, 1] .= model.HalfeKinv * model.Pt
-    BLs[:, :, NN] .= model.Pt' * model.HalfeK
+    # BRs[:, :, 1] .= model.HalfeKinv * model.Pt
+    # BLs[:, :, NN] .= model.Pt' * model.HalfeK
+    BRs[:, :, 1] .= model.Pt
+    BLs[:, :, NN] .= model.Pt'
 
     for idx in NN-1:-1:1
         BM_F!(tmpN, tmpNN, BM, model, s, idx)
@@ -60,24 +62,23 @@ function phy_update(path::String, model::tV_Hubbard_Para_, s::Array{UInt8,3}, Sw
             for j in reverse(axes(s, 2))
                 for i in axes(s, 1)
                     x, y = model.nnidx[i, j]
-                    tmpN[x] = model.α[lt] * model.η[s[i, j, lt]]
-                    tmpN[y] = -model.α[lt] * model.η[s[i, j, lt]]
+                    tmpN[x] = model.exp_αη_pos[lt, s[i, j, lt]]
+                    tmpN[y] = model.exp_αη_neg[lt, s[i, j, lt]]
                 end
-                tmpN .= exp.(tmpN)
                 WrapV!(tmpNN, G, tmpN, view(model.UV, :, :, j), "B")
 
                 UpdatePhyLayer!(rng, j, view(s, :, j, lt), lt, model, UPD, Phy)
                 ####################################################################
-                # print("*")
+                # # print("*")
                 # GG = model.eK * Gτ(model, s, lt - 1) * model.eKinv
                 # for jj in size(model.nnidx, 2):-1:j
                 #     E = zeros(model.Ns)
                 #     for ii in 1:size(s)[1]
                 #         x, y = model.nnidx[ii, jj]
-                #         E[x] = model.α[lt] * model.η[s[ii, jj, lt]]
-                #         E[y] = -model.α[lt] * model.η[s[ii, jj, lt]]
+                #         E[x] = model.exp_αη_pos[lt, s[ii, jj, lt]]
+                #         E[y] = model.exp_αη_neg[lt, s[ii, jj, lt]]
                 #     end
-                #     GG = model.UV[:, :, jj] * Diagonal(exp.(E)) * model.UV[:, :, jj]' * GG * model.UV[:, :, jj] * Diagonal(exp.(-E)) * model.UV[:, :, jj]'
+                #     GG = model.UV[:, :, jj] * Diagonal(E) * model.UV[:, :, jj]' * GG * model.UV[:, :, jj] * Diagonal(1.0 ./ E) * model.UV[:, :, jj]'
                 # end
                 # if (norm(G - GG) > ERROR)
                 #     println("lt=$(lt) j=$(j)")
@@ -119,7 +120,7 @@ function phy_update(path::String, model::tV_Hubbard_Para_, s::Array{UInt8,3}, Sw
 
         for lt in reverse(axes(s, 3))
             #####################################################################
-            # if norm(G - Gτ(model, s, lt)) / norm(G) > ERROR
+            # if norm(G - Gτ(model, s, lt)) > ERROR
             #     error("Wrap-$(lt)   :   $(norm(G-Gτ(model,s,lt-1))) , $(norm(G)) , $(norm(Gτ(model,s,lt-1))) ")
             # end
             ######################################################################
@@ -127,10 +128,9 @@ function phy_update(path::String, model::tV_Hubbard_Para_, s::Array{UInt8,3}, Sw
                 UpdatePhyLayer!(rng, j, view(s, :, j, lt), lt, model, UPD, Phy)
                 for i in axes(s, 1)
                     x, y = model.nnidx[i, j]
-                    tmpN[x] = model.α[lt] * model.η[s[i, j, lt]]
-                    tmpN[y] = -model.α[lt] * model.η[s[i, j, lt]]
+                    tmpN[x] = model.exp_αη_neg[lt, s[i, j, lt]]
+                    tmpN[y] = model.exp_αη_pos[lt, s[i, j, lt]]
                 end
-                tmpN .= exp.(.-tmpN)
                 WrapV!(tmpNN, G, tmpN, view(model.UV, :, :, j), "B")
             end
             mul!(tmpNN, model.eKinv, G)
@@ -193,7 +193,7 @@ function UpdatePhyLayer!(rng, j, s, lt, model::tV_Hubbard_Para_, UPD::UpdateBuff
         x, y = model.nnidx[i, j]
         UPD.subidx .= [x, y]
         sx = rand(rng, model.samplers_dict[s[i]])
-        p = get_r!(UPD, model.α[lt] * (model.η[sx] - model.η[s[i]]), Phy.G)
+        p = get_r!(UPD, model.αη[lt, sx] - model.αη[lt, s[i]], Phy.G)
         p *= model.γ[sx] / model.γ[s[i]]
         if real(p) < 0 || abs(imag(p)) > 1e-6
             println("Negative Sign: $(p)")
@@ -230,10 +230,9 @@ function phy_measure(model::tV_Hubbard_Para_, Phy::PhyBuffer_, lt, s)
             for j in axes(s, 2)
                 for i in axes(s, 1)
                     x, y = model.nnidx[i, j]
-                    tmpN[x] = model.α[t] * model.η[s[i, j, t]]
-                    tmpN[y] = -model.α[t] * model.η[s[i, j, t]]
+                    tmpN[x] = model.exp_αη_neg[t, s[i, j, t]]
+                    tmpN[y] = model.exp_αη_pos[t, s[i, j, t]]
                 end
-                tmpN .= exp.(.-tmpN)
 
                 WrapV!(tmpNN, G0, tmpN, view(model.UV, :, :, j), "B")
                 # G0=model.UV[j,:,:]'*diagm(exp.(-E))*model.UV[j,:,:] *G0* model.UV[j,:,:]'*diagm(exp.(E))*model.UV[j,:,:]
@@ -250,10 +249,9 @@ function phy_measure(model::tV_Hubbard_Para_, Phy::PhyBuffer_, lt, s)
             for j in reverse(axes(s, 2))
                 for i in axes(s, 1)
                     x, y = model.nnidx[i, j]
-                    tmpN[x] = model.α[t] * model.η[s[i, j, t]]
-                    tmpN[y] = -model.α[t] * model.η[s[i, j, t]]
+                    tmpN[x] = model.exp_αη_pos[t, s[i, j, t]]
+                    tmpN[y] = model.exp_αη_neg[t, s[i, j, t]]
                 end
-                tmpN .= exp.(tmpN)
                 WrapV!(tmpNN, G0, tmpN, view(model.UV, :, :, j), "B")
                 # G0=model.UV[j,:,:]'*diagm(exp.(E))*model.UV[j,:,:] *G0* model.UV[j,:,:]'*diagm(exp.(-E))*model.UV[j,:,:]
             end

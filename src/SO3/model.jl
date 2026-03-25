@@ -12,9 +12,12 @@ struct SO3_Hubbard_Para_
     K::Array{ComplexF64,2}
     BatchSize::Int64
     Δt::Float64
-    α::Vector{Float64}
+    # α::Vector{Float64}
+    # η::Vector{Float64}
+    exp_αη_pos::Matrix{Float64}  # 大小: length(α) × 4
+    exp_αη_neg::Matrix{Float64}  # 大小: length(α) × 4
+    αη::Matrix{Float64}  # 大小: length(α) × 4
     γ::Vector{Float64}
-    η::Vector{Float64}
     Pt::Array{ComplexF64,2}
     HalfeK::Array{ComplexF64,2}
     eK::Array{ComplexF64,2}
@@ -60,6 +63,14 @@ function SO3_Hubbard_Para(; Ht, HJ1, HJ2, Δt, Θrelax, Θquench, Lattice::Strin
     γ = [1 + sqrt(6) / 3, 1 + sqrt(6) / 3, 1 - sqrt(6) / 3, 1 - sqrt(6) / 3]
     η = [sqrt(2 * (3 - sqrt(6))), -sqrt(2 * (3 - sqrt(6))), sqrt(2 * (3 + sqrt(6))), -sqrt(2 * (3 + sqrt(6)))]
 
+    # 预计算每个状态对应的指数值，避免重复计算
+    # exp(-α*η) 和 exp(α*η) 对于每个状态值是常数
+    # 状态值 s ∈ {1,2,3,4} 对应 model.η 的索引
+    exp_αη_neg = [exp(-i * j) for i in α, j in η]  # 大小: length(α) × 4
+    exp_αη_pos = [exp(i * j) for i in α, j in η]    # 大小: length(α) × 4
+
+    αη = [i * j for i in α, j in η]
+
     if div(Nt, 2) % BatchSize == 0
         nodes = collect(0:BatchSize:Nt)
     else
@@ -86,8 +97,10 @@ function SO3_Hubbard_Para(; Ht, HJ1, HJ2, Δt, Θrelax, Θquench, Lattice::Strin
         samplers_dict[excluded] = Random.Sampler(rng, allowed)
     end
 
+    println("  $(Lattice) $(opt)-flux=$(flux): $(site)  Δt=$(Δt) BS=$(BatchSize)  Θ=$(Θrelax)+$(Θquench)  HJ:$(HJ1)--$(HJ2)  Initial:$Initial")
+
     return SO3_Hubbard_Para_(Lattice, Ht, HJ1, HJ2, site, Θrelax, Θquench, Ns,
-        Nt, K, BatchSize, Δt, α, γ, η, Pt,
+        Nt, K, BatchSize, Δt, exp_αη_pos, exp_αη_neg, αη, γ, Pt,
         HalfeK, eK, HalfeKinv, eKinv, bondidx, nodes, UV, samplers_dict, flux)
 
 end

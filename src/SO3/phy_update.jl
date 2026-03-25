@@ -1,7 +1,9 @@
 # turn off symmetric HS decomposition when debuging
 
+# 将全局锁定义为模块级别的常量，避免每次函数调用都重新创建
+const PHY_UPDATE_LOCK = ReentrantLock()
+
 function phy_update(path::String, model::SO3_Hubbard_Para_, s::Array{UInt8,3}, Sweeps::Int64, record::Bool)
-    global LOCK = ReentrantLock()
     TTT = time_ns()
     ERROR = 1e-6
 
@@ -12,19 +14,21 @@ function phy_update(path::String, model::SO3_Hubbard_Para_, s::Array{UInt8,3}, S
 
     name = name_Lattice(model.Lattice)
 
-    if length(unique(model.α)) == 1
+    if model.HJ1 == model.HJ2
         file = "$(path)/SO3phy$(name)_t$(model.Ht)V$(model.HJ1)size$(model.site)Δt$(model.Δt)Θ$(model.Θrelax)BS$(model.BatchSize).csv"
     else
         file = "$(path)/SO3phy$(name)_t$(model.Ht)V$(model.HJ1)_$(model.HJ2)size$(model.site)Δt$(model.Δt)Θ$(model.Θrelax)_$(model.Θquench)BS$(model.BatchSize).csv"
     end
 
-    rng = MersenneTwister(Threads.threadid() + time_ns())
+    # 使用更类型稳定的随机数生成器初始化方式
+    rng = MersenneTwister(Threads.threadid() + UInt64(time_ns()))
 
     PHY_RECORD = zeros(5)
     counter = 0
 
     G, BLs, BRs, tmpN, tmpNN, tmpnn, tmpnN, tmpNn, tau, ipiv, BM =
         Phy.G, Phy.BLs, Phy.BRs, Phy.N, Phy.NN, Phy.nn, Phy.nN, Phy.Nn, Phy.tau, Phy.ipiv, Phy.BM
+    exp_αη_pos, exp_αη_neg = model.exp_αη_pos, model.exp_αη_neg
 
     BRs[:, :, 1] .= model.Pt
     BLs[:, :, NN] .= model.Pt'
@@ -45,8 +49,8 @@ function phy_update(path::String, model::SO3_Hubbard_Para_, s::Array{UInt8,3}, S
         # println("\n Sweep: $loop ")
         for lt in axes(s, 3)
             #####################################################################
-            # # println(lt)
-            # @assert norm(G - Gτ(model, s, lt - 1)) < ERROR "Initial G does not match Gτ for lt=$(lt): $(norm(G-Gτ(model,s,lt-1))) , $(norm(G)) , $(norm(Gτ(model,s,lt-1))) "
+            # println(lt)
+            @assert norm(G - Gτ(model, s, lt - 1)) < ERROR "Initial G does not match Gτ for lt=$(lt): $(norm(G-Gτ(model,s,lt-1))) , $(norm(G)) , $(norm(Gτ(model,s,lt-1))) "
             #####################################################################
 
             mul!(tmpNN, G, model.eKinv)
@@ -54,33 +58,32 @@ function phy_update(path::String, model::SO3_Hubbard_Para_, s::Array{UInt8,3}, S
             # @assert norm(model.eKinv * G * model.eK - Gτ(model, s, lt - 1)) < 1e-8 "12321312G does not match Gτ for lt=$(lt): $(norm(model.eKinv * G * model.eK - Gτ(model, s, lt - 1)))"
 
             for j in reverse(axes(s, 2))
-                fill!(tmpN, 0.0)
+                fill!(tmpN, 1.0)
                 for i in axes(s, 1)
                     x, y = model.bondidx[i, j]
-                    tmpN[x] = -model.α[lt] * model.η[s[i, j, lt]]
-                    tmpN[y] = model.α[lt] * model.η[s[i, j, lt]]
+                    tmpN[x] = exp_αη_neg[lt, s[i, j, lt]]  # 预计算的 exp(-α*η)
+                    tmpN[y] = exp_αη_pos[lt, s[i, j, lt]]  # 预计算的 exp(α*η)
                 end
-                tmpN .= exp.(tmpN)
                 WrapV!(tmpNN, G, tmpN, view(model.UV, :, :, j), "B")
 
                 UpdatePhyLayer!(rng, j, view(s, :, j, lt), lt, model, UPD, Phy)
                 ####################################################################
-                # print("*")
-                # GG = model.eK * Gτ(model, s, lt - 1) * model.eKinv
-                # for jj in size(model.bondidx, 2):-1:j
-                #     # println("jj=$(jj)")
-                #     E = zeros(model.Ns)
-                #     for ii in 1:size(s)[1]
-                #         x, y = model.bondidx[ii, jj]
-                #         E[x] = -model.α[lt] * model.η[s[ii, jj, lt]]
-                #         E[y] = model.α[lt] * model.η[s[ii, jj, lt]]
-                #     end
-                #     GG = model.UV[:, :, jj] * Diagonal(exp.(E)) * model.UV[:, :, jj]' * GG * model.UV[:, :, jj] * Diagonal(exp.(-E)) * model.UV[:, :, jj]'
-                # end
-                # if (norm(G - GG) > ERROR)
-                #     println("lt=$(lt) j=$(j)")
-                #     error(j, " update error: ", norm(G - GG), "  lt=", lt)
-                # end
+                print("*")
+                GG = model.eK * Gτ(model, s, lt - 1) * model.eKinv
+                for jj in size(model.bondidx, 2):-1:j
+                    # println("jj=$(jj)")
+                    E = zeros(model.Ns)
+                    for ii in 1:size(s)[1]
+                        x, y = model.bondidx[ii, jj]
+                        E[x] = exp_αη_neg[lt, s[ii, jj, lt]]  # 预计算的 exp(-α*η)
+                        E[y] = exp_αη_pos[lt, s[ii, jj, lt]]  # 预计算的 exp(α*η)
+                    end
+                    GG = model.UV[:, :, jj] * Diagonal(E) * model.UV[:, :, jj]' * GG * model.UV[:, :, jj] * Diagonal(1 ./ E) * model.UV[:, :, jj]'
+                end
+                if (norm(G - GG) > ERROR)
+                    println("lt=$(lt) j=$(j)")
+                    error(j, " update error: ", norm(G - GG), "  lt=", lt)
+                end
                 ####################################################################
             end
 
@@ -112,19 +115,18 @@ function phy_update(path::String, model::SO3_Hubbard_Para_, s::Array{UInt8,3}, S
         end
         for lt in reverse(axes(s, 3))
             #####################################################################
-            # if norm(G - Gτ(model, s, lt)) > ERROR
-            #     error("Wrap-$(lt)   :   $(norm(G-Gτ(model,s,lt-1))) , $(norm(G)) , $(norm(Gτ(model,s,lt-1))) ")
-            # end
+            if norm(G - Gτ(model, s, lt)) > ERROR
+                error("Wrap-$(lt)   :   $(norm(G-Gτ(model,s,lt-1))) , $(norm(G)) , $(norm(Gτ(model,s,lt-1))) ")
+            end
             ######################################################################
             for j in axes(s, 2)
                 UpdatePhyLayer!(rng, j, view(s, :, j, lt), lt, model, UPD, Phy)
-                fill!(tmpN, 0.0)
+                fill!(tmpN, 1.0)
                 for i in axes(s, 1)
                     x, y = model.bondidx[i, j]
-                    tmpN[x] = model.α[lt] * model.η[s[i, j, lt]]
-                    tmpN[y] = -model.α[lt] * model.η[s[i, j, lt]]
+                    tmpN[x] = exp_αη_pos[lt, s[i, j, lt]]  # 预计算的 exp(α*η)
+                    tmpN[y] = exp_αη_neg[lt, s[i, j, lt]]  # 预计算的 exp(-α*η)
                 end
-                tmpN .= exp.(tmpN)
                 WrapV!(tmpNN, G, tmpN, view(model.UV, :, :, j), "B")
             end
             mul!(tmpNN, model.eKinv, G)
@@ -157,7 +159,7 @@ function phy_update(path::String, model::SO3_Hubbard_Para_, s::Array{UInt8,3}, S
         end
 
         if record
-            lock(LOCK) do
+            lock(PHY_UPDATE_LOCK) do
                 open(file, "a") do io
                     writedlm(io, PHY_RECORD' ./ counter, ',')
                 end
@@ -181,7 +183,7 @@ function UpdatePhyLayer!(rng, j, s, lt, model::SO3_Hubbard_Para_, UPD::UpdateBuf
         x, y = model.bondidx[i, j]
         UPD.subidx .= [x, y]
         sx = rand(rng, model.samplers_dict[s[i]])
-        p = get_r!(UPD, model.α[lt] * (model.η[sx] - model.η[s[i]]), Phy.G)
+        p = get_r!(UPD, model.αη[lt, sx] - model.αη[lt, s[i]], Phy.G)
         p *= model.γ[sx] / model.γ[s[i]]
         if rand(rng) < p
             UPD.acc += 1
@@ -203,25 +205,26 @@ end
 
 function phy_measure(model::SO3_Hubbard_Para_, Phy::PhyBuffer_, lt, s)
     """
-    (Ek,Ev,R0,R1)    
+    (Ek,Ev,R0,R1)
     """
     G0 = Phy.G[:, :]
     tmpN = Phy.N
     tmpNN = Phy.NN
 
+    # 使用来自 phy_update 的预计算指数值
+    exp_αη_neg, exp_αη_pos = model.exp_αη_neg, model.exp_αη_pos
+
     if lt > model.Nt / 2
         for t in lt:-1:div(model.Nt, 2)+1
             for j in axes(s, 2)
-                fill!(tmpN, 0.0)
+                fill!(tmpN, 1.0)
                 for i in axes(s, 1)
                     x, y = model.bondidx[i, j]
-                    tmpN[x] = model.α[t] * model.η[s[i, j, t]]
-                    tmpN[y] = -model.α[t] * model.η[s[i, j, t]]
+                    tmpN[x] = exp_αη_pos[t, s[i, j, t]]  # 预计算的 exp(α*η)
+                    tmpN[y] = exp_αη_neg[t, s[i, j, t]]  # 预计算的 exp(-α*η)
                 end
-                tmpN .= exp.(tmpN)
 
                 WrapV!(tmpNN, G0, tmpN, view(model.UV, :, :, j), "B")
-                # G0=model.UV[j,:,:]'*diagm(exp.(-E))*model.UV[j,:,:] *G0* model.UV[j,:,:]'*diagm(exp.(E))*model.UV[j,:,:]
             end
             mul!(tmpNN, model.eKinv, G0)
             mul!(G0, tmpNN, model.eK)
@@ -232,14 +235,14 @@ function phy_measure(model::SO3_Hubbard_Para_, Phy::PhyBuffer_, lt, s)
             mul!(tmpNN, G0, model.eKinv)
             mul!(G0, model.eK, tmpNN)
             # G0=model.eK*G0*model.eKinv
+
             for j in reverse(axes(s, 2))
-                fill!(tmpN, 0.0)
+                fill!(tmpN, 1.0)
                 for i in axes(s, 1)
                     x, y = model.bondidx[i, j]
-                    tmpN[x] = -model.α[t] * model.η[s[i, j, t]]
-                    tmpN[y] = model.α[t] * model.η[s[i, j, t]]
+                    tmpN[x] = exp_αη_neg[t, s[i, j, t]]  # 预计算的 exp(-α*η)
+                    tmpN[y] = exp_αη_pos[t, s[i, j, t]]  # 预计算的 exp(α*η)
                 end
-                tmpN .= exp.(tmpN)
                 WrapV!(tmpNN, G0, tmpN, view(model.UV, :, :, j), "B")
                 # G0=model.UV[j,:,:]'*diagm(exp.(E))*model.UV[j,:,:] *G0* model.UV[j,:,:]'*diagm(exp.(-E))*model.UV[j,:,:]
             end
@@ -321,10 +324,10 @@ function phy_measure(model::SO3_Hubbard_Para_, Phy::PhyBuffer_, lt, s)
                 R1u1 += cos(2 * π / model.site[1] * rx + 2 * π / model.site[2] * ry) * tmp2
             end
         end
-        R0so3 /= 4 * prod(model.site)
-        R1so3 /= 4 * prod(model.site)
-        R0u1 /= 4 * prod(model.site)
-        R1u1 /= 4 * prod(model.site)
+        R0so3 /= 4 * prod(model.site)^2
+        R1so3 /= 4 * prod(model.site)^2
+        R0u1 /= 4 * prod(model.site)^2
+        R1u1 /= 4 * prod(model.site)^2
         @assert abs(imag(R0u1)) < 1e-10 "R0u1 should be real, but got $(R0u1)"
         @assert abs(imag(R1u1)) < 1e-10 "R1u1 should be real, but got $(R1u1)"
     else

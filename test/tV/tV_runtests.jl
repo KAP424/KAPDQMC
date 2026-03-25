@@ -32,7 +32,7 @@ using LinearAlgebra
     # ------------------------------------------------------------------------------------------------------------------------------------------------------
 
     model = tV_Hubbard_Para(Ht=1.0, Hv1=2.0, Hv2=2.0, Θrelax=0.1, Θquench=0.0,
-        Lattice="HoneyComb120", site=[6, 6], Δt=0.03, BatchSize=5, Initial="H0", flux=0, opt="xy")
+        Lattice="HoneyComb120", site=[21, 21], Δt=0.03, BatchSize=5, Initial="H0", flux=0, opt="xy")
 
     G0 = I(model.Ns) - model.Pt * inv(model.Pt' * model.Pt) * model.Pt'
     # println(diag(G0))
@@ -41,7 +41,7 @@ using LinearAlgebra
     tmp = KAPDQMC.tVDQMC.phy_measure(model, Phy, div(model.Nt, 2), Initial_s(model, rng))
     println(tmp)
     println(sum(tmp[3] .* [-1, -1, 1, 1]), "  ", sum(tmp[4] .* [-1, -1, 1, 1]))
-
+    println(1 - sum(tmp[4] .* [-1, -1, 1, 1]) / sum(tmp[3] .* [-1, -1, 1, 1]))
     # λ = 0.5
     # Nλ = 2
 

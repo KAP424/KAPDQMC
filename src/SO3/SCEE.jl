@@ -15,7 +15,7 @@ function ctrl_SCEEicr(path::String, model::SO3_Hubbard_Para_, indexA::Vector{Int
 
     name = name_Lattice(model.Lattice)
 
-    if length(unique(model.α)) == 1
+    if model.HJ1 == model.HJ2
         file = "$(path)/SO3SCEE$(name)_t$(model.Ht)V$(model.HJ1)size$(model.site)Δt$(model.Δt)Θ$(model.Θrelax)N$(Nλ)BS$(model.BatchSize).csv"
     else
         file = "$(path)/SO3VSCEE$(name)_t$(model.Ht)V$(model.HJ1)_$(model.HJ2)size$(model.site)Δt$(model.Δt)Θ$(model.Θrelax)_$(model.Θquench)N$(Nλ)BS$(model.BatchSize).csv"
@@ -30,6 +30,7 @@ function ctrl_SCEEicr(path::String, model::SO3_Hubbard_Para_, indexA::Vector{Int
 
     # 预分配临时数组
     tmpN, tmpN_, tmpNN, tmpNn, tmpnN, tau = SCEE.N, SCEE.N_, SCEE.NN, SCEE.Nn, SCEE.nN, SCEE.tau
+    exp_αη_pos, exp_αη_neg = model.exp_αη_pos, model.exp_αη_neg
 
     counter = 0
     O = zeros(Float64, Sweeps + 1)
@@ -104,17 +105,15 @@ function ctrl_SCEEicr(path::String, model::SO3_Hubbard_Para_, indexA::Vector{Int
             WrapK!(tmpNN, G2, model.eK, model.eKinv)
 
             for j in reverse(axes(ss[1], 2))
-                fill!(tmpN, 0.0)
-                fill!(tmpN_, 0.0)
+                fill!(tmpN, 1.0)
+                fill!(tmpN_, 1.0)
                 for i in axes(ss[1], 1)
                     x, y = model.bondidx[i, j]
-                    tmpN[x] = -model.α[lt] * model.η[ss[1][i, j, lt]]
-                    tmpN[y] = model.α[lt] * model.η[ss[1][i, j, lt]]
-                    tmpN_[x] = -model.α[lt] * model.η[ss[2][i, j, lt]]
-                    tmpN_[y] = model.α[lt] * model.η[ss[2][i, j, lt]]
+                    tmpN[x] = exp_αη_neg[lt, ss[1][i, j, lt]]  # 预计算的 exp(-α*η) 
+                    tmpN[y] = exp_αη_pos[lt, ss[1][i, j, lt]]  # 预计算的 exp(α*η)
+                    tmpN_[x] = exp_αη_neg[lt, ss[2][i, j, lt]]  # 预计算的 exp(-α*η)
+                    tmpN_[y] = exp_αη_pos[lt, ss[2][i, j, lt]]  # 预计算的 exp(α*η)
                 end
-                tmpN .= exp.(tmpN)
-                tmpN_ .= exp.(tmpN_)
 
                 WrapV!(tmpNN, Gt01, tmpN, view(model.UV, :, :, j), "L")
                 WrapV!(tmpNN, Gt02, tmpN_, view(model.UV, :, :, j), "L")
@@ -146,21 +145,21 @@ function ctrl_SCEEicr(path::String, model::SO3_Hubbard_Para_, indexA::Vector{Int
                 # detg_B_ = abs2(det(GM_B_))
 
                 # for jj in size(model.bondidx, 2):-1:j
-                #     E = zeros(model.Ns)
-                #     E_ = zeros(model.Ns)
+                #     E = ones(model.Ns)
+                #     E_ = ones(model.Ns)
                 #     for ii in 1:size(ss[1])[1]
                 #         x, y = model.bondidx[ii, jj]
-                #         E[x] = -model.α[lt] * model.η[ss[1][ii, jj, lt]]
-                #         E[y] = model.α[lt] * model.η[ss[1][ii, jj, lt]]
-                #         E_[x] = -model.α[lt] * model.η[ss[2][ii, jj, lt]]
-                #         E_[y] = model.α[lt] * model.η[ss[2][ii, jj, lt]]
+                #         E[x] = model.exp_αη_neg[lt, ss[1][ii, jj, lt]] # 预计算的 exp(-α*η)
+                #         E[y] = model.exp_αη_pos[lt, ss[1][ii, jj, lt]] # 预计算的 exp(α*η)
+                #         E_[x] = model.exp_αη_neg[lt, ss[2][ii, jj, lt]] # 预计算的 exp(-α*η)
+                #         E_[y] = model.exp_αη_pos[lt, ss[2][ii, jj, lt]] # 预计算的 exp(α*η)
                 #     end
-                #     Gt1_ = model.UV[:, :, jj] * Diagonal(exp.(E)) * model.UV[:, :, jj]' * Gt1_ * model.UV[:, :, jj] * Diagonal(exp.(-E)) * model.UV[:, :, jj]'
-                #     Gt01_ = model.UV[:, :, jj] * Diagonal(exp.(E)) * model.UV[:, :, jj]' * Gt01_
-                #     G0t1_ = G0t1_ * model.UV[:, :, jj] * Diagonal(exp.(-E)) * model.UV[:, :, jj]'
-                #     Gt2_ = model.UV[:, :, jj] * Diagonal(exp.(E_)) * model.UV[:, :, jj]' * Gt2_ * model.UV[:, :, jj] * Diagonal(exp.(-E_)) * model.UV[:, :, jj]'
-                #     Gt02_ = model.UV[:, :, jj] * Diagonal(exp.(E_)) * model.UV[:, :, jj]' * Gt02_
-                #     G0t2_ = G0t2_ * model.UV[:, :, jj] * Diagonal(exp.(-E_)) * model.UV[:, :, jj]'
+                #     Gt1_ = model.UV[:, :, jj] * Diagonal(E) * model.UV[:, :, jj]' * Gt1_ * model.UV[:, :, jj] * Diagonal(1 ./ E) * model.UV[:, :, jj]'
+                #     Gt01_ = model.UV[:, :, jj] * Diagonal(E) * model.UV[:, :, jj]' * Gt01_
+                #     G0t1_ = G0t1_ * model.UV[:, :, jj] * Diagonal(1 ./ E) * model.UV[:, :, jj]'
+                #     Gt2_ = model.UV[:, :, jj] * Diagonal(E_) * model.UV[:, :, jj]' * Gt2_ * model.UV[:, :, jj] * Diagonal(1 ./ E_) * model.UV[:, :, jj]'
+                #     Gt02_ = model.UV[:, :, jj] * Diagonal(E_) * model.UV[:, :, jj]' * Gt02_
+                #     G0t2_ = G0t2_ * model.UV[:, :, jj] * Diagonal(1 ./ E_) * model.UV[:, :, jj]'
                 # end
 
                 # if norm(Gt1 - Gt1_) + norm(G01 - G01_) + norm(Gt01 - Gt01_) + norm(G0t1 - G0t1_) +
@@ -172,7 +171,7 @@ function ctrl_SCEEicr(path::String, model::SO3_Hubbard_Para_, indexA::Vector{Int
                 #     println(norm(gmInv_A_ - A.gmInv), " ", norm(B.gmInv - gmInv_B_), " ", abs(A.detg - detg_A_), " ", abs(B.detg - detg_B_))
                 #     error("s1:  $lt  $j:,,,asdasdasd")
                 # end
-                # ######################################################################
+                ######################################################################
             end
 
             ##------------------------------------------------------------------------
@@ -259,21 +258,22 @@ function ctrl_SCEEicr(path::String, model::SO3_Hubbard_Para_, indexA::Vector{Int
                 # detg_B_ = abs2(det(GM_B_))
 
                 # for jj in size(model.bondidx, 2):-1:j
-                #     E = zeros(model.Ns)
-                #     E_ = zeros(model.Ns)
+                #     # println("  Update check at lt=$lt, bond j=$jj")
+                #     E = ones(model.Ns)
+                #     E_ = ones(model.Ns)
                 #     for ii in 1:size(ss[1])[1]
                 #         x, y = model.bondidx[ii, jj]
-                #         E[x] = -model.α[lt] * model.η[ss[1][ii, jj, lt]]
-                #         E[y] = model.α[lt] * model.η[ss[1][ii, jj, lt]]
-                #         E_[x] = -model.α[lt] * model.η[ss[2][ii, jj, lt]]
-                #         E_[y] = model.α[lt] * model.η[ss[2][ii, jj, lt]]
+                #         E[x] = exp_αη_neg[lt, ss[1][ii, jj, lt]]  # 预计算的 exp(-α*η) 
+                #         E[y] = exp_αη_pos[lt, ss[1][ii, jj, lt]]  # 预计算的 exp(α*η)
+                #         E_[x] = exp_αη_neg[lt, ss[2][ii, jj, lt]]  # 预计算的 exp(-α*η)
+                #         E_[y] = exp_αη_pos[lt, ss[2][ii, jj, lt]]  # 预计算的 exp(α*η)
                 #     end
-                #     Gt1_ = model.UV[:, :, jj] * Diagonal(exp.(E)) * model.UV[:, :, jj]' * Gt1_ * model.UV[:, :, jj] * Diagonal(exp.(-E)) * model.UV[:, :, jj]'
-                #     Gt01_ = model.UV[:, :, jj] * Diagonal(exp.(E)) * model.UV[:, :, jj]' * Gt01_
-                #     G0t1_ = G0t1_ * model.UV[:, :, jj] * Diagonal(exp.(-E)) * model.UV[:, :, jj]'
-                #     Gt2_ = model.UV[:, :, jj] * Diagonal(exp.(E_)) * model.UV[:, :, jj]' * Gt2_ * model.UV[:, :, jj] * Diagonal(exp.(-E_)) * model.UV[:, :, jj]'
-                #     Gt02_ = model.UV[:, :, jj] * Diagonal(exp.(E_)) * model.UV[:, :, jj]' * Gt02_
-                #     G0t2_ = G0t2_ * model.UV[:, :, jj] * Diagonal(exp.(-E_)) * model.UV[:, :, jj]'
+                #     Gt1_ = model.UV[:, :, jj] * Diagonal(E) * model.UV[:, :, jj]' * Gt1_ * model.UV[:, :, jj] * Diagonal(1 ./ E) * model.UV[:, :, jj]'
+                #     Gt01_ = model.UV[:, :, jj] * Diagonal(E) * model.UV[:, :, jj]' * Gt01_
+                #     G0t1_ = G0t1_ * model.UV[:, :, jj] * Diagonal(1 ./ E) * model.UV[:, :, jj]'
+                #     Gt2_ = model.UV[:, :, jj] * Diagonal(E_) * model.UV[:, :, jj]' * Gt2_ * model.UV[:, :, jj] * Diagonal(1 ./ E_) * model.UV[:, :, jj]'
+                #     Gt02_ = model.UV[:, :, jj] * Diagonal(E_) * model.UV[:, :, jj]' * Gt02_
+                #     G0t2_ = G0t2_ * model.UV[:, :, jj] * Diagonal(1 ./ E_) * model.UV[:, :, jj]'
                 # end
 
                 # if norm(Gt1 - Gt1_) + norm(G01 - G01_) + norm(Gt01 - Gt01_) + norm(G0t1 - G0t1_) +
@@ -286,17 +286,15 @@ function ctrl_SCEEicr(path::String, model::SO3_Hubbard_Para_, indexA::Vector{Int
                 #     error("s1:  $lt  $j:,,,asdasdasd")
                 # end
                 # ######################################################################
-                fill!(tmpN, 0.0)
-                fill!(tmpN_, 0.0)
+                fill!(tmpN, 1.0)
+                fill!(tmpN_, 1.0)
                 for i in axes(ss[1], 1)
                     x, y = model.bondidx[i, j]
-                    tmpN[x] = model.α[lt] * model.η[ss[1][i, j, lt]]
-                    tmpN[y] = -model.α[lt] * model.η[ss[1][i, j, lt]]
-                    tmpN_[x] = model.α[lt] * model.η[ss[2][i, j, lt]]
-                    tmpN_[y] = -model.α[lt] * model.η[ss[2][i, j, lt]]
+                    tmpN[x] = exp_αη_pos[lt, ss[1][i, j, lt]]  # 预计算的 exp(-α*η) 
+                    tmpN[y] = exp_αη_neg[lt, ss[1][i, j, lt]]  # 预计算的 exp(α*η)
+                    tmpN_[x] = exp_αη_pos[lt, ss[2][i, j, lt]]  # 预计算的 exp(-α*η)
+                    tmpN_[y] = exp_αη_neg[lt, ss[2][i, j, lt]]  # 预计算的 exp(α*η)
                 end
-                tmpN .= exp.(tmpN)
-                tmpN_ .= exp.(tmpN_)
 
                 WrapV!(tmpNN, Gt01, tmpN, view(model.UV, :, :, j), "L")
                 WrapV!(tmpNN, Gt02, tmpN_, view(model.UV, :, :, j), "L")
@@ -422,7 +420,7 @@ function UpdateSCEELayer!(rng, j, s1, s2, lt, G1::G4Buffer_, G2::G4Buffer_, A::A
         ########## update s1
         begin
             sx = rand(rng, model.samplers_dict[s1[i]])
-            p = get_r!(UPD, model.α[lt] * (model.η[sx] - model.η[s1[i]]), G1.Gt)
+            p = get_r!(UPD, model.αη[lt, sx] - model.αη[lt, s1[i]], G1.Gt)
             p *= model.γ[sx] / model.γ[s1[i]]
 
             detTau_A = abs2(get_abTau1!(A, UPD, G2.G0, G1.Gt0, G1.G0t))
@@ -444,7 +442,7 @@ function UpdateSCEELayer!(rng, j, s1, s2, lt, G1::G4Buffer_, G2::G4Buffer_, A::A
         ########## update ss[2]
         begin
             sx = rand(rng, model.samplers_dict[s2[i]])
-            p = get_r!(UPD, model.α[lt] * (model.η[sx] - model.η[s2[i]]), G2.Gt)
+            p = get_r!(UPD, model.αη[lt, sx] - model.αη[lt, s2[i]], G2.Gt)
             p *= model.γ[sx] / model.γ[s2[i]]
 
             detTau_A = abs2(get_abTau2!(A, UPD, G1.G0, G2.Gt0, G2.G0t))

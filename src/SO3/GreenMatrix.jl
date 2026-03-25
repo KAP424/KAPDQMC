@@ -23,13 +23,12 @@ function BM_F!(tmpN, tmpNN, BM, model::SO3_Hubbard_Para_, s::Array{UInt8,3}, idx
     for lt in model.nodes[idx]+1:model.nodes[idx+1]
         mul!(BM, model.eK, tmpNN)
         for j in reverse(axes(s, 2))
-            fill!(tmpN, 0)
+            fill!(tmpN, 1.0)
             for i in axes(s, 1)
                 x, y = model.bondidx[i, j]
-                tmpN[x] = -model.α[lt] * model.η[s[i, j, lt]]
-                tmpN[y] = model.α[lt] * model.η[s[i, j, lt]]
+                tmpN[x] = model.exp_αη_neg[lt, s[i, j, lt]]
+                tmpN[y] = model.exp_αη_pos[lt, s[i, j, lt]]
             end
-            tmpN .= exp.(tmpN)
             mul!(tmpNN, view(model.UV, :, :, j)', BM)
             mul!(BM, Diagonal(tmpN), tmpNN)
             mul!(tmpNN, view(model.UV, :, :, j), BM)
@@ -52,14 +51,12 @@ function BMinv_F!(tmpN, tmpNN, BM, model::SO3_Hubbard_Para_, s::Array{UInt8,3}, 
     for lt in model.nodes[idx]+1:model.nodes[idx+1]
         mul!(BM, tmpNN, model.eKinv)
         for j in reverse(axes(s, 2))
-            fill!(tmpN, 0)
+            fill!(tmpN, 1.0)
             for i in axes(s, 1)
                 x, y = model.bondidx[i, j]
-                tmpN[x] = model.α[lt] * model.η[s[i, j, lt]]
-                tmpN[y] = -model.α[lt] * model.η[s[i, j, lt]]
+                tmpN[x] = model.exp_αη_pos[lt, s[i, j, lt]]
+                tmpN[y] = model.exp_αη_neg[lt, s[i, j, lt]]
             end
-            tmpN .= exp.(tmpN)
-
             mul!(tmpNN, BM, view(model.UV, :, :, j))
             mul!(BM, tmpNN, Diagonal(tmpN))
             mul!(tmpNN, BM, view(model.UV, :, :, j)')
@@ -134,14 +131,14 @@ function Gτ(model::SO3_Hubbard_Para_, s::Array{UInt8,3}, τ::Int64)
     counter = 0
     for lt in model.Nt:-1:τ+1
         for j in axes(s, 2)
-            fill!(E, 0.0)
+            fill!(E, 1.0)
             for i in axes(s, 1)
                 x, y = model.bondidx[i, j]
-                E[x] = -model.α[lt] * model.η[s[i, j, lt]]
-                E[y] = model.α[lt] * model.η[s[i, j, lt]]
+                E[x] = model.exp_αη_neg[lt, s[i, j, lt]]
+                E[y] = model.exp_αη_pos[lt, s[i, j, lt]]
             end
-            BL = BL * model.UV[:, :, j] * Diagonal(exp.(E)) * model.UV[:, :, j]'
-            # @assert norm(Diagonal(exp.(E)) - I(model.Ns)) < 1e-5 "Diagonal(exp.(E)) should be close to identity when α is small!"
+            BL = BL * model.UV[:, :, j] * Diagonal(E) * model.UV[:, :, j]'
+            # @assert norm(Diagonal(E) - I(model.Ns)) < 1e-5 "Diagonal(E) should be close to identity when α is small!"
         end
         BL = BL * model.eK
         counter += 1
@@ -154,14 +151,14 @@ function Gτ(model::SO3_Hubbard_Para_, s::Array{UInt8,3}, τ::Int64)
     for lt in 1:τ
         BR = model.eK * BR
         for j in reverse(axes(s, 2))
-            fill!(E, 0.0)
+            fill!(E, 1.0)
             for i in axes(s, 1)
                 x, y = model.bondidx[i, j]
-                E[x] = -model.α[lt] * model.η[s[i, j, lt]]
-                E[y] = model.α[lt] * model.η[s[i, j, lt]]
+                E[x] = model.exp_αη_neg[lt, s[i, j, lt]]
+                E[y] = model.exp_αη_pos[lt, s[i, j, lt]]
             end
-            BR = model.UV[:, :, j] * Diagonal(exp.(E)) * model.UV[:, :, j]' * BR
-            # @assert norm(Diagonal(exp.(E)) - I(model.Ns)) < 1e-5 "Diagonal(exp.(E)) should be close to identity when α is small!"
+            BR = model.UV[:, :, j] * Diagonal(E) * model.UV[:, :, j]' * BR
+            # @assert norm(Diagonal(E) - I(model.Ns)) < 1e-5 "Diagonal(E) should be close to identity when α is small!"
         end
         counter += 1
         if counter == model.BatchSize
@@ -194,13 +191,13 @@ function G4(model::SO3_Hubbard_Para_, s::Array{UInt8,3}, τ1::Int64, τ2::Int64,
         for lt in 1:τ2
             UR[1, :, :] = model.eK * UR[1, :, :]
             for j in reverse(axes(s, 2))
-                E = zeros(model.Ns)
+                E = ones(model.Ns)
                 for i in axes(s, 1)
                     x, y = model.bondidx[i, j]
-                    E[x] = -model.α[lt] * model.η[s[i, j, lt]]
-                    E[y] = model.α[lt] * model.η[s[i, j, lt]]
+                    E[x] = model.exp_αη_neg[lt, s[i, j, lt]]
+                    E[y] = model.exp_αη_pos[lt, s[i, j, lt]]
                 end
-                UR[1, :, :] = model.UV[:, :, j] * Diagonal(exp.(E)) * model.UV[:, :, j]' * UR[1, :, :]
+                UR[1, :, :] = model.UV[:, :, j] * Diagonal(E) * model.UV[:, :, j]' * UR[1, :, :]
             end
 
             counter += 1
@@ -214,13 +211,13 @@ function G4(model::SO3_Hubbard_Para_, s::Array{UInt8,3}, τ1::Int64, τ2::Int64,
         counter = 0
         for lt in model.Nt:-1:τ1+1
             for j in axes(s, 2)
-                E = zeros(model.Ns)
+                E = ones(model.Ns)
                 for i in axes(s, 1)
                     x, y = model.bondidx[i, j]
-                    E[x] = -model.α[lt] * model.η[s[i, j, lt]]
-                    E[y] = model.α[lt] * model.η[s[i, j, lt]]
+                    E[x] = model.exp_αη_neg[lt, s[i, j, lt]]
+                    E[y] = model.exp_αη_pos[lt, s[i, j, lt]]
                 end
-                UL[end, :, :] = UL[end, :, :] * model.UV[:, :, j] * Diagonal(exp.(E)) * model.UV[:, :, j]'
+                UL[end, :, :] = UL[end, :, :] * model.UV[:, :, j] * Diagonal(E) * model.UV[:, :, j]'
             end
             UL[end, :, :] = UL[end, :, :] * model.eK
 
@@ -239,15 +236,14 @@ function G4(model::SO3_Hubbard_Para_, s::Array{UInt8,3}, τ1::Int64, τ2::Int64,
                 BBs[lt, :, :] = model.eK * BBs[lt, :, :]
                 BBsInv[lt, :, :] = BBsInv[lt, :, :] * model.eKinv
                 for j in reverse(axes(s, 2))
-                    E = zeros(model.Ns)
+                    E = ones(model.Ns)
                     for i in axes(s, 1)
                         x, y = model.bondidx[i, j]
-                        E[x] = -model.α[τ2+(lt-1)*model.BatchSize+lt2] * model.η[s[i, j, τ2+(lt-1)*model.BatchSize+lt2]]
-                        E[y] = model.α[τ2+(lt-1)*model.BatchSize+lt2] * model.η[s[i, j, τ2+(lt-1)*model.BatchSize+lt2]]
+                        E[x] = model.exp_αη_neg[τ2+(lt-1)*model.BatchSize+lt2, s[i, j, τ2+(lt-1)*model.BatchSize+lt2]]
+                        E[y] = model.exp_αη_pos[τ2+(lt-1)*model.BatchSize+lt2, s[i, j, τ2+(lt-1)*model.BatchSize+lt2]]
                     end
-                    BBs[lt, :, :] = model.UV[:, :, j] * Diagonal(exp.(E)) * model.UV[:, :, j]' * BBs[lt, :, :]
-                    BBsInv[lt, :, :] = BBsInv[lt, :, :] * model.UV[:, :, j] * Diagonal(exp.(-E)) * model.UV[:, :, j]'
-
+                    BBs[lt, :, :] = model.UV[:, :, j] * Diagonal(E) * model.UV[:, :, j]' * BBs[lt, :, :]
+                    BBsInv[lt, :, :] = BBsInv[lt, :, :] * model.UV[:, :, j] * Diagonal(1 ./ E) * model.UV[:, :, j]'
                 end
             end
         end
@@ -258,14 +254,14 @@ function G4(model::SO3_Hubbard_Para_, s::Array{UInt8,3}, τ1::Int64, τ2::Int64,
             BBs[end, :, :] = model.eK * BBs[end, :, :]
             BBsInv[end, :, :] = BBsInv[end, :, :] * model.eKinv
             for j in reverse(axes(s, 2))
-                E = zeros(model.Ns)
+                E = ones(model.Ns)
                 for i in axes(s, 1)
                     x, y = model.bondidx[i, j]
-                    E[x] = -model.α[lt] * model.η[s[i, j, lt]]
-                    E[y] = model.α[lt] * model.η[s[i, j, lt]]
+                    E[x] = model.exp_αη_neg[lt, s[i, j, lt]]
+                    E[y] = model.exp_αη_pos[lt, s[i, j, lt]]
                 end
-                BBs[end, :, :] = model.UV[:, :, j] * Diagonal(exp.(E)) * model.UV[:, :, j]' * BBs[end, :, :]
-                BBsInv[end, :, :] = BBsInv[end, :, :] * model.UV[:, :, j] * Diagonal(exp.(-E)) * model.UV[:, :, j]'
+                BBs[end, :, :] = model.UV[:, :, j] * Diagonal(E) * model.UV[:, :, j]' * BBs[end, :, :]
+                BBsInv[end, :, :] = BBsInv[end, :, :] * model.UV[:, :, j] * Diagonal(1 ./ E) * model.UV[:, :, j]'
             end
         end
 
@@ -278,12 +274,12 @@ function G4(model::SO3_Hubbard_Para_, s::Array{UInt8,3}, τ1::Int64, τ2::Int64,
             G[i, :, :] = I(model.Ns) - UR[i, :, :] * inv(UL[i, :, :] * UR[i, :, :]) * UL[i, :, :]
 
             #####################################################################
-            if i <size(G)[1]
-                if norm(Gτ(model,s,τ2+(i-1)*model.BatchSize)-G[i,:,:])>1e-3
+            if i < size(G)[1]
+                if norm(Gτ(model, s, τ2 + (i - 1) * model.BatchSize) - G[i, :, :]) > 1e-3
                     error("$i Gt:  $(norm(Gτ(model,s,τ2+(i-1)*model.BatchSize)-G[i,:,:]))")
                 end
             else
-                if norm(Gτ(model,s,τ1)-G[i,:,:])>1e-3
+                if norm(Gτ(model, s, τ1) - G[i, :, :]) > 1e-3
                     error("$i Gt:  $(norm(Gτ(model,s,τ1)-G[i,:,:]))")
                 end
             end

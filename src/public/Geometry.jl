@@ -190,7 +190,6 @@ function nnK_Matrix(Lattice::String, site::Vector{Int64}; t=(1.0, 1.0, 1.0), flu
     else
         K = zeros(Float64, Ns, Ns)
     end
-
     if occursin("SQUARE", Lattice)
         for i in 1:Ns
             nnidx = nn2idx(Lattice, site, i)
@@ -216,6 +215,18 @@ function nnK_Matrix(Lattice::String, site::Vector{Int64}; t=(1.0, 1.0, 1.0), flu
                     else
                         K[i, nnidx[1]] = 1.0
                         K[i, nnidx[2]] = cis(flux)
+                        K[i, nnidx[3]] = 1.0
+                        K[i, nnidx[4]] = 1.0
+                    end
+                elseif opt == "yy"
+                    if mod(i, 2) == 1
+                        K[i, nnidx[1]] = cis(flux / 2)
+                        K[i, nnidx[2]] = cis(flux / 2)
+                        K[i, nnidx[3]] = 1.0
+                        K[i, nnidx[4]] = 1.0
+                    else
+                        K[i, nnidx[1]] = cis(-flux / 2)
+                        K[i, nnidx[2]] = cis(-flux / 2)
                         K[i, nnidx[3]] = 1.0
                         K[i, nnidx[4]] = 1.0
                     end

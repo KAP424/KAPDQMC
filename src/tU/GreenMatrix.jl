@@ -19,7 +19,7 @@ function BM_F!(tmpN, tmpNN, BM, model::tU_Hubbard_Para_, s::Array{UInt8,2}, idx:
     end
     for lt in model.nodes[idx]+1:model.nodes[idx+1]
         @inbounds @simd for i in 1:model.Ns
-            tmpN[i] = cis(model.α[lt] * model.η[s[i, lt]])
+            tmpN[i] = model.exp_αη_pos[lt, s[i, lt]]
         end
         mul!(tmpNN, model.eK, BM)
         mul!(BM, Diagonal(tmpN), tmpNN)
@@ -39,7 +39,7 @@ function BMinv_F!(tmpN, tmpNN, BM, model::tU_Hubbard_Para_, s::Array{UInt8,2}, i
 
     for lt in model.nodes[idx]+1:model.nodes[idx+1]
         @inbounds for i in 1:model.Ns
-            tmpN[i] = cis(-model.α[lt] * model.η[s[i, lt]])
+            tmpN[i] = model.exp_αη_neg[lt, s[i, lt]]
         end
         mul!(tmpNN, BM, model.eKinv)
         mul!(BM, tmpNN, Diagonal(tmpN))
@@ -97,8 +97,8 @@ function Gτ(model::tU_Hubbard_Para_, s::Array{UInt8,2}, τ::Int64)::Array{Compl
 
     counter = 0
     for i in model.Nt:-1:τ+1
-        D = [model.η[x] for x in s[:, i]]
-        BL = BL * diagm(exp.(1im * model.α[i] .* D)) * model.eK
+        D = [model.exp_αη_pos[i, x] for x in s[:, i]]
+        BL = BL * diagm(D) * model.eK
         counter += 1
         if counter == model.BatchSize
             counter = 0
@@ -107,8 +107,8 @@ function Gτ(model::tU_Hubbard_Para_, s::Array{UInt8,2}, τ::Int64)::Array{Compl
     end
     counter = 0
     for i in 1:1:τ
-        D = [model.η[x] for x in s[:, i]]
-        BR = diagm(exp.(1im * model.α[i] .* D)) * model.eK * BR
+        D = [model.exp_αη_pos[i, x] for x in s[:, i]]
+        BR = diagm(D) * model.eK * BR
         counter += 1
         if counter == model.BatchSize
             counter = 0
@@ -142,8 +142,8 @@ function G4(model::tU_Hubbard_Para_, s::Array{UInt8,2}, τ1::Int64, τ2::Int64)
 
         counter = 0
         for i in 1:τ2
-            D = [model.η[x] for x in s[:, i]]
-            UR[1, :, :] = diagm(exp.(1im * model.α[i] .* D)) * model.eK * UR[1, :, :]
+            D = [model.exp_αη_pos[i, x] for x in s[:, i]]
+            UR[1, :, :] = diagm(D) * model.eK * UR[1, :, :]
             counter += 1
             if counter == model.BatchSize
                 counter = 0
@@ -155,8 +155,8 @@ function G4(model::tU_Hubbard_Para_, s::Array{UInt8,2}, τ1::Int64, τ2::Int64)
 
         counter = 0
         for i in model.Nt:-1:τ1+1
-            D = [model.η[x] for x in s[:, i]]
-            UL[end, :, :] = UL[end, :, :] * diagm(exp.(1im * model.α[i] .* D)) * model.eK
+            D = [model.exp_αη_pos[i, x] for x in s[:, i]]
+            UL[end, :, :] = UL[end, :, :] * diagm(D) * model.eK
             counter += 1
             if counter == model.BatchSize
                 counter = 0
@@ -170,18 +170,18 @@ function G4(model::tU_Hubbard_Para_, s::Array{UInt8,2}, τ1::Int64, τ2::Int64)
             BBs[i, :, :] = I(model.Ns)
             BBsInv[i, :, :] = I(model.Ns)
             for j in 1:model.BatchSize
-                D = [model.η[x] for x in s[:, τ2+(i-1)*model.BatchSize+j]]
-                BBs[i, :, :] = diagm(exp.(1im * model.α[τ2+(i-1)*model.BatchSize+j] .* D)) * model.eK * BBs[i, :, :]
-                BBsInv[i, :, :] = BBsInv[i, :, :] * model.eKinv * diagm(exp.(-1im * model.α[τ2+(i-1)*model.BatchSize+j] .* D))
+                D = [model.exp_αη_pos[τ2+(i-1)*model.BatchSize+j, x] for x in s[:, τ2+(i-1)*model.BatchSize+j]]
+                BBs[i, :, :] = diagm(D) * model.eK * BBs[i, :, :]
+                BBsInv[i, :, :] = BBsInv[i, :, :] * model.eKinv * diagm([model.exp_αη_neg[τ2+(i-1)*model.BatchSize+j, x] for x in s[:, τ2+(i-1)*model.BatchSize+j]])
             end
         end
 
         BBs[end, :, :] = I(model.Ns)
         BBsInv[end, :, :] = I(model.Ns)
         for j in τ2+(size(BBs)[1]-1)*model.BatchSize+1:τ1
-            D = [model.η[x] for x in s[:, j]]
-            BBs[end, :, :] = diagm(exp.(1im * model.α[j] .* D)) * model.eK * BBs[end, :, :]
-            BBsInv[end, :, :] = BBsInv[end, :, :] * model.eKinv * diagm(exp.(-1im * model.α[j] .* D))
+            D = [model.exp_αη_pos[j, x] for x in s[:, j]]
+            BBs[end, :, :] = diagm(D) * model.eK * BBs[end, :, :]
+            BBsInv[end, :, :] = BBsInv[end, :, :] * model.eKinv * diagm([model.exp_αη_neg[j, x] for x in s[:, j]])
         end
 
         for i in 1:size(BBs)[1]

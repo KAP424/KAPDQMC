@@ -30,6 +30,10 @@ function phy_update(path::String, model::tU_Hubbard_Para_, s::Array{UInt8,2}, Sw
 
     BRs[:, :, 1] .= model.HalfeKinv * model.Pt
     BLs[:, :, NN] .= model.Pt' * model.HalfeK
+
+    # BRs[:, :, 1] .= model.Pt
+    # BLs[:, :, NN] .= model.Pt'
+
     for idx in NN-1:-1:1
         BM_F!(tmpN, tmpNN, BM, model, s, idx)
         mul!(tmpnN, view(BLs, :, :, idx + 1), BM)
@@ -51,7 +55,7 @@ function phy_update(path::String, model::tU_Hubbard_Para_, s::Array{UInt8,2}, Sw
             #####################################################################
 
             @inbounds @simd for iii in 1:Ns
-                tmpN[iii] = @fastmath cis(model.α[lt] * model.η[s[iii, lt]])
+                tmpN[iii] = @fastmath model.exp_αη_pos[lt, s[iii, lt]]
             end
             WrapKV!(tmpNN, model.eK, model.eKinv, tmpN, G, "Forward", "B")
 
@@ -113,7 +117,7 @@ function phy_update(path::String, model::tU_Hubbard_Para_, s::Array{UInt8,2}, Sw
             end
             # ---------------------------------------------------------------------------------------------------------
             @inbounds @simd for iii in 1:Ns
-                tmpN[iii] = @fastmath cis(-model.α[lt] * model.η[s[iii, lt]])
+                tmpN[iii] = @fastmath model.exp_αη_neg[lt, s[iii, lt]]
             end
             WrapKV!(tmpNN, model.eK, model.eKinv, tmpN, G, "Backward", "B")
 
@@ -160,14 +164,14 @@ function phy_measure(model::tU_Hubbard_Para_, lt, s, G, tmpNN, tmpN)
     if lt > model.Nt / 2
         for t in lt:-1:div(model.Nt, 2)+1
             for i in axes(s, 1)
-                tmpN[i] = cis(-model.α[t] * model.η[s[i, t]])
+                tmpN[i] = model.exp_αη_neg[t, s[i, t]]
             end
             WrapKV!(tmpNN, model.eK, model.eKinv, tmpN, G0, "Backward", "B")
         end
     else
         for t in lt+1:div(model.Nt, 2)
             for i in axes(s, 1)
-                tmpN[i] = cis(model.α[t] * model.η[s[i, t]])
+                tmpN[i] = model.exp_αη_pos[t, s[i, t]]
             end
             WrapKV!(tmpNN, model.eK, model.eKinv, tmpN, G0, "Forward", "B")
         end
@@ -256,7 +260,7 @@ function UpdatePhyLayer!(rng, s, lt, model::tU_Hubbard_Para_, UPD::UpdateBuffer_
     for i in eachindex(s)
         UPD.subidx = [i]
         sx = rand(rng, model.samplers_dict[s[i]])
-        p = get_r!(UPD, model.α[lt] * (model.η[sx] - model.η[s[i]]), Phy.G)
+        p = get_r!(UPD, model.αη[lt, sx] - model.αη[lt, s[i]], Phy.G)
         p *= model.γ[sx] / model.γ[s[i]]
         if rand(rng) < p
             UPD.acc += 1

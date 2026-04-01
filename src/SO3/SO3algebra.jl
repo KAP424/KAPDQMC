@@ -72,7 +72,10 @@ function so3bondTidx_F(Lattice, site)
     return nnidx
 end
 
-function nnK_Matrix4so3(Lattice, site, flux=0.0, opt="xy")
+function nnK_Matrix4so3(Lattice, site; flux=0.0, opt="xy")
+    if flux != 0.0
+        error("Flux is only supported for nnK_Matrix4so3")
+    end
     if Lattice == "SQUARE90"
         error("Lattice $Lattice not supported!")
     elseif Lattice == "HoneyComb120"

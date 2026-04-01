@@ -53,24 +53,24 @@ using LinearAlgebra
     # ss = ctrl_SCEEicr(path, model, indexA, indexB, 2, λ, Nλ, ss, true)
 
 
-    # println(length(model.nodes))
+    # # println(length(model.nodes))
 
-    s = Initial_s(model, rng)
-    # println(size(s))
+    # s = Initial_s(model, rng)
+    # # println(size(s))
 
-    # # s = phy_update(path, model, s, 2, false)
-    s = phy_update(path, model, s, 2, true)
+    # # # s = phy_update(path, model, s, 2, false)
+    # s = phy_update(path, model, s, 2, true)
 
 
-    L = model.site[2]
-    indexA = area_index(model.Lattice, model.site, ([1, 1], [div(L, 2), L]))
-    # # HalfHalf
-    indexB = area_index(model.Lattice, model.site, ([1, 1], [div(L, 2), div(L, 2)]))
-    # println(indexB)
-    ss = [copy(s), copy(s)]
-    λ = 0.5
-    Nλ = 2
-    ss = ctrl_SCEEicr(path, model, indexA, indexB, 3, λ, Nλ, ss, true)
+    # L = model.site[2]
+    # indexA = area_index(model.Lattice, model.site, ([1, 1], [div(L, 2), L]))
+    # # # HalfHalf
+    # indexB = area_index(model.Lattice, model.site, ([1, 1], [div(L, 2), div(L, 2)]))
+    # # println(indexB)
+    # ss = [copy(s), copy(s)]
+    # λ = 0.5
+    # Nλ = 2
+    # ss = ctrl_SCEEicr(path, model, indexA, indexB, 3, λ, Nλ, ss, true)
 
     # s = ctrl_SCDOPicr(path, model, π / 2, indexA, indexB, 20, λ, Nλ, s, true)
 

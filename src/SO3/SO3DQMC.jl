@@ -20,6 +20,6 @@ include("SO3algebra.jl")
 # include("EEicr.jl")
 # include("disorder_operate.jl")
 
-export SO3_Hubbard_Para, SO3Initial_Pt!, nnK_Matrix4so3
+export SO3_Hubbard_Para, SO3Initial_Pt!, nnK_Matrix4so3, so3area_index
 end
 

@@ -57,7 +57,7 @@ using LinearAlgebra
     # ss = ctrl_SCEEicr(path, model, indexA, indexB, 2, λ, Nλ, ss, true)
     # ss = ctrl_EEicr(path, model, indexA, 2, λ, Nλ, ss, true)
 
-    s = phy_update(path, model, s, 10, true)
+    # s = phy_update(path, model, s, 10, true)
 
 
     # L = model.site[2]
@@ -76,6 +76,6 @@ using LinearAlgebra
 
 
     # # println(@btime ctrl_SCEEicr($path,$model,$indexA,$indexB,$Sweeps,$λ,$Nλ,$ss,$true) )
-    ss = ctrl_SCEEicr(path, model, indexA, indexB, 2, λ, Nλ, ss, true)
+    # ss = ctrl_SCEEicr(path, model, indexA, indexB, 2, λ, Nλ, ss, true)
 
 end

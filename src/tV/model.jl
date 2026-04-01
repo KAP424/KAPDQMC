@@ -97,6 +97,8 @@ function tV_Hubbard_Para(; Ht, Hv1, Hv2, Δt, Θrelax, Θquench, Lattice::String
         samplers_dict[excluded] = Random.Sampler(rng, allowed)
     end
 
+    println("$(Lattice) size=$(site)  Δt=$(Δt)  Θ=$(Θrelax)+$(Θquench)  U=$(Hv1)--$(Hv2)  Initial=$Initial  flux=$(flux)  opt=$opt  BS=$(BatchSize)  $(Nt)*$(Ns)*$(size(K))")
+
     return tV_Hubbard_Para_{T}(Lattice, Ht, Hv1, Hv2, site, Θrelax, Θquench, Ns,
         Nt, K, BatchSize, Δt, exp_αη_pos, exp_αη_neg, αη, γ, Pt,
         HalfeK, eK, HalfeKinv, eKinv, nnidx, nodes, UV, samplers_dict, flux)

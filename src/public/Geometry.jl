@@ -326,8 +326,9 @@ function area_index(Lattice::String, site::Vector{Int64}, area::Tuple{Vector{Int
             end
             return index
         end
+    else
+        error("Lattice: $(Lattice) is not allowed !")
     end
-
 end
 
 function name_Lattice(Lattice::String)

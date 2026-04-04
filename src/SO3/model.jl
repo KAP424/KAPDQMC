@@ -32,7 +32,7 @@ end
 
 
 function SO3_Hubbard_Para(; Ht, HJ1, HJ2, Δt, Θrelax, Θquench, Lattice::String, site, BatchSize, Initial::String, flux=0.0, opt="xy")
-    K = nnK_Matrix4so3(Lattice, site, flux, opt)
+    K = nnK_Matrix4so3(Lattice, site; flux=flux, opt=opt)
     Ns = size(K, 1)
 
     E, V = LAPACK.syevd!('V', 'L', -Ht .* K[:, :])

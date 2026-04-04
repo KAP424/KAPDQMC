@@ -25,20 +25,20 @@ using LinearAlgebra
     # println(1 - tmp[3] / tmp[2])
 
 
-    s = Initial_s(model, rng)
+    # s = Initial_s(model, rng)
 
-    # s = phy_update(path, model, s, 4, true)
+    # # s = phy_update(path, model, s, 4, true)
 
 
-    L = model.site[2]
-    indexA = area_index(model.Lattice, model.site, ([1, 1], [div(L, 3), L]))
-    # # HalfHalf
-    indexB = area_index(model.Lattice, model.site, ([1, 1], [div(L, 3), div(2 * L, 3)]))
-    # println(indexB)
-    ss = [copy(s), copy(s)]
-    λ = 0.5
-    Nλ = 2
-    ss = ctrl_SCEEicr(path, model, indexA, indexB, 2, λ, Nλ, ss, true)
+    # L = model.site[2]
+    # indexA = area_index(model.Lattice, model.site, ([1, 1], [div(L, 3), L]))
+    # # # HalfHalf
+    # indexB = area_index(model.Lattice, model.site, ([1, 1], [div(L, 3), div(2 * L, 3)]))
+    # # println(indexB)
+    # ss = [copy(s), copy(s)]
+    # λ = 0.5
+    # Nλ = 2
+    # ss = ctrl_SCEEicr(path, model, indexA, indexB, 2, λ, Nλ, ss, true)
 
     # # s = ctrl_SCDOPicr(path, model, π / 2, indexA, indexB, 20, λ, Nλ, s, true)
 

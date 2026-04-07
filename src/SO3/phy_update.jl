@@ -198,6 +198,7 @@ function Correlation_Cal(G, i, j, k, l)
     """
     calculate the correlation <c†_i c_j c†_k c_l> = <c†_i c_j><c†_k c_l> + <c†_i c_l><c_j c†_k>
     G_ij = c_i c†_j = δ_ij - c†_j c_i
+    sum of ∑_{λ1,λ2} 
     """
     ans = (Int(i == j) - G[j, i]) * (Int(k == l) - G[l, k]) + (Int(i == l) - G[l, i]) * G[j, k]
     return 2 * real(ans)
@@ -276,7 +277,7 @@ function phy_measure(model::SO3_Hubbard_Para_, Phy::PhyBuffer_, lt, s)
                 for ix in 1:model.site[1]
                     for iy in 1:model.site[2]
                         # SO3 order parameter
-                        for zi in 1:2
+                        for zi in 1:2   # z is A/B sublattice
                             for zj in 1:2
                                 # <sx ⋅ sx>
                                 # i -> iy, j -> iz, k -> jy, l -> jz 
@@ -288,16 +289,18 @@ function phy_measure(model::SO3_Hubbard_Para_, Phy::PhyBuffer_, lt, s)
                                 tmp1 -= (-1)^(zi + zj) * Correlation_Cal(G0, j, i, l, k)
                                 tmp1 += (-1)^(zi + zj) * Correlation_Cal(G0, i, j, l, k)
                                 tmp1 += (-1)^(zi + zj) * Correlation_Cal(G0, j, i, k, l)
+                                tmp1 += (-1)^(zi + zj) * 2 * abs((G0[j, i] - G0[i, j]) * adjoint(G0[l, k] - G0[k, l]))
 
                                 # <sy ⋅ sy>
-                                i = xyzσTidx(model.Lattice, model.site, ix, iy, zi, 1)
-                                j = xyzσTidx(model.Lattice, model.site, ix, iy, zi, 3)
-                                k = xyzσTidx(model.Lattice, model.site, mod1(ix + rx, model.site[1]), mod1(iy + ry, model.site[2]), zj, 1)
-                                l = xyzσTidx(model.Lattice, model.site, mod1(ix + rx, model.site[1]), mod1(iy + ry, model.site[2]), zj, 3)
+                                i = xyzσTidx(model.Lattice, model.site, ix, iy, zi, 3)
+                                j = xyzσTidx(model.Lattice, model.site, ix, iy, zi, 1)
+                                k = xyzσTidx(model.Lattice, model.site, mod1(ix + rx, model.site[1]), mod1(iy + ry, model.site[2]), zj, 3)
+                                l = xyzσTidx(model.Lattice, model.site, mod1(ix + rx, model.site[1]), mod1(iy + ry, model.site[2]), zj, 1)
                                 tmp1 -= (-1)^(zi + zj) * Correlation_Cal(G0, i, j, k, l)
                                 tmp1 -= (-1)^(zi + zj) * Correlation_Cal(G0, j, i, l, k)
                                 tmp1 += (-1)^(zi + zj) * Correlation_Cal(G0, i, j, l, k)
                                 tmp1 += (-1)^(zi + zj) * Correlation_Cal(G0, j, i, k, l)
+                                tmp1 += (-1)^(zi + zj) * 2 * abs((G0[j, i] - G0[i, j]) * adjoint(G0[l, k] - G0[k, l]))
 
                                 # <sz ⋅ sz>
                                 i = xyzσTidx(model.Lattice, model.site, ix, iy, zi, 1)

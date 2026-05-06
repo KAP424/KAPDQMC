@@ -164,6 +164,14 @@ function nn2idx(Lattice::String, site::Vector{Int64}, idx::Int64)
             nn[2] = xy_i(Lattice, site, x, mod1(y + 1, site[2])) - 1
             nn[3] = xy_i(Lattice, site, mod1(x - 1, site[1]), mod1(y + 1, site[2])) - 1
         end
+    elseif Lattice == "triangular"
+        nn = zeros(Int, 6)
+        nn[1] = xy_i(Lattice, site, x, mod1(y + 1, site[2]))    #up
+        nn[2] = xy_i(Lattice, site, x, mod1(y - 1, site[2]))    #down
+        nn[3] = xy_i(Lattice, site, mod1(x - 1, site[1]), y)    #left
+        nn[4] = xy_i(Lattice, site, mod1(x + 1, site[1]), y)    #right
+        nn[5] = xy_i(Lattice, site, mod1(x - 1, site[1]), mod1(y + 1, site[2]))    #up-left
+        nn[6] = xy_i(Lattice, site, mod1(x + 1, site[1]), mod1(y - 1, site[2]))    #down-right
     else
         error("Lattice: $(Lattice) is not allowed !")
     end

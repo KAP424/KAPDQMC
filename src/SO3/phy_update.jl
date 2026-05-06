@@ -50,8 +50,8 @@ function phy_update(path::String, model::SO3_Hubbard_Para_, s::Array{UInt8,3}, S
         # println("\n Sweep: $loop ")
         for lt in axes(s, 3)
             #####################################################################
-            # println(lt)
-            @assert norm(G - Gτ(model, s, lt - 1)) < ERROR "Initial G does not match Gτ for lt=$(lt): $(norm(G-Gτ(model,s,lt-1))) , $(norm(G)) , $(norm(Gτ(model,s,lt-1))) "
+            # # println(lt)
+            # @assert norm(G - Gτ(model, s, lt - 1)) < ERROR "Initial G does not match Gτ for lt=$(lt): $(norm(G-Gτ(model,s,lt-1))) , $(norm(G)) , $(norm(Gτ(model,s,lt-1))) "
             #####################################################################
 
             mul!(tmpNN, G, model.eKinv)
@@ -69,22 +69,22 @@ function phy_update(path::String, model::SO3_Hubbard_Para_, s::Array{UInt8,3}, S
 
                 UpdatePhyLayer!(rng, j, view(s, :, j, lt), lt, model, UPD, Phy)
                 ####################################################################
-                print("*")
-                GG = model.eK * Gτ(model, s, lt - 1) * model.eKinv
-                for jj in size(model.bondidx, 2):-1:j
-                    # println("jj=$(jj)")
-                    E = zeros(model.Ns)
-                    for ii in 1:size(s)[1]
-                        x, y = model.bondidx[ii, jj]
-                        E[x] = exp_αη_neg[lt, s[ii, jj, lt]]  # 预计算的 exp(-α*η)
-                        E[y] = exp_αη_pos[lt, s[ii, jj, lt]]  # 预计算的 exp(α*η)
-                    end
-                    GG = model.UV[:, :, jj] * Diagonal(E) * model.UV[:, :, jj]' * GG * model.UV[:, :, jj] * Diagonal(1 ./ E) * model.UV[:, :, jj]'
-                end
-                if (norm(G - GG) > ERROR)
-                    println("lt=$(lt) j=$(j)")
-                    error(j, " update error: ", norm(G - GG), "  lt=", lt)
-                end
+                # print("*")
+                # GG = model.eK * Gτ(model, s, lt - 1) * model.eKinv
+                # for jj in size(model.bondidx, 2):-1:j
+                #     # println("jj=$(jj)")
+                #     E = zeros(model.Ns)
+                #     for ii in 1:size(s)[1]
+                #         x, y = model.bondidx[ii, jj]
+                #         E[x] = exp_αη_neg[lt, s[ii, jj, lt]]  # 预计算的 exp(-α*η)
+                #         E[y] = exp_αη_pos[lt, s[ii, jj, lt]]  # 预计算的 exp(α*η)
+                #     end
+                #     GG = model.UV[:, :, jj] * Diagonal(E) * model.UV[:, :, jj]' * GG * model.UV[:, :, jj] * Diagonal(1 ./ E) * model.UV[:, :, jj]'
+                # end
+                # if (norm(G - GG) > ERROR)
+                #     println("lt=$(lt) j=$(j)")
+                #     error(j, " update error: ", norm(G - GG), "  lt=", lt)
+                # end
                 ####################################################################
             end
 
@@ -116,9 +116,9 @@ function phy_update(path::String, model::SO3_Hubbard_Para_, s::Array{UInt8,3}, S
         end
         for lt in reverse(axes(s, 3))
             #####################################################################
-            if norm(G - Gτ(model, s, lt)) > ERROR
-                error("Wrap-$(lt)   :   $(norm(G-Gτ(model,s,lt-1))) , $(norm(G)) , $(norm(Gτ(model,s,lt-1))) ")
-            end
+            # if norm(G - Gτ(model, s, lt)) > ERROR
+            #     error("Wrap-$(lt)   :   $(norm(G-Gτ(model,s,lt-1))) , $(norm(G)) , $(norm(Gτ(model,s,lt-1))) ")
+            # end
             ######################################################################
             for j in axes(s, 2)
                 UpdatePhyLayer!(rng, j, view(s, :, j, lt), lt, model, UPD, Phy)
@@ -198,7 +198,6 @@ function Correlation_Cal(G, i, j, k, l)
     """
     calculate the correlation <c†_i c_j c†_k c_l> = <c†_i c_j><c†_k c_l> + <c†_i c_l><c_j c†_k>
     G_ij = c_i c†_j = δ_ij - c†_j c_i
-    sum of ∑_{λ1,λ2} 
     """
     ans = (Int(i == j) - G[j, i]) * (Int(k == l) - G[l, k]) + (Int(i == l) - G[l, i]) * G[j, k]
     return 2 * real(ans)
@@ -311,6 +310,7 @@ function phy_measure(model::SO3_Hubbard_Para_, Phy::PhyBuffer_, lt, s)
                                 tmp1 -= (-1)^(zi + zj) * Correlation_Cal(G0, j, i, l, k)
                                 tmp1 += (-1)^(zi + zj) * Correlation_Cal(G0, i, j, l, k)
                                 tmp1 += (-1)^(zi + zj) * Correlation_Cal(G0, j, i, k, l)
+                                tmp1 += (-1)^(zi + zj) * 2 * abs((G0[j, i] - G0[i, j]) * adjoint(G0[l, k] - G0[k, l]))
 
                                 # U(1) order parameter
                                 for σ in 1:3

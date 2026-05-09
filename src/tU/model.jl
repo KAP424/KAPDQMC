@@ -73,6 +73,9 @@ function tU_Hubbard_Para(; Ht, Hu1, Hu2, Δt, Θrelax, Θquench, Lattice::String
     Ns = size(K, 1)
 
     E, V = LAPACK.syevd!('V', 'L', Ht * K[:, :])
+    if abs(E[div(Ns, 2)] - E[div(Ns, 2)+1]) > 1e-10
+        @warn "Warning: The non-interacting system may be gapped!"
+    end
     HalfeK = V * Diagonal(exp.(-Δt .* E ./ 2)) * V'
     eK = V * Diagonal(exp.(-Δt .* E)) * V'
     HalfeKinv = V * Diagonal(exp.(Δt .* E ./ 2)) * V'

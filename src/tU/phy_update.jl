@@ -252,8 +252,45 @@ function phy_measure(model::tU_Hubbard_Para_, lt, s, G, tmpNN, tmpN)
                 R1 += cos(π * (rx + ry) + 2 * π / model.site[1] * rx + 2 * π / model.site[2] * ry) * tmp
             end
         end
+    elseif model.Lattice == "triangular90"
+        R0cdw = R1cdw = R0sc = R1sc = 0.0
+        for rx in 1:model.site[1]
+            for ry in 1:model.site[2]
+                tmp1 = tmp2 = 0
+                for ix in 1:model.site[1]
+                    for iy in 1:model.site[2]
+                        for zi in 0:1
+                            for zj in 0:1
+                                idx1 = ix + (iy - 1) * model.site[1] + zi
+                                idx2 = mod1(rx + ix, model.site[1]) + mod((ry + iy - 1), model.site[2]) * model.site[1] + zj
+                                tmp1 += (-1)^(zi + zj) * 2 * real(Correlation_Cal(G0, idx1, idx1, idx2, idx2))    # <n_i n_j>
+                                tmp1 += (-1)^(zi + zj) * 2 * real((1 - G0[idx1, idx1]) * (1 - adjoint(G0[idx2, idx2])))    #<n_i><n_j>
+
+                                tmp2 += abs2(G0[idx1, idx2])     # <c_i c†_j>
+                            end
+                        end
+                    end
+                end
+                tmp1 /= prod(model.site)
+                tmp2 /= prod(model.site)
+                R0cdw += tmp1
+                R1cdw += cos(2 * π / model.site[1] * rx + 2 * π / model.site[2] * ry) * tmp1
+                R0sc += tmp2
+                R1sc += cos(2 * π / model.site[1] * rx + 2 * π / model.site[2] * ry) * tmp2
+            end
+        end
+        return Ek, Eu, R0cdw, R1cdw, R0sc, R1sc
     end
     return Ek, Eu, CDW0, CDW1, SDW0, SDW1
+end
+
+function Correlation_Cal(G, i, j, k, l)
+    """
+    calculate the correlation <c†_i c_j c†_k c_l> = <c†_i c_j><c†_k c_l> + <c†_i c_l><c_j c†_k>
+    G_ij = c_i c†_j = δ_ij - c†_j c_i
+    """
+    ans = (Int(i == j) - G[j, i]) * (Int(k == l) - G[l, k]) + (Int(i == l) - G[l, i]) * G[j, k]
+    return ans
 end
 
 function UpdatePhyLayer!(rng, s, lt, model::tU_Hubbard_Para_, UPD::UpdateBuffer_, Phy::PhyBuffer_)

@@ -35,12 +35,12 @@ Only work for two-dimensional binary lattices
     convert (x,y) coordinate to even index
 """
 function xy_i(Lattice::String, site::Vector{Int64}, x::Int64, y::Int64)::Int64
-    if Lattice == "SQUARE90" || Lattice == "HoneyComb120" || Lattice == "HoneyComb60"
+    if Lattice == "SQUARE90" || Lattice == "HoneyComb120" || Lattice == "HoneyComb60" || Lattice == "triangular90"
         if 0 > x > site[1] || 0 > y > site[2]
             error("Error : Out of Lattice Range!")
         end
         return 2 * (x + (y - 1) * site[1])
-    elseif Lattice == "SQUARE45"
+    elseif Lattice == "SQUARE45" || Lattice == "triangular45"
         if 0 > x > site[1] || 0 > y > site[2]
             error("Error : Out of Lattice Range!")
         end
@@ -54,10 +54,10 @@ Only work for two-dimensional binary lattices
     convert odd/even index to (x,y) coordinate
 """
 function i_xy(Lattice::String, site::Vector{Int64}, i::Int64)
-    if Lattice == "SQUARE90" || Lattice == "HoneyComb120" || Lattice == "HoneyComb60"
+    if Lattice == "SQUARE90" || Lattice == "HoneyComb120" || Lattice == "HoneyComb60" || Lattice == "triangular90"
         j = Int(ceil(i / 2))
         return mod1(j, site[1]), Int(ceil(j / site[1]))
-    elseif Lattice == "SQUARE45"
+    elseif Lattice == "SQUARE45" || Lattice == "triangular45"
         return mod1(i, site[1]), Int(ceil(i / site[1]))
     else
         error("Lattice: $(Lattice) is not allowed !")
@@ -164,14 +164,42 @@ function nn2idx(Lattice::String, site::Vector{Int64}, idx::Int64)
             nn[2] = xy_i(Lattice, site, x, mod1(y + 1, site[2])) - 1
             nn[3] = xy_i(Lattice, site, mod1(x - 1, site[1]), mod1(y + 1, site[2])) - 1
         end
-    elseif Lattice == "triangular"
+    elseif Lattice == "triangular90"
         nn = zeros(Int, 6)
-        nn[1] = xy_i(Lattice, site, x, mod1(y + 1, site[2]))    #up
-        nn[2] = xy_i(Lattice, site, x, mod1(y - 1, site[2]))    #down
-        nn[3] = xy_i(Lattice, site, mod1(x - 1, site[1]), y)    #left
-        nn[4] = xy_i(Lattice, site, mod1(x + 1, site[1]), y)    #right
-        nn[5] = xy_i(Lattice, site, mod1(x - 1, site[1]), mod1(y + 1, site[2]))    #up-left
-        nn[6] = xy_i(Lattice, site, mod1(x + 1, site[1]), mod1(y - 1, site[2]))    #down-right
+        if idx % 2 == 1
+            nn[1] = idx + 1   #right
+            nn[2] = xy_i(Lattice, site, x, mod1(y + 1, site[2]))    #up
+            nn[3] = xy_i(Lattice, site, mod1(x - 1, site[1]), mod1(y + 1, site[2]))    #left
+            nn[4] = xy_i(Lattice, site, mod1(x - 1, site[1]), y)    #down
+            nn[5] = xy_i(Lattice, site, mod1(x - 1, site[1]), y) - 1    #dash
+            nn[6] = xy_i(Lattice, site, mod1(x + 1, site[1]), y) - 1    #dash
+        else
+            nn[1] = idx - 1   #left
+            nn[2] = xy_i(Lattice, site, x, mod1(y - 1, site[2])) - 1    #down
+            nn[3] = xy_i(Lattice, site, mod1(x + 1, site[1]), y) - 1    #up
+            nn[4] = xy_i(Lattice, site, mod1(x + 1, site[1]), mod1(y - 1, site[2])) - 1    #right
+            nn[5] = xy_i(Lattice, site, mod1(x - 1, site[1]), y)    #bold
+            nn[6] = xy_i(Lattice, site, mod1(x + 1, site[1]), y)    #bold
+        end
+    elseif Lattice == "triangular45"
+        # if (x + y) % 2 == 1
+        #     nn = zeros(Int, 6)
+        #     nn[1] = xy_i(Lattice, site, x, mod1(y + 1, site[2]))    #up
+        #     nn[2] = xy_i(Lattice, site, mod1(x - 1, site[1]), y)    #left
+        #     nn[3] = xy_i(Lattice, site, mod1(x - 1, site[1]), mod1(y + 1, site[2]))    #up-left
+        #     nn[4] = xy_i(Lattice, site, mod1(x - 1, site[1]), mod1(y - 1, site[2]))    #down-left
+        #     nn[5] = xy_i(Lattice, site, x, mod1(y - 1, site[2]))    #down
+        #     nn[6] = xy_i(Lattice, site, mod1(x + 1, site[1]), y)    #right
+        # else
+        #     nn = zeros(Int, 6)
+        #     nn[1] = xy_i(Lattice, site, x, mod1(y + 1, site[2]))    #up
+        #     nn[2] = xy_i(Lattice, site, mod1(x + 1, site[1]), y)    #right
+        #     nn[3] = xy_i(Lattice, site, mod1(x + 1, site[1]), mod1(y + 1, site[2]))    #up-right
+        #     nn[4] = xy_i(Lattice, site, mod1(x + 1, site[1]), mod1(y - 1, site[2]))    #down-right
+        #     nn[5] = xy_i(Lattice, site, x, mod1(y - 1, site[2]))    #down
+        #     nn[6] = xy_i(Lattice, site, mod1(x - 1, site[1]), y)    #left
+        # end
+        error("Lattice: $(Lattice) is not allowed !")
     else
         error("Lattice: $(Lattice) is not allowed !")
     end
@@ -264,6 +292,22 @@ function nnK_Matrix(Lattice::String, site::Vector{Int64}; t=(1.0, 1.0, 1.0), flu
                 K[i, nnidx[j]] = t[j]
             end
         end
+    elseif Lattice == "triangular90"
+        for i in 1:Ns
+            nnidx = nn2idx(Lattice, site, i)
+            if i % 2 == 1
+                K[i, nnidx[1]] = 1
+                K[i, nnidx[2]] = 1
+                K[i, nnidx[3]] = 1
+                K[i, nnidx[4]] = 1
+                K[i, nnidx[5]] = -1
+                K[i, nnidx[6]] = -1
+            else
+                for j in eachindex(nnidx)
+                    K[i, nnidx[j]] = 1
+                end
+            end
+        end
     end
     @assert norm(K - K') < 1e-8 "K is not Hermitian!"
     return K
@@ -284,7 +328,7 @@ function area_index(Lattice::String, site::Vector{Int64}, area::Tuple{Vector{Int
             end
         end
         return index
-    elseif Lattice == "SQUARE90"
+    elseif Lattice == "SQUARE90" || Lattice == "triangular90"
         counter = 1
         index = zeros(Int64, 2 * prod(area[2] - area[1] + [1, 1]))
         for lx in area[1][1]:area[2][1]
@@ -348,6 +392,10 @@ function name_Lattice(Lattice::String)
         return "HC60"
     elseif Lattice == "HoneyComb120"
         return "HC120"
+    elseif Lattice == "triangular90"
+        return "△90"
+    elseif Lattice == "triangular45"
+        return "△45"
     else
         error("Lattice: $(Lattice) is not allowed !")
     end

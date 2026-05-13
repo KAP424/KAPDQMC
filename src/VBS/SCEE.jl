@@ -1,4 +1,4 @@
-function ctrl_SCEEicr(path::String, model::tV_Hubbard_Para_, indexA::Vector{Int64}, indexB::Vector{Int64}, Sweeps::Int64, λ::Float64, Nλ::Int64, ss::Vector{Array{UInt8,3}}, record)
+function ctrl_SCEEicr(path::String, model::VBS_Hubbard_Para_, indexA::Vector{Int64}, indexB::Vector{Int64}, Sweeps::Int64, λ::Float64, Nλ::Int64, ss::Vector{Array{UInt8,3}}, record)
     T = typeof(model.K[1, 1])
     global LOCK = ReentrantLock()
     TTT = time_ns()
@@ -17,9 +17,9 @@ function ctrl_SCEEicr(path::String, model::tV_Hubbard_Para_, indexA::Vector{Int6
     name = name_Lattice(model.Lattice)
 
     if model.Hv1 == model.Hv2
-        file = "$(path)/tVSCEE$(name)_t$(model.Ht)V$(model.Hv1)size$(model.site)Δt$(model.Δt)Θ$(model.Θrelax)N$(Nλ)BS$(model.BatchSize).csv"
+        file = "$(path)/VBS$(model.SUN)SCEE$(name)_t$(model.Ht)V$(model.Hv1)size$(model.site)Δt$(model.Δt)Θ$(model.Θrelax)N$(Nλ)BS$(model.BatchSize).csv"
     else
-        file = "$(path)/tVSCEE$(name)_t$(model.Ht)V$(model.Hv1)_$(model.Hv2)size$(model.site)Δt$(model.Δt)Θ$(model.Θrelax)_$(model.Θquench)N$(Nλ)BS$(model.BatchSize).csv"
+        file = "$(path)/VBS$(model.SUN)SCEE$(name)_t$(model.Ht)V$(model.Hv1)_$(model.Hv2)size$(model.site)Δt$(model.Δt)Θ$(model.Θrelax)_$(model.Θquench)N$(Nλ)BS$(model.BatchSize).csv"
     end
     rng = MersenneTwister(Threads.threadid() + time_ns())
 
@@ -409,7 +409,7 @@ function get_ABGM!(G1::G4Buffer_, G2::G4Buffer_, A::AreaBuffer_, B::AreaBuffer_,
     LAPACK.getri!(B.gmInv, B.ipiv)
 end
 
-function UpdateSCEELayer!(rng, j, s1, s2, lt, G1::G4Buffer_, G2::G4Buffer_, A::AreaBuffer_, B::AreaBuffer_, model::tV_Hubbard_Para_, UPD::UpdateBuffer_, SCEE::SCEEBuffer_, λ)
+function UpdateSCEELayer!(rng, j, s1, s2, lt, G1::G4Buffer_, G2::G4Buffer_, A::AreaBuffer_, B::AreaBuffer_, model::VBS_Hubbard_Para_, UPD::UpdateBuffer_, SCEE::SCEEBuffer_, λ)
     for i in axes(s1, 1)
         x, y = model.nnidx[i, j]
         UPD.subidx = [x, y]

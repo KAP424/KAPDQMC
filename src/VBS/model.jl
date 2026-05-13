@@ -1,7 +1,7 @@
 # using hopping channel ±1,±2 HS transformation
 # add DataType choice: flux=0 Float64, flux≠0 ComplexF64
 
-struct VBS_Hubbard_Para_{T<:Number}
+struct VBS_Hubbard_Para_
     SUN::Int64
     Lattice::String
     Ht::Float64
@@ -12,7 +12,7 @@ struct VBS_Hubbard_Para_{T<:Number}
     Θquench::Float64
     Ns::Int64
     Nt::Int64
-    K::Array{T,2}
+    K::Array{Float64,2}
     BatchSize::Int64
     Δt::Float64
     # α::Vector{Float64}
@@ -21,11 +21,11 @@ struct VBS_Hubbard_Para_{T<:Number}
     exp_αη_neg::Matrix{Float64}  # 大小: length(α) × 4
     αη::Matrix{Float64}  # 大小: length(α) × 4
     γ::Vector{Float64}
-    Pt::Array{T,2}
-    HalfeK::Array{T,2}
-    eK::Array{T,2}
-    HalfeKinv::Array{T,2}
-    eKinv::Array{T,2}
+    Pt::Array{Float64,2}
+    HalfeK::Array{Float64,2}
+    eK::Array{Float64,2}
+    HalfeKinv::Array{Float64,2}
+    eKinv::Array{Float64,2}
     nnidx::Matrix{Tuple{Int64,Int64}}
     nodes::Vector{Int64}
     UV::Array{Float64,3}
@@ -34,7 +34,6 @@ struct VBS_Hubbard_Para_{T<:Number}
 end
 
 function VBS_Hubbard_Para(; SUN, Ht, HJ1, HJ2, Δt, Θrelax, Θquench, Lattice::String, site, BatchSize, Initial::String, flux=0.0, opt="xy")
-    T = flux != 0.0 && opt != "y" ? ComplexF64 : Float64
 
     K = nnK_Matrix(Lattice, site, flux=flux, opt=opt)
     Ns = size(K, 1)
@@ -48,7 +47,7 @@ function VBS_Hubbard_Para(; SUN, Ht, HJ1, HJ2, Δt, Θrelax, Θquench, Lattice::
     HalfeKinv = V * Diagonal(exp.(Δt .* E ./ 2)) * V'
     eKinv = V * Diagonal(exp.(Δt .* E)) * V'
 
-    Pt = zeros(T, Ns, div(Ns, 2))
+    Pt = zeros(Float64, Ns, div(Ns, 2))
     Initial_Pt!(Lattice, Initial, Pt, K)
 
     Nt = round(Int, 2 * (Θrelax + Θquench) / Δt)
@@ -101,31 +100,31 @@ function VBS_Hubbard_Para(; SUN, Ht, HJ1, HJ2, Δt, Θrelax, Θquench, Lattice::
 
     println("$(Lattice) size=$(site)  Δt=$(Δt)  Θ=$(Θrelax)+$(Θquench)  U=$(HJ1)--$(HJ2)  Initial=$Initial  flux=$(flux)  opt=$opt  BS=$(BatchSize)  $(Nt)*$(Ns)*$(size(K))")
 
-    return VBS_Hubbard_Para_{T}(SUN, Lattice, Ht, HJ1, HJ2, site, Θrelax, Θquench, Ns,
+    return VBS_Hubbard_Para_(SUN, Lattice, Ht, HJ1, HJ2, site, Θrelax, Θquench, Ns,
         Nt, K, BatchSize, Δt, exp_αη_pos, exp_αη_neg, αη, γ, Pt,
         HalfeK, eK, HalfeKinv, eKinv, nnidx, nodes, UV, samplers_dict, flux)
 
 end
 
-mutable struct UpdateBuffer_{T<:Number}
+mutable struct UpdateBuffer_
     acc::Int64
     uv::Matrix{Float64}      # 2 x 2
-    tmp22::Matrix{T}   # 2 x 2
-    tmp2::Vector{T}    # length 2
-    r::Matrix{T}       # 2 x 2
-    Δ::Matrix{T}       # 2 x 2
+    tmp22::Matrix{Float64}   # 2 x 2
+    tmp2::Vector{Float64}    # length 2
+    r::Matrix{Float64}       # 2 x 2
+    Δ::Matrix{Float64}       # 2 x 2
     subidx::Vector{Int64}  # length 2
 end
 
-function UpdateBuffer(T)
+function UpdateBuffer()
     uv = [-2^0.5/2 -2^0.5/2; -2^0.5/2 2^0.5/2]
     return UpdateBuffer_(
         0,
         uv,
-        Matrix{T}(undef, 2, 2),
-        Vector{T}(undef, 2),
-        Matrix{T}(undef, 2, 2),
-        Matrix{T}(undef, 2, 2),
+        Matrix{Float64}(undef, 2, 2),
+        Vector{Float64}(undef, 2),
+        Matrix{Float64}(undef, 2, 2),
+        Matrix{Float64}(undef, 2, 2),
         Vector{Int64}(undef, 2),
     )
 end
@@ -133,86 +132,86 @@ end
 
 # ---------------------------------------------------------------------------------------
 
-function PhyBuffer(T, Ns, NN)
+function PhyBuffer(Ns, NN)
     ns = div(Ns, 2)
     return PhyBuffer_(
-        Vector{T}(undef, ns),
+        Vector{Float64}(undef, ns),
         Vector{LAPACK.BlasInt}(undef, ns),
-        Matrix{T}(undef, Ns, Ns),
-        Matrix{T}(undef, Ns, Ns),
-        Array{T}(undef, ns, Ns, NN),
-        Array{T}(undef, Ns, ns, NN),
-        Vector{T}(undef, Ns),
-        Matrix{T}(undef, Ns, Ns),
-        Matrix{T}(undef, Ns, ns),
-        Matrix{T}(undef, ns, ns),
-        Matrix{T}(undef, ns, Ns),
-        Matrix{T}(undef, 2, Ns),
+        Matrix{Float64}(undef, Ns, Ns),
+        Matrix{Float64}(undef, Ns, Ns),
+        Array{Float64}(undef, ns, Ns, NN),
+        Array{Float64}(undef, Ns, ns, NN),
+        Vector{Float64}(undef, Ns),
+        Matrix{Float64}(undef, Ns, Ns),
+        Matrix{Float64}(undef, Ns, ns),
+        Matrix{Float64}(undef, ns, ns),
+        Matrix{Float64}(undef, ns, Ns),
+        Matrix{Float64}(undef, 2, Ns),
     )
 end
 # ---------------------------------------------------------------------------------------
 
-function SCEEBuffer(T, Ns)
+function SCEEBuffer(Ns)
     ns = div(Ns, 2)
     return SCEEBuffer_(
-        Matrix{T}(I, Ns, Ns),
-        Vector{T}(undef, Ns),
-        Vector{T}(undef, Ns),
-        Matrix{T}(undef, 2, Ns),
-        Matrix{T}(undef, ns, ns),
-        Matrix{T}(undef, Ns, Ns),
-        Matrix{T}(undef, Ns, Ns),
-        Matrix{T}(undef, Ns, ns),
-        Matrix{T}(undef, ns, Ns),
+        Matrix{Float64}(I, Ns, Ns),
+        Vector{Float64}(undef, Ns),
+        Vector{Float64}(undef, Ns),
+        Matrix{Float64}(undef, 2, Ns),
+        Matrix{Float64}(undef, ns, ns),
+        Matrix{Float64}(undef, Ns, Ns),
+        Matrix{Float64}(undef, Ns, Ns),
+        Matrix{Float64}(undef, Ns, ns),
+        Matrix{Float64}(undef, ns, Ns),
         Vector{LAPACK.BlasInt}(undef, ns),
-        Vector{T}(undef, ns),
+        Vector{Float64}(undef, ns),
     )
 end
 
-function G4Buffer(T, Ns, NN)
+function G4Buffer(Ns, NN)
     ns = div(Ns, 2)
     return G4Buffer_(
-        Matrix{T}(undef, Ns, Ns),
-        Matrix{T}(undef, Ns, Ns),
-        Matrix{T}(undef, Ns, Ns),
-        Matrix{T}(undef, Ns, Ns),
-        Array{T,3}(undef, ns, Ns, NN),
-        Array{T,3}(undef, Ns, ns, NN),
-        Array{T,3}(undef, Ns, Ns, NN),
-        Array{T,3}(undef, Ns, Ns, NN),
+        Matrix{Float64}(undef, Ns, Ns),
+        Matrix{Float64}(undef, Ns, Ns),
+        Matrix{Float64}(undef, Ns, Ns),
+        Matrix{Float64}(undef, Ns, Ns),
+        Array{Float64,3}(undef, ns, Ns, NN),
+        Array{Float64,3}(undef, Ns, ns, NN),
+        Array{Float64,3}(undef, Ns, Ns, NN),
+        Array{Float64,3}(undef, Ns, Ns, NN),
     )
 end
 
-function AreaBuffer(T, index)
+function AreaBuffer(index)
     nA = length(index)
     return AreaBuffer_(
         index,
-        zero(T),
-        Matrix{T}(undef, nA, nA),
-        Matrix{T}(undef, nA, nA),
-        Matrix{T}(undef, nA, 2),
-        Matrix{T}(undef, 2, nA),
-        Matrix{T}(undef, nA, 2),
-        Matrix{T}(undef, 2, nA),
-        Matrix{T}(undef, 2, 2),
+        zero(Float64),
+        Matrix{Float64}(undef, nA, nA),
+        Matrix{Float64}(undef, nA, nA),
+        Matrix{Float64}(undef, nA, 2),
+        Matrix{Float64}(undef, 2, nA),
+        Matrix{Float64}(undef, nA, 2),
+        Matrix{Float64}(undef, 2, nA),
+        Matrix{Float64}(undef, 2, 2),
         Vector{LAPACK.BlasInt}(undef, nA),
     )
 end
 
 # undeveloped 
-function DOPBuffer(T, alpha, index)
+function DOPBuffer(alpha, index)
     nA = length(index)
     return DOPBuffer_(
         alpha,
         index,
         zero(ComplexF64),
-        Matrix{T}(undef, nA, nA),
-        Matrix{T}(undef, nA, nA),
-        Matrix{T}(undef, nA, 1),
-        Matrix{T}(undef, 1, nA),
-        Matrix{T}(undef, nA, 1),
-        Matrix{T}(undef, 1, nA),
-        Matrix{T}(undef, 1, 1),
+        Matrix{ComplexF64}(undef, nA, nA),
+        Matrix{ComplexF64}(undef, nA, nA),
+        Matrix{ComplexF64}(undef, nA, 1),
+        Matrix{ComplexF64}(undef, 1, nA),
+        Matrix{ComplexF64}(undef, nA, 1),
+        Matrix{ComplexF64}(undef, 1, nA),
+        Matrix{ComplexF64}(undef, 1, 1),
         Vector{LAPACK.BlasInt}(undef, nA),
     )
 end

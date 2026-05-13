@@ -1,4 +1,4 @@
-module tVDQMC
+module VBSDQMC
 import ..KAPDQMC: phy_update, Initial_s, ctrl_SCEEicr, ctrl_SCDOPicr
 
 using ..KAPDQMC: name_Lattice, nn2idx, xy_i, i_xy, nnK_Matrix, area_index, nnidx_F, Initial_Pt!
@@ -16,8 +16,8 @@ include("../public/Gupdate.jl")
 include("GreenMatrix.jl")
 include("phy_update.jl")
 include("SCEE.jl")
-include("disorder_operate.jl")
+# include("disorder_operate.jl")
 
-export tV_Hubbard_Para
+export VBS_Hubbard_Para
 end
 

@@ -1,4 +1,4 @@
-function Initial_s(model::tV_Hubbard_Para_, rng::MersenneTwister)::Array{UInt8,3}
+function Initial_s(model::VBS_Hubbard_Para_, rng::MersenneTwister)::Array{UInt8,3}
     sp = Random.Sampler(rng, [1, 2, 3, 4])
     a, b = size(model.nnidx)
     s = zeros(UInt8, a, b, model.Nt)
@@ -9,7 +9,7 @@ function Initial_s(model::tV_Hubbard_Para_, rng::MersenneTwister)::Array{UInt8,3
     return s
 end
 
-function BM_F!(tmpN, tmpNN, BM, model::tV_Hubbard_Para_, s::Array{UInt8,3}, idx::Int64)
+function BM_F!(tmpN, tmpNN, BM, model::VBS_Hubbard_Para_, s::Array{UInt8,3}, idx::Int64)
     """
     不包头包尾
     """
@@ -36,7 +36,7 @@ function BM_F!(tmpN, tmpNN, BM, model::tV_Hubbard_Para_, s::Array{UInt8,3}, idx:
     end
 end
 
-function BMinv_F!(tmpN, tmpNN, BM, model::tV_Hubbard_Para_, s::Array{UInt8,3}, idx::Int64)
+function BMinv_F!(tmpN, tmpNN, BM, model::VBS_Hubbard_Para_, s::Array{UInt8,3}, idx::Int64)
     """
     不包头包尾
     """
@@ -120,7 +120,7 @@ end
 # Below is just used for debug
 
 "equal time Green function"
-function Gτ(model::tV_Hubbard_Para_, s::Array{UInt8,3}, τ::Int64)
+function Gτ(model::VBS_Hubbard_Para_, s::Array{UInt8,3}, τ::Int64)
     BL = model.Pt'[:, :]
     BR = model.Pt[:, :]
 
@@ -194,7 +194,7 @@ end
 
 
 "displaced Green function G(τ₁,τ₂)"
-function G4(model::tV_Hubbard_Para_, s::Array{UInt8,3}, τ1::Int64, τ2::Int64, direction="Forward")
+function G4(model::VBS_Hubbard_Para_, s::Array{UInt8,3}, τ1::Int64, τ2::Int64, direction="Forward")
     if τ1 > τ2
         BBs = zeros(ComplexF64, cld(τ1 - τ2, model.BatchSize), model.Ns, model.Ns)
         BBsInv = zeros(ComplexF64, size(BBs))

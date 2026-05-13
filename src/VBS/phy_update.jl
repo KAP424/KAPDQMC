@@ -1,29 +1,28 @@
 # turn off symmetric HS decomposition when debuging
 
-function phy_update(path::String, model::tV_Hubbard_Para_, s::Array{UInt8,3}, Sweeps::Int64, record::Bool)
-    T = typeof(model.K[1, 1])
+function phy_update(path::String, model::VBS_Hubbard_Para_, s::Array{UInt8,3}, Sweeps::Int64, record::Bool)
     TTT = time_ns()
     global LOCK = ReentrantLock()
     ERROR = 1e-6
 
-    UPD = UpdateBuffer(T)
+    UPD = UpdateBuffer()
     NN = length(model.nodes)
-    Phy = PhyBuffer(T, model.Ns, NN)
+    Phy = PhyBuffer(model.Ns, NN)
     Θidx = div(NN, 2) + 1
 
     name = name_Lattice(model.Lattice)
 
-    if model.Hv2 == model.Hv1
-        file = "$(path)/tVphy$(name)_t$(model.Ht)V$(model.Hv1)size$(model.site)Δt$(model.Δt)Θ$(model.Θrelax)BS$(model.BatchSize).csv"
+    if model.HJ2 == model.HJ1
+        file = "$(path)/VBS$(model.SUN)phy$(name)_t$(model.Ht)V$(model.HJ1)size$(model.site)Δt$(model.Δt)Θ$(model.Θrelax)BS$(model.BatchSize).csv"
     else
-        file = "$(path)/tVphy$(name)_t$(model.Ht)V$(model.Hv1)_$(model.Hv2)size$(model.site)Δt$(model.Δt)Θ$(model.Θrelax)_$(model.Θquench)BS$(model.BatchSize).csv"
+        file = "$(path)/VBS$(model.SUN)phy$(name)_t$(model.Ht)V$(model.HJ1)_$(model.HJ2)size$(model.site)Δt$(model.Δt)Θ$(model.Θrelax)_$(model.Θquench)BS$(model.BatchSize).csv"
     end
 
     rng = MersenneTwister(Threads.threadid() + time_ns())
 
     Ek = Ev = 0.0
-    R0 = zeros(Float64, 4)
-    R1 = zeros(Float64, 4)
+    R0 = 0.0
+    R1 = 0.0
     counter = 0
 
     G, BLs, BRs, tmpN, tmpNN, tmpnn, tmpnN, tmpNn, tau, ipiv, BM =
@@ -92,8 +91,8 @@ function phy_update(path::String, model::tV_Hubbard_Para_, s::Array{UInt8,3}, Sw
                 tmp = phy_measure(model, Phy, lt, s)
                 Ek += tmp[1]
                 Ev += tmp[2]
-                axpy!(1, tmp[3], R0)
-                axpy!(1, tmp[4], R1)
+                R0 += tmp[3]
+                R1 += tmp[4]
                 counter += 1
             end
 
@@ -141,8 +140,8 @@ function phy_update(path::String, model::tV_Hubbard_Para_, s::Array{UInt8,3}, Sw
                 tmp = phy_measure(model, Phy, lt - 1, s)
                 Ek += tmp[1]
                 Ev += tmp[2]
-                axpy!(1, tmp[3], R0)
-                axpy!(1, tmp[4], R1)
+                R0 += tmp[3]
+                R1 += tmp[4]
                 counter += 1
             end
 
@@ -170,12 +169,11 @@ function phy_update(path::String, model::tV_Hubbard_Para_, s::Array{UInt8,3}, Sw
         if record
             lock(LOCK) do
                 open(file, "a") do io
-                    writedlm(io, vcat([Ek, Ev], R0, R1)' ./ counter, ',')
+                    writedlm(io, [Ek, Ev, R0, R1]' ./ counter, ',')
                 end
             end
             Ek = Ev = 0.0
-            fill!(R0, 0.0)
-            fill!(R1, 0.0)
+            R0 = R1 = 0.0
             counter = 0
         end
     end
@@ -189,17 +187,17 @@ function phy_update(path::String, model::tV_Hubbard_Para_, s::Array{UInt8,3}, Sw
     return s
 end
 
-function UpdatePhyLayer!(rng, j, s, lt, model::tV_Hubbard_Para_, UPD::UpdateBuffer_, Phy::PhyBuffer_)
+function UpdatePhyLayer!(rng, j, s, lt, model::VBS_Hubbard_Para_, UPD::UpdateBuffer_, Phy::PhyBuffer_)
     for i in axes(s, 1)
         x, y = model.nnidx[i, j]
         UPD.subidx .= [x, y]
         sx = rand(rng, model.samplers_dict[s[i]])
-        p = get_r!(UPD, model.αη[lt, sx] - model.αη[lt, s[i]], Phy.G)
+        p = get_r!(UPD, model.αη[lt, sx] - model.αη[lt, s[i]], Phy.G)^model.SUN
         p *= model.γ[sx] / model.γ[s[i]]
-        if real(p) < 0 || abs(imag(p)) > 1e-6
+        if p < 0
             println("Negative Sign: $(p)")
         end
-        if rand(rng) < real(p)
+        if rand(rng) < p
             UPD.acc += 1
             Gupdate!(Phy, UPD)
             s[i] = sx
@@ -215,7 +213,7 @@ function Correlation_Cal(G, i, j, k, l)
     return (Int(i == j) - G[j, i]) * (Int(k == l) - G[l, k]) + (Int(i == l) - G[l, i]) * G[j, k]
 end
 
-function phy_measure(model::tV_Hubbard_Para_, Phy::PhyBuffer_, lt, s)
+function phy_measure(model::VBS_Hubbard_Para_, Phy::PhyBuffer_, lt, s)
     """
     (Ek,Ev,R0,R1)    
     """
@@ -223,8 +221,6 @@ function phy_measure(model::tV_Hubbard_Para_, Phy::PhyBuffer_, lt, s)
     tmpN = Phy.N
     tmpNN = Phy.NN
     tmp = zeros(ComplexF64, 4)
-    R0 = zeros(Float64, 4)
-    R1 = zeros(Float64, 4)
 
     if lt > model.Nt / 2
         for t in lt:-1:div(model.Nt, 2)+1
@@ -277,44 +273,48 @@ function phy_measure(model::tV_Hubbard_Para_, Phy::PhyBuffer_, lt, s)
     Ek = real(Ek)
     Ev = real(Ev)
 
+    R0 = R1 = 0.0
     if occursin("HoneyComb", model.Lattice) || model.Lattice == "SQUARE90"
         for rx in 1:model.site[1]
             for ry in 1:model.site[2]
-                fill!(tmp, 0.0)
+                tmp = 0.0
                 for ix in 1:model.site[1]
                     for iy in 1:model.site[2]
                         idx1 = xy_i(model.Lattice, model.site, ix, iy) - 1
                         idx2 = xy_i(model.Lattice, model.site, mod1(ix + rx, model.site[1]), mod1(iy + ry, model.site[2])) - 1
-                        tmp[1] += Correlation_Cal(G0, idx1, idx1, idx2, idx2)
-                        tmp[2] += Correlation_Cal(G0, idx1 + 1, idx1 + 1, idx2 + 1, idx2 + 1)
-                        tmp[3] += Correlation_Cal(G0, idx1 + 1, idx1 + 1, idx2, idx2)
-                        tmp[4] += Correlation_Cal(G0, idx1, idx1, idx2 + 1, idx2 + 1)
+
+                        nn1 = nn2idx(model.Lattice, model.site, idx1)
+                        nn2 = nn2idx(model.Lattice, model.site, idx2)
+
+                        for delta in eachindex(nn1)
+                            tmp += Correlation_Cal(G0, idx1, nn1[delta], idx2, nn2[delta])
+                        end
+
                     end
                 end
-                @assert norm(imag(tmp)) < 1e-10 "Complex emergence in R0 or R1"
-                tmp .= real.(tmp)
-                axpy!(1, tmp, R0)
-                axpy!(cos(2 * π / model.site[1] * rx + 2 * π / model.site[2] * ry), tmp, R1)
+                R0 += tmp
+                R1 += cos(2 * π / model.site[1] * rx + 2 * π / model.site[2] * ry) * tmp
             end
         end
-        lmul!(1 / model.Ns^2, R0)
-        lmul!(1 / model.Ns^2, R1)
+        R0 /= model.Ns
+        R1 /= model.Ns
     elseif model.Lattice == "SQUARE"
-        for rx in 1:model.site[1]
-            for ry in 1:model.site[2]
-                tmp = 0
-                for ix in 1:model.site[1]
-                    for iy in 1:model.site[2]
-                        idx1 = ix + (iy - 1) * model.site[1]
-                        idx2 = mod1(rx + ix, model.site[1]) + mod((ry + iy - 1), model.site[2]) * model.site[1]
-                        tmp += (1 - G0[idx1, idx1]) * (1 - G0[idx2, idx2]) - G0[idx1, idx2] * G0[idx2, idx1]
-                    end
-                end
-                tmp /= prod(model.site)
-                R0 += tmp * cos(π * (rx + ry))
-                R1 += cos(π * (rx + ry) + 2 * π / model.site[1] * rx + 2 * π / model.site[2] * ry) * tmp
-            end
-        end
+        error("Correlation measurement not implemented for SQUARE lattice yet!")
+        # for rx in 1:model.site[1]
+        #     for ry in 1:model.site[2]
+        #         tmp = 0
+        #         for ix in 1:model.site[1]
+        #             for iy in 1:model.site[2]
+        #                 idx1 = ix + (iy - 1) * model.site[1]
+        #                 idx2 = mod1(rx + ix, model.site[1]) + mod((ry + iy - 1), model.site[2]) * model.site[1]
+        #                 tmp += (1 - G0[idx1, idx1]) * (1 - G0[idx2, idx2]) - G0[idx1, idx2] * G0[idx2, idx1]
+        #             end
+        #         end
+        #         tmp /= prod(model.site)
+        #         R0 += tmp * cos(π * (rx + ry))
+        #         R1 += cos(π * (rx + ry) + 2 * π / model.site[1] * rx + 2 * π / model.site[2] * ry) * tmp
+        #     end
+        # end
     end
     # 1-R1/R0
     return Ek, Ev, R0, R1

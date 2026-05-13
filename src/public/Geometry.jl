@@ -9,7 +9,7 @@ function Initial_Pt!(Lattice, Initial, Pt, K)
         E, V = LAPACK.syevd!('V', 'L', KK)
         Pt .= V[:, 1:div(Ns, 2)]
     elseif Initial == "V"
-        if Lattice == "SQUARE90" || Lattice == "HoneyComb120" || Lattice == "HoneyComb60"
+        if Lattice == "SQUARE90" || Lattice == "HoneyComb120" || Lattice == "HoneyComb60" || Lattice == "triangular90"
             for i in 1:div(Ns, 2)
                 Pt[i*2, i] = 1
             end
@@ -26,6 +26,8 @@ function Initial_Pt!(Lattice, Initial, Pt, K)
                 end
             end
         end
+    else
+        error("Initial state: $(Initial) is not allowed for Initial_Pt!")
     end
 
 end
@@ -46,7 +48,7 @@ function xy_i(Lattice::String, site::Vector{Int64}, x::Int64, y::Int64)::Int64
         end
         return x + (y - 1) * site[1]
     else
-        error("Lattice: $(Lattice) is not allowed !")
+        error("Lattice: $(Lattice) is not allowed for xy_i!")
     end
 end
 """
@@ -60,7 +62,7 @@ function i_xy(Lattice::String, site::Vector{Int64}, i::Int64)
     elseif Lattice == "SQUARE45" || Lattice == "triangular45"
         return mod1(i, site[1]), Int(ceil(i / site[1]))
     else
-        error("Lattice: $(Lattice) is not allowed !")
+        error("Lattice: $(Lattice) is not allowed for i_xy!")
     end
 end
 
@@ -105,6 +107,8 @@ function nnidx_F(Lattice, site)
             end
             count += 1
         end
+    else
+        error("Lattice: $(Lattice) is not allowed for nnidx_F!")
     end
     return nnidx
 end
@@ -168,40 +172,29 @@ function nn2idx(Lattice::String, site::Vector{Int64}, idx::Int64)
         nn = zeros(Int, 6)
         if idx % 2 == 1
             nn[1] = idx + 1   #right
-            nn[2] = xy_i(Lattice, site, x, mod1(y + 1, site[2]))    #up
-            nn[3] = xy_i(Lattice, site, mod1(x - 1, site[1]), mod1(y + 1, site[2]))    #left
-            nn[4] = xy_i(Lattice, site, mod1(x - 1, site[1]), y)    #down
-            nn[5] = xy_i(Lattice, site, mod1(x - 1, site[1]), y) - 1    #dash
-            nn[6] = xy_i(Lattice, site, mod1(x + 1, site[1]), y) - 1    #dash
+            nn[2] = xy_i(Lattice, site, mod1(x - 1, site[1]), mod1(y + 1, site[2]))    #left
+            nn[3] = xy_i(Lattice, site, mod1(x - 1, site[1]), y)    #down
+            nn[4] = xy_i(Lattice, site, x, mod1(y + 1, site[2]))    #up dash
+            nn[5] = xy_i(Lattice, site, mod1(x - 1, site[1]), y) - 1    #nnn dash
+            nn[6] = xy_i(Lattice, site, mod1(x + 1, site[1]), y) - 1    #nnn dash
         else
             nn[1] = idx - 1   #left
-            nn[2] = xy_i(Lattice, site, x, mod1(y - 1, site[2])) - 1    #down
-            nn[3] = xy_i(Lattice, site, mod1(x + 1, site[1]), y) - 1    #up
-            nn[4] = xy_i(Lattice, site, mod1(x + 1, site[1]), mod1(y - 1, site[2])) - 1    #right
-            nn[5] = xy_i(Lattice, site, mod1(x - 1, site[1]), y)    #bold
-            nn[6] = xy_i(Lattice, site, mod1(x + 1, site[1]), y)    #bold
+            nn[2] = xy_i(Lattice, site, mod1(x + 1, site[1]), y) - 1    #up
+            nn[3] = xy_i(Lattice, site, mod1(x + 1, site[1]), mod1(y - 1, site[2])) - 1    #right
+            nn[4] = xy_i(Lattice, site, mod1(x - 1, site[1]), y)    #nnn
+            nn[5] = xy_i(Lattice, site, mod1(x + 1, site[1]), y)    #nnn
+            nn[6] = xy_i(Lattice, site, x, mod1(y - 1, site[2])) - 1    #down dash
         end
     elseif Lattice == "triangular45"
-        # if (x + y) % 2 == 1
-        #     nn = zeros(Int, 6)
-        #     nn[1] = xy_i(Lattice, site, x, mod1(y + 1, site[2]))    #up
-        #     nn[2] = xy_i(Lattice, site, mod1(x - 1, site[1]), y)    #left
-        #     nn[3] = xy_i(Lattice, site, mod1(x - 1, site[1]), mod1(y + 1, site[2]))    #up-left
-        #     nn[4] = xy_i(Lattice, site, mod1(x - 1, site[1]), mod1(y - 1, site[2]))    #down-left
-        #     nn[5] = xy_i(Lattice, site, x, mod1(y - 1, site[2]))    #down
-        #     nn[6] = xy_i(Lattice, site, mod1(x + 1, site[1]), y)    #right
-        # else
-        #     nn = zeros(Int, 6)
-        #     nn[1] = xy_i(Lattice, site, x, mod1(y + 1, site[2]))    #up
-        #     nn[2] = xy_i(Lattice, site, mod1(x + 1, site[1]), y)    #right
-        #     nn[3] = xy_i(Lattice, site, mod1(x + 1, site[1]), mod1(y + 1, site[2]))    #up-right
-        #     nn[4] = xy_i(Lattice, site, mod1(x + 1, site[1]), mod1(y - 1, site[2]))    #down-right
-        #     nn[5] = xy_i(Lattice, site, x, mod1(y - 1, site[2]))    #down
-        #     nn[6] = xy_i(Lattice, site, mod1(x - 1, site[1]), y)    #left
-        # end
-        error("Lattice: $(Lattice) is not allowed !")
+        nn = zeros(Int, 6)
+        nn[1] = xy_i(Lattice, site, x, mod1(y + 1, site[2]))    #up
+        nn[2] = xy_i(Lattice, site, mod1(x - 1, site[1]), y)    #left
+        nn[3] = xy_i(Lattice, site, x, mod1(y - 1, site[2]))    #down
+        nn[4] = xy_i(Lattice, site, mod1(x + 1, site[1]), y)    #right
+        nn[5] = xy_i(Lattice, site, mod1(x + 1, site[1]), mod1(y + 1, site[2]))    #up-right
+        nn[6] = xy_i(Lattice, site, mod1(x - 1, site[1]), mod1(y - 1, site[2]))    #down-left
     else
-        error("Lattice: $(Lattice) is not allowed !")
+        error("Lattice: $(Lattice) is not allowed for nn2idx!")
     end
     return nn
 end
@@ -215,7 +208,7 @@ function nnK_Matrix(Lattice::String, site::Vector{Int64}; t=(1.0, 1.0, 1.0), flu
     flux1 = cis(flux / 4)
     flux2 = cis(-flux / 4)
 
-    if Lattice == "SQUARE45"
+    if Lattice == "SQUARE45" || Lattice == "triangular45"
         Ns = prod(site)
     else
         Ns = prod(site) * 2
@@ -226,50 +219,11 @@ function nnK_Matrix(Lattice::String, site::Vector{Int64}; t=(1.0, 1.0, 1.0), flu
     else
         K = zeros(Float64, Ns, Ns)
     end
-    if occursin("SQUARE", Lattice)
+    if Lattice == "SQUARE90"
         for i in 1:Ns
             nnidx = nn2idx(Lattice, site, i)
-            if Lattice == "SQUARE90"
-                if opt == "xy"
-                    if mod(i, 2) == 1
-                        K[i, nnidx[1]] = flux1
-                        K[i, nnidx[2]] = flux1
-                        K[i, nnidx[3]] = flux2
-                        K[i, nnidx[4]] = flux2
-                    else
-                        K[i, nnidx[1]] = flux2
-                        K[i, nnidx[2]] = flux2
-                        K[i, nnidx[3]] = flux1
-                        K[i, nnidx[4]] = flux1
-                    end
-                elseif opt == "y"
-                    if mod(i, 2) == 1
-                        K[i, nnidx[1]] = cis(flux)
-                        K[i, nnidx[2]] = 1.0
-                        K[i, nnidx[3]] = 1.0
-                        K[i, nnidx[4]] = 1.0
-                    else
-                        K[i, nnidx[1]] = 1.0
-                        K[i, nnidx[2]] = cis(flux)
-                        K[i, nnidx[3]] = 1.0
-                        K[i, nnidx[4]] = 1.0
-                    end
-                elseif opt == "yy"
-                    if mod(i, 2) == 1
-                        K[i, nnidx[1]] = cis(flux / 2)
-                        K[i, nnidx[2]] = cis(flux / 2)
-                        K[i, nnidx[3]] = 1.0
-                        K[i, nnidx[4]] = 1.0
-                    else
-                        K[i, nnidx[1]] = cis(-flux / 2)
-                        K[i, nnidx[2]] = cis(-flux / 2)
-                        K[i, nnidx[3]] = 1.0
-                        K[i, nnidx[4]] = 1.0
-                    end
-                end
-            elseif Lattice == "SQUARE45"
-                x, y = i_xy(Lattice, site, i)
-                if mod(x + y, 2) == 1
+            if opt == "xy"
+                if mod(i, 2) == 1
                     K[i, nnidx[1]] = flux1
                     K[i, nnidx[2]] = flux1
                     K[i, nnidx[3]] = flux2
@@ -279,6 +233,72 @@ function nnK_Matrix(Lattice::String, site::Vector{Int64}; t=(1.0, 1.0, 1.0), flu
                     K[i, nnidx[2]] = flux2
                     K[i, nnidx[3]] = flux1
                     K[i, nnidx[4]] = flux1
+                end
+            elseif opt == "y"
+                if mod(i, 2) == 1
+                    K[i, nnidx[1]] = cis(flux)
+                    K[i, nnidx[2]] = 1.0
+                    K[i, nnidx[3]] = 1.0
+                    K[i, nnidx[4]] = 1.0
+                else
+                    K[i, nnidx[1]] = 1.0
+                    K[i, nnidx[2]] = cis(flux)
+                    K[i, nnidx[3]] = 1.0
+                    K[i, nnidx[4]] = 1.0
+                end
+            elseif opt == "yy"
+                if mod(i, 2) == 1
+                    K[i, nnidx[1]] = cis(flux / 2)
+                    K[i, nnidx[2]] = cis(flux / 2)
+                    K[i, nnidx[3]] = 1.0
+                    K[i, nnidx[4]] = 1.0
+                else
+                    K[i, nnidx[1]] = cis(-flux / 2)
+                    K[i, nnidx[2]] = cis(-flux / 2)
+                    K[i, nnidx[3]] = 1.0
+                    K[i, nnidx[4]] = 1.0
+                end
+            end
+        end
+    elseif Lattice == "SQUARE45"
+        for i in 1:Ns
+            nnidx = nn2idx(Lattice, site, i)
+            if opt == "xy"
+                x, y = i_xy(Lattice, site, i)
+                if mod(x + y, 2) == 0
+                    K[i, nnidx[1]] = flux1
+                    K[i, nnidx[2]] = flux1
+                    K[i, nnidx[3]] = flux2
+                    K[i, nnidx[4]] = flux2
+                else
+                    K[i, nnidx[1]] = flux2
+                    K[i, nnidx[2]] = flux2
+                    K[i, nnidx[3]] = flux1
+                    K[i, nnidx[4]] = flux1
+                end
+            elseif opt == "y"
+                if mod(x + y, 2) == 0
+                    K[i, nnidx[1]] = cis(flux)
+                    K[i, nnidx[2]] = 1.0
+                    K[i, nnidx[3]] = 1.0
+                    K[i, nnidx[4]] = 1.0
+                else
+                    K[i, nnidx[1]] = 1.0
+                    K[i, nnidx[2]] = cis(flux)
+                    K[i, nnidx[3]] = 1.0
+                    K[i, nnidx[4]] = 1.0
+                end
+            elseif opt == "yy"
+                if mod(x + y, 2) == 0
+                    K[i, nnidx[1]] = cis(flux / 2)
+                    K[i, nnidx[2]] = cis(flux / 2)
+                    K[i, nnidx[3]] = 1.0
+                    K[i, nnidx[4]] = 1.0
+                else
+                    K[i, nnidx[1]] = cis(-flux / 2)
+                    K[i, nnidx[2]] = cis(-flux / 2)
+                    K[i, nnidx[3]] = 1.0
+                    K[i, nnidx[4]] = 1.0
                 end
             end
         end
@@ -296,7 +316,19 @@ function nnK_Matrix(Lattice::String, site::Vector{Int64}; t=(1.0, 1.0, 1.0), flu
         for i in 1:Ns
             nnidx = nn2idx(Lattice, site, i)
             if i % 2 == 1
-                K[i, nnidx[1]] = 1
+                K[i, nnidx[1:3]] .= 1
+                K[i, nnidx[4:6]] .= -1
+            else
+                K[i, nnidx[1:5]] .= 1
+                K[i, nnidx[6]] = -1
+            end
+        end
+    elseif Lattice == "triangular45"
+        for i in 1:Ns
+            nnidx = nn2idx(Lattice, site, i)
+            x, y = i_xy(Lattice, site, i)
+            if (x + y) % 2 == 0
+                K[i, nnidx[1]] = -1
                 K[i, nnidx[2]] = 1
                 K[i, nnidx[3]] = 1
                 K[i, nnidx[4]] = 1
@@ -306,8 +338,11 @@ function nnK_Matrix(Lattice::String, site::Vector{Int64}; t=(1.0, 1.0, 1.0), flu
                 for j in eachindex(nnidx)
                     K[i, nnidx[j]] = 1
                 end
+                K[i, nnidx[3]] = -1
             end
         end
+    else
+        error("Lattice: $(Lattice) is not allowed for nnK_Matrix!")
     end
     @assert norm(K - K') < 1e-8 "K is not Hermitian!"
     return K
@@ -379,7 +414,7 @@ function area_index(Lattice::String, site::Vector{Int64}, area::Tuple{Vector{Int
             return index
         end
     else
-        error("Lattice: $(Lattice) is not allowed !")
+        error("Lattice: $(Lattice) is not allowed for area_index!")
     end
 end
 
@@ -397,7 +432,7 @@ function name_Lattice(Lattice::String)
     elseif Lattice == "triangular45"
         return "△45"
     else
-        error("Lattice: $(Lattice) is not allowed !")
+        error("Lattice: $(Lattice) is not allowed for name_Lattice!")
     end
 end
 

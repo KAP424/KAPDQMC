@@ -4,25 +4,26 @@ using Test
 using Random
 using LinearAlgebra
 
+KAPDQMC.nn2idx("triangular90", [4, 4], 5)
+
 @testset "KAPDQMC.jl" begin
     path = "test/triangular/"
 
     rng = MersenneTwister(1234)
 
-    model = tU_Hubbard_Para(Ht=1.0, Hu1=1.0, Hu2=1.0, Θrelax=1.0, Θquench=0., Lattice="triangular90",
+    model = tU_Hubbard_Para(Ht=1.0, Hu1=1.0, Hu2=1.0,
+        Θrelax=1.0, Θquench=0., Lattice="triangular90",
         site=[6, 6], Δt=0.1, BatchSize=10, Initial="H0")
 
+    # s = Initial_s(model, rng)
 
-    s = Initial_s(model, rng)
-
-    s = phy_update(path, model, s, 10, true)
+    # s = phy_update(path, model, s, 10, true)
 
 
     # L = model.site[2]
     # indexA = area_index(model.Lattice, model.site, ([1, 1], [L, div(L, 2)]))
     # # # HalfHalf
     # indexB = area_index(model.Lattice, model.site, ([1, 1], [div(L, 2), div(L, 2)]))
-    # println(indexB)
 
     # println(model.Ns)
     # println((indexA))

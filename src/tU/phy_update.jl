@@ -236,6 +236,7 @@ function phy_measure(model::tU_Hubbard_Para_, lt, s, G, tmpNN, tmpN)
         CDW1 = real(CDW1) / model.Ns^2
         SDW0 = real(SDW0) / model.Ns^2
         SDW1 = real(SDW1) / model.Ns^2
+        return Ek, Eu, CDW0, CDW1, SDW0, SDW1
     elseif model.Lattice == "SQUARE"
         for rx in 1:model.site[1]
             for ry in 1:model.site[2]
@@ -265,8 +266,8 @@ function phy_measure(model::tU_Hubbard_Para_, lt, s, G, tmpNN, tmpN)
                                 idx2 = mod1(rx + ix, model.site[1]) + mod((ry + iy - 1), model.site[2]) * model.site[1] + zj
                                 tmp1 += (-1)^(zi + zj) * 2 * real(Correlation_Cal(G0, idx1, idx1, idx2, idx2))    # <n_i n_j>
                                 tmp1 += (-1)^(zi + zj) * 2 * real((1 - G0[idx1, idx1]) * (1 - adjoint(G0[idx2, idx2])))    #<n_i><n_j>
-
-                                tmp2 += abs2(G0[idx1, idx2])     # <c_i c†_j>
+                                delta = idx1 == idx2 ? 1 : 0
+                                tmp2 += abs2(delta - G0[idx1, idx2]) + abs2(G0[idx1, idx2])     # <c_i c†_j>
                             end
                         end
                     end
@@ -280,8 +281,31 @@ function phy_measure(model::tU_Hubbard_Para_, lt, s, G, tmpNN, tmpN)
             end
         end
         return Ek, Eu, R0cdw, R1cdw, R0sc, R1sc
+    elseif model.Lattice == "triangular45"
+        R0cdw = R1cdw = R0sc = R1sc = 0.0
+        for rx in 1:model.site[1]
+            for ry in 1:model.site[2]
+                tmp1 = tmp2 = 0
+                for ix in 1:model.site[1]
+                    for iy in 1:model.site[2]
+                        idx1 = ix + (iy - 1) * model.site[1]
+                        idx2 = mod1(rx + ix, model.site[1]) + mod((ry + iy - 1), model.site[2]) * model.site[1]
+                        tmp1 += (-1)^(rx + ry) * 2 * real(Correlation_Cal(G0, idx1, idx1, idx2, idx2))    # <n_i n_j>
+                        tmp1 += (-1)^(rx + ry) * 2 * real((1 - G0[idx1, idx1]) * (1 - adjoint(G0[idx2, idx2])))    #<n_i><n_j>
+                        delta = idx1 == idx2 ? 1 : 0
+                        tmp2 += abs2(delta - G0[idx1, idx2]) + abs2(G0[idx1, idx2])     # <c_i c†_j>
+                    end
+                end
+                tmp1 /= prod(model.site)
+                tmp2 /= prod(model.site)
+                R0cdw += tmp1
+                R1cdw += cos(2 * π / model.site[1] * rx + 2 * π / model.site[2] * ry) * tmp1
+                R0sc += tmp2
+                R1sc += cos(2 * π / model.site[1] * rx + 2 * π / model.site[2] * ry) * tmp2
+            end
+        end
+        return Ek, Eu, R0cdw, R1cdw, R0sc, R1sc
     end
-    return Ek, Eu, CDW0, CDW1, SDW0, SDW1
 end
 
 function Correlation_Cal(G, i, j, k, l)

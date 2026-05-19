@@ -39,7 +39,7 @@ function SO3Initial_Pt!(Lattice, Initial, Pt, K)
                 HJ[3*(i-1)+1:3*i, 3*(i-1)+1:3*i] .= -hJ
             end
         end
-        HJ .+= 1e-5 * diagm(repeat([-1, -1, -1, 1, 1, 1], div(Ns, 6)))
+        # HJ .+= 1e-5 * diagm(repeat([-1, -1, -1, 1, 1, 1], div(Ns, 6)))
         E, V = LAPACK.syevd!('V', 'L', HJ)
         Pt .= V[:, 1:div(Ns, 2)]
     else

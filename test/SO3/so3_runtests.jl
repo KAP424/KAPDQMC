@@ -9,11 +9,11 @@ using LinearAlgebra
     rng = MersenneTwister(time_ns())
 
     Lattice = "HoneyComb120"
-    L = 6
+    L = 18
     site = [L, L]
 
     model = SO3_Hubbard_Para(Ht=1.0, HJ1=1.0, HJ2=1.0, Θrelax=3.1, Θquench=0.0,
-        Lattice=Lattice, site=site, Δt=0.05, BatchSize=5, Initial="H0")
+        Lattice=Lattice, site=site, Δt=0.05, BatchSize=5, Initial="HJ")
     # @assert norm(model.α) < 1e-10 "α should be zero when HJ1 and HJ2 are zero!"
 
     # G0 = I(model.Ns) - model.Pt * inv(model.Pt' * model.Pt) * model.Pt'
@@ -27,7 +27,12 @@ using LinearAlgebra
 
     s = Initial_s(model, rng)
 
-    s = phy_update(path, model, s, 4, true)
+    Phy = KAPDQMC.SO3DQMC.PhyBuffer(model.Ns, 0)
+    Phy.G = I(model.Ns) - model.Pt * inv(model.Pt' * model.Pt) * model.Pt'
+    Ek, Ev, R0, R1 = KAPDQMC.SO3DQMC.phy_measure(model, Phy, div(model.Nt, 2), s)
+    println("Ek = $Ek, Ev = $Ev, R0 = $R0, R1 = $R1")
+
+    # s = phy_update(path, model, s, 4, true)
 
 
     # L = model.site[2]

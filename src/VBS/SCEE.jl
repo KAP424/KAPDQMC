@@ -1,5 +1,4 @@
 function ctrl_SCEEicr(path::String, model::VBS_Hubbard_Para_, indexA::Vector{Int64}, indexB::Vector{Int64}, Sweeps::Int64, λ::Float64, Nλ::Int64, ss::Vector{Array{UInt8,3}}, record)
-    T = typeof(model.K[1, 1])
     global LOCK = ReentrantLock()
     TTT = time_ns()
     ERROR = 1e-5
@@ -7,19 +6,19 @@ function ctrl_SCEEicr(path::String, model::VBS_Hubbard_Para_, indexA::Vector{Int
     NN = length(model.nodes)
     Θidx = div(NN, 2) + 1
 
-    UPD = UpdateBuffer(T)
-    SCEE = SCEEBuffer(T, model.Ns)
-    A = AreaBuffer(T, indexA)
-    B = AreaBuffer(T, indexB)
-    G1 = G4Buffer(T, model.Ns, NN)
-    G2 = G4Buffer(T, model.Ns, NN)
+    UPD = UpdateBuffer()
+    SCEE = SCEEBuffer(model.Ns)
+    A = AreaBuffer(indexA)
+    B = AreaBuffer(indexB)
+    G1 = G4Buffer(model.Ns, NN)
+    G2 = G4Buffer(model.Ns, NN)
 
     name = name_Lattice(model.Lattice)
 
-    if model.Hv1 == model.Hv2
-        file = "$(path)/VBS$(model.SUN)SCEE$(name)_t$(model.Ht)V$(model.Hv1)size$(model.site)Δt$(model.Δt)Θ$(model.Θrelax)N$(Nλ)BS$(model.BatchSize).csv"
+    if model.HJ1 == model.HJ2
+        file = "$(path)/VBS$(model.SUN)SCEE$(name)_t$(model.Ht)V$(model.HJ1)size$(model.site)Δt$(model.Δt)Θ$(model.Θrelax)N$(Nλ)BS$(model.BatchSize).csv"
     else
-        file = "$(path)/VBS$(model.SUN)SCEE$(name)_t$(model.Ht)V$(model.Hv1)_$(model.Hv2)size$(model.site)Δt$(model.Δt)Θ$(model.Θrelax)_$(model.Θquench)N$(Nλ)BS$(model.BatchSize).csv"
+        file = "$(path)/VBS$(model.SUN)SCEE$(name)_t$(model.Ht)V$(model.HJ1)_$(model.HJ2)size$(model.site)Δt$(model.Δt)Θ$(model.Θrelax)_$(model.Θquench)N$(Nλ)BS$(model.BatchSize).csv"
     end
     rng = MersenneTwister(Threads.threadid() + time_ns())
 
@@ -77,7 +76,7 @@ function ctrl_SCEEicr(path::String, model::VBS_Hubbard_Para_, indexA::Vector{Int
 
 
     idx = 1
-    get_ABGM!(G1, G2, A, B, SCEE, model.nodes, idx, "Forward")
+    get_ABGM!(model.SUN, G1, G2, A, B, SCEE, model.nodes, idx, "Forward")
     for loop in 1:Sweeps
         # println("\n ====== Sweep $loop / $Sweeps ======")
         for lt in 1:model.Nt
@@ -209,7 +208,7 @@ function ctrl_SCEEicr(path::String, model::VBS_Hubbard_Para_, indexA::Vector{Int
                     copyto!(view(BLMs2, :, :, i), tmpnN)
                 end
 
-                get_ABGM!(G1, G2, A, B, SCEE, model.nodes, idx, "Forward")
+                get_ABGM!(model.SUN, G1, G2, A, B, SCEE, model.nodes, idx, "Forward")
             end
         end
 
@@ -340,7 +339,7 @@ function ctrl_SCEEicr(path::String, model::VBS_Hubbard_Para_, indexA::Vector{Int
                     LAPACK.orgqr!(tmpNn, tau)
                     copyto!(view(BRMs2, :, :, i), tmpNn)
                 end
-                get_ABGM!(G1, G2, A, B, SCEE, model.nodes, idx, "Backward")
+                get_ABGM!(model.SUN, G1, G2, A, B, SCEE, model.nodes, idx, "Backward")
             end
         end
 
@@ -366,7 +365,7 @@ function ctrl_SCEEicr(path::String, model::VBS_Hubbard_Para_, indexA::Vector{Int
     return ss
 end
 
-function get_ABGM!(G1::G4Buffer_, G2::G4Buffer_, A::AreaBuffer_, B::AreaBuffer_, SCEE::SCEEBuffer_, nodes, idx, direction::String="Backward")
+function get_ABGM!(SUN, G1::G4Buffer_, G2::G4Buffer_, A::AreaBuffer_, B::AreaBuffer_, SCEE::SCEEBuffer_, nodes, idx, direction::String="Backward")
     #####################################################################
     # WrapErr = zeros(ComplexF64, size(G1.Gt))
     # if idx != div(length(nodes), 2)
@@ -399,12 +398,12 @@ function get_ABGM!(G1::G4Buffer_, G2::G4Buffer_, A::AreaBuffer_, B::AreaBuffer_,
     # end
     #####################################################################
     GroverMatrix!(A.gmInv, view(G1.G0, A.index, A.index), view(G2.G0, A.index, A.index))
-    A.detg = det(A.gmInv)
+    A.detg = det(A.gmInv)^SUN
     LAPACK.getrf!(A.gmInv, A.ipiv)
     LAPACK.getri!(A.gmInv, A.ipiv)
 
     GroverMatrix!(B.gmInv, view(G1.G0, B.index, B.index), view(G2.G0, B.index, B.index))
-    B.detg = det(B.gmInv)
+    B.detg = det(B.gmInv)^SUN
     LAPACK.getrf!(B.gmInv, B.ipiv)
     LAPACK.getri!(B.gmInv, B.ipiv)
 end
@@ -417,14 +416,14 @@ function UpdateSCEELayer!(rng, j, s1, s2, lt, G1::G4Buffer_, G2::G4Buffer_, A::A
         # update s1
         begin
             sx = rand(rng, model.samplers_dict[s1[i]])
-            p = get_r!(UPD, model.αη[lt, sx] - model.αη[lt, s1[i]], G1.Gt)
+            p = get_r!(UPD, model.αη[lt, sx] - model.αη[lt, s1[i]], G1.Gt)^model.SUN
             p *= model.γ[sx] / model.γ[s1[i]]
 
-            detTau_A = get_abTau1!(A, UPD, G2.G0, G1.Gt0, G1.G0t)
-            detTau_B = get_abTau1!(B, UPD, G2.G0, G1.Gt0, G1.G0t)
+            detTau_A = get_abTau1!(A, UPD, G2.G0, G1.Gt0, G1.G0t)^model.SUN
+            detTau_B = get_abTau1!(B, UPD, G2.G0, G1.Gt0, G1.G0t)^model.SUN
 
             @fastmath p *= (detTau_A)^λ * (detTau_B)^(1 - λ)
-            if imag(p) > 1e-6 || real(p) < 0
+            if p < 0
                 println("Warning: negative p=$p at lt=$lt, j=$j, i=$i")
             end
             if rand(rng) < abs(p)
@@ -442,14 +441,14 @@ function UpdateSCEELayer!(rng, j, s1, s2, lt, G1::G4Buffer_, G2::G4Buffer_, A::A
         # update ss[2]
         begin
             sx = rand(rng, model.samplers_dict[s2[i]])
-            p = get_r!(UPD, model.αη[lt, sx] - model.αη[lt, s2[i]], G2.Gt)
+            p = get_r!(UPD, model.αη[lt, sx] - model.αη[lt, s2[i]], G2.Gt)^model.SUN
             p *= model.γ[sx] / model.γ[s2[i]]
 
-            detTau_A = get_abTau2!(A, UPD, G1.G0, G2.Gt0, G2.G0t)
-            detTau_B = get_abTau2!(B, UPD, G1.G0, G2.Gt0, G2.G0t)
+            detTau_A = get_abTau2!(A, UPD, G1.G0, G2.Gt0, G2.G0t)^model.SUN
+            detTau_B = get_abTau2!(B, UPD, G1.G0, G2.Gt0, G2.G0t)^model.SUN
 
             @fastmath p *= (detTau_A)^λ * (detTau_B)^(1 - λ)
-            if imag(p) > 1e-6 || real(p) < 0
+            if p < 0
                 println("Warning: negative p=$p at lt=$lt, j=$j, i=$i")
             end
             if rand(rng) < abs(p)

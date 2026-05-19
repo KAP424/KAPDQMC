@@ -1,3 +1,5 @@
+# Only Pass Test for HoneyComb 
+
 module SO3DQMC
 import ..KAPDQMC: phy_update, Initial_s, ctrl_SCEEicr, ctrl_SCDOPicr, ctrl_EEicr
 

@@ -267,14 +267,19 @@ function phy_measure(model::VBS_Hubbard_Para_, Phy::PhyBuffer_, lt, s)
     Ev = 0.0
     for k in 1:length(model.nnidx)
         x, y = model.nnidx[k]
-        Ev += (1 - G0[x, x]) * (1 - G0[y, y]) - G0[x, y] * G0[y, x]
+        Ev += model.SUN * Correlation_Cal(G0, x, y, x, y)
+        Ev += model.SUN * Correlation_Cal(G0, x, y, y, x)
+        Ev += model.SUN * Correlation_Cal(G0, y, x, x, y)
+        Ev += model.SUN * Correlation_Cal(G0, y, x, y, x)
+        Ev += (model.SUN - 1) * model.SUN * G0[x, y] * G0[x, y]
+        Ev += (model.SUN - 1) * model.SUN * G0[x, y] * G0[y, x]
+        Ev += (model.SUN - 1) * model.SUN * G0[y, x] * G0[x, y]
+        Ev += (model.SUN - 1) * model.SUN * G0[y, x] * G0[y, x]
     end
-    @assert abs(imag(Ek)) + abs(imag(Ev)) < 1e-10 "Complex emergence in Ek or Ev"
-    Ek = real(Ek)
-    Ev = real(Ev)
+    Ev = -Ev * model.HJ2 / 2 / model.SUN
 
     R0 = R1 = 0.0
-    if occursin("HoneyComb", model.Lattice) || model.Lattice == "SQUARE90"
+    if occursin("HoneyComb", model.Lattice)
         for rx in 1:model.site[1]
             for ry in 1:model.site[2]
                 tmp = 0.0
@@ -286,14 +291,31 @@ function phy_measure(model::VBS_Hubbard_Para_, Phy::PhyBuffer_, lt, s)
                         nn1 = nn2idx(model.Lattice, model.site, idx1)
                         nn2 = nn2idx(model.Lattice, model.site, idx2)
 
-                        for delta in eachindex(nn1)
-                            tmp += Correlation_Cal(G0, idx1, nn1[delta], idx2, nn2[delta])
+                        for iδ in eachindex(nn1)
+                            tmp += model.SUN * Correlation_Cal(G0, idx1, nn1[iδ], idx2, nn2[iδ])
+                            tmp += model.SUN * Correlation_Cal(G0, nn1[iδ], idx1, idx2, nn2[iδ])
+                            tmp += model.SUN * Correlation_Cal(G0, idx1, nn1[iδ], nn2[iδ], idx2)
+                            tmp += model.SUN * Correlation_Cal(G0, nn1[iδ], idx1, nn2[iδ], idx2)
+                            tmp += (model.SUN - 1) * model.SUN * G0[idx1, nn1[iδ]] * G0[nn2[iδ], idx2]
+                            tmp += (model.SUN - 1) * model.SUN * G0[idx1, nn1[iδ]] * G0[idx2, nn2[iδ]]
+                            tmp += (model.SUN - 1) * model.SUN * G0[nn1[iδ], idx1] * G0[nn2[iδ], idx2]
+                            tmp += (model.SUN - 1) * model.SUN * G0[nn1[iδ], idx1] * G0[idx2, nn2[iδ]]
+
+                            # tmp += model.SUN * (Int(idx1 == nn2[iδ]) - G0[nn2[iδ], idx1]) * G0[nn1[iδ], idx2]
+                            # tmp += model.SUN * (Int(nn1[iδ] == nn2[iδ]) - G0[nn2[iδ], nn1[iδ]]) * G0[idx1, idx2]
+                            # tmp += model.SUN * (Int(idx1 == idx2) - G0[idx2, idx1]) * G0[nn1[iδ], nn2[iδ]]
+                            # tmp += model.SUN * (Int(nn1[iδ] == idx2) - G0[idx2, nn1[iδ]]) * G0[idx1, nn2[iδ]]
+                            # tmp += model.SUN^2 * G0[idx1, nn1[iδ]] * G0[nn2[iδ], idx2]
+                            # tmp += model.SUN^2 * G0[idx1, nn1[iδ]] * G0[idx2, nn2[iδ]]
+                            # tmp += model.SUN^2 * G0[nn1[iδ], idx1] * G0[nn2[iδ], idx2]
+                            # tmp += model.SUN^2 * G0[nn1[iδ], idx1] * G0[idx2, nn2[iδ]]
                         end
 
                     end
                 end
-                R0 += tmp
-                R1 += cos(2 * π / model.site[1] * rx + 2 * π / model.site[2] * ry) * tmp
+
+                R0 += cos(2π * (rx / 3 - ry / 3)) * tmp
+                R1 += cos(2π * (rx / 3 - ry / 3 + rx / model.site[1] + ry / model.site[2])) * tmp
             end
         end
         R0 /= model.Ns

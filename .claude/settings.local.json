@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:arxiv.org)",
+      "WebSearch",
+      "Bash(python -)",
+      "Bash(pdftotext \"test/VBS/Li 等 - 2017 - Fermion-induced quantum critical points.pdf\" -)",
+      "Bash(perl -0777 -ne 'while\\(/\\(.{0,500}\\(?:Binder|binder|Hubbard|Stratonovich|VBS|valence|Monte Carlo|auxiliary|order parameter\\).{0,900}\\)/sig\\){$s=$1;$s=~s/\\\\s+/ /g; print \"---\\\\n$s\\\\n\"}')",
+      "Bash(pdftotext -f 3 -l 4 -layout \"test/VBS/Li 等 - 2017 - Fermion-induced quantum critical points.pdf\" -)",
+      "Bash(perl -0777 -pe 's/\\\\f/\\\\n---PAGE---\\\\n/g')",
+      "Bash(julia --project=. -)"
+    ]
+  }
+}

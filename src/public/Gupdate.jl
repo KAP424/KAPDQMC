@@ -50,6 +50,7 @@ function GMupdate!(A::AreaBuffer_)
     mul!(A.NN, A.Nz, A.zN)
     axpy!(-1.0, A.NN, A.gmInv)
 end
+
 function GMupdate!(A::DOPBuffer_)
     mul!(A.Nz, A.Xinv, A.a)
     inv22!(A.Tau)

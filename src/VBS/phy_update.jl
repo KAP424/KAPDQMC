@@ -280,8 +280,8 @@ function phy_measure(model::VBS_Hubbard_Para_, Phy::PhyBuffer_, lt, s)
 
     R0 = R1 = 0.0
     if occursin("HoneyComb", model.Lattice)
-        for rx in 1:model.site[1]
-            for ry in 1:model.site[2]
+        for rx in 0:model.site[1]-1
+            for ry in 0:model.site[2]-1
                 tmp = 0.0
                 for ix in 1:model.site[1]
                     for iy in 1:model.site[2]
@@ -314,8 +314,8 @@ function phy_measure(model::VBS_Hubbard_Para_, Phy::PhyBuffer_, lt, s)
                     end
                 end
 
-                R0 += cos(2π * (rx / 3 - ry / 3)) * tmp
-                R1 += cos(2π * (rx / 3 - ry / 3 + rx / model.site[1] + ry / model.site[2])) * tmp
+                R0 += cos(2π * (rx / 3 + ry / 3)) * tmp
+                R1 += cos(2π * (rx / 3 + ry / 3 + rx / model.site[1] + ry / model.site[2])) * tmp
             end
         end
         R0 /= model.Ns

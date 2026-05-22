@@ -27,28 +27,6 @@ function Initial_Pt!(Lattice, Initial, Pt, K)
             end
         end
     elseif Initial == "VBS"
-        # count = 1
-        # if occursin("HoneyComb", Lattice)
-        #     L = Int(sqrt(div(Ns, 2)))
-        #     site = [L, L]
-        #     Initial_direct = 1
-        #     for y in 1:L
-        #         direct = Initial_direct
-        #         for x in 1:L
-        #             idx1 = xy_i(Lattice, site, x, y)
-        #             idx2 = nn2idx(Lattice, site, idx1)[direct]
-        #             Pt[idx1, count] = 1 / sqrt(2)
-        #             Pt[idx2, count] = -1 / sqrt(2)
-        #             # println("Initial VBS: Area $count, Bond ($idx1, $idx2)")
-        #             count += 1
-        #             direct = mod(direct, 3) + 1
-        #         end
-        #         Initial_direct = mod(Initial_direct, 3) + 1
-        #     end
-        # else
-        #     error("Initial state $Initial not supported for Lattice $Lattice!")
-        # end
-
         L = Int(sqrt(div(Ns, 2)))
         site = [L, L]
         HJ = zeros(Float64, size(K))
@@ -62,8 +40,7 @@ function Initial_Pt!(Lattice, Initial, Pt, K)
         end
 
         E, V = LAPACK.syevd!('V', 'L', HJ)
-        Pt .= V[:, 1:div(Ns, 2)]
-
+        Pt .= V[:, div(Ns, 2)+1:end]
     else
         error("Initial state: $(Initial) is not allowed for Initial_Pt!")
     end

@@ -263,25 +263,28 @@ function phy_measure(model::M_VBS_Hubbard_Para_, Phy::PhyBuffer_, lt, s)
     Ek = -imag(model.Ht * sum(model.K .* G0))
     Ev = 0.0
 
+    for i in 1:length(model.nnidx)
+        x1, y1 = model.nnidx[i]
+        for j in 1:length(model.nnidx)
+            x2, y2 = model.nnidx[j]
+            Ev -= model.SUN * Correlation_Cal(G0, x1, y1, x2, y2)
+            Ev += model.SUN * Correlation_Cal(G0, x1, y1, y2, x2)
+            Ev += model.SUN * Correlation_Cal(G0, y1, x1, x2, y2)
+            Ev -= model.SUN * Correlation_Cal(G0, y1, x1, y2, x2)
 
-    for k in 1:length(model.nnidx)
-        x, y = model.nnidx[k]
-        Ev -= model.SUN * Correlation_Cal(G0, x, y, x, y)
-        Ev += model.SUN * Correlation_Cal(G0, x, y, y, x)
-        Ev += model.SUN * Correlation_Cal(G0, y, x, x, y)
-        Ev -= model.SUN * Correlation_Cal(G0, y, x, y, x)
+            Ev += model.SUN * 2 * real(G0[x1, y1] * adjoint(G0[x2, y2]))
+            Ev -= model.SUN * 2 * real(G0[y1, x1] * adjoint(G0[x2, y2]))
+            Ev -= model.SUN * 2 * real(G0[x1, y1] * adjoint(G0[y2, x2]))
+            Ev += model.SUN * 2 * real(G0[y1, x1] * adjoint(G0[y2, x2]))
 
-        Ev += model.SUN * 2 * abs2(G0[x, y])
-        Ev += model.SUN * 2 * abs2(G0[y, x])
-        Ev -= model.SUN * 4 * real(G0[x, y] * adjoint(G0[y, x]))
-
-        Ev += model.SUN * (model.SUN - 1) * 2 * imag(G0[x, y]) * 2 * imag(G0[x, y])
-        Ev -= model.SUN * (model.SUN - 1) * 2 * imag(G0[y, x]) * 2 * imag(G0[x, y])
-        Ev -= model.SUN * (model.SUN - 1) * 2 * imag(G0[x, y]) * 2 * imag(G0[y, x])
-        Ev += model.SUN * (model.SUN - 1) * 2 * imag(G0[y, x]) * 2 * imag(G0[y, x])
-
+            Ev += model.SUN * (model.SUN - 1) * 2 * imag(G0[x1, y1]) * 2 * imag(G0[x2, y2])
+            Ev -= model.SUN * (model.SUN - 1) * 2 * imag(G0[y1, x1]) * 2 * imag(G0[x2, y2])
+            Ev -= model.SUN * (model.SUN - 1) * 2 * imag(G0[x1, y1]) * 2 * imag(G0[y2, x2])
+            Ev += model.SUN * (model.SUN - 1) * 2 * imag(G0[y1, x1]) * 2 * imag(G0[y2, x2])
+        end
     end
-    Ev *= -model.HJ2 / 2 / model.SUN
+
+    Ev *= -model.HJ2 / 8 / model.SUN
 
     R0 = R1 = 0.0
     if occursin("HoneyComb", model.Lattice)

@@ -38,6 +38,7 @@ function Initial_Pt!(Lattice, Initial, Pt, K)
                 HJ[nnidx[j], i] = HJ[i, nnidx[j]] = cos(δ[j] + 2π * (x / 3 + y / 3))
             end
         end
+        @assert norm(HJ - HJ') < 1e-5 "HJ is not Hermitian"
 
         E, V = LAPACK.syevd!('V', 'L', HJ)
         Pt .= V[:, div(Ns, 2)+1:end]
@@ -50,13 +51,14 @@ function Initial_Pt!(Lattice, Initial, Pt, K)
             x, y = i_xy(Lattice, site, i)
             nnidx = nn2idx(Lattice, site, i)
             for j in eachindex(nnidx)
-                HJ[nnidx[j], i] = cos(δ[j] + 2π * (x / 3 + y / 3))
-                HJ[i, nnidx[j]] = -cos(δ[j] + 2π * (x / 3 + y / 3))
+                HJ[i, nnidx[j]] = 1im * cos(δ[j] + 2π * (x / 3 + y / 3))
+                HJ[nnidx[j], i] = -1im * cos(δ[j] + 2π * (x / 3 + y / 3))
             end
         end
-
+        @assert norm(HJ - HJ') < 1e-5 "HJ is not Hermitian"
         E, V = LAPACK.syevd!('V', 'L', HJ)
-        Pt .= V[:, div(Ns, 2)+1:end]
+        # Pt .= V[:, div(Ns, 2)+1:end]
+        Pt .= V[:, 1:div(Ns, 2)]
     else
         error("Initial state: $(Initial) is not allowed for Initial_Pt!")
     end
@@ -97,7 +99,7 @@ function i_xy(Lattice::String, site::Vector{Int64}, i::Int64)
     end
 end
 
-
+# 只记录A格子的nearest neighbor
 function nnidx_F(Lattice, site)
     if Lattice == "SQUARE45"
         Ns = prod(site)

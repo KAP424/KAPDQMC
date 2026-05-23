@@ -263,23 +263,29 @@ function phy_measure(model::M_VBS_Hubbard_Para_, Phy::PhyBuffer_, lt, s)
     mul!(G0, tmpNN, model.HalfeKinv)
     # G0=model.HalfeK* G0 *model.HalfeKinv
 
-    Ek = imag(model.Ht * sum(model.K .* G0))
+    Ek = -imag(model.Ht * sum(model.K .* G0))
     Ev = 0.0
 
     println("G0:", norm(G0 + transpose(G0)))
 
     for k in 1:length(model.nnidx)
         x, y = model.nnidx[k]
-        Ev += model.SUN * Correlation_Cal(G0, x, y, x, y)
+        Ev -= model.SUN * Correlation_Cal(G0, x, y, x, y)
         Ev += model.SUN * Correlation_Cal(G0, x, y, y, x)
         Ev += model.SUN * Correlation_Cal(G0, y, x, x, y)
-        Ev += model.SUN * Correlation_Cal(G0, y, x, y, x)
-        Ev += (model.SUN - 1) * model.SUN * G0[x, y] * G0[x, y]
-        Ev += (model.SUN - 1) * model.SUN * G0[x, y] * G0[y, x]
-        Ev += (model.SUN - 1) * model.SUN * G0[y, x] * G0[x, y]
-        Ev += (model.SUN - 1) * model.SUN * G0[y, x] * G0[y, x]
+        Ev -= model.SUN * Correlation_Cal(G0, y, x, y, x)
+
+        Ev += model.SUN * 2 * abs2(G0[x, y])
+        Ev += model.SUN * 2 * abs2(G0[y, x])
+        Ev -= model.SUN * 4 * real(G0[x, y] * adjoint(G0[y, x]))
+
+        Ev += model.SUN * (model.SUN - 1) * 2 * imag(G0[x, y]) * 2 * imag(G0[x, y])
+        Ev -= model.SUN * (model.SUN - 1) * 2 * imag(G0[y, x]) * 2 * imag(G0[x, y])
+        Ev -= model.SUN * (model.SUN - 1) * 2 * imag(G0[x, y]) * 2 * imag(G0[y, x])
+        Ev += model.SUN * (model.SUN - 1) * 2 * imag(G0[y, x]) * 2 * imag(G0[y, x])
+
     end
-    Ev = -Ev * model.HJ2 / 2 / model.SUN
+    Ev *= -model.HJ2 / 2 / model.SUN
 
     R0 = R1 = 0.0
     if occursin("HoneyComb", model.Lattice)
@@ -295,27 +301,27 @@ function phy_measure(model::M_VBS_Hubbard_Para_, Phy::PhyBuffer_, lt, s)
                         nn2 = nn2idx(model.Lattice, model.site, idx2)
 
                         for iδ in eachindex(nn1)
-                            tmp += model.SUN * Correlation_Cal(G0, idx1, nn1[iδ], idx2, nn2[iδ])
+                            tmp -= model.SUN * Correlation_Cal(G0, idx1, nn1[iδ], idx2, nn2[iδ])
+                            tmp += model.SUN * Correlation_Cal(G0, nn1[iδ], idx1, idx2, nn2[iδ])
+                            tmp += model.SUN * Correlation_Cal(G0, idx1, nn1[iδ], nn2[iδ], idx2)
+                            tmp -= model.SUN * Correlation_Cal(G0, nn1[iδ], idx1, nn2[iδ], idx2)
 
-                            tmp -= model.SUN * 2 * real(G0[idx1, nn1[iδ]] * adjoint(G0[idx2, nn2[iδ]]))
+                            tmp += model.SUN * 2 * real(G0[idx1, nn1[iδ]] * adjoint(G0[idx2, nn2[iδ]]))
+                            tmp -= model.SUN * 2 * real(G0[nn1[iδ], idx1] * adjoint(G0[idx2, nn2[iδ]]))
+                            tmp -= model.SUN * 2 * real(G0[idx1, nn1[iδ]] * adjoint(G0[nn2[iδ], idx2]))
+                            tmp += model.SUN * 2 * real(G0[nn1[iδ], idx1] * adjoint(G0[nn2[iδ], idx2]))
 
-                            tmp += model.SUN * (model.SUN - 1) * 2 * real(G0[idx1, nn1[iδ]]) * 2 * real(G0[idx2, nn2[iδ]])
+                            tmp += model.SUN * (model.SUN - 1) * 2 * imag(G0[idx1, nn1[iδ]]) * 2 * imag(G0[idx2, nn2[iδ]])
+                            tmp -= model.SUN * (model.SUN - 1) * 2 * imag(G0[nn1[iδ], idx1]) * 2 * imag(G0[idx2, nn2[iδ]])
+                            tmp -= model.SUN * (model.SUN - 1) * 2 * imag(G0[idx1, nn1[iδ]]) * 2 * imag(G0[nn2[iδ], idx2])
+                            tmp += model.SUN * (model.SUN - 1) * 2 * imag(G0[nn1[iδ], idx1]) * 2 * imag(G0[nn2[iδ], idx2])
 
-                            # tmp += model.SUN * (Int(idx1 == nn2[iδ]) - G0[nn2[iδ], idx1]) * G0[nn1[iδ], idx2]
-                            # tmp += model.SUN * (Int(nn1[iδ] == nn2[iδ]) - G0[nn2[iδ], nn1[iδ]]) * G0[idx1, idx2]
-                            # tmp += model.SUN * (Int(idx1 == idx2) - G0[idx2, idx1]) * G0[nn1[iδ], nn2[iδ]]
-                            # tmp += model.SUN * (Int(nn1[iδ] == idx2) - G0[idx2, nn1[iδ]]) * G0[idx1, nn2[iδ]]
-                            # tmp += model.SUN^2 * G0[idx1, nn1[iδ]] * G0[nn2[iδ], idx2]
-                            # tmp += model.SUN^2 * G0[idx1, nn1[iδ]] * G0[idx2, nn2[iδ]]
-                            # tmp += model.SUN^2 * G0[nn1[iδ], idx1] * G0[nn2[iδ], idx2]
-                            # tmp += model.SUN^2 * G0[nn1[iδ], idx1] * G0[idx2, nn2[iδ]]
                         end
-
                     end
                 end
 
-                R0 += cos(2π * (rx / 3 + ry / 3)) * tmp
-                R1 += cos(2π * (rx / 3 + ry / 3 + rx / model.site[1] + ry / model.site[2])) * tmp
+                R0 += cos(2π * (rx / 3 + ry / 3)) * tmp / 2
+                R1 += cos(2π * (rx / 3 + ry / 3 + rx / model.site[1] + ry / model.site[2])) * tmp / 2
             end
         end
         R0 /= model.Ns

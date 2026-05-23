@@ -26,20 +26,20 @@ KAPDQMC.nn2idx("triangular90", [4, 4], 5)
     println("Ek = $Ek, Ev = $Ev, R0 = $R0, R1 = $R1")
 
 
-    L = model.site[2]
-    indexA = area_index(model.Lattice, model.site, ([1, 1], [div(L, 3), L]))
-    # # HalfHalf
-    indexB = area_index(model.Lattice, model.site, ([1, 1], [div(L, 3), div(2 * L, 3)]))
+    # L = model.site[2]
+    # indexA = area_index(model.Lattice, model.site, ([1, 1], [div(L, 3), L]))
+    # # # HalfHalf
+    # indexB = area_index(model.Lattice, model.site, ([1, 1], [div(L, 3), div(2 * L, 3)]))
 
-    # println(model.Ns)
-    # println((indexA))
-    # println((indexB))
+    # # println(model.Ns)
+    # # println((indexA))
+    # # println((indexB))
 
-    λ = 0.5
-    Nλ = 2
+    # λ = 0.5
+    # Nλ = 2
 
-    ss = [copy(s), copy(s)]
-    ss = ctrl_SCEEicr(path, model, indexA, indexB, 2, λ, Nλ, ss, true)
+    # ss = [copy(s), copy(s)]
+    # ss = ctrl_SCEEicr(path, model, indexA, indexB, 2, λ, Nλ, ss, true)
 
 
     # # # println(@btime ctrl_SCEEicr($path,$model,$indexA,$indexB,$Sweeps,$λ,$Nλ,$ss,$true) )

@@ -34,13 +34,17 @@ struct M_VBS_Hubbard_Para_
 end
 
 function M_VBS_Hubbard_Para(; SUN, Ht, HJ1, HJ2, Δt, Θrelax, Θquench, Lattice::String, site, BatchSize, Initial::String, flux=0.0, opt="xy")
+    Ns = prod(site) * 2
     nnidx = nnidx_F(Lattice, site)
-    realK = nnK_Matrix(Lattice, site, flux=flux, opt=opt)
-    K = 1im * realK / 2
-    K = triu(K) - triu(K)'
-    realK = triu(realK) - triu(realK)'
-    Ns = size(K, 1)
-
+    # println(nnidx)
+    realK = zeros(Float64, Ns, Ns)
+    K = zeros(ComplexF64, Ns, Ns)
+    for (x, y) in nnidx
+        realK[x, y] = 1
+        realK[y, x] = -1
+        K[x, y] = 1im
+        K[y, x] = -1im
+    end
 
     E, V = LAPACK.syevd!('V', 'L', -Ht .* K[:, :])
 
@@ -55,6 +59,10 @@ function M_VBS_Hubbard_Para(; SUN, Ht, HJ1, HJ2, Δt, Θrelax, Θquench, Lattice
     eKinv = V * Diagonal(exp.(Δt .* E)) * V'
 
     Pt = zeros(ComplexF64, Ns, div(Ns, 2))
+    if Initial == "VBS"
+        error("Majorana channel: Initial should be M_VBS")
+    end
+
     Initial_Pt!(Lattice, Initial, Pt, K)
 
     Nt = round(Int, 2 * (Θrelax + Θquench) / Δt)

@@ -18,7 +18,6 @@ KAPDQMC.nn2idx("triangular90", [4, 4], 5)
     s = Initial_s(model, rng)
     # s = phy_update(path, model, s, 10, true)
     # s = phy_update(path, model, s, 100, true)
-    println(unique(model.K))
 
     Phy = KAPDQMC.M_VBSDQMC.PhyBuffer(model.Ns, 0)
     Phy.G = I(model.Ns) - model.Pt * inv(model.Pt' * model.Pt) * model.Pt'

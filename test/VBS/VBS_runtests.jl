@@ -13,17 +13,17 @@ KAPDQMC.nn2idx("triangular90", [4, 4], 5)
 
     model = VBS_Hubbard_Para(SUN=3, Ht=1.0, HJ1=3.0, HJ2=3.0,
         Θrelax=3.6, Θquench=0., Lattice="HoneyComb120",
-        site=[9, 9], Δt=0.05, BatchSize=5, Initial="VBS")
+        site=[6, 6], Δt=0.05, BatchSize=5, Initial="H0")
 
     s = Initial_s(model, rng)
     # s = phy_update(path, model, s, 10, false)
     # s = phy_update(path, model, s, 100, true)
 
 
-    # Phy = KAPDQMC.VBSDQMC.PhyBuffer(model.Ns, 0)
-    # Phy.G = I(model.Ns) - model.Pt * inv(model.Pt' * model.Pt) * model.Pt'
-    # Ek, Ev, R0, R1 = KAPDQMC.VBSDQMC.phy_measure(model, Phy, div(model.Nt, 2), s)
-    # println("Ek = $Ek, Ev = $Ev, R0 = $R0, R1 = $R1")
+    Phy = KAPDQMC.VBSDQMC.PhyBuffer(model.Ns, 0)
+    Phy.G = I(model.Ns) - model.Pt * inv(model.Pt' * model.Pt) * model.Pt'
+    Ek, Ev, R0, R1 = KAPDQMC.VBSDQMC.phy_measure(model, Phy, div(model.Nt, 2), s)
+    println("Ek = $Ek, Ev = $Ev, R0 = $R0, R1 = $R1")
 
 
     L = model.site[2]

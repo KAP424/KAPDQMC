@@ -1,6 +1,6 @@
 # turn off symmetric HS decomposition when debuging
 
-function phy_update(path::String, model::VBS_Hubbard_Para_, s::Array{UInt8,3}, Sweeps::Int64, record::Bool)
+function phy_update(path::String, model::M_VBS_Hubbard_Para_, s::Array{UInt8,3}, Sweeps::Int64, record::Bool)
     TTT = time_ns()
     global LOCK = ReentrantLock()
     ERROR = 1e-6
@@ -187,7 +187,7 @@ function phy_update(path::String, model::VBS_Hubbard_Para_, s::Array{UInt8,3}, S
     return s
 end
 
-function UpdatePhyLayer!(rng, j, s, lt, model::VBS_Hubbard_Para_, UPD::UpdateBuffer_, Phy::PhyBuffer_)
+function UpdatePhyLayer!(rng, j, s, lt, model::M_VBS_Hubbard_Para_, UPD::UpdateBuffer_, Phy::PhyBuffer_)
     for i in axes(s, 1)
         x, y = model.nnidx[i, j]
         UPD.subidx .= [x, y]
@@ -210,10 +210,10 @@ function Correlation_Cal(G, i, j, k, l)
     calculate the correlation <c†_i c_j c†_k c_l> = <c†_i c_j><c†_k c_l> + <c†_i c_l><c_j c†_k>
     G_ij = c_i c†_j = δ_ij - c†_j c_i
     """
-    return (Int(i == j) - G[j, i]) * (Int(k == l) - G[l, k]) + (Int(i == l) - G[l, i]) * G[j, k]
+    return 2 * real((Int(i == j) - G[j, i]) * (Int(k == l) - G[l, k]) + (Int(i == l) - G[l, i]) * G[j, k])
 end
 
-function phy_measure(model::VBS_Hubbard_Para_, Phy::PhyBuffer_, lt, s)
+function phy_measure(model::M_VBS_Hubbard_Para_, Phy::PhyBuffer_, lt, s)
     """
     (Ek,Ev,R0,R1)    
     """
@@ -263,8 +263,11 @@ function phy_measure(model::VBS_Hubbard_Para_, Phy::PhyBuffer_, lt, s)
     mul!(G0, tmpNN, model.HalfeKinv)
     # G0=model.HalfeK* G0 *model.HalfeKinv
 
-    Ek = model.Ht * sum(model.K .* G0)
+    Ek = imag(model.Ht * sum(model.K .* G0))
     Ev = 0.0
+
+    println("G0:", norm(G0 + transpose(G0)))
+
     for k in 1:length(model.nnidx)
         x, y = model.nnidx[k]
         Ev += model.SUN * Correlation_Cal(G0, x, y, x, y)
@@ -293,13 +296,10 @@ function phy_measure(model::VBS_Hubbard_Para_, Phy::PhyBuffer_, lt, s)
 
                         for iδ in eachindex(nn1)
                             tmp += model.SUN * Correlation_Cal(G0, idx1, nn1[iδ], idx2, nn2[iδ])
-                            tmp += model.SUN * Correlation_Cal(G0, nn1[iδ], idx1, idx2, nn2[iδ])
-                            tmp += model.SUN * Correlation_Cal(G0, idx1, nn1[iδ], nn2[iδ], idx2)
-                            tmp += model.SUN * Correlation_Cal(G0, nn1[iδ], idx1, nn2[iδ], idx2)
-                            tmp += (model.SUN - 1) * model.SUN * G0[idx1, nn1[iδ]] * G0[nn2[iδ], idx2]
-                            tmp += (model.SUN - 1) * model.SUN * G0[idx1, nn1[iδ]] * G0[idx2, nn2[iδ]]
-                            tmp += (model.SUN - 1) * model.SUN * G0[nn1[iδ], idx1] * G0[nn2[iδ], idx2]
-                            tmp += (model.SUN - 1) * model.SUN * G0[nn1[iδ], idx1] * G0[idx2, nn2[iδ]]
+
+                            tmp -= model.SUN * 2 * real(G0[idx1, nn1[iδ]] * adjoint(G0[idx2, nn2[iδ]]))
+
+                            tmp += model.SUN * (model.SUN - 1) * 2 * real(G0[idx1, nn1[iδ]]) * 2 * real(G0[idx2, nn2[iδ]])
 
                             # tmp += model.SUN * (Int(idx1 == nn2[iδ]) - G0[nn2[iδ], idx1]) * G0[nn1[iδ], idx2]
                             # tmp += model.SUN * (Int(nn1[iδ] == nn2[iδ]) - G0[nn2[iδ], nn1[iδ]]) * G0[idx1, idx2]

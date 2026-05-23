@@ -33,7 +33,10 @@ export SO3Initial_Pt!, nnK_Matrix4so3, so3area_index
 include("VBS/VBSDQMC.jl")
 using .VBSDQMC: VBS_Hubbard_Para
 
-export tU_Hubbard_Para, tV_Hubbard_Para, tUV_Hubbard_Para, SO3_Hubbard_Para, VBS_Hubbard_Para
+include("M_VBS/M_VBSDQMC.jl")
+using .M_VBSDQMC: M_VBS_Hubbard_Para
+
+export tU_Hubbard_Para, tV_Hubbard_Para, tUV_Hubbard_Para, SO3_Hubbard_Para, VBS_Hubbard_Para, M_VBS_Hubbard_Para
 export Initial_s, phy_update, ctrl_SCEEicr, ctrl_EEicr, ctrl_SCDOPicr
 end
 

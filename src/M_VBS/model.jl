@@ -28,26 +28,33 @@ struct M_VBS_Hubbard_Para_
     eKinv::Array{ComplexF64,2}
     nnidx::Matrix{Tuple{Int64,Int64}}
     nodes::Vector{Int64}
-    UV::Array{Float64,3}
+    UV::Array{ComplexF64,3}
     samplers_dict::Dict{UInt8,Random.Sampler}
     flux::Float64
 end
 
 function M_VBS_Hubbard_Para(; SUN, Ht, HJ1, HJ2, Δt, Θrelax, Θquench, Lattice::String, site, BatchSize, Initial::String, flux=0.0, opt="xy")
-
-    K = -1im * nnK_Matrix(Lattice, site, flux=flux, opt=opt)
+    nnidx = nnidx_F(Lattice, site)
+    realK = nnK_Matrix(Lattice, site, flux=flux, opt=opt)
+    K = 1im * realK / 2
+    K = triu(K) - triu(K)'
+    realK = triu(realK) - triu(realK)'
     Ns = size(K, 1)
 
+
     E, V = LAPACK.syevd!('V', 'L', -Ht .* K[:, :])
+
     if abs(E[div(Ns, 2)] - E[div(Ns, 2)+1]) > 1e-10
         @warn "Warning: The non-interacting system may be gapped!"
     end
+
+    # K 矩阵纯虚
     HalfeK = V * Diagonal(exp.(-Δt .* E ./ 2)) * V'
     eK = V * Diagonal(exp.(-Δt .* E)) * V'
     HalfeKinv = V * Diagonal(exp.(Δt .* E ./ 2)) * V'
     eKinv = V * Diagonal(exp.(Δt .* E)) * V'
 
-    Pt = zeros(Float64, Ns, div(Ns, 2))
+    Pt = zeros(ComplexF64, Ns, div(Ns, 2))
     Initial_Pt!(Lattice, Initial, Pt, K)
 
     Nt = round(Int, 2 * (Θrelax + Θquench) / Δt)
@@ -80,8 +87,7 @@ function M_VBS_Hubbard_Para(; SUN, Ht, HJ1, HJ2, Δt, Θrelax, Θquench, Lattice
     end
 
     uv = [1 1; 1im -1im] / sqrt(2)
-    nnidx = nnidx_F(Lattice, site)
-    UV = zeros(Float64, Ns, Ns, size(nnidx, 2))
+    UV = zeros(ComplexF64, Ns, Ns, size(nnidx, 2))
     for j in axes(nnidx, 2)
         for i in axes(nnidx, 1)
             x, y = nnidx[i, j]
@@ -100,14 +106,14 @@ function M_VBS_Hubbard_Para(; SUN, Ht, HJ1, HJ2, Δt, Θrelax, Θquench, Lattice
     println("$(Lattice) size=$(site)  Δt=$(Δt)  Θ=$(Θrelax)+$(Θquench)  U=$(HJ1)--$(HJ2)  Initial=$Initial  flux=$(flux)  opt=$opt  BS=$(BatchSize)  $(Nt)*$(Ns)*$(size(K))")
 
     return M_VBS_Hubbard_Para_(SUN, Lattice, Ht, HJ1, HJ2, site, Θrelax, Θquench, Ns,
-        Nt, K, BatchSize, Δt, exp_αη_pos, exp_αη_neg, αη, γ, Pt,
+        Nt, realK, BatchSize, Δt, exp_αη_pos, exp_αη_neg, αη, γ, Pt,
         HalfeK, eK, HalfeKinv, eKinv, nnidx, nodes, UV, samplers_dict, flux)
 
 end
 
 mutable struct UpdateBuffer_
     acc::Int64
-    uv::Matrix{Float64}      # 2 x 2
+    uv::Matrix{ComplexF64}      # 2 x 2
     tmp22::Matrix{ComplexF64}   # 2 x 2
     tmp2::Vector{ComplexF64}    # length 2
     r::Matrix{ComplexF64}       # 2 x 2
@@ -116,7 +122,7 @@ mutable struct UpdateBuffer_
 end
 
 function UpdateBuffer()
-    uv = [-2^0.5/2 -2^0.5/2; -2^0.5/2 2^0.5/2]
+    uv = [1 1; 1im -1im] / sqrt(2)
     return UpdateBuffer_(
         0,
         uv,

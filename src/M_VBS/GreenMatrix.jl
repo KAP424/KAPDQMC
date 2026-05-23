@@ -1,4 +1,4 @@
-function Initial_s(model::VBS_Hubbard_Para_, rng::MersenneTwister)::Array{UInt8,3}
+function Initial_s(model::M_VBS_Hubbard_Para_, rng::MersenneTwister)::Array{UInt8,3}
     sp = Random.Sampler(rng, [1, 2, 3, 4])
     a, b = size(model.nnidx)
     s = zeros(UInt8, a, b, model.Nt)
@@ -9,7 +9,7 @@ function Initial_s(model::VBS_Hubbard_Para_, rng::MersenneTwister)::Array{UInt8,
     return s
 end
 
-function BM_F!(tmpN, tmpNN, BM, model::VBS_Hubbard_Para_, s::Array{UInt8,3}, idx::Int64)
+function BM_F!(tmpN, tmpNN, BM, model::M_VBS_Hubbard_Para_, s::Array{UInt8,3}, idx::Int64)
     """
     不包头包尾
     """
@@ -28,7 +28,7 @@ function BM_F!(tmpN, tmpNN, BM, model::VBS_Hubbard_Para_, s::Array{UInt8,3}, idx
                 tmpN[x] = model.exp_αη_pos[lt, s[i, j, lt]]
                 tmpN[y] = model.exp_αη_neg[lt, s[i, j, lt]]
             end
-            mul!(tmpNN, view(model.UV, :, :, j), BM)
+            mul!(tmpNN, view(model.UV, :, :, j)', BM)
             mul!(BM, Diagonal(tmpN), tmpNN)
             mul!(tmpNN, view(model.UV, :, :, j), BM)
             copyto!(BM, tmpNN)
@@ -36,8 +36,8 @@ function BM_F!(tmpN, tmpNN, BM, model::VBS_Hubbard_Para_, s::Array{UInt8,3}, idx
     end
 end
 
-function BMinv_F!(tmpN, tmpNN, BM, model::VBS_Hubbard_Para_, s::Array{UInt8,3}, idx::Int64)
-    """
+function BMinv_F!(tmpN, tmpNN, BM, model::M_VBS_Hubbard_Para_, s::Array{UInt8,3}, idx::Int64)
+    """M_VBS_Hubbard_Para
     不包头包尾
     """
     @assert 0 < idx <= length(model.nodes)
@@ -58,7 +58,7 @@ function BMinv_F!(tmpN, tmpNN, BM, model::VBS_Hubbard_Para_, s::Array{UInt8,3}, 
 
             mul!(tmpNN, BM, view(model.UV, :, :, j))
             mul!(BM, tmpNN, Diagonal(tmpN))
-            mul!(tmpNN, BM, view(model.UV, :, :, j))
+            mul!(tmpNN, BM, view(model.UV, :, :, j)')
             copyto!(BM, tmpNN)
         end
     end
@@ -84,7 +84,7 @@ function get_r!(UPD::UpdateBuffer_, Δs::Float64, Gt)
     # redefine r=inv(r) ⋅ ̇Δ 
     inv22!(UPD.tmp22, UPD.r)
     mul!(UPD.r, UPD.tmp22, UPD.Δ)
-    return p
+    return abs2(p)
 end
 
 """
@@ -95,32 +95,32 @@ end
     Only wrap interaction part 
     ------------------------------------------------------------------------------
 """
-function WrapV!(tmpNN, G, D, UV::SubArray{Float64,2,Array{Float64,3}}, LR::String)
+function WrapV!(tmpNN, G, D, UV::SubArray{ComplexF64,2,Array{ComplexF64,3}}, LR::String)
     if LR == "L"
-        mul!(tmpNN, UV, G)
+        mul!(tmpNN, UV', G)
         mul!(G, Diagonal(D), tmpNN)
         mul!(tmpNN, UV, G)
         copyto!(G, tmpNN)
     elseif LR == "R"
         mul!(tmpNN, G, UV)
         mul!(G, tmpNN, Diagonal(D))
-        mul!(tmpNN, G, UV)
+        mul!(tmpNN, G, UV')
         copyto!(G, tmpNN)
     elseif LR == "B"
-        mul!(tmpNN, UV, G)
+        mul!(tmpNN, UV', G)
         mul!(G, tmpNN, UV)
         mul!(tmpNN, Diagonal(D), G)
         D .= 1 ./ D
         mul!(G, tmpNN, Diagonal(D))
         mul!(tmpNN, UV, G)
-        mul!(G, tmpNN, UV)
+        mul!(G, tmpNN, UV')
     end
 end
 
 # Below is just used for debug
 
 "equal time Green function"
-function Gτ(model::VBS_Hubbard_Para_, s::Array{UInt8,3}, τ::Int64)
+function Gτ(model::M_VBS_Hubbard_Para_, s::Array{UInt8,3}, τ::Int64)
     BL = model.Pt'[:, :]
     BR = model.Pt[:, :]
 
@@ -134,7 +134,7 @@ function Gτ(model::VBS_Hubbard_Para_, s::Array{UInt8,3}, τ::Int64)
                 E[x] = model.exp_αη_pos[lt, s[i, j, lt]]
                 E[y] = model.exp_αη_neg[lt, s[i, j, lt]]
             end
-            BL = BL * model.UV[:, :, j] * Diagonal(E) * model.UV[:, :, j]
+            BL = BL * model.UV[:, :, j] * Diagonal(E) * model.UV[:, :, j]'
 
             #####################################################################
             # V=zeros(Float64,model.Ns,model.Ns)
@@ -165,7 +165,7 @@ function Gτ(model::VBS_Hubbard_Para_, s::Array{UInt8,3}, τ::Int64)
                 E[x] = model.exp_αη_pos[lt, s[i, j, lt]]
                 E[y] = model.exp_αη_neg[lt, s[i, j, lt]]
             end
-            BR = model.UV[:, :, j] * Diagonal(E) * model.UV[:, :, j] * BR
+            BR = model.UV[:, :, j] * Diagonal(E) * model.UV[:, :, j]' * BR
             #####################################################################
             # V=zeros(Float64,model.Ns,model.Ns)
             # for i in 1:size(s)[2]
@@ -194,7 +194,7 @@ end
 
 
 "displaced Green function G(τ₁,τ₂)"
-function G4(model::VBS_Hubbard_Para_, s::Array{UInt8,3}, τ1::Int64, τ2::Int64, direction="Forward")
+function G4(model::M_VBS_Hubbard_Para_, s::Array{UInt8,3}, τ1::Int64, τ2::Int64, direction="Forward")
     if τ1 > τ2
         BBs = zeros(ComplexF64, cld(τ1 - τ2, model.BatchSize), model.Ns, model.Ns)
         BBsInv = zeros(ComplexF64, size(BBs))

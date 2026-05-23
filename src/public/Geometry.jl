@@ -35,7 +35,23 @@ function Initial_Pt!(Lattice, Initial, Pt, K)
             x, y = i_xy(Lattice, site, i)
             nnidx = nn2idx(Lattice, site, i)
             for j in eachindex(nnidx)
-                HJ[nnidx[j], i] = HJ[i, nnidx[j]] = cos(δ[j] + 2π * (x / 3 - y / 3))
+                HJ[nnidx[j], i] = HJ[i, nnidx[j]] = cos(δ[j] + 2π * (x / 3 + y / 3))
+            end
+        end
+
+        E, V = LAPACK.syevd!('V', 'L', HJ)
+        Pt .= V[:, div(Ns, 2)+1:end]
+    elseif Initial == "M_VBS"
+        L = Int(sqrt(div(Ns, 2)))
+        site = [L, L]
+        HJ = zeros(ComplexF64, size(K))
+        δ = [0, 2π / 3, 4π / 3]
+        for i in 1:2:Ns
+            x, y = i_xy(Lattice, site, i)
+            nnidx = nn2idx(Lattice, site, i)
+            for j in eachindex(nnidx)
+                HJ[nnidx[j], i] = cos(δ[j] + 2π * (x / 3 + y / 3))
+                HJ[i, nnidx[j]] = -cos(δ[j] + 2π * (x / 3 + y / 3))
             end
         end
 

@@ -427,9 +427,9 @@ function UpdateSCEELayer!(rng, j, s1, s2, lt, G1::G4Buffer_, G2::G4Buffer_, A::A
             end
 
             p *= ((detTau_A)^λ * (detTau_B)^(1 - λ))^model.SUN
-            # if p < 0
-            #     println("Warning: negative p=$p at lt=$lt, j=$j, i=$i")
-            # end
+            if p < 0
+                println("Warning: negative p=$p at lt=$lt, j=$j, i=$i")
+            end
             if rand(rng) < abs(p)
                 UPD.acc += 1
                 A.detg *= detTau_A
@@ -451,9 +451,9 @@ function UpdateSCEELayer!(rng, j, s1, s2, lt, G1::G4Buffer_, G2::G4Buffer_, A::A
             detTau_A = get_abTau2!(A, UPD, G1.G0, G2.Gt0, G2.G0t)
             detTau_B = get_abTau2!(B, UPD, G1.G0, G2.Gt0, G2.G0t)
 
-            # if detTau_A < 0 || detTau_B < 0
-            #     error("Warning: negative detTau_A=$detTau_A or detTau_B=$detTau_B at lt=$lt, j=$j, i=$i")
-            # end
+            if detTau_A < 0 || detTau_B < 0
+                error("Warning: negative detTau_A=$detTau_A or detTau_B=$detTau_B at lt=$lt, j=$j, i=$i")
+            end
 
             p *= ((detTau_A)^λ * (detTau_B)^(1 - λ))^model.SUN
             if p < 0

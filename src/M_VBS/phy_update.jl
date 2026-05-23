@@ -194,9 +194,6 @@ function UpdatePhyLayer!(rng, j, s, lt, model::M_VBS_Hubbard_Para_, UPD::UpdateB
         sx = rand(rng, model.samplers_dict[s[i]])
         p = get_r!(UPD, model.αη[lt, sx] - model.αη[lt, s[i]], Phy.G)^model.SUN
         p *= model.γ[sx] / model.γ[s[i]]
-        if p < 0
-            println("Negative Sign: $(p)")
-        end
         if rand(rng) < p
             UPD.acc += 1
             Gupdate!(Phy, UPD)
@@ -266,7 +263,6 @@ function phy_measure(model::M_VBS_Hubbard_Para_, Phy::PhyBuffer_, lt, s)
     Ek = -imag(model.Ht * sum(model.K .* G0))
     Ev = 0.0
 
-    println("G0:", norm(G0 + transpose(G0)))
 
     for k in 1:length(model.nnidx)
         x, y = model.nnidx[k]

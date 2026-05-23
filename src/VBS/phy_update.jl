@@ -263,7 +263,7 @@ function phy_measure(model::VBS_Hubbard_Para_, Phy::PhyBuffer_, lt, s)
     mul!(G0, tmpNN, model.HalfeKinv)
     # G0=model.HalfeK* G0 *model.HalfeKinv
 
-    Ek = model.Ht * sum(model.K .* G0)
+    Ek = -model.Ht * sum(model.K .* G0)
     Ev = 0.0
     for k in 1:length(model.nnidx)
         x, y = model.nnidx[k]

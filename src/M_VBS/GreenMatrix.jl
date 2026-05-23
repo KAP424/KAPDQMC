@@ -75,7 +75,7 @@ function get_r!(UPD::UpdateBuffer_, Δs::Float64, Gt)
     UPD.tmp2 .= Δs .* [1.0, -1.0]
     UPD.tmp2 .= exp.(UPD.tmp2) .- 1
     mul!(UPD.r, UPD.uv, Diagonal(UPD.tmp2))
-    mul!(UPD.Δ, UPD.r, UPD.uv)
+    mul!(UPD.Δ, UPD.r, UPD.uv')
     mul!(UPD.r, UPD.Δ, view(Gt, UPD.subidx, UPD.subidx))
     axpby!(1.0, UPD.Δ, -1.0, UPD.r)   # r = I + Δ ⋅ (I - Gt1[subidx,subidx])
     UPD.r[1, 1] += 1

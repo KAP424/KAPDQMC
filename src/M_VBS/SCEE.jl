@@ -1,4 +1,4 @@
-function ctrl_SCEEicr(path::String, model::VBS_Hubbard_Para_, indexA::Vector{Int64}, indexB::Vector{Int64}, Sweeps::Int64, λ::Float64, Nλ::Int64, ss::Vector{Array{UInt8,3}}, record)
+function ctrl_SCEEicr(path::String, model::M_VBS_Hubbard_Para_, indexA::Vector{Int64}, indexB::Vector{Int64}, Sweeps::Int64, λ::Float64, Nλ::Int64, ss::Vector{Array{UInt8,3}}, record)
     global LOCK = ReentrantLock()
     TTT = time_ns()
     ERROR = 1e-4
@@ -16,9 +16,9 @@ function ctrl_SCEEicr(path::String, model::VBS_Hubbard_Para_, indexA::Vector{Int
     name = name_Lattice(model.Lattice)
 
     if model.HJ1 == model.HJ2
-        file = "$(path)/VBS$(model.SUN)SCEE$(name)_t$(model.Ht)V$(model.HJ1)size$(model.site)Δt$(model.Δt)Θ$(model.Θrelax)N$(Nλ)BS$(model.BatchSize).csv"
+        file = "$(path)/M_VBS$(model.SUN)SCEE$(name)_t$(model.Ht)V$(model.HJ1)size$(model.site)Δt$(model.Δt)Θ$(model.Θrelax)N$(Nλ)BS$(model.BatchSize).csv"
     else
-        file = "$(path)/VBS$(model.SUN)SCEE$(name)_t$(model.Ht)V$(model.HJ1)_$(model.HJ2)size$(model.site)Δt$(model.Δt)Θ$(model.Θrelax)_$(model.Θquench)N$(Nλ)BS$(model.BatchSize).csv"
+        file = "$(path)/M_VBS$(model.SUN)SCEE$(name)_t$(model.Ht)V$(model.HJ1)_$(model.HJ2)size$(model.site)Δt$(model.Δt)Θ$(model.Θrelax)_$(model.Θquench)N$(Nλ)BS$(model.BatchSize).csv"
     end
     rng = MersenneTwister(Threads.threadid() + time_ns())
 
@@ -399,17 +399,17 @@ function get_ABGM!(G1::G4Buffer_, G2::G4Buffer_, A::AreaBuffer_, B::AreaBuffer_,
     # end
     #####################################################################
     GroverMatrix!(A.gmInv, view(G1.G0, A.index, A.index), view(G2.G0, A.index, A.index))
-    A.detg = det(A.gmInv)
+    A.detg = abs(det(A.gmInv))
     LAPACK.getrf!(A.gmInv, A.ipiv)
     LAPACK.getri!(A.gmInv, A.ipiv)
 
     GroverMatrix!(B.gmInv, view(G1.G0, B.index, B.index), view(G2.G0, B.index, B.index))
-    B.detg = det(B.gmInv)
+    B.detg = abs(det(B.gmInv))
     LAPACK.getrf!(B.gmInv, B.ipiv)
     LAPACK.getri!(B.gmInv, B.ipiv)
 end
 
-function UpdateSCEELayer!(rng, j, s1, s2, lt, G1::G4Buffer_, G2::G4Buffer_, A::AreaBuffer_, B::AreaBuffer_, model::VBS_Hubbard_Para_, UPD::UpdateBuffer_, SCEE::SCEEBuffer_, λ)
+function UpdateSCEELayer!(rng, j, s1, s2, lt, G1::G4Buffer_, G2::G4Buffer_, A::AreaBuffer_, B::AreaBuffer_, model::M_VBS_Hubbard_Para_, UPD::UpdateBuffer_, SCEE::SCEEBuffer_, λ)
     for i in axes(s1, 1)
         x, y = model.nnidx[i, j]
         UPD.subidx = [x, y]
@@ -420,17 +420,11 @@ function UpdateSCEELayer!(rng, j, s1, s2, lt, G1::G4Buffer_, G2::G4Buffer_, A::A
             p = get_r!(UPD, model.αη[lt, sx] - model.αη[lt, s1[i]], G1.Gt)^model.SUN
             p *= model.γ[sx] / model.γ[s1[i]]
 
-            detTau_A = get_abTau1!(A, UPD, G2.G0, G1.Gt0, G1.G0t)
-            detTau_B = get_abTau1!(B, UPD, G2.G0, G1.Gt0, G1.G0t)
-            if detTau_A < 0 || detTau_B < 0
-                error("Warning: negative detTau_A=$detTau_A or detTau_B=$detTau_B at lt=$lt, j=$j, i=$i")
-            end
-
+            detTau_A = abs(get_abTau1!(A, UPD, G2.G0, G1.Gt0, G1.G0t))
+            detTau_B = abs(get_abTau1!(B, UPD, G2.G0, G1.Gt0, G1.G0t))
             p *= ((detTau_A)^λ * (detTau_B)^(1 - λ))^model.SUN
-            # if p < 0
-            #     println("Warning: negative p=$p at lt=$lt, j=$j, i=$i")
-            # end
-            if rand(rng) < abs(p)
+
+            if rand(rng) < p
                 UPD.acc += 1
                 A.detg *= detTau_A
                 B.detg *= detTau_B
@@ -448,18 +442,12 @@ function UpdateSCEELayer!(rng, j, s1, s2, lt, G1::G4Buffer_, G2::G4Buffer_, A::A
             p = get_r!(UPD, model.αη[lt, sx] - model.αη[lt, s2[i]], G2.Gt)^model.SUN
             p *= model.γ[sx] / model.γ[s2[i]]
 
-            detTau_A = get_abTau2!(A, UPD, G1.G0, G2.Gt0, G2.G0t)
-            detTau_B = get_abTau2!(B, UPD, G1.G0, G2.Gt0, G2.G0t)
-
-            # if detTau_A < 0 || detTau_B < 0
-            #     error("Warning: negative detTau_A=$detTau_A or detTau_B=$detTau_B at lt=$lt, j=$j, i=$i")
-            # end
+            detTau_A = abs(get_abTau2!(A, UPD, G1.G0, G2.Gt0, G2.G0t))
+            detTau_B = abs(get_abTau2!(B, UPD, G1.G0, G2.Gt0, G2.G0t))
 
             p *= ((detTau_A)^λ * (detTau_B)^(1 - λ))^model.SUN
-            if p < 0
-                println("Warning: negative p=$p at lt=$lt, j=$j, i=$i")
-            end
-            if rand(rng) < abs(p)
+
+            if rand(rng) < p
                 UPD.acc += 1
                 A.detg *= detTau_A
                 B.detg *= detTau_B

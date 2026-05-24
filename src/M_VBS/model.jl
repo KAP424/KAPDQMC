@@ -59,8 +59,8 @@ function M_VBS_Hubbard_Para(; SUN, Ht, HJ1, HJ2, Δt, Θrelax, Θquench, Lattice
     eKinv = V * Diagonal(exp.(Δt .* E)) * V'
 
     Pt = zeros(ComplexF64, Ns, div(Ns, 2))
-    if Initial == "VBS"
-        error("Majorana channel: Initial should be M_VBS")
+    if Initial != "M_VBS" && Initial != "H0"
+        error("Majorana channel Only support Initial M_VBS and H0")
     end
 
     Initial_Pt!(Lattice, Initial, Pt, K)
@@ -111,7 +111,7 @@ function M_VBS_Hubbard_Para(; SUN, Ht, HJ1, HJ2, Δt, Θrelax, Θquench, Lattice
         samplers_dict[excluded] = Random.Sampler(rng, allowed)
     end
 
-    println("$(Lattice) size=$(site)  Δt=$(Δt)  Θ=$(Θrelax)+$(Θquench)  U=$(HJ1)--$(HJ2)  Initial=$Initial  flux=$(flux)  opt=$opt  BS=$(BatchSize)  $(Nt)*$(Ns)*$(size(K))")
+    println("Majorana: $(Lattice) size=$(site)  Δt=$(Δt)  Θ=$(Θrelax)+$(Θquench)  U=$(HJ1)--$(HJ2)  Initial=$Initial  flux=$(flux)  opt=$opt  BS=$(BatchSize)  $(Nt)*$(Ns)*$(size(K))")
 
     return M_VBS_Hubbard_Para_(SUN, Lattice, Ht, HJ1, HJ2, site, Θrelax, Θquench, Ns,
         Nt, realK, BatchSize, Δt, exp_αη_pos, exp_αη_neg, αη, γ, Pt,

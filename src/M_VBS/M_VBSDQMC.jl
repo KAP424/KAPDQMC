@@ -15,7 +15,7 @@ include("model.jl")
 include("../public/Gupdate.jl")
 include("GreenMatrix.jl")
 include("phy_update.jl")
-# include("SCEE.jl")
+include("SCEE.jl")
 # include("disorder_operate.jl")
 
 export M_VBS_Hubbard_Para

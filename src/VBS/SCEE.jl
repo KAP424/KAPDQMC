@@ -18,7 +18,11 @@ function ctrl_SCEEicr(path::String, model::VBS_Hubbard_Para_, indexA::Vector{Int
     if model.HJ1 == model.HJ2
         file = "$(path)/VBS$(model.SUN)SCEE$(name)_t$(model.Ht)V$(model.HJ1)size$(model.site)Δt$(model.Δt)Θ$(model.Θrelax)N$(Nλ)BS$(model.BatchSize).csv"
     else
-        file = "$(path)/VBS$(model.SUN)SCEE$(name)_t$(model.Ht)V$(model.HJ1)_$(model.HJ2)size$(model.site)Δt$(model.Δt)Θ$(model.Θrelax)_$(model.Θquench)N$(Nλ)BS$(model.BatchSize).csv"
+        if model.relax == false
+            file = "$(path)/D_VBS$(model.SUN)SCEE$(name)_t$(model.Ht)V$(model.HJ1)_$(model.HJ2)size$(model.site)Δt$(model.Δt)Θ$(model.Θrelax)_$(model.Θquench)N$(Nλ)BS$(model.BatchSize).csv"
+        else
+            file = "$(path)/R_VBS$(model.SUN)SCEE$(name)_t$(model.Ht)V$(model.HJ1)_$(model.HJ2)size$(model.site)Δt$(model.Δt)Θ$(model.Θrelax)_$(model.Θquench)N$(Nλ)BS$(model.BatchSize).csv"
+        end
     end
     rng = MersenneTwister(Threads.threadid() + time_ns())
 

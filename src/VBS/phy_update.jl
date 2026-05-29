@@ -15,8 +15,13 @@ function phy_update(path::String, model::VBS_Hubbard_Para_, s::Array{UInt8,3}, S
     if model.HJ2 == model.HJ1
         file = "$(path)/VBS$(model.SUN)phy$(name)_t$(model.Ht)V$(model.HJ1)size$(model.site)Δt$(model.Δt)Θ$(model.Θrelax)BS$(model.BatchSize).csv"
     else
-        file = "$(path)/VBS$(model.SUN)phy$(name)_t$(model.Ht)V$(model.HJ1)_$(model.HJ2)size$(model.site)Δt$(model.Δt)Θ$(model.Θrelax)_$(model.Θquench)BS$(model.BatchSize).csv"
+        if model.relax == false
+            file = "$(path)/D_VBS$(model.SUN)phy$(name)_t$(model.Ht)V$(model.HJ1)_$(model.HJ2)size$(model.site)Δt$(model.Δt)Θ$(model.Θrelax)_$(model.Θquench)BS$(model.BatchSize).csv"
+        else
+            file = "$(path)/R_VBS$(model.SUN)phy$(name)_t$(model.Ht)V$(model.HJ1)_$(model.HJ2)size$(model.site)Δt$(model.Δt)Θ$(model.Θrelax)_$(model.Θquench)BS$(model.BatchSize).csv"
+        end
     end
+
 
     rng = MersenneTwister(Threads.threadid() + time_ns())
 

@@ -40,10 +40,10 @@ function M_VBS_Hubbard_Para(; SUN, Ht, HJ1, HJ2, Δt, Θrelax, Θquench, Lattice
     realK = zeros(Float64, Ns, Ns)
     K = zeros(ComplexF64, Ns, Ns)
     for (x, y) in nnidx
-        realK[x, y] = 1
-        realK[y, x] = -1
-        K[x, y] = 1im
-        K[y, x] = -1im
+        realK[x, y] = 1 / 2
+        realK[y, x] = -1 / 2
+        K[x, y] = 1im / 2
+        K[y, x] = -1im / 2
     end
 
     E, V = LAPACK.syevd!('V', 'L', -Ht .* K[:, :])
@@ -111,7 +111,7 @@ function M_VBS_Hubbard_Para(; SUN, Ht, HJ1, HJ2, Δt, Θrelax, Θquench, Lattice
         samplers_dict[excluded] = Random.Sampler(rng, allowed)
     end
 
-    println("Majorana: $(Lattice) size=$(site)  Δt=$(Δt)  Θ=$(Θrelax)+$(Θquench)  U=$(HJ1)--$(HJ2)  Initial=$Initial  flux=$(flux)  opt=$opt  BS=$(BatchSize)  $(Nt)*$(Ns)*$(size(K))")
+    println("Majorana: $(Lattice) SU$(SUN) size=$(site)  Δt=$(Δt)  Θ=$(Θrelax)+$(Θquench)  U=$(HJ1)--$(HJ2)  Initial=$Initial  flux=$(flux)  opt=$opt  BS=$(BatchSize)  $(Nt)*$(Ns)*$(size(K))")
 
     return M_VBS_Hubbard_Para_(SUN, Lattice, Ht, HJ1, HJ2, site, Θrelax, Θquench, Ns,
         Nt, realK, BatchSize, Δt, exp_αη_pos, exp_αη_neg, αη, γ, Pt,

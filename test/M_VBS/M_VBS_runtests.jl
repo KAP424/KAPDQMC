@@ -12,22 +12,22 @@ using LinearAlgebra
 
     model = M_VBS_Hubbard_Para(SUN=3, Ht=1.0, HJ1=1.0, HJ2=1.0,
         Θrelax=3.6, Θquench=0., Lattice="HoneyComb120",
-        site=[6, 6], Δt=0.05, BatchSize=5, Initial="H0")
+        site=[6, 6], Δt=0.05, BatchSize=5, Initial="M_VBS")
 
     s = Initial_s(model, rng)
-    # s = phy_update(path, model, s, 10, false)
-    # s = phy_update(path, model, s, 300, true)
+    s = phy_update(path, model, s, 10, false)
+    s = phy_update(path, model, s, 300, true)
 
-    # Phy = KAPDQMC.M_VBSDQMC.PhyBuffer(model.Ns, 0)
-    # Phy.G = I(model.Ns) - model.Pt * inv(model.Pt' * model.Pt) * model.Pt'
-    # Ek, Ev, R0, R1 = KAPDQMC.M_VBSDQMC.phy_measure(model, Phy, div(model.Nt, 2), s)
-    # println("Ek = $Ek, Ev = $Ev, R0 = $R0, R1 = $R1")
+    Phy = KAPDQMC.M_VBSDQMC.PhyBuffer(model.Ns, 0)
+    Phy.G = I(model.Ns) - model.Pt * inv(model.Pt' * model.Pt) * model.Pt'
+    Ek, Ev, R0, R1 = KAPDQMC.M_VBSDQMC.phy_measure(model, Phy, div(model.Nt, 2), s)
+    println("Ek = $Ek, Ev = $Ev, R0 = $R0, R1 = $R1")
 
 
-    L = model.site[2]
-    indexA = area_index(model.Lattice, model.site, ([1, 1], [div(L, 3), L]))
-    # # HalfHalf
-    indexB = area_index(model.Lattice, model.site, ([1, 1], [div(L, 3), div(2 * L, 3)]))
+    # L = model.site[2]
+    # indexA = area_index(model.Lattice, model.site, ([1, 1], [div(L, 3), L]))
+    # # # HalfHalf
+    # indexB = area_index(model.Lattice, model.site, ([1, 1], [div(L, 3), div(2 * L, 3)]))
 
 
     # G0 = I(model.Ns) - model.Pt * inv(model.Pt' * model.Pt) * model.Pt'
@@ -44,11 +44,11 @@ using LinearAlgebra
     # # println((indexA))
     # # println((indexB))
 
-    λ = 0.
-    Nλ = 1
+    # λ = 0.
+    # Nλ = 1
 
-    ss = [copy(s), copy(s)]
-    ss = ctrl_SCEEicr(path, model, indexA, indexB, 100, λ, Nλ, ss, true)
+    # ss = [copy(s), copy(s)]
+    # ss = ctrl_SCEEicr(path, model, indexA, indexB, 100, λ, Nλ, ss, true)
 
 
     # # # println(@btime ctrl_SCEEicr($path,$model,$indexA,$indexB,$Sweeps,$λ,$Nλ,$ss,$true) )

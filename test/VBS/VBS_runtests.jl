@@ -10,9 +10,13 @@ using LinearAlgebra
 
     rng = MersenneTwister(time_ns())
 
-    model = VBS_Hubbard_Para(SUN=3, Ht=1.0, HJ1=1.0, HJ2=1.0,
-        Θrelax=3.6, Θquench=0., Lattice="HoneyComb120",
-        site=[6, 6], Δt=0.05, BatchSize=5, Initial="H0")
+    # model = VBS_Hubbard_Para(SUN=3, Ht=1.0, HJ1=1.0, HJ2=1.0,
+    #     Θrelax=3.6, Θquench=0., Lattice="HoneyComb120",
+    #     site=[9, 9], Δt=0.05, BatchSize=5, Initial="VBS")
+
+    model = VBS_Hubbard_Para(SUN=3, Ht=1.0, HJ1=3.5, HJ2=2.9,
+        Θrelax=0.0, Θquench=3.6, Lattice="HoneyComb120",
+        site=[9, 9], Δt=0.05, BatchSize=5, Initial="V", relax=true)
 
     s = Initial_s(model, rng)
     # s = phy_update(path, model, s, 10, false)
@@ -47,7 +51,7 @@ using LinearAlgebra
     Nλ = 1
 
     ss = [copy(s), copy(s)]
-    ss = ctrl_SCEEicr(path, model, indexA, indexB, 100, λ, Nλ, ss, true)
+    ss = ctrl_SCEEicr(path, model, indexA, indexB, 2, λ, Nλ, ss, true)
 
 
     # # # println(@btime ctrl_SCEEicr($path,$model,$indexA,$indexB,$Sweeps,$λ,$Nλ,$ss,$true) )

@@ -31,9 +31,10 @@ struct VBS_Hubbard_Para_
     UV::Array{Float64,3}
     samplers_dict::Dict{UInt8,Random.Sampler}
     flux::Float64
+    relax::Bool
 end
 
-function VBS_Hubbard_Para(; SUN, Ht, HJ1, HJ2, Δt, Θrelax, Θquench, Lattice::String, site, BatchSize, Initial::String, flux=0.0, opt="xy")
+function VBS_Hubbard_Para(; SUN, Ht, HJ1, HJ2, Δt, Θrelax, Θquench, Lattice::String, site, BatchSize, Initial::String, flux=0.0, opt="xy", relax=false)
 
     K = nnK_Matrix(Lattice, site, flux=flux, opt=opt)
     Ns = size(K, 1)
@@ -51,11 +52,16 @@ function VBS_Hubbard_Para(; SUN, Ht, HJ1, HJ2, Δt, Θrelax, Θquench, Lattice::
     Initial_Pt!(Lattice, Initial, Pt, K)
 
     Nt = round(Int, 2 * (Θrelax + Θquench) / Δt)
+
     if (Θquench > 0) & (abs(HJ1 - HJ2) > 0)
-        HJ = LinRange(HJ1, HJ2, round(Int, Θquench / Δt) + 1)[2:end]
-        HJ = vcat(fill(HJ1, round(Int, Θrelax / Δt)), collect(HJ), reverse(collect(HJ)), fill(HJ1, round(Int, Θrelax / Δt)))
+        if relax == false
+            HJ = LinRange(HJ1, HJ2, round(Int, Θquench / Δt) + 1)[2:end]
+            HJ = vcat(fill(HJ1, round(Int, Θrelax / Δt)), collect(HJ), reverse(collect(HJ)), fill(HJ1, round(Int, Θrelax / Δt)))
+        else
+            HJ = vcat(fill(HJ1, round(Int, Θrelax / Δt)), fill(HJ2, 2 * round(Int, Θquench / Δt)), fill(HJ1, round(Int, Θrelax / Δt)))
+        end
     else
-        @assert (HJ1 == HJ2) & (Θquench < 1e-7) "For Θquench=0, HJ1 must equal HJ2"
+        @assert (HJ1 == HJ2) & (Θquench < 1e-7) "For Θquench=0 and relax=false, HJ1 must equal HJ2"
         HJ = HJ1 .* ones(Float64, Nt)
     end
     HJ /= 2 * SUN
@@ -98,11 +104,11 @@ function VBS_Hubbard_Para(; SUN, Ht, HJ1, HJ2, Δt, Θrelax, Θquench, Lattice::
         samplers_dict[excluded] = Random.Sampler(rng, allowed)
     end
 
-    println("$(Lattice) size=$(site)  Δt=$(Δt)  Θ=$(Θrelax)+$(Θquench)  U=$(HJ1)--$(HJ2)  Initial=$Initial  flux=$(flux)  opt=$opt  BS=$(BatchSize)  $(Nt)*$(Ns)*$(size(K))")
+    println("$(Lattice) SU$(SUN) size=$(site)  Δt=$(Δt)  Θ=$(Θrelax)+$(Θquench)  U=$(HJ1)--$(HJ2)  Initial=$Initial  flux=$(flux)  opt=$opt  BS=$(BatchSize)  $(Nt)*$(Ns)*$(size(K))")
 
     return VBS_Hubbard_Para_(SUN, Lattice, Ht, HJ1, HJ2, site, Θrelax, Θquench, Ns,
         Nt, K, BatchSize, Δt, exp_αη_pos, exp_αη_neg, αη, γ, Pt,
-        HalfeK, eK, HalfeKinv, eKinv, nnidx, nodes, UV, samplers_dict, flux)
+        HalfeK, eK, HalfeKinv, eKinv, nnidx, nodes, UV, samplers_dict, flux, relax)
 
 end
 

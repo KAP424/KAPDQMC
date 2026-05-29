@@ -41,7 +41,7 @@ function Initial_Pt!(Lattice, Initial, Pt, K)
         @assert norm(HJ - HJ') < 1e-5 "HJ is not Hermitian"
 
         E, V = LAPACK.syevd!('V', 'L', HJ)
-        Pt .= V[:, div(Ns, 2)+1:end]
+        Pt .= V[:, 1:div(Ns, 2)]
     elseif Initial == "M_VBS"
         L = Int(sqrt(div(Ns, 2)))
         site = [L, L]

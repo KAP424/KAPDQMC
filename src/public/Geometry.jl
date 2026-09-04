@@ -30,6 +30,7 @@ function Initial_Pt!(Lattice, Initial, Pt, K)
         L = Int(sqrt(div(Ns, 2)))
         site = [L, L]
         HJ = zeros(Float64, size(K))
+        # δ = [0, π / 2, π / 2]
         δ = [0, 2π / 3, 4π / 3]
         for i in 1:2:Ns
             x, y = i_xy(Lattice, site, i)
@@ -41,6 +42,9 @@ function Initial_Pt!(Lattice, Initial, Pt, K)
         @assert norm(HJ - HJ') < 1e-5 "HJ is not Hermitian"
 
         E, V = LAPACK.syevd!('V', 'L', HJ)
+        if abs(E[div(Ns, 2)] - E[div(Ns, 2)+1]) > 1e-10
+            @warn "Warning: The initial state may be gapped!"
+        end
         Pt .= V[:, 1:div(Ns, 2)]
     elseif Initial == "M_VBS"
         L = Int(sqrt(div(Ns, 2)))

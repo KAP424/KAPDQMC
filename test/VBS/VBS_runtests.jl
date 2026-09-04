@@ -16,7 +16,7 @@ using LinearAlgebra
 
     model = VBS_Hubbard_Para(SUN=3, Ht=1.0, HJ1=3.5, HJ2=2.9,
         Θrelax=0.0, Θquench=3.6, Lattice="HoneyComb120",
-        site=[9, 9], Δt=0.05, BatchSize=5, Initial="V", relax=true)
+        site=[9, 9], Δt=0.05, BatchSize=5, Initial="VBS", relax=true)
 
     s = Initial_s(model, rng)
     # s = phy_update(path, model, s, 10, false)
@@ -29,10 +29,10 @@ using LinearAlgebra
     # println("Ek = $Ek, Ev = $Ev, R0 = $R0, R1 = $R1")
 
 
-    L = model.site[2]
-    indexA = area_index(model.Lattice, model.site, ([1, 1], [div(L, 3), L]))
-    # # HalfHalf
-    indexB = area_index(model.Lattice, model.site, ([1, 1], [div(L, 3), div(2 * L, 3)]))
+    # L = model.site[2]
+    # indexA = area_index(model.Lattice, model.site, ([1, 1], [div(L, 3), L]))
+    # # # HalfHalf
+    # indexB = area_index(model.Lattice, model.site, ([1, 1], [div(L, 3), div(2 * L, 3)]))
 
     # G0 = I(model.Ns) - model.Pt * inv(model.Pt' * model.Pt) * model.Pt'
     # gm_F = GroverMatrix(G0, G0)
@@ -47,11 +47,11 @@ using LinearAlgebra
     # println((indexA))
     # println((indexB))
 
-    λ = 0.
-    Nλ = 1
+    # λ = 0.
+    # Nλ = 1
 
-    ss = [copy(s), copy(s)]
-    ss = ctrl_SCEEicr(path, model, indexA, indexB, 2, λ, Nλ, ss, true)
+    # ss = [copy(s), copy(s)]
+    # ss = ctrl_SCEEicr(path, model, indexA, indexB, 2, λ, Nλ, ss, true)
 
 
     # # # println(@btime ctrl_SCEEicr($path,$model,$indexA,$indexB,$Sweeps,$λ,$Nλ,$ss,$true) )

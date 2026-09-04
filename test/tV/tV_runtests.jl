@@ -31,8 +31,8 @@ using LinearAlgebra
 
     # ------------------------------------------------------------------------------------------------------------------------------------------------------
 
-    model = tV_Hubbard_Para(Ht=1.0, Hv1=0.2, Hv2=0.2, Θrelax=2.1, Θquench=0.0,
-        Lattice="HoneyComb120", site=[9, 9], Δt=0.05, BatchSize=5, Initial="H0", flux=0, opt="y")
+    model = tV_Hubbard_Para(Ht=1.0, Hv1=2.5, Hv2=1.35, Θrelax=5.1, Θquench=3.6,
+        Lattice="HoneyComb120", site=[9, 9], Δt=0.03, BatchSize=5, Initial="V", flux=0, opt="y")
 
     # G0 = I(model.Ns) - model.Pt * inv(model.Pt' * model.Pt) * model.Pt'
     # # println(diag(G0))
@@ -42,8 +42,8 @@ using LinearAlgebra
     # println(tmp)
     # println(sum(tmp[3] .* [-1, -1, 1, 1]), "  ", sum(tmp[4] .* [-1, -1, 1, 1]))
     # println(1 - sum(tmp[4] .* [-1, -1, 1, 1]) / sum(tmp[3] .* [-1, -1, 1, 1]))
-    
-    
+
+
     # λ = 0.5
     # Nλ = 2
 
@@ -55,22 +55,22 @@ using LinearAlgebra
 
     # # println(length(model.nodes))
 
-    # s = Initial_s(model, rng)
+    s = Initial_s(model, rng)
     # # println(size(s))
 
     # # # s = phy_update(path, model, s, 2, false)
     # s = phy_update(path, model, s, 2, true)
 
 
-    # L = model.site[2]
-    # indexA = area_index(model.Lattice, model.site, ([1, 1], [div(L, 2), L]))
-    # # # HalfHalf
-    # indexB = area_index(model.Lattice, model.site, ([1, 1], [div(L, 2), div(L, 2)]))
-    # # println(indexB)
-    # ss = [copy(s), copy(s)]
-    # λ = 0.5
-    # Nλ = 2
-    # ss = ctrl_SCEEicr(path, model, indexA, indexB, 3, λ, Nλ, ss, true)
+    L = model.site[2]
+    indexA = area_index(model.Lattice, model.site, ([1, 1], [div(L, 3), L]))
+    # # HalfHalf
+    indexB = area_index(model.Lattice, model.site, ([1, 1], [div(L, 3), div(2 * L, 3)]))
+    # println(indexB)
+    ss = [copy(s), copy(s)]
+    λ = 0.5
+    Nλ = 2
+    ss = ctrl_SCEEicr(path, model, indexA, indexB, 3, λ, Nλ, ss, true)
 
     # s = ctrl_SCDOPicr(path, model, π / 2, indexA, indexB, 20, λ, Nλ, s, true)
 

@@ -1,76 +1,6 @@
-# Only PBC, OBC is not allowed
-
-function Initial_Pt!(Lattice, Initial, Pt, K)
-    Ns = size(K, 1)
-    if Initial == "H0"
-        KK = copy(K)
-        μ = 1e-5
-        KK .+= μ * diagm(repeat([-1, 1], div(Ns, 2)))
-        E, V = LAPACK.syevd!('V', 'L', KK)
-        Pt .= V[:, 1:div(Ns, 2)]
-    elseif Initial == "V"
-        if Lattice == "SQUARE90" || Lattice == "HoneyComb120" || Lattice == "HoneyComb60" || Lattice == "triangular90"
-            for i in 1:div(Ns, 2)
-                Pt[i*2, i] = 1
-            end
-        elseif Lattice == "SQUARE45"
-            count = 1
-            for i in 1:Ns
-                x, y = i_xy(Lattice, site, i)
-                if (x + y) % 2 == 1
-                    Pt[i, count] = 1
-                    count += 1
-                    if count > div(Ns, 2)
-                        break
-                    end
-                end
-            end
-        end
-    elseif Initial == "VBS"
-        L = Int(sqrt(div(Ns, 2)))
-        site = [L, L]
-        HJ = zeros(Float64, size(K))
-        # δ = [0, π / 2, π / 2]
-        δ = [0, 2π / 3, 4π / 3]
-        for i in 1:2:Ns
-            x, y = i_xy(Lattice, site, i)
-            nnidx = nn2idx(Lattice, site, i)
-            for j in eachindex(nnidx)
-                HJ[nnidx[j], i] = HJ[i, nnidx[j]] = cos(δ[j] + 2π * (x / 3 + y / 3))
-            end
-        end
-        @assert norm(HJ - HJ') < 1e-5 "HJ is not Hermitian"
-
-        E, V = LAPACK.syevd!('V', 'L', HJ)
-        if abs(E[div(Ns, 2)] - E[div(Ns, 2)+1]) > 1e-10
-            @warn "Warning: The initial state may be gapped!"
-        end
-        Pt .= V[:, 1:div(Ns, 2)]
-    elseif Initial == "M_VBS"
-        L = Int(sqrt(div(Ns, 2)))
-        site = [L, L]
-        HJ = zeros(ComplexF64, size(K))
-        δ = [0, 2π / 3, 4π / 3]
-        for i in 1:2:Ns
-            x, y = i_xy(Lattice, site, i)
-            nnidx = nn2idx(Lattice, site, i)
-            for j in eachindex(nnidx)
-                HJ[i, nnidx[j]] = 1im * cos(δ[j] + 2π * (x / 3 + y / 3))
-                HJ[nnidx[j], i] = -1im * cos(δ[j] + 2π * (x / 3 + y / 3))
-            end
-        end
-        @assert norm(HJ - HJ') < 1e-5 "HJ is not Hermitian"
-        E, V = LAPACK.syevd!('V', 'L', HJ)
-        # Pt .= V[:, div(Ns, 2)+1:end]
-        Pt .= V[:, 1:div(Ns, 2)]
-    else
-        error("Initial state: $(Initial) is not allowed for Initial_Pt!")
-    end
-    @assert norm(Pt' * Pt - I(size(Pt, 2))) < 1e-10 "Initial Pt is not orthonormal!"
-end
+# 有用的部分以 KAPBDQMC 为主
 
 """
-Only work for two-dimensional binary lattices
     convert (x,y) coordinate to even index
 """
 function xy_i(Lattice::String, site::Vector{Int64}, x::Int64, y::Int64)::Int64
@@ -79,7 +9,7 @@ function xy_i(Lattice::String, site::Vector{Int64}, x::Int64, y::Int64)::Int64
             error("Error : Out of Lattice Range!")
         end
         return 2 * (x + (y - 1) * site[1])
-    elseif Lattice == "SQUARE45" || Lattice == "triangular45"
+    elseif Lattice == "SQUARE45" || Lattice == "triangular45" || Lattice == "triangular60"
         if 0 > x > site[1] || 0 > y > site[2]
             error("Error : Out of Lattice Range!")
         end
@@ -89,14 +19,13 @@ function xy_i(Lattice::String, site::Vector{Int64}, x::Int64, y::Int64)::Int64
     end
 end
 """
-Only work for two-dimensional binary lattices
     convert odd/even index to (x,y) coordinate
 """
 function i_xy(Lattice::String, site::Vector{Int64}, i::Int64)
     if Lattice == "SQUARE90" || Lattice == "HoneyComb120" || Lattice == "HoneyComb60" || Lattice == "triangular90"
         j = Int(ceil(i / 2))
         return mod1(j, site[1]), Int(ceil(j / site[1]))
-    elseif Lattice == "SQUARE45" || Lattice == "triangular45"
+    elseif Lattice == "SQUARE45" || Lattice == "triangular45" || Lattice == "triangular60"
         return mod1(i, site[1]), Int(ceil(i / site[1]))
     else
         error("Lattice: $(Lattice) is not allowed for i_xy!")
@@ -230,6 +159,14 @@ function nn2idx(Lattice::String, site::Vector{Int64}, idx::Int64)
         nn[4] = xy_i(Lattice, site, mod1(x + 1, site[1]), y)    #right
         nn[5] = xy_i(Lattice, site, mod1(x + 1, site[1]), mod1(y + 1, site[2]))    #up-right
         nn[6] = xy_i(Lattice, site, mod1(x - 1, site[1]), mod1(y - 1, site[2]))    #down-left
+    elseif Lattice == "triangular60"
+        nn = zeros(Int, 6)
+        nn[1] = xy_i(Lattice, site, x, mod1(y + 1, site[2]))    #up
+        nn[2] = xy_i(Lattice, site, mod1(x - 1, site[1]), y)    #left
+        nn[3] = xy_i(Lattice, site, x, mod1(y - 1, site[2]))    #down
+        nn[4] = xy_i(Lattice, site, mod1(x + 1, site[1]), y)    #right
+        nn[5] = xy_i(Lattice, site, mod1(x + 1, site[1]), mod1(y - 1, site[2]))    #down-right
+        nn[6] = xy_i(Lattice, site, mod1(x - 1, site[1]), mod1(y + 1, site[2]))    #up-left
     else
         error("Lattice: $(Lattice) is not allowed for nn2idx!")
     end
@@ -245,7 +182,7 @@ function nnK_Matrix(Lattice::String, site::Vector{Int64}; t=(1.0, 1.0, 1.0), flu
     flux1 = cis(flux / 4)
     flux2 = cis(-flux / 4)
 
-    if Lattice == "SQUARE45" || Lattice == "triangular45"
+    if Lattice == "SQUARE45" || Lattice == "triangular45" || Lattice == "triangular60"
         Ns = prod(site)
     else
         Ns = prod(site) * 2
@@ -376,6 +313,13 @@ function nnK_Matrix(Lattice::String, site::Vector{Int64}; t=(1.0, 1.0, 1.0), flu
                     K[i, nnidx[j]] = 1
                 end
                 K[i, nnidx[3]] = -1
+            end
+        end
+    elseif Lattice == "triangular60"
+        for i in 1:Ns
+            nnidx = nn2idx(Lattice, site, i)
+            for j in eachindex(nnidx)
+                K[i, nnidx[j]] = 1
             end
         end
     else

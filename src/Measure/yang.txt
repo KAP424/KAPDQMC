@@ -1,0 +1,1718 @@
+                                     PHYSICAL REVIEW B 108, 165120 (2023)
+
+
+
+                    Entanglement in a one-dimensional critical state after measurements
+
+                                            Zhou Yang, Dan Mao , and Chao-Ming Jian
+                                Department of Physics, Cornell University, Ithaca, New York 14853, USA
+
+                   (Received 15 May 2023; revised 3 October 2023; accepted 4 October 2023; published 13 October 2023)
+
+                The entanglement entropy (EE) of the ground state of a one-dimensional Hamiltonian at criticality has a
+             universal logarithmic scaling with a prefactor given by the central charge c of the underlying (1 + 1)-dimensional
+             conformal field theory. When the system is probed by measurements, the entanglement in the critical ground state
+             is inevitably affected due to wave-function collapse. In this paper, we study the effect of weak measurements
+             on the entanglement scaling in the ground state of the one-dimensional critical transverse-field Ising model. For
+             the measurements of the spins along their transverse spin axis, we identify interesting postmeasurement states
+             associated with spatially uniform measurement outcomes. The EE in these states still satisfies the logarithmic
+             scaling but with an alternative prefactor given by the effective central charge ceff . We derive the analytical
+             expression of ceff as a function of the measurement strength. With both numerical simulations and analytical
+             studies, we show that for the EE averaged over all postmeasurement states based on their Born-rule probabilities,
+             the effective central charge is independent of the measurement strength, contrary to the usual expectation that
+             local and nonoverlapping measurements reduce the entanglement in the system. We also examine the behavior
+             of the average EE under (biased) forced measurements where the measurement outcomes are sampled with a
+             predetermined probability distribution without intersite correlations. In particular, we find an optimal probability
+             distribution that can serve as a mean-field approximation to the Born-rule probabilities and lead to the same ceff
+             behavior. The effects of the measurements along the longitudinal spin axis and the postmeasurement correlation
+             functions are also discussed.
+
+             DOI: 10.1103/PhysRevB.108.165120
+
+                     I. INTRODUCTION                                     In particular, for a one-dimensional critical system, the
+                                                                         ground-state von Neumann entanglement entropy (EE) on
+    For a quantum system, measurements can affect its state
+                                                                         a subsystem of length l has a universal logarithmic scaling
+in a highly nontrivial manner. Measurement is an intrinsically
+                                                                         ∼ 3c ln l where c is the central charge of the conformal field
+nonunitary operation due to the wave-function collapse in the
+                                                                         theory (CFT) that describes the low-energy physics of the
+process. Therefore, its effects on quantum states fundamen-
+                                                                         system [17]. Examples of nontrivial effects of measurements
+tally differ from any unitary operations. One can exploit the
+                                                                         on a one-dimensional critical ground state were presented in
+peculiar effect of measurement to either generate or reduce the
+                                                                         interesting recent works [18,19]. For instance, the latter work
+entanglement in a quantum system. For example, the entangle-
+                                                                         showed that the correlation functions in a (one-dimensional)
+ment between the Einstein-Podolsky-Rosen pair is eliminated
+                                                                         Tomonaga-Luttinger liquid can experience transitions when
+once one partner is measured. On the other hand, one can also
+simultaneously perform a set of commuting measurements on                the state is measured. More generally, the problem of a one-
+overlapping observables on an array of unentangled qubits                dimensional critical ground state subject to measurements is
+to create long-range-entangled states with topological order,            naturally mapped to the problem of boundary or defect CFTs
+such as the toric code [1–3], which are states that cannot be            (or critical systems with impurities or defects) [9,20–22],
+created by the local unitary circuit with a depth independent            which is a subject that has been extensively studied. Similar
+of the system size [4]. Moreover, starting with many-body                ideas generalize naturally to higher dimensions. In another
+quantum states with certain entanglement structures (such as             recent work [23], phase transitions have also been found in
+the cluster states), general quantum information processing              two-dimensional critical states subject to weak measurements.
+can be carried out by sequences of measurements, follow-                     In this work, we are interested in the entanglement struc-
+ing the scheme of measurement-based quantum computation                  ture, the EE in particular, in the one-dimensional critical
+[5–8]. From a quantum matter perspective, the ground states              system after measurements are performed on the ground state.
+of quantum many-body systems (with local Hamiltonians)                   After the measurements, the critical system is no longer at
+provide a large class of states with rich entanglement proper-           equilibrium. A general question is whether or not the postmea-
+ties [9–16]. Any form of probe or measurement will inevitably            surement entanglement in the system still exhibits universal
+alter the many-body wave functions and, hence, change the                properties. Using a system with its criticality described by
+entanglement structure in the original ground states. In gen-            the (1 + 1)-dimensional [(1 + 1)D] Ising CFT as an exam-
+eral, it is interesting to understand how measurements affect            ple, we show that various aspects of the postmeasurement
+the entanglement in quantum many-body systems.                           entanglement are directly related to the universal properties
+    Among the ground states of local quantum Hamiltonian                 of defects in the Ising CFT. Programmable quantum simu-
+systems, critical ground states are among the most entangled.            lators provide natural platforms to experimentally study the
+
+2469-9950/2023/108(16)/165120(22)                                  165120-1                                 ©2023 American Physical Society
+ZHOU YANG, DAN MAO, AND CHAO-MING JIAN                                                   PHYSICAL REVIEW B 108, 165120 (2023)
+
+universal postmeasurement entanglement investigated in this         states naturally occur according to the classic Born-rule
+paper.                                                              probability. When physical quantities, including EE, are
+   Concretely, we start with the ground state | of the critical   averaged over the postmeasurement states according to
+transverse-field Ising model (cTFIM) prepared on a one-             Born-rule probability, we refer to this type of measurement
+dimensional spin and qubit chain. We will focus on the effects      as the Born-rule measurement. There is another commonly
+of independent weak measurements on each spin and qubit             discussed averaging scheme, associated with the so-called
+along the x or z axis (corresponding to the transverse and lon-     forced measurement, where different measurement outcomes
+gitudinal directions in the cTFIM). Such weak measurements          are “forced” to be sampled with equal probability. One can
+can be implemented in programmable quantum simulators               view the forced measurement as the Born-rule measurement
+(whose capability of measuring different qubits independently       followed by a reweighting on the ensemble of outcomes
+has been demonstrated [24–30]) with the help of ancilla qubits      and their associated postmeasurement states. Although being
+[31]. The strength of the measurement is a tunable parame-          less natural compared to the Born-rule measurement, in the
+ter λ ∈ [0, 1], where λ = 1 indicates the standard projective       different context of dynamical quantum systems monitored
+measurements, and the measurement is reduced to a trivial           by measurements, forced measurements were studied in many
+action on the state in the limit λ = 0. After the measurement,      examples due to their close relations to the physics of random
+each set of measurement outcomes corresponds to a partic-           tensor network or disordered statistical mechanics models
+ular postmeasurement (pure) state due to the wave-function          [32–37]. For this work, we are interested in the behavior of
+collapse. The postmeasurement states for different sets of          both the postmeasurement EE averaged in accordance with
+measurement outcomes form an ensemble. It is interesting to         Born-rule measurements and that with forced measurements.
+explore different ways to sample this ensemble and study the            In the case of Born-rule measurements, we show the av-
+universal behavior of the EE in the postmeasurement states.         erage EE can be described by a (1 + 1)D R-replica field
+Later, we will see that the measurements along the x or z           theory with a measurement-induced perturbation on a one-
+axis have different properties under the Ising Z2 symmetry          dimensional defect in the replica limit R → 1. Using the
+and lead to distinct classes of universal behaviors in the large    numerical method based on matrix product states (MPS) (and
+system limit. These universal behaviors reflect the properties      an alternative method based on a Majorana-fermion repre-
+of the defects CFT at the renormalization group (RG) fixed          sentation of the system), we calculate the postmeasurement
+points, which are independent of the microscopic details of         EE averaged with respect to the Born-rule probability. We
+the weak measurements.                                              find that the numerically extracted effective central charge
+   When the spins are independently measured along their            ceff , which is associated with the logarithmic scaling of the
+x axis, we identify intriguing postmeasurement states with          average EE, turns out to be the same as that of the unmeasured
+spatially uniform measurement outcomes. The EEs in such             ground state. This interesting result is contrary to the naive
+states still follow the logarithmic scaling c3eff ln(l ) but with   expectation that measurements on local and nonoverlapping
+an effective central charge ceff that decreases continuously        observables generally reduce the entanglement in the system.
+and monotonically as the measurement strength λ increases.          We provide an analytical understanding of this behavior of the
+Such behavior results from the fact that the measurement            effective central charge by studying the measurement-induced
+along the x axis induces an exactly marginal perturbation           perturbation in the CFT and showing that the defect associ-
+to cTFIM ground state | in the RG sense. We obtain the            ated with perturbation has a vanishing strength in the replica
+exact analytical expression of ceff (λ) using a combination of      limit R → 1.
+a field-theoretic treatment and a mapping to another cTFIM              In the case of forced measurements, we show the average
+with a defect. We also show analytically that a two-point           EE can be captured by the same (1 + 1)D R-replica field
+longitudinal-spin correlation function in these particular          theory with a measurement-induced perturbation on a one-
+postmeasurement states exhibits a scaling exponent that             dimensional defect but in a different replica limit R → 0.
+varies continuously as the measurement strength changes.            The effective central charge ceff extracted from the numer-
+Both the ceff (λ) and the varying exponents are directly            ically calculated average EE decreases continuously as the
+related to the universal properties of an exactly marginal          measurement strength increases. Interestingly, one can deform
+conformal defect in the Ising CFT (with λ parametrizing the         the probability distribution of the forced measurements to set
+defect strength). When the spins are measured along the z           a bias towards one of the two measurement outcomes on
+axis, the postmeasurement states with uniform measurement           every spin. We find an optimal bias under which a mean-
+outcomes have a vanishing central charge immediately when           field approximation to the Born-rule probability is achieved.
+the measurement strength λ is nonzero. As we show later, this       With this optimal bias, the numerically calculated effective
+behavior results from a relevant perturbation to the cTFIM          central charge restores the unmeasured value independent of
+ground state | induced by the z-axis measurements. The            the measurement strength, a feature shared by the average EE
+obtained properties of the uniform postmeasurement states           with Born-rule measurements. Analytical understandings of
+can also be interpreted as results in quantum dynamics under        such behaviors of the effective central charge under biased and
+non-Hermitian Hamiltonians.                                         unbiased forced measurements are provided.
+   We also study the average behavior of the EE in the entire           The remainder of the paper is organized as follows. In
+ensemble of postmeasurement states. For the study of average        Sec. II, we introduce cTFIM and the weak measurements on
+EE, we focus on the measurements with respect to the x axis         its ground state that we consider in this work. In Sec. III,
+of the spins. When the measurements are performed, different        we study the universal properties, especially the effective
+measurement outcomes and their associated postmeasurement           central charges, of the postmeasurement states with uniform
+
+                                                              165120-2
+ENTANGLEMENT IN A ONE-DIMENSIONAL CRITICAL …                                               PHYSICAL REVIEW B 108, 165120 (2023)
+
+measurement outcomes. Both exact analytical results and            The Kraus operators {K j,m
+                                                                                            x
+                                                                                                }
+                                                                                               j m j =±
+                                                                                                          satisfy the condition for a
+their numerical verification will be presented. In Sec. IV, we     positive operator-valued measure (POVM):
+discuss the average EE with Born-rule measurement using                                           † x
+both analytical and numerical methods. In Sec. V, we present
+                                                                                              x
+                                                                                            K j,m j
+                                                                                                      K j,m j = 1,                (5)
+our results on the average EE with forced measurements and                             m j =±
+biased forced measurements obtained from both analytical           which guarantees the normalization
+and numerical approaches. In Sec. VI, we provide a summary                                            of total    Born-rule prob-
+                                                                                                        m j =± p (m j ) = 1, for any
+                                                                                                                x
+                                                                   ability given in Eq. (4), i.e.,
+of the results of this paper and discuss several interesting       incoming state. (See, for example, Ref. [38] for a general
+questions for future investigation.                                discussion of the Kraus-operator formalism and the POVM
+                                                                   condition).
+II. MEASURING THE GROUND STATE OF THE CRITICAL                        When λ = 1, the weak measurement defined by the Kraus-
+         TRANSVERSE-FIELD ISING MODEL                              operator set {K j,m
+                                                                                   x
+                                                                                        }
+                                                                                       j m j =±
+                                                                                                reduces to the standard projective
+                                                                   measurement with respect to observable σ jx . And the Kraus
+   We consider the ground state | of the cTFIM on a spin                               1+m j σ x
+chain whose Hamiltonian is given by                                operators reduce to 2 j which are the projection operators
+                                                                   to the eigenstates of σ jx . For 0 < λ < 1, the measurement
+                                                                has a “lower resolution” in resolving the spin state along the
+                  H =−      σ jz σ j+1
+                                   z
+                                       + σ jx ,             (1)    x axis and the Kraus operators in Eq. (2) become softened
+                            j
+                                                                   versions of the projection operators. In the limit λ = 0, the
+                                                                   Kraus operators are reduced to the identity operators (up to a
+where σ jx,z are the Pauli operators on the jth site of the spin   multiplicative constant). The measurement does not provide
+chain. The Hamiltonian H and its ground state | preserve         any information on the state of the system. Hence, there is
+the global Ising Z2 symmetry: σ jz → −σ jz .                       effectively no measurement performed.
+   Let us first introduce the types of measurements on the            Similarly, the z-axis weak measurement is defined by the
+ground state | we will study in this paper. We will primarily    Kraus-operator set {K j,m
+                                                                                         z
+                                                                                              }       with
+                                                                                             j m j =±
+focus on weak measurements of spins in the system along
+their x axis. We will also discuss the effect of the z-axis weak                                 1 ± λσ jz
+measurement as well. As explained below, these two types
+                                                                                           z
+                                                                                         K j,± =           ,                    (6)
+                                                                                                 2(1 + λ2 )
+of measurements have different properties under the Ising Z2
+symmetry and generate perturbations to the underlying Ising        which also satisfies the POVM condition
+CFT through different primary operators.                                                           † z
+                                                                                               z
+                                                                                             K j,m     K j,m j = 1.              (7)
+   The weak measurement we consider is a softened version                                          j
+                                                                                       m j =±
+of the standard projective measurement (which can be imple-
+mented by using ancilla qubits and projective measurement          For this z-axis weak measurement, the definition of quantum
+[31]). For a given site j, the x-axis weak measurement is          trajectories and the expressions of the Born-rule probabilities
+defined using the Kraus-operator set {K j,m
+                                          x
+                                              }
+                                             j m j =±
+                                                      with         for different measurement outcomes m j = ± parallel the case
+                                                                   of the x-axis weak measurement discussed above.
+                             1 ± λσ jx                                 Consider performing a weak measurement along the spin
+                       x
+                     K j,± =           ,                   (2)    axis v on every spin in the ground state | of the cTFIM.
+                             2(1 + λ2 )                            There are two cases given by v = x and v = z. On a spin
+                                                                   chain of length L, the set of measurement outcomes from
+where λ ∈ [0, 1] is the parameter that controls the strength of    the measurements on every site is denoted as {m j } j=1,2,...,L .
+the measurement. For this x-axis weak measurement, there are       In the quantum trajectory associated with {m j }, the postmea-
+two possible measurement outcomes m j = ±. Depending on            surement state is given by
+the measurement outcome m j , an incoming state |ψ evolves
+                                                                                      v                   j K j,m j |
+                                                                                                                v
+or collapses into one of the two postmeasurement states ac-                                        =                   .   (8)
+                                                                                        {m j }                          
+                                                                                                            j K j,m j |
+cording to                                                                                                      v
+
+                               x
+                             K j,m   |ψ                           When the measurement axis is v = x, the postmeasurement
+                     |ψ →  x          .
+                                   j
+                                                            (3)    states in all quantum trajectories preserve the Ising Z2 sym-
+                           K |ψ
+                               j,m j                               metry. When v = z, the Ising Z2 symmetry is broken in the
+                                                                   postmeasurement states.
+This evolution is commonly referred to as the quantum trajec-          In this paper, we are interested in the entanglement proper-
+tory associated with the measurement outcome m j .                 ties, especially the EE, of the postmeasurement states |{mv
+                                                                                                                                   .
+                                                                                                                                j}
+   The two quantum trajectories with m j = ± occur with the        Before any measurement, on a spin chain of length L, the
+classic Born-rule probability                                      half-system EE follows the logarithmic scaling
+                      x † x                                                                      c
+      px (m j ) = ψ| K j,m   K j,m j |ψ                                            S| (L/2) = ln(L) + O(1),                 (9)
+                            j                                                                      6
+                      1                               
+              =              1 + λ2 + 2m j λψ|σ jx |ψ .   (4)    where c = 21 is the central charge of (1 + 1)D Ising conformal
+                  2(1 + λ )
+                         2
+                                                                   field theory (CFT) that governs the low-energy physics of
+
+                                                             165120-3
+ZHOU YANG, DAN MAO, AND CHAO-MING JIAN                                                         PHYSICAL REVIEW B 108, 165120 (2023)
+
+cTFIM. Note that Eq. (9) applies to a one-dimensional system             the postmeasurement states |±z  do not have any logarithmic
+with an open boundary condition where the half-system refers             dependence on the system size L for any nonvanishing λ > 0.
+to an interval of length L/2 starting from the boundary of the           In other words, the effective central charge ceff drops from
+spin chain. This expression of EE, especially the prefactor              c = 21 at λ = 0 (where there is essentially no measurement) to
+c/6, can be derived by introducing the twist fields in Ising             ceff = 0 for any nonzero λ.
+CFT [17]. The previously mentioned universal EE scaling                      We begin our analysis of the postmeasurement states |±v 
+c
+3
+  ln(l ), which concerns a subsystem of length l away from               by providing a field-theoretic interpretation of them. We
+the boundary of the system, has exactly the same origin as               will use the state |+v  as an example and comment on
+Eq. (9). The factor of 2 difference between the two EE scal-             the difference between |+v  and |−v  when necessary. The
+ing expressions is related to the difference in the number of            postmeasurement state |+v  can be rewritten, up to a normal-
+boundary points of the subsystems.                                       ization factor, as
+   After the weak measurements on every site of the sys-                                                     
+                                                                                               |+v  ∝ eβ       j σj
+                                                                                                                    v
+                                                                                                                        |,          (11)
+tem, the ensemble of different possible sets of measurement
+outcomes gives rise to an ensemble of different postmea-                 where β = arctanh(λ). In the continuum description of the
+surement states {|{m  v
+                          j}
+                             }. These postmeasurement states can        infinite-length chain (L → ∞), the cTFIM ground state |
+be viewed as the Ising CFT ground state perturbed by pri-                can be viewed as the result of the Euclidean path integral of
+mary operators that depend on v, which we will elaborate in              the (1 + 1)D Ising CFT on a half-space with the spatial co-
+the following sections. Depending on the way the postmea-                ordinate x ∈ (−∞, ∞) and the imaginary time τ ∈ (−∞, 0].
+surement states are sampled, our study is divided into three             | occurs at the τ = 0 time slice. Therefore, any observable
+parts.                                                                   +v |O|+v  on the postmeasurement state |+v  can be cap-
+   In the first part, we focus on the specific postmeasurement           tured by a path integral in a full Euclidean plane (x, τ ) ∈ R2
+states |{mv
+             j =+}
+                    and |{m v
+                                 j =−}
+                                        associated with the spatially   with an action
+uniform measurement outcomes, i.e., m j = + for all sites or
+                                                                                             Sps,+
+                                                                                              v
+                                                                                                   = SIsing + δSps,+
+                                                                                                                v
+                                                                                                                     ,                (12)
+m j = − for all sites.
+   The second part concerns the case of Born-rule measure-               where SIsing is the action for the (1 + 1)D Ising CFT and the
+ment, where we study the average EE over all postmeasure-                measurement-induced perturbation δSps,+ v
+                                                                                                                    is given by
+ment states weighted by their associated Born-rule probability
+                                                                                      δSps,+
+                                                                                        v
+                                                                                             ≡ −β̃      dτ dx δ(τ )φ v (x, τ ),       (13)
+               p({m j }) = |          v†
+                                      K j,m j
+                                                v
+                                              K j,m j
+                                                      |.       (10)
+                                  j                                      which can be viewed as a one-dimensional defect in the
+                                                                         (1 + 1)D Ising CFT. When the measurement axis is v = x,
+   In the third part, we consider the case of forced mea-
+                                                                         the field φ v=x = ε is the energy field of the Ising CFT, while
+surements where all the postmeasurement states |{m
+                                                  v
+                                                     j}
+                                                         are
+                                                                         φ v=z = s is the spin field (or the order parameter) of the
+“forced” to be sampled with equal probability. We will also
+                                                                         Ising CFT when the measurement axis is v = z. The cou-
+introduce a biased version of the forced measurement where
+                                                                         pling constant β̃ is related to the measurement strength λ.
+we can put in a tunable bias in the statistical weight for
+                                                                         The exact relation between β̃ and λ is unimportant and also
+m j = + and m j = − on each site.
+                                                                         nonuniversal.
+                                                                             Equation (12) describes the Ising CFT perturbed by the
+             III. EXACT RESULT FOR UNIFORM                               field φ v turned on only along the τ = 0 slice. Replacing the
+                                                                                                      β̃ /2      ∞
+                 MEASUREMENT OUTCOMES                                    perturbation δSps,+
+                                                                                          v
+                                                                                               by − −β̃0 0 /2 dτ −∞ dx φ v (x, τ ) within a
+     In this section, we focus on the postmeasurement states             finite time window τ ∈ [−β̃0 /2, β̃0 /2] does not change the
+|{mv
+        j =+}
+                and |{m
+                        v
+                          j =−}
+                                 with spatially uniform measurement     infrared behavior of the path-integral equation (12). We can
+outcomes, i.e., m j = + for all sites or m j = − for all sites.          pictorially represent this path integral of the perturbed Ising
+For simplicity, we denote them as |±v , respectively. Most             CFT as Fig. 1(a) where the green regions represent the unper-
+interestingly, we show that when the weak measurements                   turbed Ising CFT path integral and the brown region around
+are performed with respect to the spin axis v = x, the half-             τ = 0 is the region where the perturbation is turned on. It
+system EEs of the postmeasurement states |±x  follow a                 is interesting to point out that if we fold space-time along
+similar logarithmic scaling as in Eq. (9). However, the central          the τ = 0 axis, we can view this path integral as that of a
+charge c = 21 is replaced by an effective central charge ceff            boundary CFT where the bulk is given by a double-layer Ising
+that decreases monotonically as the measurement strength λ               CFT. However, we will not directly use this picture of folded
+increases. The analytical expression of ceff as a function of λ is       space-time in the following discussion.
+derived using a combination of a field-theoretic treatment and               From the renormalization group (RG) perspective, the scal-
+a mapping to an Ising chain with a defect. We also show that             ing dimension of the coupling β̃ is given by
+the scaling exponents associated with the correlation function
+                                                                                                   β̃ = 1 −         φv ,              (14)
+σ jz σ jz  in the postmeasurement states |±x  can be deformed
+continuously as a function of λ. Exact expressions of these              where φ v is the scaling dimension of the field φ v . For the
+exponents are obtained.                                                  measurement axis v = x, φ x =       = 1 is the scaling dimen-
+     In contrast, when the weak measurements are performed               sion of the energy field of the Ising CFT. Hence, β̃ = 0
+with respect to the spin axis v = z, we show that the EEs of             which implies that the perturbation is marginal in the sense
+
+                                                                   165120-4
+ENTANGLEMENT IN A ONE-DIMENSIONAL CRITICAL …                                                            PHYSICAL REVIEW B 108, 165120 (2023)
+
+ (a)                                                                               (b)
+
+
+
+
+    FIG. 1. (a) A pictorial representation of the path integral for the postmeasurement state |+v . The green region is described by the (1 + 1)D
+Ising CFT. The brown region denotes the region where the perturbation induced by the measurements is turned on. To calculate the EE on the
+interval A = [x1 , x2 ] in the postmeasurement state |+v , one should consider the R-replica version of this path integral and the insertion of
+the twist fields TR at end points of the interval (indicated by the red crosses). (b) R-replica path-integral representation of Tr(ρ[xR 1 ,x2 ] ) for the
+reduced density matrix ρ[x1 ,x2 ] of the state |+v  on the interval [x1 , x2 ]. The insertion of the twist fields TR and T̃R introduces an R-fold branch
+cut in the path integral.
+
+of RG. For the measurement axis v = z, φ z = s = 18 is                         EE S|+z  ([x1 , x2 ]) should saturate to an O(1) value for a large
+the scaling dimension of the spin field. In this case, β̃ = 78                 interval [x1 , x2 ]. In other words, in the case of the z-axis weak
+indicating a relevant perturbation.                                            measurements, the EE of the postmeasurement state |+z 
+    Formally we can calculate the EE in the state |+v  by                    has a vanishing effective central charge, i.e., ceff = 0, for any
+introducing the twist fields in the path integral described                    nonvanishing value of the measurement strength, i.e., λ > 0.
+by Eq. (12). This calculation generalizes the well-known                       This conclusion is confirmed by the numerical simulation
+derivation of Eq. (9) of the EE in the ground state of an                      shown in Fig. 2. The EE of the postmeasurement state |+z 
+(unperturbed) (1 + 1)D CFT using the twist-field correlation                   is calculated using the numerical method based on matrix
+functions [17]. For the EE of an interval [x1 , x2 ] in the state              product states (MPS). We prepare |+z  by starting with an
+|+v  [see Fig. 1(a)], we need to first introduce R replicas of               infinite MPS that simulates the ground         state of cTFIM and
+                                                                               applying an infinite product of eλσ j on each site. We then
+                                                                                                                          z
+
+the path integral governed by Eq. (12). Then, we introduce
+the twist field TR and its conjugate T̃R at (x1 , τ = 0) and                   calculate the EE between the interval [x1 , x2 ] and the rest
+(x2 , τ = 0) that serve as the end points of an R-fold branch                  of the chain. (See Appendix A for more details of the MPS
+cut along the interval [x1 , x2 ] in this R-replica path integral              simulation.) The postmeasurement state |−z  shares exactly
+[see Fig. 1(b)]. The EE of the interval [x1 , x2 ] in the postmea-             the same behavior as |+z  as they are related to each other by
+surement state |+v  can be expressed as                                      a global symmetry generated by j σ jx .
+
+S|+v  ([x1 , x2 ]) = −Tr(ρ[x1 ,x2 ] ln ρ[x1 ,x2 ] )
+                                 1
+                    = lim             lnTR (x1 , τ = 0) T̃R (x2 , τ = 0),
+                       R→1 1 − R
+                                                                      (15)
+where the ρ[x1 ,x2 ] is the reduced density matrix on the interval
+[x1 , x2 ]. To be more explicit about the second line, TR (x1 , τ =
+0) T̃R (x2 , τ = 0) is defined as the ratio of R-replica path
+integral with and without the twist fields, that is, with and
+without the R-fold branch cut. In terms of the reduced density
+matrices ρ[x1 ,x2 ] , the twist-field two-point function is equiva-
+lent to Tr(ρ[xR 1 ,x2 ] )/(Trρ[x1 ,x2 ] )R .
+    When the weak measurements are performed along the
+spin axis v = z, the perturbation δSps,+     z
+                                               is relevant under RG.
+Such a perturbation effectively cuts the (x, τ ) plane along the
+τ = 0 line (the brown region in Fig. 1) into two decoupled
+halves with τ > 0 and τ < 0. In this case, the R-fold branch
+cut associated with twist fields TR and T̃R , which are located                    FIG. 2. For the postmeasurement state |+z  obtained from mea-
+right in the middle of the cut, has no effect in IR behavior                   suring the cTFIM ground state | along the spin axis v = z, the
+of the path integral. Hence, we expect that the correlation                    EE S|+z  ([x1 , x2 ]) on an interval [x1 , x2 ] is plotted as a function
+TR (x1 , τ = 0) T̃R (x2 , τ = 0) saturates, in the limit of a large          of |x1 − x2 | for different measurement strength λ = 0.1, 0.05, 0.01.
+separation between x1 and x2 , to a finite value. Therefore, the               S|+z  ([x1 , x2 ]) saturates as the interval |x1 − x2 | grows big.
+
+                                                                        165120-5
+ZHOU YANG, DAN MAO, AND CHAO-MING JIAN                                                          PHYSICAL REVIEW B 108, 165120 (2023)
+
+
+
+
+    FIG. 3. Connected σ z correlators after Z-basis measurement for
+uniform measurement outcome. λ is the strength of the weak
+measurement. r is the separation between the two operators. The               FIG. 4. Analytic (solid line) and numerical (circles) results for
+exponents are extrapolated using the correlators at large separation.    ceff of postmeasurement state |+x .
+When λ = 0, there is no measurement, and we expect the exponent
+to be − 14 (based on the scaling dimension of the spin field in the
+Ising CFT). For λ > 0, the exponents become ∼ − 4, consistent with       with
+the extraordinary boundary of the Ising CFT. The simulation is done
+                                                                                                   1       (1 − λ2 )2
+with bond dimension 65 for a chain with 1000 sites. Increasing bond                       s=            = 4           .                   (18)
+dimension and system size gives convergent results.                                             cosh 4β  λ + 6λ2 + 1
+                                                                                            0
+                                                                         Here, Li2 (z) ≡ z ln(1−t t
+                                                                                                    )dt
+                                                                                                        denotes the dilogarithm function.
+   Note that even though δSps,+    z
+                                        is a relevant perturbation       ceff gradually decreases from c = 21 as we increase the mea-
+that results in a vanishing effective central charge. The post-          surement strength λ from 0. Based on the connection between
+measurement state |+z  still exhibits nontrivial power-law             the EE and the twist fields explained above, ceff (λ) is directly
+correlation functions such as +z |σ jz σiz |+z c ∼ |i−1j|4 , which   related to scaling dimension of the twist fields in the limit
+is expected from the boundary Ising CFT (with the extraor-               R → 1, which is a function of the strength of the defect
+dinary boundary) [39]. Here, the subscript c indicates the               parametrized by λ.
+connected correlation. We confirm this expectation using the                 Before we explain the derivation of ceff , we compare
+numerical calculation of +z |σ jz σiz |+z c in the MPS repre-        Eqs. (16) and (17) with the numerical simulations. For dif-
+sentation, which is shown in Fig. 3.                                     ferent values of β = arctanhλ, the effective central charge
+   Now, we consider the weak measurements performed                      associated with the logarithmic scaling of the EE of |+x 
+along the spin axis v = x. For small λ, it is easy to show that          can be numerically extracted using the MPS-based method.
+the two states |+x  and |−x  correspond to the most and the          The details of the numerical procedure based on MPS are
+least probable amongst all possible measurement outcomes                 provided in Appendix A. As shown in Fig. 4, the analytical
+{m j }. For |+x , the one-dimensional defect caused by the             expression (17) matches perfectly with the effective central
+perturbation δSps,+
+                  x
+                       is marginal as explained under Eq. (14). λ        charge ceff extracted from numerical calculations. There is an
+can be viewed as the parameter that controls the strength of the         alternative numerical method for the study of |+x . We can
+defect. In fact, this defect is exactly marginal, which is evident       map the cTFIM of length L to a one-dimensional Majorana-
+when we reformulate the (1 + 1)D Ising CFT as the (1 + 1)D               fermion chain with 2L sites. We numerically calculate the EE
+free massless Majorana-fermion CFT. The perturbation δSps,+        x     of the postmeasurement state |+x  in the Majorana-fermion
+can be rewritten as the Majorana-fermion mass term localized             representation using the covariance matrix formulation. More
+along the τ = 0 time slice. The perturbed theory of Majorana             details of this mapping and the covariance matrix formulation
+fermions remains noninteracting, and there is no RG flow for             are provided in Appendix C. The numerical simulation using
+the localized mass term. Therefore, δSps,+ x
+                                               is exactly marginal.      the Majorana-fermion representation for L = 512 also yields
+As a consequence, on a chain of length L, the half-system                the same result as shown in Fig. 4.
+EE of the postmeasurement state |+x  follows a logarithmic                 Now, we discuss how to obtain the analytical expression
+scaling                                                                  (17). In the R-replica field-theoretic treatment, the half-system
+                                                                         EE in the state |+x  is associated with the one-point function
+                                   ceff                                  of the twist field TR inserted in the middle of the system and
+                 S|+x  (L/2) =        ln(L) + O(1),            (16)
+                                    6                                    at τ = 0 (as indicated by the red cross in the left panel of
+                                                                         Fig. 5) whose associated branch cut follows the constant-time
+which is similar to Eq. (9) for the unmeasured cTFIM ground
+                                                                         slice at τ = 0. We can perform a 90◦ space-time rotation of
+state | but with an effective central charge
+                                                                         the path integral (see the right panel of Fig. 5). The rotated
+             −3                                                          path integral effectively describes a different one-dimensional
+    ceff =      {[(1 + s) ln(1 + s) + (1 − s) ln(1 − s)] ln(s)           spin chain with a static Hamiltonian tuned to the critical point
+             π2
+                                                                         of the TFIM everywhere along the chain except at a defect
+             + (1 + s)Li2 (−s) + (1 − s)Li2 (s)}             (17)        located in the middle point of the chain. Let us call this
+
+                                                                   165120-6
+ENTANGLEMENT IN A ONE-DIMENSIONAL CRITICAL …                                                       PHYSICAL REVIEW B 108, 165120 (2023)
+
+
+
+
+    FIG. 5. Path-integral representation of half-system reduced den-
+sity matrix ρA for postmeasurement state |+x  (left panel) and the
+cTFIM with a bond defect (right panel). A = (−∞, 0) represents half
+of the infinite spin chain. The two systems (on two panels) are related       FIG. 6. z,± extracted from the numerical calculation of
+by a space-time rotation.                                                 ±x |σ jz σ jz |±x  are plotted as blues circles and brown triangles for
+                                                                          different values of measurement strength λ. The analytical results in
+                                                                          Eq. (20) are plotted as solid lines.
+spin chain the “Ising chain with a defect.” We argue that the
+half-system EE in the state |+x  shares the same universal
+behavior as the half-system EE of the Ising chain with a                  chain with a defect should be viewed as a mapping between
+defect. Note that in the latter system, an end point of the “half-        the infrared (IR) physics of the two systems. It should not be
+system” is exactly located at the defect. The twist-field-based           interpreted as an exact mapping at the lattice scale.
+field-theoretic description of the half-system EE of the state                Using the proxy classical Ising model, we obtain Eq. (19)
+|+x  can be mapped, under a 90◦ space-time rotation and                 and, more importantly, the analytical expression (17) of the ef-
+a rearrangement of the branch cut (red wavy line in Fig. 5),              fective central charge ceff for the postmeasurement state |+x 
+to the field-theoretic description of the half-system EE of the           which results from the weak measurements along the spin axis
+Ising chain with a defect (see Fig. 5). The universal behavior            v = x on the cTFIM ground state |. By the same method,
+of the half-system EE in both cases is governed by the scaling            we can show that the effective central charge ceff defined
+dimension of the twist field TR located within the perturbed              via the half-system EE in the postmeasurement state |−x 
+region (brown region of Fig. 5) of the space-time. The orien-             follows exactly the same expression as Eq. (17). However,
+tation of the branch cut does not matter. From the perspective            the fact that |−x  and |+x  share the same effective central
+of the R-replica path integral which is effectively conducted             charge ceff can be explained by the observation that the two
+on a R-sheeted surface (see Fig. 1), different choices of the             postmeasurement states are related by a Kramers-Wannier du-
+orientation of the branch cut do not affect the geometry of               ality (see Appendix B for details). However, this observation
+the surface. Hence, the EE in the postmeasurement state |+x             does not imply that |−x  and |+x  have completely identical
+shares the same universal behavior as that of the Ising chain             IR properties. In fact, they exhibit different behaviors in the
+with a defect.                                                            correlation function σ jz σ jz  as we explain below.
+     A careful treatment of the space-time rotation can be per-               Again, using the same proxy two-dimensional classical
+formed by using a two-dimensional classical Ising model on                Ising model, one can show that the correlation func-
+a square lattice with a one-dimensional defect as a proxy to              tions ±x |σ jz σ jz |±x  ∼ | j − j  |−2 z,± in the postmeasurement
+the continuum field theory. The technical details are provided            states |±x  follow power-law behavior with exponents z,±
+in Appendix B. Using this proxy two-dimensional classical                 that vary continuously as we change the measurement strength
+Ising model, the space-time rotation maps the problem of the              λ:
+half-system EE of the postmeasurement state |+x  to that of                                                                    2 
+                                                                                                         2                 1 ±  λ
+an Ising chain with a defect whose Hamiltonian is given by                                       z,± =      arctan2                   .       (20)
+taking the Hamiltonian (1) and modifying only the coupling                                              π2                 1∓λ
+σ jz σ j+1
+       z
+           for one neighboring pair of sites in the middle of the
+chain to tσ jz σ j+1
+                 z
+                     . The parameter t of the Ising chain with a          Note that the expression differs for the two postmeasurement
+defect is related to the measurement strength λ via                       states |+x  and |−x .
+                                                                             Numerics confirms this analytical result. In Fig. 6, we
+                                           
+                            −4β      1−λ 2                                plot the exponents z,± (blue circles and brown triangles)
+                       t =e     =             .              (19)         extracted from the numerically calculated correlation func-
+                                     1+λ
+                                                                          tions ±x |σ jz σ jz |±x  ∼ | j − j  |−2 z,± . They exactly match the
+The half-system EE of such an Ising chain with a defect has               analytical expression (20) which is plotted as the blue and
+been studied in Ref. [40] and shown to have a logarithmic                 brown lines in Fig. 6. The numerical simulation is performed
+scaling of the same form as Eq. (16) with a t-dependent                   on a spin chain of length L = 256 represented as a Majorana-
+effective central charge. The proxy classical Ising model also            fermion chain with 512 sites.
+played an important role in obtaining the EE in the Ising chain              Note that, even though the effective central charge ceff and
+with a defect. We remark that the mapping that relates the                the exponents z,± vary continuously as λ changes, we should
+EE of the postmeasurement state |+x  and that in the Ising              view them as the universal properties of the one-dimensional
+
+                                                                    165120-7
+ZHOU YANG, DAN MAO, AND CHAO-MING JIAN                                                                    PHYSICAL REVIEW B 108, 165120 (2023)
+
+exactly marginal defects in the (1 + 1)D Ising CFT, which are                     The average half-system EE under the Born-rule measure-
+parametrized by only one parameter, i.e., the defect strength.                  ments, denoted as Eb S(A), can be written as
+In settings with more general measurement protocols, as long                                  
+as the measurements perturbed the Ising CFT ground state                          Eb S(A) =         p({m j })S|{m
+                                                                                                                x
+                                                                                                                   }
+                                                                                                                      (A)
+through the primary field φ x , the uniform postmeasurement
+                                                                                                                             j
+                                                                                               {m j =±}
+states are expected to exhibit the same ceff and z,± upon the                                                                                                    
+                                                                                                                                       ρ          ρ
+correct identification of the defect strength. This universal be-                           =−               p({m j })TrA                    ln                      ,
+havior is analogous to Luttinger liquid, where the low-energy                                     {m j =±}
+                                                                                                                                     TrA (ρ)    TrA (ρ)
+properties are solely determined by the Luttinger parameter,
+regardless the details of the specific lattice realization.                                                                                                         (22)
+    We close this section with some comments on the post-
+measurement states |±v . To prepare the states |±v  from                    where Eb represents the averaging with respect to the Born-
+measurements, postselections on the measurement outcomes                        rule probability p({m j }) given in Eq. (10) which can be
+{m j } are required. While there is no scalable implementation                  rewritten as
+of the required postselection in the thermodynamical limit,
+                                                                                         p({m j }) = TrA (ρ)
+it is still interesting to investigate if the universal behavior                                       ⎛                                                   ⎞
+found in this section can be observed in a finite-size near-term
+quantum device [41]. We defer this investigation for future                                        = Tr⎝                 x
+                                                                                                                       K j,m j
+                                                                                                                               ||            K jx† ,m j ⎠.    (23)
+study. Instead of being viewed as the results of measurements,                                                 j                            j
+|±v  can also be thought of as the result of the finite-time
+                                                             evo-
+lution with respect to a non-Hermitian Hamiltonian j iσ jv ,                    Here, “Tr” without any subscript indicates the trace over the
+starting from the cTFIM ground state |. The time duration                     degrees of freedom in the entire chain.
+of the evolution β is given by the measurement strength via                        Now, we discuss the formal field-theory representation of
+β = arctanh(λ). Hence, the results in this section can also be                  this problem. We assume an infinite system size, i.e., L →
+viewed as the consequences of nonunitary quantum dynamics                       ∞, for this discussion. Using the replica trick, we can rewrite
+with the initial state |. At a finite time β, the acquired state              Eq. (22) as
+|+v  has an interesting entanglement structure indicated by its
+effective central charge ceff . In the long-time limit β → ∞,                    Eb S(A)
+the state |+v  becomes trivial. We remark that there are                                          1    
+also one-dimensional spin chains with different nonunitary                           = lim lim                {TrA (ρ) TrA (ρ n )l − TrA (ρ)nl+1 }.
+                                                                                       n→1 l→0 l (1 − n)
+dynamics that exhibit interesting entanglement structures in                                             {m }      j
+
+the long-time limit [42–46].                                                                                                                                        (24)
+                                                                                                                   
+                                                                                Both {m j } TrA (ρ)TrA (ρ n )l and {m j } TrA (ρ)nl+1 can be ex-
+             IV. BORN-RULE MEASUREMENTS
+                                                                                pressed in the continuum in terms of an R-replica path integral
+   In this section, we focus on weak Born-rule measurement                      with the replica number R = nl + 1.
+along the spin-x axis. That means we study the EEs of the                        Let us nl+1      first describe the path integral for
+postmeasurement states |{m   x
+                                j}
+                                    averaged over all possible                    {m j } Tr A (ρ)     = {m j } | j K j,m
+                                                                                                                        x†
+                                                                                                                            j
+                                                                                                                                x
+                                                                                                                              K j,m j
+                                                                                                                                      |R .      The
+measurement outcomes {m j = ±} with respect to their Born-                      action of this path integral contains R copies of SIsing , the
+rule probability (10).                                                          action of (1 + 1)D Ising CFT, one for each replica. The
+   In the following, we discuss the field-theory representation                 measurements (and the averaging over different measurement
+of the Born-rule averaged EE and present our numerical re-                      outcomes) induce the coupling δSM between the replicas:
+sults for effective central charge extracted from the average                                                                                  
+EE.                                                                                                                     R
+
+   Consider the spin chain of length L which lies along the                      e−δSM =               exp β̃ dx m(x)         φαx (x, τ ) + hx ) ,
+interval [−L/2, L/2]. This chain is divided into two halves                                {m(x)=±}                                   α=1
+A = (−L/2, 0] and B = (0, L/2). For each given measure-                                                                                                             (25)
+ment outcome {m j }, an un-normalized version of the reduced
+density matrix on the half-system A is given by                                 where φαx is the field φ x , namely, the ε field of the
+                                                                                (1 + 1)D Ising CFT in the αth replica. The perturbation
+                       ⎛                            ⎞                           δSM can be viewed as introducing a one-dimensional def-
+         ρ{m j },A = TrB ⎝         x
+                                 K j,m j
+                                         ||        K jx† ,m j ⎠           fect in the R-replica Ising CFT. Note that in the limit
+                             j                    j
+                                                                                limn→1 liml→0 in Eq. (24), the number of replicas has a
+                       x  x                                                limit R → 1.
+                 ∝ TrB {m j}
+                               {m j } | .                              (21)        The coupling constant hx , independent of the measurement
+                                                                                strength λ, is introduced to account for an important differ-
+“TrA/B ” represent the trace over the degrees of freedom in the                 ence between the operator σ jx of the spin chain and the field
+subsystem A and B, respectively. In the following, We will                      φ x = ε of the Ising CFT. The former has a finite expectation
+suppress the subscripts of ρ{m j },A and write it as ρ to simplify              value |σ jx | = 2/π on the cTFIM ground state while the
+the notation without causing confusion.                                         expectation value of the field φ x = ε vanishes on the ground
+
+                                                                          165120-8
+ENTANGLEMENT IN A ONE-DIMENSIONAL CRITICAL …                                                       PHYSICAL REVIEW B 108, 165120 (2023)
+
+state.1 Therefore, in a field-theory representation, we should
+substitute σ jx with φ x + hx with hx > 0. This finite coupling hx
+results in an asymmetry between the measurement outcomes
+m(x) = ±1.
+    We remark that a finite hx does not affect our previous field-
+theoretic analysis for the postmeasurement states |±x . That
+is because the measurement outcomes m j are fixed for |±x ,
+and the effect of a finite hx is removed once we normalize
+these postmeasurement states.              
+    The path-integral description of {m j } TrA (ρ)TrA (ρ n )l ap-
+pearing in Eq. (24) isgiven by almost the same R-replica
+field theory as that of {m j } TrA (ρ)nl+1 except that a branch
+cut needs to be introduced at τ = 0 along the line (−∞, 0)
+on the spatial axis (where the subsystem A is located).
+Crossing the branch cut implements a permutation T of
+                                                                               FIG. 7. For the Born-rule measurement along the spin-x axis, the
+the replica index: α → T (α). T is an element of the per-                  average EE follows a logarithmic scaling. The numerically extracted
+mutation group SR whose cycle representation is given                      effective central charge is plotted as a function of λ.
+by (1, 2, . . . , n)(n + 1, n + 2, . . . , 2n) . . . ((l − 1)n + 1, (l −
+1)n + 2, . . . , ln) where the last cycle is of length one and
+hence suppressed in the notation. We can view the branch
+                                                                           measured starting from the cTFIM ground state |, we obtain
+cut as the consequence of the insertion of a twist field TR at
+                                                                           a postmeasurement state |{m j }  whose half-system EE can be
+(x = 0, τ = 0).
+                                                                           directly numerically calculated.
+    From the path integral, one can readily argue that the
+                                                                               To obtain the average half-system EE, one can, in principle,
+coupling e−δSM in Eq. (25) does not contain any relevant
+                                                                           repeat the one-by-one measurement procedure starting from
+perturbation to the replicated Ising CFT. In the replica limit
+                                                                           | over and over. To speed up the convergence, we use the
+R → 1, we can show analytically that even the marginal
+                                                                           following trick. When we finish one round of measurements
+perturbation is absent, rendering the measurement-induced
+                                                                           of all the spins starting from |, we obtain a specific set of
+perturbation e−δSM irrelevant under RG. The details of this RG
+                                                                           measurement outcomes {m j }. We can simultaneously calcu-
+analysis are provided in Appendix E. A direct consequence is
+                                                                           late the half-system EE for postmeasurement states |{mj } 
+that, for Born-rule measurements, the effective central charge
+should remain at ceff = 21 regardless of the measurement                   with {mj = m j+k } which are obtained from {m j } by shifting
+strength. As shown below, this conclusion is verified by our               the site index by k = 0, 1, . . . , L − 1. We then average the
+MPS-based numerical simulations.                                           half-system EE of all postmeasurement states |{mj }  with dif-
+    Using the MPS method, we calculate the average half-                   ferent k’s. That is, we average half-system EE over L different
+system EE for an infinite spin chain. The bond dimension of                measurement outcomes {|{m j } , |{m j+1 } }, . . . , |{m j+L−1 } }.
+the MPS serves as a cutoff for the EE. The effective central               In other words, we trade the statistical average over dif-
+charge can be extracted from the dependence of the EE on                   ferent {m j } by a spatial average. Without changing L, the
+the bond dimension. Ideally, the measurement outcome (and                  MPS method allows us to extract the effective central charge
+the associated Kraus operator) on each site of the infinite                ceff from the dependence of the EE on the correlation
+chain should be independent. In the numerical simulation,                  length, both of which are cut off by the MPS bond dimen-
+we cannot perform independent measurements on an infinite                  sion. By varying the bond dimension, their dependence can
+number of sites. Instead, we take an approximation by as-                  be extracted. More details can be found in Appendix A.
+suming a periodicity in the measurement outcomes with a                    Conceptually, our approach for the average EE is similar
+unit cell L, namely, m j = m j+L . The ideal case can then be              to calculating the half-system EE for a finite spin chain,
+approached by taking L → ∞. In the following simulations,                  whose length is given by the correlation length of the MPS
+we take L = 120.                                                           representation.
+    Instead of measuring all the spins at once, we measure                     In Fig. 7, we present the extracted ceff for various mea-
+the spins one by one. For each spin, we follow the Born-rule               surement strengths λ. The error bars represent the fluctuation
+probability (4) to choose a measurement outcome, obtain the                of the extracted ceff from 10 different sets of {m j } (not re-
+resulting postmeasurement state following Eq. (3), and then                lated by shifting) with each set generated by the one-by-one
+move on to the measurement of the next spin. One can show                  measurement procedure starting from |. We find that, with
+straightforwardly that the measurement outcomes {m j } gener-              the Born-rule measurement along the spin-x axis, the ef-
+ated in this one-by-one measurement procedure follow exactly               fective central charge ceff appears to be independent of the
+the (joint) Born-rule probability (10). Once all the spins are             measurement strength λ and takes the value 0.5, which is
+                                                                           in strong in contrast to the postmeasurement states |±x .
+                                                                           The fluctuations between different sets of {m j } are very
+                                                                           small, indicating that the spatial average on the infinite spin
+ 1
+   The expectation value |σ jx | = 2/π can be straightforwardly        chain with a L = 120 unit cell for the measurement out-
+calculated using the Majorana-fermion representation of cTFIM.             comes provides a good approximation to the behavior of
+
+
+                                                                     165120-9
+ZHOU YANG, DAN MAO, AND CHAO-MING JIAN                                                      PHYSICAL REVIEW B 108, 165120 (2023)
+
+averaged postmeasurement EE in the true infinite system limit
+(with L → ∞).
+    The alternative numerical method using the Majorana-
+fermion representation of a length-512 spin chain produces
+consistent results as those shown in Fig. 7. In this method,
+we calculate the average EE for different interval sizes l and
+extract ceff by fitting the average EE to ln l.
+    The independence of ceff on λ is somewhat surprising given
+that the usual (and possibly naive) expectation is such that
+measurements of nonoverlapping (and, hence, commuting)
+observables generally reduce the entanglement in the system.
+This expectation is correct for the postmeasurement states
+|±v  but at odds with our findings for the average EE with
+Born-rule measurements. In terms of the field theory, the inde-
+pendence of ceff on the measurement strength λ substantiates
+our analytical result (detailed in Appendix E) that the coupling      FIG. 8. The numerically extracted effective central charges ceff
+                                                                   from the forced measurement (p+ = 21 ) and from the biased forced
+δSM in Eq. (25) is irrelevant in the replica limit R → 1 and,
+                                                                   measurement with p+ = pxb are plotted as functions of λ.
+hence, does not affect the scaling behavior of the twist fields
+TR in this replica limit.
+    The Born-rule probability p({m j }) contains nontrivial cor-         Again, by applying the replica trick, we can write
+relations between the measurement outcome m j at different
+sites j. In the following section, we show that one can approx-      Ef S(A)
+imate the Born-rule probability p({m j }) by an uncorrelated                   1              1    
+probability distribution p ({m j }). Under this uncorrelated              =      lim lim               {TrA (ρ n )l − TrA (ρ)nl }. (27)
+                                                                               2 n→1 l→0 l (1 − n) {m }
+                                                                                L
+probability distribution for the postmeasurement-state ensem-                                           j
+
+ble, the feature that ceff is independent of the measurement                             n l
+                                                                                                                          nl
+                                                                   Both        {m j } TrA (ρ ) and          {m j } TrA (ρ)    can be formally
+strength λ is retained.
+                                                                   expressed in terms of an R-replica path integral where the
+                                                                   replica number is given by R = nl. In the limit limn→1 liml→0 ,
+               V. FORCED MEASUREMENTS                              the number of replicas R → 0 (as opposed to R → 1 in the
+   In this section, we consider the average behavior of the        case of Born-rule
+                                                                                               measurement). The path-integral formu-
+EE after the forced measurement on the cTFIM ground state          lation of          {m j } Tr A (ρ)nl is identical to the R-replica path
+|. That is, we average the EE over all possible measure-         integral formulated in Sec. IV except that R = nl. Hence,
+ment outcomes {m j = ±} with equal probability. For this           the path-integral action is given by R = nl copies of (1 +
+section, the weak measurement on each spin is still along          1)D
+                                                                    Ising CFT                coupled to each other via Eq. (25). For
+                                                                      {m j } TrA (ρ ) , a branch cut at τ = 0 along the interval
+                                                                                     n l
+the spin-x axis. We show that under the forced measure-
+ment, the average half-system EE still exhibits the logarithmic    (−∞, 0] is needed (assuming the system size L is infi-
+scaling ∼ c6eff ln(L/2) where the effective central charge ceff    nite). Crossing the branch cut results in a permutation T 
+depends nontrivially on the measurement strength. Moreover,        of the replica index α → T  (α). T  is an element of the
+we introduce a biased version of the forced measurement            permutation group SR whose cycle representation is given
+where an uncorrelated bias towards one of the two measure-         by (1, 2, . . . , n)(n + 1, n + 2, . . . , 2n) . . . ((l − 1)n + 1, (l −
+ment outcomes m j = ± on every site is introduced. With a          1)n + 2, . . . , ln) (without any additional trivial cycles).
+proper choice of the bias, we can recover a feature of the             The numerical calculation of the average EE is similar to
+Born-rule averaged EE, that is, the independence of ceff on        the case with Born-rule measurements. This numerical cal-
+the measurement strength λ. We show that the probability           culation is also performed using the MPS-based method on
+distribution of measurement outcomes {m j } with this biased       an infinite spin chain with periodic measurement outcomes
+forced measurement serves as a mean-field approximation to         with a unit cell L = 120. The measurement outcomes {m j } are
+the Born-rule probability distribution as far as the average       also sampled using the one-by-one measurement procedure.
+EE goes.                                                           Unlike the Born-rule case, for the forced measurement of
+   For the chain of length L divided into two halves               every spin, we sample the measurement outcome m j = +
+A = (−L/2, 0] and B = (0, L/2), the average EE Ef S(A)             with probability p+ = 21 and m j = − with probability p− =
+of the half-system A under the forced measurement can be           1 − p+ = 21 . Once all the spins are measured once starting
+expressed as                                                       from the cTFIM ground state |, we can calculate the av-
+                                                                erage half-system EE. It is found to follow the logarithmic
+                   1               ρ          ρ                   scaling still. We extract the effective central charge ceff in the
+   Ef S(A) = − L            TrA           ln           , (26)
+                   2 {m =±}       TrA (ρ)    TrA (ρ)               same way as we did in the Born-rule case. ceff for various mea-
+                      j
+                                                                   surement strength λ is plotted as the blue circles in Fig. 8. The
+where ρ follows the definition in Eq. (21) and Ef represents       error bars represent the fluctuation of the extracted ceff from
+the average over all measurement outcomes with equal               10 different sets of measurement outcomes {m j } with each set
+probability.                                                       independently generated using the one-by-one measurement
+
+                                                             165120-10
+ENTANGLEMENT IN A ONE-DIMENSIONAL CRITICAL …                                              PHYSICAL REVIEW B 108, 165120 (2023)
+
+procedure starting from |. We find that ceff has a nontrivial
+dependence on the measurement strength λ.
+   The analytical approach to study the dependence of ceff on
+the forced measurement strength λ is explained in detail in
+Appendix E. The analytical approach begins with the observa-
+tion that the perturbation induced by the forced measurements
+also takes the form (25), and it does not contain any RG-
+relevant terms. The next step is to extract the exactly marginal
+terms contained in the perturbation in the replica limit R → 0.
+The effective central charge depends on the exactly marginal
+terms in a similar way as it does in the case of the post-
+measurement states |±x  discussed in Sec. III. As shown in
+Appendix E, this analytical approach provides an analytical
+expression of the effective central charge that matches the
+numerical simulations.
+   We can generalize the one-by-one forced measurement                 FIG. 9. The numerically extracted effective central charges ceff
+procedure to a biased version with a general value of p+ and        from the biased forced measurement with p+ = pxb , pxb ± 0.1, pxb ±
+p− = 1 − p+ . When p+ deviates from 21 , the forced mea-            0.2 are plotted as functions of λ.
+surement imposes a bias towards one of the measurement
+outcomes m = ±. For a general p+ , we have a biased forced              The fact that the bias forced measurement p ({m j }) with
+measurement where different sets of measurement outcomes            p+ = pxb procedures the same feature, namely, the indepen-
+{m j } are sampled based on the probability distribution            dence of ceff on λ, as the Born-rule measurement suggests
+                                                                    that the nontrivial correlation contained in the Born-rule prob-
+                 p ({m j }) = pN++ (1 − p+ )N− ,           (28)    ability p({m j }) between the measurement outcomes m j ’s on
+where N± is the number of sites where the measurement               different sites is unimportant for the effective central charge
+outcome m j is ±. For this probability distribution p ({m j }),    ceff . The numerical results in Fig. 9 show that the field theory
+there is no correlation between the measurement outcomes at         that described the cTFIM ground state | under biased forced
+different sites. We can use p ({m j }) as a “mean-field” approx-   measurements contains a nontrivial marginal perturbation (to
+imation to the Born-rule probability p({m j }) in Eq. (10). By      the replicated Ising CFT) for a generic value p+ in the replica
+minimizing the Kullback-Leibler divergence [47] between the         limit R → 0. In other words, a marginal one-dimensional
+two probability distributions p and p , we find that the optimal   defect with finite strength is present for generic p+ . The
+mean-field approximation is achieved at                             defect strength is turned off when p+ = pxb . Our analytical
+                              1     2λ                              study of the measurement-induced perturbation (detailed in
+                 p+ = pxb ≡     +           .               (29)    Appendix E) can be generalized to the case with biased forced
+                              2 π (1 + λ2 )                         measurements. The dependence of the effective central charge
+Note that pxb is exactly the probability of finding the mea-        on both p+ and the measurement strength λ are calculated
+surement outcome m = + when we perform only a single-site           in Appendix E and are shown to agree with our numerical
+measurement along the spin-x axis on the cTFIM ground state         results.
+|. The expression of pxb can be obtained from Eq. (4) and
+the fact that |σ jx | = 2/π . More details of the Kullback-                    VI. SUMMARY AND OUTLOOK
+Leibler divergence and its minimization are provided in
+Appendix D. Note that with p+ = pxb , the probability distri-          In this paper, we study the effect of weak measurements
+bution p ({m j }) and the Born-rule counterpart p({m j }) yield    on the universal properties of the ground state | of the
+the same distribution when we reduce them to a single site          one-dimensional cTFIM with a focus on the behavior of the
+(by summing over all possible values of m j = ± on other            postmeasurement EE in the system. Starting from the cTFIM
+sites). Hence, p provides a mean-field approximation to p. For     ground state |, we consider the situation where weak mea-
+the biased forced measurement with p+ = pxb , the numerically       surements are performed on every spin in the system along
+extracted effective central charge is plotted in Fig. 8 as the      their spin axis v = x, z. For each set of measurement out-
+brown triangles and is found to be independent of the mea-          comes {m j }, there is a postmeasurement state |{m v
+                                                                                                                          j}
+                                                                                                                              in the
+surement strength λ, which is a feature shared by the case of       corresponding quantum trajectory. Based on how the ensem-
+the Born-rule measurement. The numerical method to extract          ble of postmeasurement states is sampled, our work contains
+the effective central charge for the case with biased forced        three parts: (1) postmeasurement states with spatially uni-
+measurements parallels that of the forced measurements.             form measurement outcomes, (2) Born-rule measurement, and
+    To further demonstrate that p+ = pxb produces the opti-         (3) forced measurements. In each part, the postmeasurement
+mal mean-field approximation of the Born-rule probability           properties are related to certain one-dimensional defects in the
+p({m j }) at the level of EE, we plot the numerically extracted     (1 + 1)D Ising CFT or its multireplica counterpart.
+effective central charge for various choices of p+ = pxb ± δ p         In the first part, we identify the interesting postmeasure-
+with δ p = 0, ±0.1, ±0.2 in Fig. 9. Any deviation from p+ =         ment states |±v  associated with the uniform measurement
+pxb results in some nontrivial dependence on the measurement        outcomes {m j = +} and {m j = −}, respectively. We show
+strength of the effective central charge ceff .                     that the properties of |±v  can be studied using a (1 + 1)D
+
+                                                              165120-11
+ZHOU YANG, DAN MAO, AND CHAO-MING JIAN                                                          PHYSICAL REVIEW B 108, 165120 (2023)
+
+Ising CFT with a measurement-induced perturbation along a                 This result also suggests that postmeasurement states |±x 
+one-dimensional defect. When the measurement is performed                 are atypical states, as far as the EE scaling goes, among the
+with respect to the spin axis v = x, the perturbation is ex-              ensemble of postmeasurement states |{m       x
+                                                                                                                          j}
+                                                                                                                              weighted by
+actly marginal. Consequently, the effective central charge ceff           their corresponding Born-rule probability p({m j }).
+of |±x , defined via the logarithmic scaling of the EE, can                 Lastly, we study the case of forced measurements (with
+be continuously deformed as a function of the measurement                 respect to the spin-x axis) where we sample different mea-
+strength λ. We obtain the analytical expression (17) of ceff              surement outcomes {m j } with equal probability and, more
+using a combination of field-theoretic analysis and a mapping             generally, the case of biased force measurements where {m j }
+between the postmeasurement state |±x  and the ground state             are sampled according to a predetermined probability distri-
+of an Ising chain with a defect studied in Ref. [40]. Moreover,           bution p ({m j }) given in Eq. (28) with a tunable bias p+ . Like
+we show that the correlation function σ jz σ jz  ∼ | j − j  |−2 z,±   the case with Born-rule measurements, the average EE with
+in the postmeasurement states |±x  exhibits continuously tun-           forced measurements can also be formulated as a (1 + 1)D
+able exponents z,± whose exact expressions are given in                   R-replica Ising CFT coupled to each other by a measurement-
+Eq. (20). The effective central charge ceff and the exponents             induced perturbation along a one-dimensional defect. The
+   z,± in the uniform postmeasurement states are directly re-             difference is that the replica limit is R → 0 (as opposed to
+lated to universal properties of the one-parameter family of              R → 1 in the Born-rule case). Based on our numerical simu-
+exactly marginal defects in the Ising CFT. In contrast, when              lations, the average EE with forced measurements (which is
+the measurements are conducted with respect to the spin axis              equivalent to choosing p+ = 21 ) retains its logarithmic scaling
+v = z, we use an RG argument to show that the effective cen-              but exhibits an effective central charge ceff that decreases con-
+tral charge ceff immediately vanishes when the measurement                tinuously as the measurement strength λ grows. In the case of
+strength λ is nonzero. All the analytical results of the effec-           biased force measurements with a generic choice of p+ , a sim-
+tive central charge ceff and the exponents z,± are compared               ilar dependence of ceff on λ is found. Interestingly, for the p+
+with those extracted from numerical simulations. There are                value given in Eq. (29), the biased-forced-measurement prob-
+two independent methods for this numerical simulation, one                ability distribution p ({m j }) for the measurement outcomes
+based on MPS and the other based on the Majorana-fermion                  {m j } provides a mean-field approximation of the Born-rule
+representation of the spin chain. They both yield consistent              probability distribution p({m j }). In this case, the average EE
+results exactly matching the analytical expressions of ceff and           with respect to the probability distribution p ({m j }) exhibits
+   z,± in Eqs. (17) and (20).                                             an effective central charge ceff independent of the measure-
+    We comment on the postmeasurement states |±v . In addi-             ment strength λ, a feature shared by the average EE with
+tion to thinking of them as the consequence of measurements               Born-rule measurements. The dependence of the effective
+followed by postselecting the measurement outcomes, they                  central charge on the bias p+ and the forced measurement
+can also be thought of as being generated from the cTFIM                  strength λ can be analytically calculated by studying the as-
+ground state | via an    evolution with respect to a non-              sociated measurement-induced defect in the corresponding
+Hermitian Hamiltonian j iσ jv for time λ. Hence, our results              replica limit.
+in this part can also be viewed as the consequence of nonuni-                 Our investigation into the measurement of cTFIM not only
+tary quantum dynamics with the cTFIM ground state | as                  provides valuable insights, but also paves the way for several
+the initial state.                                                        intriguing avenues of future research. To highlight a few of
+    In the second part, we study the Born-rule measurement                these promising directions: 1. Expanding our approach to
+where we sample different measurement outcomes {m j } and                 encompass other (1 + 1)D CFTs and critical states in higher
+their corresponding postmeasurement states |{m        x
+                                                         j}
+                                                             following   dimensions or those following volume-law EE. 2. Exploring
+the naturally occurring Born-rule probability p({m j }) given             the possibility of measurement-induced transitions in other
+in Eq. (10). For this part, we focus on the measurements                  entanglement-related quantities. 3. Gaining a deeper under-
+with respect to the spin-x axis. We show that the Born-rule               standing of the efficiency and effectiveness of the measure-
+averaged EE can be formulated as a problem of a (1 + 1)D                  ment process itself by considering other metrics aside from
+R-replica Ising CFT coupled to each other by a measurement-               EE. 4. Extending our study to address quantum dynamics sce-
+induced perturbation along a one-dimensional defect at the                narios that involve continuous monitoring and measurement.
+limit R → 1. Using numerical simulations based on MPS                         In the microscopic model, we can consider a general
+and the alternative method based on the Majorana-fermion                  measurement that is defined by a Kraus-operator set satisfying
+representation of the spin chain, we find that the EE averaged            the POVM condition. From a continuum perspective,
+over different postmeasurement states |{m      x
+                                                    j}
+                                                        with respect     as mentioned earlier, the effect of measurement on a
+to the Born-rule probability still follows the logarithmic                one-dimensional critical ground state can be captured by
+scaling. Our numerical result shows that effective central                a (1 + 1)D CFT or its multireplica counterpart with a
+charge ceff is independent of the measurement strength λ.                 measurement-induced perturbation on a one-dimensional
+This behavior can be explained using our analytical study of              defect. Different measurements can lead to different types of
+the measurement-induced defect in the replica limit R → 1.                defects. An interesting case is given by measuring observables
+This discovery is surprising because one usually expects                  with scaling dimension 1 in the CFT. An example is the
+the mutually commuting measurements on nonoverlapping                     current operator in a one-dimensional critical system with a
+observables, such as the measurements considered in this                  conserved charge. When considering the postmeasurement
+work, to reduce the entanglement entropy of the system.                   states with spatially uniform measurement outcomes, the
+
+                                                                   165120-12
+ENTANGLEMENT IN A ONE-DIMENSIONAL CRITICAL …                                            PHYSICAL REVIEW B 108, 165120 (2023)
+
+measurement-induced perturbation to the (1 + 1)D CFT is            either within a certain quantum trajectory or average over all
+marginal in the RG sense. A possible consequence of such           quantum trajectories using other metrics. For example, the
+measurement is that the effective central charge associated        quantum Fisher information or, equivalently, the fidelity sus-
+with the logarithmic scaling of postmeasurement EE changes         ceptibility [53,54] with respect to the measurement strength,
+continuously as a function of the measurement strength, just       is a helpful tool to characterize the sensitivity. It is worth
+like the cases studied in Sec. III. For analyzing the average      noting that the quantum Fisher information has been used
+properties in the postmeasurement states, in particular the        to probe quantum criticalities in various equilibrium and dy-
+effective central charge, our work has demonstrated the            namical settings, for example, in the transverse-field Ising
+effectiveness of the method that combines field-theoretic and      model at equilibrium [55], monitored quantum circuits [34],
+replica-trick-based techniques. It is worthwhile to generalize     and decohered quantum critical points [23]. It is interesting to
+this method to understand the behavior of the average              explore the application of the quantum Fisher information in
+postmeasurement EE for more general critical systems.              the postmeasurement critical states studied in this work.
+    In a (1 + 1)D CFT, one can extract the central charge,             So far, we have been focusing on the effect of measure-
+which is an intrinsic quantity associated with the CFT, from       ments acting on the critical ground state in a single time
+the logarithmic scaling of the EE in the ground state. In a        step. Therefore, we only needed to study the correlation and
+(2 + 1)D critical state with an emergent Lorentz symmetry,         entanglement at a fixed time slice. Successive measurement
+the EE on a circular region of radius L follows the universal      over an extended period of time can lead to highly nontrivial
+scaling S(L) ∼ αL − γ where subleading term γ is an intrin-        monitored quantum dynamics [56,57], which has attracted
+sic quantity to the (2 + 1)D CFT that governs the low-energy       a lot of attention in recent years. The study of monitored
+physics of the system [11–14]. A natural generalization of         quantum dynamics has primarily focused on the long-time
+the study presented in this paper is to understand if the same     limit of the dynamics where the details of the initial state be-
+S(L) ∼ αL − γ scaling holds for the (average) EE in the            come unimportant. An interesting future direction is to search
+postmeasurement states obtained from measuring (2 + 1)D            for monitored quantum dynamics strongly influenced by the
+critical ground states. If yes, it is interesting to study how γ   critical ground state as the initial state and investigate how
+depends on the measurement strength. More generally, critical      the space-time correlation, including the space-time entangle-
+ground states are less entangled compared to highly excited        ment [58], depends on the initial state. An interesting example
+states, which generally exhibit volume-law entanglement en-        would be measuring an exactly marginal operator on a critical
+tropy scaling. It would be interesting to find cases where the     initial state, where we expect the logarithmic scaling of EE
+effect of measurements on the highly excited states can be         can last for an extended period of time.
+captured by continuum field theories.                                  Recently, we became aware of an independent and related
+    In our study of the cTFIM, the effective central charge ceff   work [59], which will appear on arXiv on the same day. We
+is either a continuous function of the measurement strength        thank the authors for informing us of their work in advance.
+λ or vanishes immediately when the measurement strength                Notes added. We also noticed another related independent
+is nonzero. As exemplified by recent studies [23,48,49],           work [60].
+entanglement-related quantities can experience phase tran-
+sitions induced by finite-strength measurements and related
+                                                                                      ACKNOWLEDGMENTS
+decoherence processes acting on higher-dimensional corre-
+lated ground states (at criticality or with topological orders).      D.M. thanks D. E. Parker for helpful discussions on numer-
+It is interesting to search for a one-dimensional critical sys-    ical simulation. C.M.J. thanks B. Bauer, A. Keselman, and
+tem where the average EE and other entanglement-related            A. W. W. Ludwig for the collaboration on an earlier project
+quantities experience similar phase transitions at a finite mea-   that partly motivated this study. C.M.J. thanks J. Y. Lee and
+surement strength.                                                 C. Xu for the collaboration on a related project [23] that
+    In the cases where the postmeasurement EE still retains        investigates the effect of decoherence and weak measurements
+the logarithmic scaling with a finite ceff , the measurements      on higher-dimensional critical ground states. We thank E.-A.
+are “ineffective” in removing entanglement from the sys-           Kim for her assistance with computation resources. D.M. is
+tem. It is interesting to understand this phenomenon from          supported by a Bethe/KIC postdoctoral fellowship at Cornell
+the quantum information perspective. An analogous situation        University. This work is supported by a faculty startup grant
+occurs in the study of monitored quantum dynamics where            at Cornell University.
+the dynamical phase with a volume-law entanglement entropy
+is stable in the presence of repeated measurements [50,51].
+                                                                         APPENDIX A: DETAILS OF THE MPS SIMULATION
+The robustness of the volume-law phase is attributed to the
+error-correction properties of states with volume-law entan-          We first prepare the matrix product state representation of
+glement [52]. Whether a similar interpretation can be given to     the cTFIM ground state on an infinite chain with different
+a CFT ground state to explain the ineffectiveness of certain       bond dimensions χ using iDMRG algorithm provided by the
+measurements is a curious question to explore in the future.       TENPY package [61]. We use the method in Ref. [62] for
+From a broader perspective, it is interesting to understand        extracting the central charge. Namely, for each χ , we obtain
+the sensitivity of a critical system to measurements. In this      the correlation length ξ from the second largest eigenvalue of
+paper, we have been focusing on the dependence of EE on            the transfer matrix and the half-chain entanglement entropy
+the measurement strength. One can also study the sensitivity       S from the Schmidt decomposition. The central charge c can
+of the postmeasurement states on the measurement strength          be obtained by fitting S = 6c ln ξ [17]. The maximum bond
+
+                                                             165120-13
+ZHOU YANG, DAN MAO, AND CHAO-MING JIAN                                                            PHYSICAL REVIEW B 108, 165120 (2023)
+
+                                                                          (a)                                    (b)
+
+
+
+
+                                                                            FIG. 11. Half-system reduced density matrix ρA of |+x  repre-
+                                                                         sented as a path integral in (a) infinite plane geometry, (b) rectangular
+                                                                         geometry after a conformal map. The green patches are described
+                                                                         by the Ising CFT. The brown patches are where the measurement-
+                                                                         induced perturbation locates.
+    FIG. 10. Fitting central charge of TFIM. Blue dots correspond to
+the bond dimension used in the main text, where χmax = 29. Red dots
+correspond to another set of bond dimensions, where the maximum          system [for interval A = (−∞, 0)] density matrix ρA is ob-
+is 67. They both give a fit with central charge c = 0.50 (black line).   tained by taking two copies of such path integrals (upper half
+                                                                         plane +x | and lower half plane |+x ) and gluing along the
+dimension we use is χmax = 29, which is similar to the max-              half-line B = (0, ∞) [Fig. 11(a)]. Our goal is to calculate ρA .
+imum bond dimension used in Ref. [62] for cTFIM. We also                 First, we apply a conformal transformation,
+check the fitting of central charge with larger bond dimensions                                        w = ln(z),                             (B2)
+and the fits converge. (See Fig. 10 for the fits of cTFIM.)
+    For the postmeasurement state |±x  in Sec. III, we apply           where z = x + iτ .
+the same Kraus operator on each site to the infinite chain and              The geometry in w is shown in Fig. 11(b). This geometry
+fit S to ln ξ to obtain the effective central charge ceff . The          consists of two identical pieces stacked together. It suffices to
+so-obtained effective central charge is presented in Fig. 4 and          calculate half of it ρA1/2 [Fig. 12(a)]. We now map the quantum
+is in perfect agreement with the results obtained using the              cTFIM to a classical Ising model in 2D. In doing so, we
+alternative numerical method based on the Majorana-fermion               effectively discretize both space and time [Fig. 12(b)].
+representation of the spin chain discussed in Appendix C.                   In operator language, the path integral on the full plane
+    For the Born-rule measurements and forced measurements,              [Fig. 11(a)] is
+the Kraus operators are applied to the chain according to                                                              
+                                                                                        Zq = lim Tr(e−T Ĥ e2β             j σj   e−T Ĥ ).
+                                                                                                                              x
+the corresponding probabilities in a periodic fashion whose                                                                                   (B3)
+                                                                                               T →∞
+unit cell is of a fixed length L. For each bond within the
+unit cell, we calculate the half-chain entanglement entropy.             We now map this to a classical Ising model in 2D with a line
+The effective central charge is obtained by fitting the average          defect (for a review, see Ref. [63]). Generically, the classical
+EE over the bonds to ln ξ . We then perform the one-by-one               Hamiltonian is
+measurement procedure 10 times to get the standard deviation                                   
+                                                                                     Hcl = −      (K1 σr σr+x̂ + K2 σr σr+ŷ )
+of the effective central charge.
+                                                                                                   r
+                                                                                                  
+ APPENDIX B: ANALYTIC CALCULATION OF THE EE                                                   −        (K0 − K2 )σ(x,y=0) σ(x,y=1) ,          (B4)
+ OF POSTMEASUREMENT STATES |±x
+                                 AND MAPPING                                                      x
+       TO THE SINGLE-BOND DEFECT TFIM                                    where σr = ±1 is the classical Ising spin at site r = (x, y).
+   We calculate the half-system EE of the postmeasurement                We put the Hamiltonian on an L × L lattice so that −L/2 <
+states |±x  with spatially uniform measurement outcomes                x, y ⩽ L/2. The bulk horizontal and vertical couplings are K1
+{m j = +} and {m j = −}. This calculation is a generalization            and K2 , while on the line defect the vertical bond is modified
+of Ref. [40]. We take half-system EE of |+x  as an example.
+The analysis for |−x  is completely parallel.
+                                                                         (a)                                       (b)
+   The postmeasurement state |+x  is given by
+
+                           j K j,+ |
+                               x               x
+            |+x  =                  ∝ eβ j σ j |,       (B1)
+                                     
+                           j K j,+ |
+                               x
+
+
+In the continuum limit and L → ∞, the state is described by a
+path integral on a half Euclidean plane with Ising Lagrangian
+and a perturbation at τ = 0. Operator expectations and cor-                 FIG. 12. ρA1/2 as (a) Ising CFT path integral with perturbation
+relations are calculated by path integral on a full plane with           on the edges, (b) isotropic critical classical Ising model with line
+operator insertions on τ = 0 slice. The unnormalized half-               defects. The green bonds are Kc . The brown bonds are K0 .
+
+                                                                   165120-14
+ENTANGLEMENT IN A ONE-DIMENSIONAL CRITICAL …                                                                   PHYSICAL REVIEW B 108, 165120 (2023)
+
+to K0 . The classical partition function is                                           can immediately read out
+                                     ∗   ∗
+                                             x         
+            Zcl = e−Hcl = Tr uL/2 e(K0 −K2 ) j σ j uL/2                        (B5)                                    ρA1/2 = u0 uM u0                                          (B13)
+with a transfer matrix u defined by                                                   with
+                                                                                                                                                              
+                                                                                                                        j σj             j σ j σ j+1                  j σj
+                                                                                                           1                                 z z          1
+                                 K2∗
+                                                                                                                           x                                             x
+                                           j σj             j σ j σ j+1
+                                                                z z
+                                                                                                   u = e 2 Kc                  eKc                                           ,
+                                              x
+                    u=e                           eK1                     .    (B6)                                                                    e 2 Kc                    (B14)
+                                                                                                                                                             
+Here, we define the dual couplings K0∗ and K2∗ via                                                   u0 = e 2 (K0 −Kc )
+                                                                                                                   1     ∗
+                                                                                                                                         j σj
+                                                                                                                                            x
+                                                                                                                                                = eβ              j σj
+                                                                                                                                                                     x
+                                                                                                                                                                         ,       (B15)
+                         ∗
+                     K       ≡ − 21 ln[tanh(K )].                              (B7)   where the transfer matrix u is analogous to Eq. (B6), albeit
+                                                                                      symmetrized, and in the last equality, we have used Eq. (B12).
+To match the classical and quantum partition functions, we
+                                                                                      Now, we perform Jordan-Wigner transformation
+need to take the Hamiltonian limit K1 → 0, K2∗ → 0 and make
+the identifications                                                                                                σ jx = 2c†j c j − 1,                                          (B16)
+                                 K1 = K2∗ ,
+                                                                                                   σ jz σ j+1
+                                                                                                          z
+                                                                                                              = (c†j − c j )(c†j+1 + c j+1 ),                                    (B17)
+                           L
+                         K1 = T,                                                      where c j are fermionic operators. It remains to bring the
+                           2
+                                                                                      density matrix to the factorized form
+                          2β = K0∗ − K2∗ .                                     (B8)
+                                                                                                                         ρA = e−Heff                                             (B18)
+Since we want to harness conformal symmetries shortly,
+we can further substitute this classical Ising model in the                           with
+Hamiltonian limit with another critical isotropic Ising model                                                                    
+(deformed by a defect), where the horizontal and vertical                                                          Heff =                   l c̃l c̃l ,
+                                                                                                                                                †
+                                                                                                                                                                                 (B19)
+bonds are of the same and finite strength. These two classical                                                                       l
+
+models share the same IR behavior, as explained below. The                            where the effective Hamiltonian is a sum of single fermion
+classical Hamiltonian of the latter model is given by                                 modes c̃l which are related to the real-space fermion modes
+                                                                                     c j by some unitary transformations. Once in this form, we can
+            Hiso = −     (Kc σr σr+x̂ + Kc σr σr+ŷ )                                 calculate EE:
+                             r                                                                                                           
+                                                                                                                    ρA           ρA
+                     −            (K0 − Kc )σ(x,y=0) σ(x,y=1) ,               (B9)         S|+v  (L/2) = −TrA             ln
+                                                                                                                   TrA (ρA )    TrA (ρA )
+                             x                                                                                                 
+                           √                                                                              =    ln(1 + e− l ) +
+                                                                                                                                        l
+                                                                                                                                            .  (B20)
+where Kc = Kc∗ = arctanh( 2 − 1), which ensures the criti-                                                                         e  l + 1
+                                                                                                             l                  l
+cality in the bulk, and the defect strength K0 = K0 is to be
+determined shortly. Without defects, the IR properties of all                         These last two technical steps are carried out in Ref. [40]
+classical Ising models K1 = K2∗ are the same at criticality.                          which deals with the half-system EE of a cTFIM with a bond
+With the defect line, we need to match the critical exponent                          defect in the middle. We expect that the two systems share
+[64,65]                                                                               the same universal behavior of EE because they are related
+                                                                                     by a 90◦ space-time rotation (see Fig. 5). More precisely, the
+                                  2               ∗   ∗ 
+                 z,ladder =           arctan2 e2(K0 −K2 ) .                   (B10)   cTFIM Hamiltonian with the bond defect is
+                                  π 2
+                                                                                                                         
+Here,                                                                                       Ĥdef = −     σ jz σ j+1
+                                                                                                                 z
+                                                                                                                     + σ jx − (t − 1)σ0z σ1z , (B21)
+         z,ladder is defined by
+                                                                                                       j
+                     σr σr+r  ∼ |r |−2 z,ladder                           (B11)
+                                                                                      where −L/2 < j ⩽ L/2. The corresponding classical theory
+for |r |  1 and r parallel to the defect line (which is the                        is
+x direction in the cases above). The defect bonds form the                                              
+                                                                                            Hdef,cl = −   (K1 σr σr+x̂ + K2 σr σr+ŷ )
+shape of a ladder, thus the name. Equivalently, z,ladder can be
+                                                                                                               r
+defined on a quantum state as in Sec. III. Matching z,ladder                                               
+for Hcl and Hiso , we obtain                                                                           −               (t − 1)K1 σ(x=0,y) σ(x=1,y) .                             (B22)
+                  K0∗ − K2∗ = 2β = K0∗ − Kc∗ .
+                                                                                                               y
+                                                                              (B12)
+                                                                                      Comparing Eqs. (B4) and (B22), we see that the two ge-
+Combining this identification with Eq. (B10), we obtain the                           ometries are related by a 90◦ rotation. To relate the defect
+expression of z,+ in Eq. (20). z,− can be obtained by simply                          couplings K0 and tK1 , we rescale Hdef,cl to the (rotated)
+substituting β → −β.                                                                  isotropic theory (B9) by matching the critical exponent
+   We can now calculate the half-system EE in the isotropic
+                                                                                        z,ladder ,
+model (B9). Put this model on an M × N lattice [Fig. 12(b)],                                                               
+where each of the top and bottom ladders (brown) includes                                    tanh(K1 )          π 2 z,ladder         ∗
+half of the defect bond K0 . Viewing this as a matrix that rotates                                    = tan                   = e2(K0 −Kc ) , (B23)
+                                                                                            tanh(tK1 )              2
+the states on the bottom row to the states on the top row, we
+
+                                                                                165120-15
+ZHOU YANG, DAN MAO, AND CHAO-MING JIAN                                                                   PHYSICAL REVIEW B 108, 165120 (2023)
+
+where in the first equality we have used Eq. (B10) with K1 and                  chain defect with a ladder defect with a different coupling K0∨ .
+K2 exchanged and the identity                                                   The critical exponent for the chain defect reads as [64,65]
+                              ∗
+                        e−2K ≡ tanh(K ).                                (B24)                             2                         
+                                                                                                z,chain =     arctan2 e−2(K̃0 −K̃1 )
+                                                                                                          π 2
+In the Hamiltonian limit K1 → 0, thus we identify                                                                    
+                                                                                                          2                 ∗     ∗ 
+                                  ∗                                                                    = 2 arctan2 e−2(K0 −K2 )          (B31)
+                    t = e−2(K0 −Kc ) = e−4β,                            (B25)                             π
+                                                                                while applying Eq. (B10) to the new ladder defect K0∨ ,
+where in the last equality we have used Eq. (B12).
+   Comparing Fig. 12(b) with Fig. 4 in Ref. [40], we see that                                            2             ∨∗  ∗ 
+                                                                                                 z,ladder = arctan2 e2(K0 −K2 ) .    (B32)
+the two expressions of ρA1/2 have the same form, up to a cyclic                                         π 2
+rotation of the matrices. The cyclic rotation does not change                   Equating the two critical exponents and using Eq. (B8), we
+Tr(ρAn ) for any n, thus it also preserves EE. We then get the                  finally get
+final formulas of EE [Eqs. (16) and (17)] using Eqs. (22)
+and (26) of Ref. [40] and identifying s = t+2 1 = cosh(4β
+                                                      1
+                                                            using                             K0∨∗ − K2∗ = −(K0∗ − K2∗ ) = −2β.                       (B33)
+                                              t
+                                                          )
+Eq. (B25).                                                                      Mapping back to the quantum theory [cf. Eqs. (B3) and (B5)],
+   Finally, let us point out that the two cases |+x  and |−x                we see that the new ladder theory simply replaces β with
+are related by Kramers-Wannier (KW) duality. To see this, let                   −β and indeed corresponds to |−x . Since the KW duality
+us first look at the quantum duality transformation UD :                        preserves the partition function, we expect that the entangle-
+                                                                                ment entropy is also preserved, being a replicated and twisted
+                         UD† σ jxUD = σ j−1
+                                        z
+                                            σ jz ,                              generalization of the partition function. This explains why ceff ,
+                    UD† σ jz σ j+1
+                               z
+                                   UD = σ jx .                          (B26)   which depends only on cosh(4β ), is insensitive to the sign
+                                                                                of β.
+The critical ground state | is invariant under UD since it is
+a symmetry of the critical Hamiltonian (1). Apply this to the                         APPENDIX C: NUMERICAL SIMULATION IN A
+state |−x ,                                                                          NONINTERACTING MAJORANA-FERMION
+                                                                                                REPRESENTATION
+             UD† |−x  ∝ UD† e−β           j σj
+                                               x
+                                                     |
+                                                                                  The cTFIM Hamiltonian can be mapped, under the
+                            −β         j σ j−1 σ j
+                                           z     z
+                        =e                           |                        Jordan-Wigner transformation, to a noninteracting fermion
+                                  
+                                                                                Hamiltonian on a one-dimensional Majorana-fermion chain:
+                        = e−β          j σ j−1 σ j   e−β Ĥ eβ Ĥ |
+                                           z     z
+
+
+                                        
+                                                                                                           
+                        ≈ eβE0 eβ           j σj
+                                               x
+                                                   | ∝ |+x ,        (B27)                     Hmaj = −     iγ̂ j γ̂ j+1 ,        (C1)
+                                                                                                                       j
+where Ĥ is the critical Hamiltonian (1) and the last equality                  where γ̂ j ’s are the Majorana-fermion operators. The spin op-
+holds only if β  1. For finite β, we can relate the two cases                  erators in the cTFIM can be identified as follows:
+by classical KW duality as follows. Start with the classical
+representation of |+x , Eq. (B4). This is a critical 2D classical                         σ jx = iγ̂2 j−1 γ̂2 j ,   σ jz σ j+1
+                                                                                                                             z
+                                                                                                                                 = iγ̂2 j γ̂2 j+1 .    (C2)
+Ising model with a ladder defect along the line y = 0 and de-                   The ground state | of the cTFIM can be viewed as the
+fect coupling K0 . The classical KW transforms the lattice onto                 ground state of a noninteracting-fermion Hamiltonian (C1).
+its dual lattice, which for square lattice is again a square. The                  Any noninteracting fermion state, including |, can be
+coupling K on every link of the original lattices is dualized to                fully described by its covariance matrix
+K ∗ according to Eq. (B7) and put on the corresponding link
+of the dual lattice. For a square lattice, a horizontal link in                                               i
+                                                                                                                [γ̂ j , γ̂ j  ]
+                                                                                                           j j =                        (C3)
+the original lattice is mapped to a vertical link in the dual                                                2
+lattice and vice versa. Thus, the bulk horizontal and vertical                  which encodes all the Majorana-fermion two-point correlation
+couplings of the dual theory K̃1 and K̃2 read as                                functions in the state. All the multipoint Majorana-fermion
+                                                                                correlation functions can be calculated from the two-point
+                         K̃1 = K2∗ = K1 ,                               (B28)
+                                                                                functions using Wick’s theorem.
+                                                                                   In the fermion language, a weak measurement of σ jx is
+                         K̃2 = K1∗ = K2 .                               (B29)
+                                                                                equivalent to a weak measurement of the observable iγ̂2 j−1 γ̂2 j .
+We see the bulk coupling is invariant at criticality. The ladder                For any noninteracting fermion state |ψ whose covariance
+defect becomes a chain defect (horizontal defect bonds along                    matrix is given by , the postmeasurement state
+y = 0) in the dual theory with couplings,                                                                             x
+                                                                                                                    K j,m   |ψ
+                                                                                                         |ψ   =  x         
+                                                                                                                          j
+                                                                                                                                                       (C4)
+                             K̃0 = K0∗ .                                (B30)                                     K |ψ
+                                                                                                                           j,m j
+
+Both the chain and ladder defects look the same in the IR.                      is still a noninteracting fermion state, which can be captured
+So by matching the critical exponents, we can substitute the                    by its covariance matrix   :
+
+
+
+                                                                          165120-16
+ENTANGLEMENT IN A ONE-DIMENSIONAL CRITICAL …                                                                                              PHYSICAL REVIEW B 108, 165120 (2023)
+
+
+                                        ⎛                                                                           ⎞ ⎛                                           ⎞
+                                       [1,2 j−2],[1,2 j−2]                      0           [1,2 j−2],[2 j+1,2L]      [1,2 j−2],[2 j−1,2 j]                0
+                                     ⎜                                                                              ⎟ ⎜                                           ⎟
+                                 = ⎝          0                              −in1 σ y                0            ⎠−⎝          0                           −n2 1⎠
+                                       [2 j+1,2L],[1,2 j−2]                     0           [2 j+1,2L],[2 j+1,2L]    [2 j+1,2L],[2 j−1,2 j]                0
+                                                                                           −1                                                                   
+                                           [2 j−1,2 j],[2 j−1,2 j]                 1                 [2 j−1,2 j],[1,2 j−2]        0     [2 j−1,2 j],[2 j+1,2L]
+                                        ×                                                         .                                                                ,
+                                                   −1                             in1 σ y                      0                   n2 1             0
+
+
+where [ j1 , j2 ],[ j1 , j2 ] denotes the block of the covariance ma-                                    where [2 j,2 j  −1] is a diagonal matrix with −1 between (and
+trix  with the rows ranging from j1 to j2 and the columns                                                  including) the (2 j)th and the (2 j  − 1)th entries, and 1 for
+ranging from j1 to j2 . Here, we have assumed that there are                                              all other entries. The absolute value of the spin-z correlation
+2L Majorana modes γ̂ j=1,...,2L in the one-dimensional chain.                                               function can be written as
+The parameters n1 and n2 are determined by the measurement                                                                                                   21
+strength λ and the outcome m j :                                                                                  z z                    
+                                                                                                                  σ σ  = |ψ  |ψ| =  1 Pf i          1 
+                                                                                                                                                                ,    (C11)
+                                                                                                                    j j
+                                                                                                                                              22L   −1 i  
+                                    −2m j λ                    1 − λ2
+                           n1 =             ,          n2 =           .                       (C5)
+                                    1 + λ2                     1 + λ2                                       where 2L is the number of sites in the Majorana-fermion chain
+The Born-rule probability (4) can also be expressed using the                                               (and L is the number of sites in the corresponding spin chain).
+noninteracting fermion representation                                                                       Here, in the second equality, we have applied the result from
+                                                                                                            Ref. [66].
+                 x † x               1 + λ2 + 2m j λ2 j−1,2 j
+ px (m j ) = ψ| K j,m   K       |ψ =                           .
+                       j   j,m j
+                                             2(1 + λ2 )
+                                                                                                                  APPENDIX D: OPTIMAL BIASED FORCED
+                                                                                              (C6)            MEASUREMENT AS A MEAN-FIELD APPROXIMATION
+                                                                                                                   OF THE BORN-RULE MEASUREMENT
+    Using the covariance matrix formulation, we can per-
+form efficient numerical calculations of the postmeasurement                                                    In the biased forced measurements, the measurement out-
+non-interacting fermion states resulting from the weak mea-                                                 comes on each site are weighted by probability p± . If
+surements along the spin-x axis on the cTFIM ground                                                         we view the Born-rule measurement and the biased forced
+state |.                                                                                                  measurement as different probability distributions over the
+    Given the covariance matrix  of a noninteracting fermion                                               measurement outcomes {m j = ±}, we would like to ask what
+state, one can directly calculate the subsystem von Neumann                                                 is the “closest” biased forced measurement compared to the
+EE. For example, for a subsystem that is an interval starting                                               Born-rule one. To address this question, we calculate the
+from the jth Majorana-fermion site and ending on the j  th                                                 Kullback-Leibler (KL) divergence (relative entropy) [47] of
+site, the subsystem EE, is given by                                                                         the force measurement with respect to the Born-rule one,
+                                                                                                                                                                  
+ S[ j, j  ]                                                                                                                                             p({m j })
+                                                                                                                      DKL (p||p ) ≡      p({m j }) ln              , (D1)
+                   1        1 + si [ j, j  ],[ j, j  ] 1 + si [ j, j  ],[ j, j  ]                                              {m }
+                                                                                                                                                         p ({m j })
+       =−                 Tr                              ln                              .                                                      j
+                   2 s=±1            2                             2
+                                                                                                            where p({m j }) is the Born-rule probability given in Eq. (10)
+                                                                                              (C7)          and the p ({m j }) is the probability distribution (28) for the
+The connected spin-x correlation function σ jx σ jx  − σ jx σ jx                                    biased forced measurement. Plugging in Eq. (28), we can
+can be written as                                                                                           write
+    x x   x  x 
+    σ j σ j − σ j σ j                                                                                           DKL (p||p )
+                                                                                                                       
+               = −[2 j−1,2 j  −1] [2 j,2 j  ] + [2 j−1,2 j  ] [2 j,2 j  −1] .         (C8)                  =        p({m j }) ln p({m j })
+                                                                                                                          {m j }
+The absolute value of the spin-z correlation function |σ jz σ jz |
+can also be calculated in the covariance matrix formalism.                                                                     
+                                                                                                                               L
+Assuming j  > j, we can write                                                                                           −           Pm [m ln p+ + (L − m) ln(1 − p+ )],   (D2)
+                                               
+                                                                                                                               m=0
+                             σ jz σ jz = (i) j − j                    γ̂k .                  (C9)
+                                                      2 j⩽k⩽2 j  −1
+                                                                                                            where Pm is the sum of p({m j }) with m = N+ ({m j }).
+                                                                                                               As a function of p+ , DKL (p||p ) is minimized by p∗+ =
+For a noninteracting fermion state |ψ with covariance matrix                                               P /N and
+                                                                                                             (1)
+, the state |ψ   = σ jz σ jz |ψ is also a noninteracting fermion
+state. Its covariance matrix is given by                                                                                                             
+                                                                                                                                                     N
+                                                                                                                                           P (1) ≡         m Pm .          (D3)
+                                = [2 j,2 j  −1] [2 j,2 j  −1] ,                       (C10)                                                   m=0
+
+
+                                                                                                  165120-17
+ZHOU YANG, DAN MAO, AND CHAO-MING JIAN                                                                          PHYSICAL REVIEW B 108, 165120 (2023)
+
+
+We evaluate P (1) by considering a generating function (t )                   acting on R replicas of the Ising spin chain. λ = tanh β is
+defined by                                                                     measurement strength. σ j,αx
+                                                                                                              is the Pauli operator that acts on
+               N                                                             the jth site in the αth replica of the Ising spin chain. For each
+                                                
+                           t               t                                    j, we can write
+       (t ) ≡        1+      K + 1−
+                                2
+                                              K 2
+                           2 i,+           2 i,−                                                                     
+                i=1                                                                                      
+                                                                                                         R
+
+                
+                N                  m                N−m                              cosh 2β                  σαx
+                               t                 t
+            =             1+            1−                       Pm .   (D4)                             α=1
+                               2                 2
+                m=0                                                                              R2 
+                                                                                                                              
+Using this generating function, we can write                                                =            cR−2r s2r                          σαx1 σαx2 . . . σαx2r ,   (E2)
+                                                                                                r=0                       α1 <α2 <···<α2r
+                      P (1)  1 1
+                            = +   (t = 0)                             (D5)   where we have used the shorthand notations c ≡ cosh(2β ),
+                       N     2 N
+                                                                               s ≡ sinh(2β ), and t ≡ tanh(2β ). The site index j has been
+On the other hand, by plugging in the definition of Ki,± ’s, we                suppressed. When we consider the action of each σ x op-
+have                                                                           erator on the cTFIM ground state |, we can decompose
+                                       x                                   each σ x as
+               (t ) = (cosh β  )−N eβ i σi ,            (D6)
+
+where tanh β  = 1+λλt
+                       2.
+                                                                                                                    σ x = σ x  + φ x ,                              (E3)
+                                          λ
+   It is readily seen that p∗+ = 21 + 1+λ   2 Mx , where Mx =
+                                                                              where σ x  ≡ |σ jx | = 2/π and φ x corresponds to the
+     i σi  = π is the total magnetization density along x di-
+ 1        x    2
+N                                                                              energy field of the Ising CFT (with scaling dimension 1). We
+rection in the cTFIM ground state |.                                         expand the product i σαxi appearing in Eq. (E2) as
+
+  APPENDIX E: ANALYTIC STUDY OF THE EFFECTIVE                                         2r                                             
+                                                                                                                                     2r
+  CENTRAL CHARGE FOR BORN-RULE AND FORCED                                                   σαxi = σ x 2r + σ x 2r−1                    φαx i + O[(φ x )2 ]       (E4)
+                 MEASUREMENT                                                          i=1                                             i=1
+
+   In this Appendix, we analytically study the behavior of the                 to the first order of φαx i ’s. Recall that, from the space-time
+effective central charge ceff in the three cases with Born-rule                perspective, the measurement-induced perturbation occurs on
+measurements, unbiased forced measurements, and biased                         a one-dimensional defect at imaginary time τ = 0. We keep
+forced measurements. The key to our analysis is finding                        the first-order terms in φαx i ’s because they give rise to marginal
+the approximations of the measurement-induced perturbations                    perturbations to the (R-replica) Ising CFT, while the higher-
+that capture their most dominant effects under RG. In all three                order terms are irrelevant under RG. Using the expansion
+cases, the approximated version of the measurement-induced                     above, we can write
+perturbations turns out to be of the same type as the per-                                           
+turbation occurring in the postmeasurement states |{m  x
+                                                          j =±}
+                                                                                                               (1 + x)R + (1 − x)R
+which we have carefully studied in Sec. III. Using this ap-                         cosh 2β        σα = cR
+                                                                                                    x
+
+                                                                                                α
+                                                                                                                          2
+proximation, we obtain the expression of the effective central
+charge ceff in the three cases with the Born-rule measure-                                                                           (1 + x)R−1 − (1 − x)R−1
+ments, the unbiased forced measurements, and biased forced                                                                 + cR t
+                                                                                                                                                2
+measurements.
+                                                                                                                               
+                                                                                                                               R
+                                                                                                                           ×         φαx + O[(φ x )2 ],               (E5)
+       1. Born-rule and unbiased forced measurements                                                                           α=1
+
+   In the cases with the Born-rule and the unbiased forced
+                                                                               where x ≡ tσ
+                                                                                            x
+                                                                                              . To the linear order of φ x , we can approxi-
+measurements, the effect of the measurements is captured
+                                                                               mate cosh(2β α σαx ) by
+by the perturbation (25) in the continuum. The two types of
+measurements correspond to different replica limits: R → 1                                                     
+                                                                                                                              R
+                                                                                                                                            
+for Born-rule measurements and R → 0 for unbiased forced                             cosh 2β              σαx       = Ã            1 + g̃σαx + O[(φ x )2 ].          (E6)
+measurements.                                                                                        α                       α=1
+   At the microscopic level, this measurement-induced per-
+turbation (25) is given by the operator                                        Here, the coefficients Ã and g̃, which depend on both the
+                              ⎛                   ⎞                            measurement strength λ = tanh β and the replica number R,
+                                       R
+                                                                               are given by
+           MR =           exp ⎝2β      mj     x ⎠
+                                            σ j,α
+                    {m j =±}                                 α=1                                                             g
+                                             j
+                                                                                                            g̃ =                         ,                            (E7)
+                                                                                                                    1 + (R − 1)σ x g
+                                         
+                                         R
+                =         2 cosh 2β                  σ j,α
+                                                       x
+                                                                        (E1)                                          [1 + (R − 1)σ x g]R
+                                                                                                          Ã = A                            ,                         (E8)
+                      j                  α=1                                                                            [1 + Rσ x g]R−1
+
+                                                                         165120-18
+ENTANGLEMENT IN A ONE-DIMENSIONAL CRITICAL …                                                           PHYSICAL REVIEW B 108, 165120 (2023)
+
+where
+                               R−1 
+                          t 1 − 1−x
+                                1+x
+      g=                                   R−1 ,              (E9)
+           [1 − (R − 1)x] + [1 + (R − 1)x] 1−x
+                                           1+x
+         (1 − x)R−1 [(R − 1)x + 1]−(1 + x)R−1 [(R − 1)x−1]
+A = cR                                                     .
+                                  2
+                                                       (E10)
+  Now, we can write an approximated version of the
+measurement-induced perturbation MR in Eq. (E1) with the
+Born-rule and the unbiased forced measurements:
+                 R
+                                         
+        MR =              2Ã 1 + g̃σ j,α
+                                      x
+                                            + O[(φ x )2 ].    (E11)
+                α=1   j
+
+Notice that the first term on the right-hand side of this                                                         f
+                                                                           FIG. 13. The effective central charge ceff of unbiased forced mea-
+equation is exactly the same type of measurement-induced
+                                                                        surement. The orange curve is given by Eq. (E15). The blue dots are
+perturbation in the postmeasurement states |{m       x
+                                                         j =±}
+                                                                dis-
+                                                                        the effective central charge obtained from the MPS simulations. The
+cussed Sec. III but with a modified measurement strength                same numerical results are also presented in Fig. 8.
+captured by g̃. Recall that the measurement-induced perturba-
+tions in the postselected states |{m
+                                    x
+                                      j =±}
+                                             are exactly marginal
+                                                                                 p.m.
+under RG. The approximation (E11) includes all the marginal             where ceff    (λ̃) denotes the effective central charge in the
+perturbation and neglects the terms of the order O[(φ x )2 ],           postmeasurement state |{m  x
+                                                                                                       j =−}
+                                                                                                              with measurement strength
+which are irrelevant under RG. MR does not include any RG-              λ̃. The exact expression of ceff     p.m.
+                                                                                                                  is given by Eq. (17).
+relevant terms. Hence, we expect this approximation (E11) to            The superscripts “f” and “p.m.” are introduced to distin-
+capture the behavior of the measurement-induced perturba-               guish the effective central charges appearing in different
+tions (E1) and (25) accurately (at least) for small measurement         scenarios.
+strength.                                                                   As shown in Fig. 13, Eq. (E15) agrees well with the ef-
+   For the case with Born-rule measurements, we should con-             fective central charge numerically obtained from the MPS
+sider the replica limit R → 1. We find that                             simulation of the unbiased forced measurement for mea-
+                                 R→1                                    surement strength λ  0.7. As the measurement strength λ
+                               g̃ −−→ 0,                      (E12)     approaches 1, we caution that Eq. (E15) must receive correc-
+which implies that the measurement-induced perturbation is              tions from the neglected terms in our approximation (E11).
+irrelevant under RG. The effective central charge defined               We anticipate such corrections because Eq. (E15) does not
+through the subsystem EE should remain the same as the
+                                                                                                     f
+                                                                        capture the expected limit ceff  (λ → 1) → 0. Nevertheless, our
+“unmeasured” cTFIM ground state |. In other words, we                 method successfully captures the behavior of the effective
+conclude that, under Born-rule measurements, ceff = 21 , which          central charge for a large arrange of measurement strength λ.
+is independent of the measurement strength λ. This result is
+consistent with our numerical study presented in Fig. 7 in                                    2. Biased forced measurements
+Sec. IV.
+                                                                            As introduced in Sec. V, with biased forced measurements,
+    For the case with unbiased forced measurements, we
+                                                                        we sample each measurement outcome m j = + with proba-
+should consider the replica limit R → 0. We find that
+                                                                        bility p+ and m j = − with probability 1 − p+ .
+                             R→0
+                          g̃ −−→ −t2 σ x .                  (E13)         Under this sampling scheme, the microscopic form of the
+                                                                        measurement-induced perturbation reads as
+The     measurement-induced perturbation of the form                                                       ⎛                     ⎞
+        j 2Ã(1 + g̃σ j,α ) with g̃ = −t σ  is exactly the                       N                            
+                      x                    2    x                                                                        R
+  α
+perturbation associated with the postmeasurement state                  MR =          p++ (1 − p+ )N− exp ⎝2β      mj       x ⎠
+                                                                                                                           σ j,α
+|{m
+   x
+     j =−}
+             with a measurement strength                                         {m j =±}                                    j    α=1
+                                                                                                  ⎧            "                            #⎫
+                        1                                                                         ⎨                                       ⎬
+          λ̃ = tanh       arctanh(t σ )
+                                    2  x                                                                            1      p+
+                                                                              ∝              exp           mj         ln         +2β   σ j,α
+                                                                                                                                         x
+                                                                                                                                                ,
+                        2                                                                          ⎩                2    1 − p+      α
+                                                                                                                                              ⎭
+                                                                               {m j =±}             j
+                       1              4λ2
+             = tanh arctanh                   σ  x
+                                                      . (E14)                                                                              (E16)
+                       2           (1 + λ2 )2
+                                                                                                                                      L
+                                            f
+Consequently, the effective central charge ceff in the case of          with the proportionality constant [p+ (1 − p+ )] 2 . Here, N±
+unbiased forced measurements as a function of the measure-              is the number of sites where the measurement outcome m j
+ment strength λ is given by                                             is ±. L is the total length of the Ising spin chain. The
+                                      p.m.                              replica limit of the biased forced measurements is given
+                           f
+                          ceff (λ) = ceff  (λ̃),              (E15)     by R → 0.
+
+                                                                  165120-19
+ZHOU YANG, DAN MAO, AND CHAO-MING JIAN                                                               PHYSICAL REVIEW B 108, 165120 (2023)
+
+
+         (a)                                                              (b)
+
+
+
+
+         (c)                                                              (d)
+
+
+
+
+                                            bf
+   FIG. 14. The effective central charge ceff  for the biased forced measurements with p+ = pxb + δ p. The orange curves are given by Eq. (E19).
+The blue circles are the effective central charge obtained from MPS simulations.
+
+  Similar to Appendix E 1, we can approximate the                           our numerical simulation shown in Fig. 8. Note that, when
+measurement-induced perturbation MR by                                     p+ = pbx , namely δ p = 0, the biased forced measurement
+                                                                            provides a mean-field approximation to the case with the
+                        R
+                                                                          Born-rule measurement. The independence of the effective
+               MR ∝              1 + g̃ σ j,α
+                                            x
+                                                  + O[(φ x )2 ]   (E17)     central charge on the measurement strength is found analyt-
+                       α=1   j
+                                                                            ically and numerically in both types of measurements.
+to the first order of φ x . In the replica limit R → 0, we have                 For a generic value of δ p, the effective central charge ceff
+                                                                                                                                          bf
+
+                                                                            is given by
+                        R→0           2tδ p
+                   g̃ −−→                          ,             (E18)                                bf
+                                                                                                      ceff        p.m. 
+                                                                                                           (λ) = ceff (λ̃ )                (E19)
+                                 (1 − x 2 ) − 2xδ p
+                                                                            with
+where δ p = p+ − pbx is defined as the difference between p+                                                  '                       (
+and pbx = 1+x = 21 + 1+λλ                                                                  λ̃ (δ p, λ) = tanh 21 arctanh(|g̃ ||R→0 ) .   (E20)
+                          2 σ . The latter is the probability of
+                              x
+           2
+measuring m = +1 when we only perform the σ x measure-                      Again, this result is obtained by comparing the approximated
+ment on a single site in the cTFIM ground state |.                        version of the measurement-induced perturbation MR with
+   When δ p = 0, we have g̃ |R→0 = 0. Therefore, the cor-                  the exactly marginal perturbation appearing in the postmea-
+responding effective central charge ceff bf
+                                             with biased forced             surement states |{mx
+                                                                                                   j =±}
+                                                                                                         .
+measurements should remain the same as the un-measured                         In Fig. 14, we compare our analytical result (E19) with
+cTFIM ground state |, i.e., ceff = 21 , independent on the                the numerical simulations and find good agreements between
+measurement strength λ. This conclusion is consistent with                  them (especially at small measurement strength λ).
+
+
+
+
+ [1] A. Y. Kitaev, Quantum error correction with imperfect gates,               [3] M. A. Levin and X.-G. Wen, String-net condensation: A
+     in Quantum Communication, Computing, and Measurement,                          physical mechanism for topological phases, Phys. Rev. B 71,
+     edited by O. Hirota, A. S. Holevo, and C. M. Caves (Springer,                  045110 (2005).
+     Boston, MA, 1997), pp. 181–188.                                            [4] B. Zeng and X.-G. Wen, Gapped quantum liquids and topolog-
+ [2] A. Y. Kitaev, Fault-tolerant quantum computation by anyons,                    ical order, stochastic local transformations and emergence of
+     Ann. Phys. 303, 2 (2003).                                                      unitarity, Phys. Rev. B 91, 125121 (2015).
+
+
+                                                                    165120-20
+ENTANGLEMENT IN A ONE-DIMENSIONAL CRITICAL …                                                    PHYSICAL REVIEW B 108, 165120 (2023)
+
+ [5] R. Raussendorf and H. J. Briegel, A one-way quantum com-            [27] J. Kelly, R. Barends, A. G. Fowler, A. Megrant, E. Jeffrey, T. C.
+     puter, Phys. Rev. Lett. 86, 5188 (2001).                                 White, D. Sank, J. Y. Mutus, B. Campbell, Y. Chen, Z. Chen, B.
+ [6] D. Gottesman and I. L. Chuang, Demonstrating the vi-                     Chiaro, A. Dunsworth, I.-C. Hoi, C. Neill, P. J. J. O’Malley, C.
+     ability of universal quantum computation using teleporta-                Quintana, P. Roushan, A. Vainsencher, J. Wenner et al., State
+     tion and single-qubit operations, Nature (London) 402, 390               preservation by repetitive error detection in a superconducting
+     (1999).                                                                  quantum circuit, Nature (London) 519, 66 (2015).
+ [7] R. Raussendorf, D. E. Browne, and H. J. Briegel, Measurement-       [28] N. Ofek, A. Petrenko, R. Heeres, P. Reinhold, Z. Leghtas,
+     based quantum computation on cluster states, Phys. Rev. A 68,            B. Vlastakis, Y. Liu, L. Frunzio, S. M. Girvin, L. Jiang, M.
+     022312 (2003).                                                           Mirrahimi, M. H. Devoret, and R. J. Schoelkopf, Extending the
+ [8] H. J. Briegel and R. Raussendorf, Persistent entanglement in             lifetime of a quantum bit with error correction in superconduct-
+     arrays of interacting particles, Phys. Rev. Lett. 86, 910 (2001).        ing circuits, Nature (London) 536, 441 (2016).
+ [9] J. Cardy, Boundary conformal field theory, arXiv:hep-               [29] L. Hu, Y. Ma, W. Cai, X. Mu, Y. Xu, W. Wang, Y. Wu, H. Wang,
+     th/0411189.                                                              Y. P. Song, C.-L. Zou, S. M. Girvin, L.-M. Duan, and L. Sun,
+[10] M. Levin and X.-G. Wen, Detecting topological order in a                 Quantum error correction and universal gate set operation on a
+     ground state wave function, Phys. Rev. Lett. 96, 110405 (2006).          binomial bosonic logical qubit, Nat. Phys. 15, 503 (2019).
+[11] R. C. Myers and A. Sinha, Seeing a c-theorem with holography,       [30] J. Cramer, N. Kalb, M. A. Rol, B. Hensen, M. S. Blok, M.
+     Phys. Rev. D 82, 046006 (2010).                                          Markham, D. J. Twitchen, R. Hanson, and T. H. Taminiau,
+[12] R. C. Myers and A. Sinha, Holographic c-theorems in arbitrary            Repeated quantum error correction on a continuously encoded
+     dimensions, J. High Energy Phys. 01 (2011) 125.                          qubit by real-time feedback, Nat. Commun. 7, 11526 (2016).
+[13] H. Casini and M. Huerta, A c-theorem for entanglement en-           [31] H. M. Wiseman and G. J. Milburn, Quantum Measurement and
+     tropy, J. Phys. A: Math. Theor. 40, 7031 (2007).                         Control (Cambridge University Press, Cambridge, 2009).
+[14] H. Casini and M. Huerta, Renormalization group running of           [32] A. Nahum, S. Roy, B. Skinner, and J. Ruhman, Measurement
+     the entanglement entropy of a circle, Phys. Rev. D 85, 125016            and entanglement phase transitions in all-to-all quantum cir-
+     (2012).                                                                  cuits, on quantum trees, and in Landau-Ginsburg theory, PRX
+[15] H. Li and F. D. M. Haldane, Entanglement spectrum as a gener-            Quantum 2, 010352 (2021).
+     alization of entanglement entropy: Identification of topological    [33] C.-M. Jian, Y.-Z. You, R. Vasseur, and A. W. W. Ludwig,
+     order in non-Abelian fractional quantum Hall effect states,              Measurement-induced criticality in random quantum circuits,
+     Phys. Rev. Lett. 101, 010504 (2008).                                     Phys. Rev. B 101, 104302 (2020).
+[16] M. A. Metlitski and T. Grover, Entanglement entropy of              [34] Y. Bao, S. Choi, and E. Altman, Theory of the phase transition
+     systems with spontaneously broken continuous symmetry,                   in random unitary circuits with measurements, Phys. Rev. B
+     arXiv:1112.5166.                                                         101, 104301 (2020).
+[17] P. Calabrese and J. Cardy, Entanglement entropy and conformal       [35] Y. Li, R. Vasseur, M. P. A. Fisher, and A. W. W. Ludwig, Statis-
+     field theory, J. Phys. A: Math. Theor. 42, 504005 (2009).                tical mechanics model for clifford random tensor networks and
+[18] C.-J. Lin, W. Ye, Y. Zou, S. Sang, and T. H. Hsieh, Probing sign         monitored quantum circuits, arXiv:2110.02988.
+     structure using measurement-induced entanglement, Quantum           [36] C.-M. Jian, B. Bauer, A. Keselman, and A. W. W. Ludwig,
+     7, 910 (2023).                                                           Criticality and entanglement in nonunitary quantum circuits and
+[19] S. J. Garratt, Z. Weinstein, and E. Altman, Measurements                 tensor networks of noninteracting fermions, Phys. Rev. B 106,
+     conspire nonlocally to restructure critical quantum states,              134206 (2022).
+     arXiv:2207.09476.                                                   [37] R. Vasseur, A. C. Potter, Y.-Z. You, and A. W. W. Ludwig,
+[20] I. Affleck, A current algebra approach to the Kondo effect, Nucl.        Entanglement transitions from holographic random tensor net-
+     Phys. B 336, 517 (1990).                                                 works, Phys. Rev. B 100, 134203 (2019).
+[21] I. Affleck and A. W. Ludwig, Critical theory of overscreened        [38] M. A. Nielsen and I. L. Chuang, Computation and Quan-
+     Kondo fixed points, Nucl. Phys. B 360, 641 (1991).                       tum Information (Cambridge University Press, Cambridge, UK,
+[22] C. L. Kane and M. P. A. Fisher, Transmission through barriers            2010).
+     and resonant tunneling in an interacting one-dimensional elec-      [39] J. L. Cardy, Conformal invariance and surface critical behavior,
+     tron gas, Phys. Rev. B 46, 15233 (1992).                                 Nucl. Phys. B 240, 514 (1984).
+[23] J. Y. Lee, C.-M. Jian, and C. Xu, Quantum criticality under         [40] V. Eisler and I. Peschel, Entanglement in fermionic chains with
+     decoherence or weak measurement, PRX Quantum 4, 030317                   interface defects, Ann. Phys. 522, 679 (2010).
+     (2023).                                                             [41] J. Preskill, Quantum Computing in the NISQ era and beyond,
+[24] P. Schindler, J. T. Barreiro, T. Monz, V. Nebendahl, D. Nigg,            Quantum 2, 79 (2018).
+     M. Chwalla, M. Hennrich, and R. Blatt, Experimental repetitive      [42] T.-C. Lu and T. Grover, Spacetime duality between local-
+     quantum error correction, Science 332, 1059 (2011).                      ization transitions and measurement-induced transitions, PRX
+[25] V. Negnevitsky, M. Marinelli, K. K. Mehta, H.-Y. Lo, C.                  Quantum 2, 040319 (2021).
+     Flühmann, and J. P. Home, Repeated multi-qubit readout and          [43] M. Ippoliti, T. Rakovszky, and V. Khemani, Fractal, logarith-
+     feedback with a mixed-species trapped-ion register, Nature               mic, and volume-law entangled nonthermal steady states via
+     (London) 563, 527 (2018).                                                spacetime duality, Phys. Rev. X 12, 011045 (2022).
+[26] L. Egan, D. M. Debroy, C. Noel, A. Risinger, D. Zhu, D.             [44] X. Turkeshi, A. Biella, R. Fazio, M. Dalmonte, and M. Schiró,
+     Biswas, M. Newman, M. Li, K. R. Brown, M. Cetina, and                    Measurement-induced entanglement transitions in the quantum
+     C. Monroe, Fault-tolerant control of an error-corrected qubit,           Ising chain: From infinite to zero clicks, Phys. Rev. B 103,
+     Nature (London) 598, 281 (2021).                                         224210 (2021).
+
+                                                                   165120-21
+ZHOU YANG, DAN MAO, AND CHAO-MING JIAN                                                         PHYSICAL REVIEW B 108, 165120 (2023)
+
+[45] X. Turkeshi, M. Dalmonte, R. Fazio, and M. Schirò, Entan-          [56] M. P. Fisher, V. Khemani, A. Nahum, and S. Vijay, Random
+     glement transitions from stochastic resetting of non-Hermitian          quantum circuits, Annu. Rev. Condens. Matter Phys. 14, 335
+     quasiparticles, Phys. Rev. B 105, L241114 (2022).                       (2023).
+[46] X. Turkeshi and M. Schiró, Entanglement and correlation            [57] A. C. Potter and R. Vasseur, Entanglement dynamics in hy-
+     spreading in non-Hermitian spin chains, Phys. Rev. B 107,               brid quantum circuits, in Quantum Science and Technology
+     L020403 (2023).                                                         (Springer, Cham, Publishing, 2022), pp. 211–249.
+[47] S. Kullback and R. A. Leibler, On information and sufficiency,     [58] J. Cotler, C.-M. Jian, X.-L. Qi, and F. Wilczek, Superdensity
+     Ann. Math. Stat. 22, 79 (1951).                                         operators for spacetime quantum mechanics, J. High Energy
+[48] Y. Bao, R. Fan, A. Vishwanath, and E. Altman, Mixed-state               Phys. 09 (2018) 093.
+     topological order and the errorfield double formulation of         [59] Z. Weinstein, R. Sajith, E. Altman, and S. J. Garratt, Nonlocal-
+     decoherence-induced transitions, arXiv:2301.05687.                      ity and entanglement in measured critical quantum Ising chains,
+[49] R. Fan, Y. Bao, E. Altman, and A. Vishwanath, Diagnostics               Phys. Rev. B 107, 245132 (2023).
+     of mixed-state topological order and breakdown of quantum          [60] Y. Zou, S. Sang, and T. H. Hsieh, Channeling quantum critical-
+     memory, arXiv:2301.05689.                                               ity, Phys. Rev. Lett. 130, 250403 (2023).
+[50] B. Skinner, J. Ruhman, and A. Nahum, Measurement-induced           [61] J. Hauschild and F. Pollmann, Efficient numerical simulations
+     phase transitions in the dynamics of entanglement, Phys. Rev.           with tensor networks: Tensor network python (TeNPy), SciPost
+     X 9, 031009 (2019).                                                     Phys. Lect. Notes 5 (2018).
+[51] Y. Li, X. Chen, and M. P. A. Fisher, Quantum Zeno effect           [62] F. Pollmann, S. Mukerjee, A. M. Turner, and J. E. Moore,
+     and the many-body entanglement transition, Phys. Rev. B 98,             Theory of finite-entanglement scaling at one-dimensional
+     205136 (2018).                                                          quantum critical points, Phys. Rev. Lett. 102, 255701
+[52] S. Choi, Y. Bao, X.-L. Qi, and E. Altman, Quantum error                 (2009).
+     correction in scrambling dynamics and measurement-induced          [63] F. Iglói, I. Peschel, and L. Turban, Inhomogeneous systems with
+     phase transition, Phys. Rev. Lett. 125, 030505 (2020).                  unusual critical behaviour, Adv. Phys. 42, 683 (1993).
+[53] S.-J. Gu, Fidelity approach to quantum phase transitions,          [64] R. Bariev, Effect of linear defects on the local magnetization of
+     arXiv:0811.3127.                                                        a plane Ising lattice, Zh. Eksp. Teor. Fiz. 77, 1217 (1979) [Sov.
+[54] S. Zhou and L. Jiang, An exact correspondence between                   Phys.–JETP 50, 613 (1979)].
+     the quantum Fisher information and the Bures metric,               [65] B. M. McCoy and J. H. H. Perk, Two-spin correlation functions
+     arXiv:1910.08473.                                                       of an Ising model with continuous exponents, Phys. Rev. Lett.
+[55] B. Damski, Fidelity susceptibility of the quantum Ising model in        44, 840 (1980).
+     a transverse field: The exact solution, Phys. Rev. E 87, 052131    [66] S. Bravyi, Lagrangian representation for fermionic linear optics,
+     (2013).                                                                 Quantum Inf. Comput. 5, 216 (2005).
+
+
+
+
+                                                                  165120-22
+

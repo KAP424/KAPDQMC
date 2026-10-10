@@ -1,3 +1,14 @@
+$$
+\Psi=\sum_s P_s \Psi_s
+\\
+S_2 (\Psi) = -\ln \{\sum_{s_1,s_2}  P_{s_1}P_{s_2} \det[ G_{s_1}G_{s_2}+(I-G_{s_1})(I-G_{s_2}) ]  \}
+\\
+\Downarrow Measure \\
+\text{以波恩概率}w(E)\text{概率坍缩到波函数} M_E \Psi
+\\
+\mathbb{E}_{b} S_2 = \sum_E w_E S_2(M_E \Psi)
+$$
+
 # trajectory 中测量构型的单点交换
 
 下面只讨论固定粒子数的 Slater 态。目标是从所有含 \(a\) 个“占据目标”格点的构型中，用单点交换做重要性采样。
@@ -568,39 +579,3 @@ X'_{jj}=\frac1{\Delta_{ij}}.
 $$
 
 把 \(\widehat X\) 换回旧 \(X\)，就是第 2.3 节列出的逐元素更新式。整个更新没有重新求逆。
-
-## 4. 最终实现流程
-
-当前保存 \(E\) 和 \(X=(I_a-\lambda G_E)^{-1}\) 后，每次选择位置 \(i\) 和 \(j\)，交换物理格点 \(S[i]\) 与 \(E[j]\)：
-
-1. 计算 \(g_k=G_{e_k,S[i]}\)，再计算 \(z=Xg\)。
-2. 对 \(k\neq j\)，计算
-   \[
-   \widetilde z_k=z_k-\frac{X_{kj}}{X_{jj}}z_j.
-   \]
-3. 计算
-   \[
-   \Delta_{ij}=1-\lambda G_{S[i],S[i]}
-   -\lambda^2\sum_{k\neq j}G_{S[i],E[k]}\widetilde z_k,
-   \qquad
-   \mathrm{ratio}=\Delta_{ij}X_{jj}.
-   \]
-4. 以 \(\alpha=\min(1,\mathrm{ratio})\) 接受提议；拒绝则保持 \(E,X\) 不变。
-5. 接受后直接交换数组元素 \(S[i]\leftrightarrow E[j]\)，并用第 2.3 节的三条公式更新 \(X\)。
-
-两个基本检查是
-
-$$
-\beta\to0\quad\Longrightarrow\quad
-\lambda\to0,\ X\to I_a,\ \mathrm{ratio}\to1,
-$$
-
-以及当 \(G\) 在格点基底中对角时
-
-$$
-\mathrm{ratio}
-=\frac{1-\lambda G_{S[i],S[i]}}
-       {1-\lambda G_{E[j],E[j]}},
-$$
-
-符合“越接近初态空位的格点越容易被选作 \(E\)”的直观结果。

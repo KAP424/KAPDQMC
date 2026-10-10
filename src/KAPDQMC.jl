@@ -2,8 +2,10 @@ module KAPDQMC
 using LinearAlgebra, LinearAlgebra.BLAS, LinearAlgebra.LAPACK
 
 include("public/Geometry.jl")
-export name_Lattice, nnidx_F, area_index, i_xy, xy_i, nnn2idx, n3n2idx
-export nnK_Matrix, nnnK_Matrix, n3nK_Matrix, Initial_Pt!
+export name_Lattice, nnidx_F, area_index, i_xy, xy_i
+export nnK_Matrix, Initial_Pt!
+
+# export nnnK_Matrix, n3nK_Matrix, nnn2idx, n3n2idx
 
 include("public/Buffer.jl")
 

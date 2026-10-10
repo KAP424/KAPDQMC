@@ -3,119 +3,182 @@ using KAPDQMC
 using Test
 using Random
 using LinearAlgebra
+using DelimitedFiles
 
-@testset "Measure_EE.jl" begin
-    Sweeps = 1000
+mutable struct Measure_EE_
+    beta::Float64
+    λ::Float64
+    E_idx::Vector{Int}
+    S_idx::Vector{Int}
+    X::Matrix{Float64}
+    g::Vector{Float64}
+    zbar::Vector{Float64}
+    MO::Vector{Float64}
+    M_BR::Matrix{Float64}
+    M_BL::Matrix{Float64}
+    M_G::Matrix{Float64}
+end
+
+
+function Measure_EE(beta, Ns, ns)
+    idx = randperm(Ns)[1:ns]
+    return Measure_EE_(
+        beta,
+        1 - exp(-4 * beta),
+        idx,
+        setdiff(1:Ns, idx),
+        zeros(Float64, ns, ns),
+        zeros(Float64, ns),
+        zeros(Float64, ns),
+        ones(Float64, Ns),
+        zeros(Float64, Ns, ns),
+        zeros(Float64, ns, Ns),
+        zeros(Float64, Ns, Ns)
+    )
+end
+
+function Poss_M(beta, E_idx, Pt)
+    """
+    测试函数
+    """
+    Ns = size(Pt, 1)
+    n = ones(Ns)
+    n[E_idx] .= exp(-2 * beta)
+    MO_test = Diagonal(n)
+    M_Pt_test = MO_test * Pt
+    Poss = det(M_Pt_test' * M_Pt_test)
+    return Poss
+end
+
+function UpdateMeasure!(M::Measure_EE_, G::Matrix{Float64}, tmpn, tmpnn, Pt)
+    ns = length(M.E_idx)
+    for _ in 1:2*ns
+        i = rand(1:ns)  #E增加i
+        j = rand(1:ns)   #E减少j
+
+        M.g .= G[M.E_idx, M.S_idx[i]]
+        mul!(tmpn, M.X, M.g)
+        M.zbar .= tmpn .- (tmpn[j] / M.X[j, j]) .* M.X[:, j]
+
+        Δ = 1 - M.λ * G[M.S_idx[i], M.S_idx[i]] - M.λ^2 * dot(G[M.S_idx[i], M.E_idx], M.zbar)
+        ratio = Δ * M.X[j, j]
+
+        #############################################################################
+        # E_idx2 = copy(M.E_idx)
+        # S_idx2 = copy(M.S_idx)
+        # tmp = E_idx2[j]
+        # E_idx2[j] = S_idx2[i]         # E[j] <- S[i]
+        # S_idx2[i] = tmp         # S[i] <- E[j]
+        # Poss1 = Poss_M(M.beta, M.E_idx, Pt)
+        # Poss2 = Poss_M(M.beta, E_idx2, Pt)
+        # @assert abs(ratio - Poss2 / Poss1) / abs(ratio) < 1e-5 abs(ratio - Poss2 / Poss1) / abs(ratio)
+        ##############################################################################
+
+        if rand() < ratio
+            mul!(tmpnn, M.X[:, j], M.X[j, :]')
+
+            M.X .-= tmpnn ./ M.X[j, j]
+            mul!(tmpnn, M.zbar, M.zbar')
+            M.X .+= (M.λ^2 / Δ) .* tmpnn
+            M.X[:, j] .= (M.λ / Δ) .* M.zbar
+            M.X[j, :] .= (M.λ / Δ) .* conj.(M.zbar)
+            M.X[j, j] = 1 / Δ
+
+            tmp = M.E_idx[j]
+            M.E_idx[j] = M.S_idx[i]         # E[j] <- S[i]
+            M.S_idx[i] = tmp         # S[i] <- E[j]
+            ##############################################################################
+            # X_new_true = inv(I(ns) - M.λ * G[M.E_idx, M.E_idx])
+            # X_update_abs_error = norm(X_new_true - M.X)
+            # X_update_rel_error = X_update_abs_error / norm(X_new_true)
+            # @assert X_update_rel_error < 1e-5 X_update_rel_error
+            ##############################################################################
+        end
+    end
+    M.MO .= 1
+    M.MO[M.E_idx] .= exp(-2 * M.beta)
+end
+
+struct tmpME_
+    tmpn::Vector{Float64}
+    tmpnn::Matrix{Float64}
+end
+
+
+function Free_Measure_EE(L, beta, Sweeps)
     Result = zeros(Float64, Sweeps, 2)
     #############-----preset-----####################
     Lattice = "HoneyComb120"
-    Initial = "H0"
-    L = 6
-    beta = 4.0
     site = [L, L]
     idxA = area_index(Lattice, site, ([1, 1], [L ÷ 3, L]))
     idxB = area_index(Lattice, site, ([1, 1], [L ÷ 3, L * 2 ÷ 3]))
     #############-----preset-----####################
 
 
-    λ = 1 - exp(-4 * beta)
     K = nnK_Matrix(Lattice, site)
-
     Ns = size(K)[1]
     ns = round(Int, Ns / 2)
     Pt = zeros(Float64, Ns, ns)  # 预分配 Pt
     E, V = LAPACK.syevd!('V', 'L', K)
-    Pt = V[:, 1:ns]
-    G = Pt * inv(Pt' * Pt) * Pt'
+    Pt .= V[:, 1:ns]
+    BR = copy(Pt)
+    BL = copy(Pt')
+    G = BR * inv(BL * BR) * BL
 
     # 初始化
-    E_idx = randperm(Ns)[1:ns]
-    S_idx = setdiff(1:Ns, E_idx)
-    X = inv(I(ns) - λ * G[E_idx, E_idx])
-    g = zeros(Float64, ns)
-    zbar = zeros(Float64, ns)
-    tmpNf = zeros(Float64, ns)     # work for z
-    tmpNfNf = zeros(Float64, ns, ns)  # work for Xnew
+    M1 = Measure_EE(beta, Ns, ns)
+    M1.X = inv(I(ns) - M1.λ * G[M1.E_idx, M1.E_idx])
 
-    MO = ones(Ns)
-    M_Pt = zeros(Float64, Ns, ns)
+    tmpn = zeros(Float64, ns)     # work for z
+    tmpnn = zeros(Float64, ns, ns)  # work for Xnew
+    tmpNn = zeros(Float64, Ns, ns)
+    tmpnN = zeros(Float64, ns, Ns)
+    tau = Vector{Float64}(undef, ns)
+    ipiv = Vector{LAPACK.BlasInt}(undef, ns)
+
     GM_A = zeros(Float64, length(idxA), length(idxA))
     GM_B = zeros(Float64, length(idxB), length(idxB))
 
-    function Poss_M(E_idx, Pt)
-        """
-        测试函数
-        """
-        Ns = size(Pt, 1)
-        n = ones(Ns)
-        n[E_idx] .= exp(-2 * beta)
-        MO = Diagonal(n)
-        M_Pt = MO * Pt
-        Poss = det(M_Pt' * M_Pt)
-        return Poss
-    end
-
     for loop in 1:Sweeps
         if loop % 100 == 0
-            println("loop = $loop")
-            X = inv(I(ns) - λ * G[E_idx, E_idx])
+            # println("loop = $loop")
+            M1.X = inv(I(ns) - M1.λ * G[M1.E_idx, M1.E_idx])
         end
-        i = rand(1:ns)  #E增加i
-        j = rand(1:ns)   #E减少j
 
-        g .= G[E_idx, S_idx[i]]
-        mul!(tmpNf, X, g)     # work for z
-        zbar .= tmpNf .- (tmpNf[j] / X[j, j]) .* X[:, j]
-        zbar[j] = zero(eltype(zbar))
+        UpdateMeasure!(M1, G, tmpn, tmpnn, Pt)
 
-        Δ = 1 - λ * G[S_idx[i], S_idx[i]] - λ^2 * dot(G[S_idx[i], E_idx], zbar)
-        ratio = Δ * X[j, j]
+        # 因为是自由费米子，所以这里special，两个replica的BR，BL是一样的
+        mul!(M1.M_BR, Diagonal(M1.MO), BR)
+        LAPACK.geqrf!(M1.M_BR, tau)
+        LAPACK.orgqr!(M1.M_BR, tau, ns)
 
-        ##############################################################################
-        E_idx2 = copy(E_idx)
-        S_idx2 = copy(S_idx)
-        tmp = E_idx2[j]
-        E_idx2[j] = S_idx[i]         # E[j] <- S[i]
-        S_idx2[i] = tmp         # S[i] <- E[j]
-        Poss1 = Poss_M(E_idx, Pt)
-        Poss2 = Poss_M(E_idx2, Pt)
-        @assert abs(ratio - Poss2 / Poss1) / abs(ratio) < 1e-5 abs(ratio - Poss2 / Poss1) / abs(ratio)
-        ##############################################################################
+        mul!(M1.M_BL, BL, Diagonal(M1.MO))
+        LAPACK.gerqf!(M1.M_BL, tau)
+        LAPACK.orgrq!(M1.M_BL, tau, ns)
 
-        if rand() < ratio
-            mul!(tmpNfNf, X[:, j], X[j, :]')
+        KAPDQMC.tUDQMC.get_G!(tmpnn, tmpnN, ipiv, M1.M_BL, M1.M_BR, M1.M_G)
 
-            X .-= tmpNfNf ./ X[j, j]
-            mul!(tmpNfNf, zbar, zbar')
-            X .+= (λ^2 / Δ) .* tmpNfNf
-            X[:, j] .= (λ / Δ) .* zbar
-            X[j, :] .= (λ / Δ) .* conj.(zbar)
-            X[j, j] = 1 / Δ
-
-            tmp = E_idx[j]
-            E_idx[j] = S_idx[i]         # E[j] <- S[i]
-            S_idx[i] = tmp         # S[i] <- E[j]
-            ##############################################################################
-            X_new_true = inv(I(ns) - λ * G[E_idx, E_idx])
-            X_update_abs_error = norm(X_new_true - X)
-            X_update_rel_error = X_update_abs_error / norm(X_new_true)
-            @assert X_update_rel_error < 1e-5 X_update_rel_error
-            ##############################################################################
-        end
-        MO .= 1
-        MO[E_idx] .= exp(-2 * beta)
-        mul!(M_Pt, Diagonal(MO), Pt)
-
-        M_G = M_Pt * inv(M_Pt' * M_Pt) * M_Pt'
-
-        GroverMatrix!(GM_A, view(M_G, idxA, idxA), view(M_G, idxA, idxA))
-        GroverMatrix!(GM_B, view(M_G, idxB, idxB), view(M_G, idxB, idxB))
+        GroverMatrix!(GM_A, view(M1.M_G, idxA, idxA), view(M1.M_G, idxA, idxA))
+        GroverMatrix!(GM_B, view(M1.M_G, idxB, idxB), view(M1.M_G, idxB, idxB))
 
         Result[loop, 1] = det(GM_A)
         Result[loop, 2] = det(GM_B)
     end
 
-    file = "./Free_HC.csv"
+    file = "./src/Measure/L=$(L)/FreeHCL$(L)_β$(beta).csv"
     writedlm(file, Result, ',')
-
 end
+
+
+L_set = [12, 18]
+beta_set = collect(0.0:0.1:3.0)
+for L in L_set
+    if !isdir("./src/Measure/L=$(L)")
+        mkdir("./src/Measure/L=$(L)")
+    end
+    for beta in beta_set
+        println("L = $(L), beta = $(beta)")
+        Free_Measure_EE(L, beta, 1000)
+    end
+end
+

@@ -1,0 +1,24 @@
+Lx = 12
+Ly = 12
+Np = 144
+Ns = 288
+a1 = [1.7320508075688772, 0.0]
+a2 = [-0.8660254037844386, 1.5]
+bond_length = 1.0
+boundary = "PBC"
+delta_AB = [-0.8660254037844386, 0.5]
+filling = 0.5
+green_convention = "G_occupied[i,j] = <c_j^dagger c_i>; G_hole = I-G_occupied"
+hamiltonian = "H = sum_ij c_i^dagger K_ij c_j"
+hopping = [1.0, 1.0, 1.0]
+julia_version = "1.12.1"
+lattice = "HoneyComb120"
+reference_mass = 1.0e-5
+reference_potential_AB = [-1.0e-5, 1.0e-5]
+reference_state = "Initial_Pt!(HoneyComb120, H0, Pt, K), pure Slater determinant"
+schema_version = 1
+site_order = "A,B interleaved; x fastest; all exported indices one based"
+source = "test/test.jl; src/public/Geometry.jl; src/public/GF.jl"
+symmetric_state = "massless Gaussian ensemble; independent occupation 1/2 of every zero mode"
+zero_mode_count = 4
+zero_tolerance = 3.0e-10

@@ -1,0 +1,3 @@
+PROGRESS pilot_boundary_L6_beta3_chain2 sweep=128/256 elapsed=0.3
+PROGRESS pilot_boundary_L6_beta3_chain2 sweep=256/256 elapsed=0.4
+DONE pilot_boundary_L6_beta3_chain2 seconds=0.3959999084472656 legacy_error=5.180995606493544e-16

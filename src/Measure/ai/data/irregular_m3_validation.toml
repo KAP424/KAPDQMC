@@ -1,0 +1,22 @@
+generated_utc = "2026-10-21T07:33:29.026"
+scope = "Independent real-space exp(-0.25H) plus QR validates full projectors and all three regional entropies at L=9, theta=0,4,Inf and beta=0,1,2. The infinite-time reference is theta=128, separately compared to theta=64 and to ground energy before measurement. Full covariance comparison checks initial-state-selected zero modes. Small-system correctness only, not a scaling claim."
+max_covariance_error = 3.433361708779647e-14
+L = 9
+states = 9
+max_entropy_error = 1.0036416142611415e-13
+BLAS_threads = 1
+dense_ground_excess = 4.831690603168681e-13
+julia = "1.12.1"
+pattern = "near02_irregular3"
+status = "PASS"
+occupied_bits = "111100000011001110"
+dense_theta64_128_projector_difference = 1.700315900920514e-14
+csv_sha256 = "c339c7040faf59fcf9da06c32438956f2a26a75fa075c32a9990f570ae9f1271"
+
+[code_sha256]
+"real_entropy_extension.jl" = "56ef0aa79ec2e2c04f35d1120093dd32a513cb76d3f5cfc4c17acc41887065c9"
+"beta_patterns_strip_extension.jl" = "94d04924a186701c575710f10d7d55f00b533b5f27076914f5a3dc7a90bdaf1b"
+"irregular_m3_patterns.jl" = "64ced7a2212abb893993dd823d2c6163d0219f4c40dc14a56d0572bec5862fec"
+"validate_occupancy_classes.jl" = "485b1e79a56f819a04be8a8ad9712bfc84b234c58c9f25abbeec79e622e3af3d"
+"validate_irregular_m3.jl" = "d90d7b7f998fdef7f67caa651c7544a5cb06c5f77d0663d147bcf4f09ff64803"
+"fermion_experiment.jl" = "9efd053e7d469082ad8cead86ec256dade17e40279902842013c9a8dc9864fab"

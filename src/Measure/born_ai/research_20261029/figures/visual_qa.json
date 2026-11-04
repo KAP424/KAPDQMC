@@ -1,0 +1,27 @@
+{
+  "status": "PASS",
+  "figures": [
+    {
+      "stem": "iid_identity_checks",
+      "PNG_size": [
+        2324,
+        830
+      ],
+      "PDF_pages": 1,
+      "PNG_sha256": "585e70a4d9c4f23ed36721d9160bee113c3bfba4436cddbd2cfbe8c93d7b0583",
+      "PDF_sha256": "b4703278420f3d8d3d94d5229c71795ab645ae23d47159cd52ce2e7988db02fd",
+      "visual_review": "PASS: inspected rendered PNG; labels/legends readable, no clipping or point obscuration; one MCSE and no strict CI stated"
+    },
+    {
+      "stem": "iid_bounds_checks",
+      "PNG_size": [
+        2144,
+        1460
+      ],
+      "PDF_pages": 1,
+      "PNG_sha256": "bb34431723d3b91fa4979382b029f02fd1d41e73aa037d4284987fe399ea471d",
+      "PDF_sha256": "5b47d22905986aedf705bcf22ddf12f74f98a874b498420de17309d89aa29b44",
+      "visual_review": "PASS: inspected rendered PNG; labels/legends readable, no clipping or point obscuration; one MCSE and no strict CI stated"
+    }
+  ]
+}

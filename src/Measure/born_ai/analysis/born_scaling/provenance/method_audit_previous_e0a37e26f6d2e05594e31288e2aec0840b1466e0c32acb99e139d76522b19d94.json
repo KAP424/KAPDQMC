@@ -1,0 +1,134 @@
+{
+  "status": "PASS",
+  "scope": "Independent deterministic state, finite-filter, exact-enumeration and beta0 size checks; static review of the runner and current statistical primitives. This is NOT a production-MC convergence certificate.",
+  "checked_receipt_hash_entries": 28,
+  "receipts": {
+    "analysis/born_scaling_state_audit.toml": {
+      "status": "PASS"
+    },
+    "data/born_scaling/exact_L3_mu1e-8.toml": {
+      "status": "PASS",
+      "scope": "Exact small-system reference for the chosen staggered-mass Slater. No convergence claim for larger L and no replacement of the original swap production method."
+    },
+    "analysis/born_scaling_mass_filter_sensitivity.toml": {
+      "status": "PASS",
+      "scope": "Only these 99 fixed-E checks. They are not Born averages and do not bound regulator sensitivity of all outcomes or establish a Monte Carlo convergence criterion."
+    },
+    "data/born_scaling/beta0_mass_large_sizes.toml": {
+      "status": "PASS"
+    }
+  },
+  "state_audit": {
+    "sizes": [
+      3,
+      6,
+      9,
+      12,
+      15,
+      18,
+      21,
+      24
+    ],
+    "prescriptions_per_size": 4,
+    "main_mu": 1e-08,
+    "sensitivity_mu": 1e-09,
+    "mu_sensitivity_max_D": 9.838702297315649e-09,
+    "mu_sensitivity_max_S_A": 3.396195147331582e-08
+  },
+  "finite_filter_checks": {
+    "sizes": [
+      6,
+      12,
+      18
+    ],
+    "betas": [
+      0.5,
+      1.5,
+      3.0
+    ],
+    "fixed_configurations_per_L": 11,
+    "paired_comparisons": 99,
+    "not_a_Born_average": true
+  },
+  "exact_reference": {
+    "L": 3,
+    "mu": 1e-08,
+    "betas": [
+      0.5,
+      1.5,
+      3.0
+    ],
+    "configurations_per_beta": 48620,
+    "observables": [
+      "S_A",
+      "S_B",
+      "S_C",
+      "D"
+    ],
+    "includes": [
+      "means",
+      "full covariance",
+      "per-outcome probabilities and entropy",
+      "weighted-probability tails"
+    ]
+  },
+  "beta0_extension": {
+    "new_sizes": [
+      27,
+      30,
+      36
+    ],
+    "positive_beta_data_created": false
+  },
+  "independent_fit_crosscheck": {
+    "checks": 10,
+    "reference": "Separate Julia QR least-squares on deterministic D",
+    "maximum_log_coefficient_difference": 1.5265566588595902e-15
+  },
+  "static_runner_review": {
+    "same_measurement_beta_as_target": true,
+    "fixed_half_cardinality_preserved": true,
+    "rejected_states_retained_in_regular_trace": true,
+    "geometry": "A=(L/3)xL, B=(L/3)x(2L/3), C=Lx(L/3), both sites per cell",
+    "D_formed_per_trajectory": true,
+    "records_include_burnin": true,
+    "start_labels": "New runner uniform_A means E=all A (suppressed A), unlike older occupied-target naming. This is a labeling issue, not a transition-kernel error."
+  },
+  "pending_final_analysis_review": [
+    "Current analyzer has primitives but no production ingestion at this review hash; burn-in exclusion, stage merging and chain truncation therefore remain unverified.",
+    "Do not include initial.csv or pilot rows in independent production means; exclude by sweep before any fixed-length truncation.",
+    "ESS/Rhat screens do not certify rare-tail coverage. Absolute MCSE targets do not establish relative precision for small means.",
+    "The current fit primitive returns coefficients and residuals, not coefficient confidence intervals; final uncertainty must account for MC and window/model effects separately."
+  ],
+  "files": {
+    "analysis/born_scaling_state_audit.jl": "1578ecf4ffb680c549adc7f587d9ef6dc6f338a723221e1b1dea16e68ef09fab",
+    "original_swap_scaling.jl": "1af51fff868fbe63025323618506295ce5622179c1381de5ea64549e8c0d40cb",
+    "../../public/Geometry.jl": "079c2052642d46a7072656ccd738411faa57c9f07791f786a0a6872a5a5970ad",
+    "analysis/born_scaling_state_audit.csv": "6abdd8ea10d452c55197223f857019b147a525efa32928ecb89a7d33e0e9f74e",
+    "analysis/born_scaling_state_comparison.csv": "ebfb4e93636d6acd15c01344995fb9f63f3cd495f441ef4ff97a890d616f39c3",
+    "analysis/born_scaling_state_implementation_checks.csv": "3a29586ae523947b1f484c79ffecfc491cca6519eab4cad4424d6d3130ea4f32",
+    "analysis/born_scaling_state_local_slopes.csv": "88e19979bd474beb4e607afb7ff2e41f36521db127e4b2391bf060a85f9b51f7",
+    "analysis/born_scaling_state_window_fits.csv": "6801c5c8183a445c8730cf78eef1dd461e7e2a23106ec2660c8daa9403ea604f",
+    "analysis/born_scaling_state_audit.toml": "8f38e5e57125909b8cfc62286e078532927ebfc2113a80a293322026d4583756",
+    "ExactBorn.jl": "ac4ef87ef3a9b1ac38d163475f53ef5455af1bc8a5d6aa236053aff8707e26de",
+    "analysis/born_scaling_exact_L3.jl": "dc0eb1d9dcb0accf51ac52676127fd000cc38c28d7b15766e2fd4afd3d35d5c8",
+    "data/born_scaling/exact_L3_mu1e-8.csv": "66055522e1c627eb666405f4fada91e640b5ea68f36a020bc797450a714a40b3",
+    "data/born_scaling/exact_L3_mu1e-8_beta0p5_trajectories.csv": "b87a5d89d8a7df3c39bd6cad14d48a2b6c7009a5b88d7295f578b5e4ae068aa2",
+    "data/born_scaling/exact_L3_mu1e-8_beta1p5_trajectories.csv": "cd0cf5ffa48f14e2ecb8eb1158517424338fc9e60d671305f7eb9a5d9ab962ad",
+    "data/born_scaling/exact_L3_mu1e-8_beta3p0_trajectories.csv": "2aaed5b6e4e7db77d89faa4b63ff0e3ce568cf31156c38f1a762d8892d4077ad",
+    "data/born_scaling/exact_L3_mu1e-8_covariance.csv": "6b2ba4be02527ab2821a75c5c1f7607ac46d6f2f7c5f8c66de2fe0da4eaf5638",
+    "data/born_scaling/exact_L3_mu1e-8_tails.csv": "c6733aaeabff4fd5b1d5923317503699ca0ed1f75a29e747ec0deecae7b5f3f1",
+    "data/born_scaling/exact_L3_mu1e-8.toml": "69b3418ddf1f77a20f576431a6e21ade4c743ef602fbb146146ae94cc5f13fe8",
+    "analysis/born_scaling_mass_filter_sensitivity.jl": "769d700332576beeff8c6dd8e87ac02f6707af1bb7a9aa4f9582c3dbda23a217",
+    "analysis/born_scaling_mass_filter_sensitivity.csv": "63dbb2dbe882f10270f4e4f17ff0fffee11a8edb850095df2d4a9c9e28804ee7",
+    "analysis/born_scaling_mass_filter_sensitivity.toml": "48638f3838d2ec68b5382ad121e5eb6044acc19eeaeae8f9eec05dd86da9be8b",
+    "analysis/born_scaling_beta0_large_sizes.jl": "c9bc06083e2e3deb3498b57812863cb1d8f6bd592fb4f0c947a7e9d8737b7acd",
+    "data/born_scaling/beta0_mass_combined_local_slopes.csv": "0b924726cbf9626fbe17143847945f418cf22f56b63cb35d04c3509ee41bf34e",
+    "data/born_scaling/beta0_mass_combined_window_fits.csv": "52286eb46a20701e128ec0926c2a2d27871d52a561a91df6de98e840c7c9ef3c",
+    "data/born_scaling/beta0_mass_large_sizes.csv": "4d777d318dc40ed64d47afe22d7a87f6a5cce070a0fdd58721a1c7b6efa00cf0",
+    "data/born_scaling/beta0_mass_large_sizes.toml": "46f8abd0547f630aeb33aa5fdb1d68c0ea484bb7c839d511487ad00b8911995e",
+    "analyze_born_scaling.py": "3b304066b386ceb2391072741ab1637bc0006770f2407c6aba0a45a472a77c3e",
+    "run_born_scaling.jl": "3d9004c1d112a29ee1a7b440a945dc89516f7cabba8e279e0e5dd145e5a65c76",
+    "analysis/build_born_scaling_method_audit.py": "c3a7478b523795be3b88a5b40ca5486f1338728d4ea1ddecf7c6a73d985301eb"
+  }
+}

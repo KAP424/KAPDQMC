@@ -1,0 +1,5 @@
+pattern,family,m,mask,occupied_bits,double_cells,empty_cells,sublattice_imbalance,screened_orbits,eligible_orbits
+special_matched_a,special,3,87449,100110011010101010,0,0,5,4,4
+special_matched_b,special,3,87461,101001011010101010,0,0,5,4,4
+general_matched_a,general,3,27094,011010111001011000,1,1,1,64,226
+general_matched_b,general,3,54949,101001010110101100,1,1,1,64,226

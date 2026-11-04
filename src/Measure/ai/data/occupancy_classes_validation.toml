@@ -1,0 +1,74 @@
+max_dense_entropy_error = 1.8629542353210162e-13
+generated_utc = "2026-10-20T14:11:18.880"
+max_theta0_entropy = 3.197442310920451e-14
+scope = "Small-system correctness only; no scaling-fit claim. All six patterns. theta=0,4,Inf and beta=0,1,2. Independent real-space exact dense exponentials and QR validate finite-time covariance. Infinite theta is checked for ground energy/residual and entropy-backend agreement, not a separate dense limiting-state construction."
+max_direct_vs_stepped_covariance_error = 4.22814508897583e-12
+blas_config = "LBTConfig([ILP64] libopenblas64_.dll)"
+max_strip_dense_error = 1.9584334154387761e-13
+max_dense_covariance_error = 1.336019093637667e-14
+max_strip_original_error = 2.901845430614003e-14
+states = 90
+max_rectangle_eigen_error = 6.17284001691588e-14
+BLAS_threads = 1
+julia = "1.12.1"
+status = "PASS"
+max_ground_excess = 1.9895196601282805e-13
+max_ground_residual = 6.042144234787287e-14
+csv_sha256 = "9e4cdcacac2fa4cd538a662eb55a165a6cf2171ee8f2250ae4fabb471d93eff5"
+
+[code_sha256]
+"occupancy_classes_experiments.jl" = "a0a092a2bad70bff6045e922cccb40ccd65ca4902d71dc4b0640390776b43a61"
+"real_entropy_extension.jl" = "56ef0aa79ec2e2c04f35d1120093dd32a513cb76d3f5cfc4c17acc41887065c9"
+"beta_patterns_strip_extension.jl" = "94d04924a186701c575710f10d7d55f00b533b5f27076914f5a3dc7a90bdaf1b"
+"occupancy_classes_patterns.jl" = "0b76349c8e42df6cd71d76278d06b86887e832ce3e6df6d2d0d47b144e1cb6ae"
+"validate_occupancy_classes.jl" = "485b1e79a56f819a04be8a8ad9712bfc84b234c58c9f25abbeec79e622e3af3d"
+"fermion_experiment.jl" = "9efd053e7d469082ad8cead86ec256dade17e40279902842013c9a8dc9864fab"
+
+[[patterns]]
+pattern = "one_B_2"
+m = 2
+occupied_bits = "10101001"
+n1 = 4
+class_id = 1
+n2 = 0
+n0 = 0
+[[patterns]]
+pattern = "diagonal_B_3"
+m = 3
+occupied_bits = "011010100110101001"
+n1 = 9
+class_id = 1
+n2 = 0
+n0 = 0
+[[patterns]]
+pattern = "pure02_block4"
+m = 4
+occupied_bits = "11111111110011001100110000000000"
+n1 = 0
+class_id = 2
+n2 = 8
+n0 = 8
+[[patterns]]
+pattern = "pure02_irregular4"
+m = 4
+occupied_bits = "11001111001100000011001111001100"
+n1 = 0
+class_id = 2
+n2 = 8
+n0 = 8
+[[patterns]]
+pattern = "random_half_3"
+m = 3
+occupied_bits = "100110001011010110"
+n1 = 7
+class_id = 3
+n2 = 1
+n0 = 1
+[[patterns]]
+pattern = "general_matched_a"
+m = 3
+occupied_bits = "011010111001011000"
+n1 = 7
+class_id = 3
+n2 = 1
+n0 = 1

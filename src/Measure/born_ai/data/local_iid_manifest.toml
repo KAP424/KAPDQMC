@@ -1,0 +1,113 @@
+method = "Independent latent projection-DPP exact BornSampler; same saved LAPACK ground orbitals as local experiments, no burn-in and no entropy."
+script_sha256 = "8364c48887b136852b78e3620e15bb5be5f26a2a32a402252f7dee5501ddc0f3"
+status = "complete"
+sampler_sha256 = "c05d61daa476af103f46cc461745563a538e65db51a4e0f9511edb7ccfa48c54"
+seed = 823441
+n_per_setting = 512
+output_sha256 = "65ee2d470697fb4a7c68872c8a5baeb5f4114902eb0ae29011812926597604de"
+
+[[settings]]
+samples = 512
+P_sha256 = "ef31512973a1848383fe406eade5b09c1efd5b301dcc4a701ab2e30e5365d18c"
+L = 6
+seconds = 0.0369558
+G_sha256 = "16970d109ed1b3c909d1bf4d26cff33f69abc0300b07313e6ad6114e4afa4955"
+beta = 0.0
+[[settings]]
+samples = 512
+P_sha256 = "ef31512973a1848383fe406eade5b09c1efd5b301dcc4a701ab2e30e5365d18c"
+L = 6
+seconds = 0.0670619
+G_sha256 = "16970d109ed1b3c909d1bf4d26cff33f69abc0300b07313e6ad6114e4afa4955"
+beta = 0.5
+[[settings]]
+samples = 512
+P_sha256 = "ef31512973a1848383fe406eade5b09c1efd5b301dcc4a701ab2e30e5365d18c"
+L = 6
+seconds = 0.0478792
+G_sha256 = "16970d109ed1b3c909d1bf4d26cff33f69abc0300b07313e6ad6114e4afa4955"
+beta = 1.0
+[[settings]]
+samples = 512
+P_sha256 = "ef31512973a1848383fe406eade5b09c1efd5b301dcc4a701ab2e30e5365d18c"
+L = 6
+seconds = 0.0476687
+G_sha256 = "16970d109ed1b3c909d1bf4d26cff33f69abc0300b07313e6ad6114e4afa4955"
+beta = 2.0
+[[settings]]
+samples = 512
+P_sha256 = "ef31512973a1848383fe406eade5b09c1efd5b301dcc4a701ab2e30e5365d18c"
+L = 6
+seconds = 0.0476944
+G_sha256 = "16970d109ed1b3c909d1bf4d26cff33f69abc0300b07313e6ad6114e4afa4955"
+beta = 3.0
+[[settings]]
+samples = 512
+P_sha256 = "3360d98f8d5acc276e322c357526390e00c34fc491d7605f5798197eaae12935"
+L = 12
+seconds = 0.0058103
+G_sha256 = "a469f858897a61fee1f6bc97ac89c60b0741f4e29775cb869c1b7a27d35b2a5c"
+beta = 0.0
+[[settings]]
+samples = 512
+P_sha256 = "3360d98f8d5acc276e322c357526390e00c34fc491d7605f5798197eaae12935"
+L = 12
+seconds = 2.32625
+G_sha256 = "a469f858897a61fee1f6bc97ac89c60b0741f4e29775cb869c1b7a27d35b2a5c"
+beta = 0.5
+[[settings]]
+samples = 512
+P_sha256 = "3360d98f8d5acc276e322c357526390e00c34fc491d7605f5798197eaae12935"
+L = 12
+seconds = 4.2978331
+G_sha256 = "a469f858897a61fee1f6bc97ac89c60b0741f4e29775cb869c1b7a27d35b2a5c"
+beta = 1.0
+[[settings]]
+samples = 512
+P_sha256 = "3360d98f8d5acc276e322c357526390e00c34fc491d7605f5798197eaae12935"
+L = 12
+seconds = 4.3136783
+G_sha256 = "a469f858897a61fee1f6bc97ac89c60b0741f4e29775cb869c1b7a27d35b2a5c"
+beta = 2.0
+[[settings]]
+samples = 512
+P_sha256 = "3360d98f8d5acc276e322c357526390e00c34fc491d7605f5798197eaae12935"
+L = 12
+seconds = 4.192687
+G_sha256 = "a469f858897a61fee1f6bc97ac89c60b0741f4e29775cb869c1b7a27d35b2a5c"
+beta = 3.0
+[[settings]]
+samples = 512
+P_sha256 = "d72bcc8cb7b04a6119c65f638bb6b6d31855e6d05078a295d695f87d0299fa05"
+L = 18
+seconds = 0.0187974
+G_sha256 = "4fdd59b85116166d52dd4124e96f584b3123dac47aada7a6e22fe8bc958ded27"
+beta = 0.0
+[[settings]]
+samples = 512
+P_sha256 = "d72bcc8cb7b04a6119c65f638bb6b6d31855e6d05078a295d695f87d0299fa05"
+L = 18
+seconds = 45.5626364
+G_sha256 = "4fdd59b85116166d52dd4124e96f584b3123dac47aada7a6e22fe8bc958ded27"
+beta = 0.5
+[[settings]]
+samples = 512
+P_sha256 = "d72bcc8cb7b04a6119c65f638bb6b6d31855e6d05078a295d695f87d0299fa05"
+L = 18
+seconds = 44.6596744
+G_sha256 = "4fdd59b85116166d52dd4124e96f584b3123dac47aada7a6e22fe8bc958ded27"
+beta = 1.0
+[[settings]]
+samples = 512
+P_sha256 = "d72bcc8cb7b04a6119c65f638bb6b6d31855e6d05078a295d695f87d0299fa05"
+L = 18
+seconds = 44.6116249
+G_sha256 = "4fdd59b85116166d52dd4124e96f584b3123dac47aada7a6e22fe8bc958ded27"
+beta = 2.0
+[[settings]]
+samples = 512
+P_sha256 = "d72bcc8cb7b04a6119c65f638bb6b6d31855e6d05078a295d695f87d0299fa05"
+L = 18
+seconds = 45.2981843
+G_sha256 = "4fdd59b85116166d52dd4124e96f584b3123dac47aada7a6e22fe8bc958ded27"
+beta = 3.0

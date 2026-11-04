@@ -1,0 +1,58 @@
+[
+  {
+    "ProcessId": 100580,
+    "ParentProcessId": 1960,
+    "Name": "conhost.exe",
+    "CreationDate": "2026-10-27T15:52:36.346254+08:00",
+    "CommandLine": "\\??\\C:\\Windows\\system32\\conhost.exe 0x4"
+  },
+  {
+    "ProcessId": 30004,
+    "ParentProcessId": 1960,
+    "Name": "julia.exe",
+    "CreationDate": "2026-10-27T15:52:36.371888+08:00",
+    "CommandLine": "C:\\Users\\admin\\.julia\\juliaup\\julia-1.12.1+0.x64.w64.mingw32\\bin\\julia.exe"
+  },
+  {
+    "ProcessId": 48796,
+    "ParentProcessId": 50144,
+    "Name": "conhost.exe",
+    "CreationDate": "2026-10-27T15:52:36.37573+08:00",
+    "CommandLine": "\\??\\C:\\Windows\\system32\\conhost.exe 0x4"
+  },
+  {
+    "ProcessId": 97424,
+    "ParentProcessId": 50144,
+    "Name": "julia.exe",
+    "CreationDate": "2026-10-27T15:52:36.399006+08:00",
+    "CommandLine": "C:\\Users\\admin\\.julia\\juliaup\\julia-1.12.1+0.x64.w64.mingw32\\bin\\julia.exe"
+  },
+  {
+    "ProcessId": 96772,
+    "ParentProcessId": 50204,
+    "Name": "conhost.exe",
+    "CreationDate": "2026-10-27T15:52:36.402215+08:00",
+    "CommandLine": "\\??\\C:\\Windows\\system32\\conhost.exe 0x4"
+  },
+  {
+    "ProcessId": 31700,
+    "ParentProcessId": 50204,
+    "Name": "julia.exe",
+    "CreationDate": "2026-10-27T15:52:36.426414+08:00",
+    "CommandLine": "C:\\Users\\admin\\.julia\\juliaup\\julia-1.12.1+0.x64.w64.mingw32\\bin\\julia.exe"
+  },
+  {
+    "ProcessId": 99512,
+    "ParentProcessId": 102892,
+    "Name": "conhost.exe",
+    "CreationDate": "2026-10-27T15:52:36.432619+08:00",
+    "CommandLine": "\\??\\C:\\Windows\\system32\\conhost.exe 0x4"
+  },
+  {
+    "ProcessId": 102572,
+    "ParentProcessId": 102892,
+    "Name": "julia.exe",
+    "CreationDate": "2026-10-27T15:52:36.458528+08:00",
+    "CommandLine": "C:\\Users\\admin\\.julia\\juliaup\\julia-1.12.1+0.x64.w64.mingw32\\bin\\julia.exe"
+  }
+]

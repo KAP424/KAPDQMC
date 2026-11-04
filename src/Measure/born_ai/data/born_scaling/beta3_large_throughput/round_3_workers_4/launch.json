@@ -1,0 +1,44 @@
+{
+  "nworkers": 4,
+  "pids": [
+    109628,
+    105836,
+    96664,
+    105544
+  ],
+  "started_utc": "2026-10-27T13:58:23.593871+00:00",
+  "commands": [
+    [
+      "C:\\Users\\admin\\AppData\\Local\\Microsoft\\WindowsApps\\julia.EXE",
+      "--project=.",
+      "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\born_ai\\benchmark_beta3_large_throughput.jl",
+      "--worker=1",
+      "--output=D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\born_ai\\data\\born_scaling\\beta3_large_throughput\\round_3_workers_4",
+      "--timed-sweeps=20"
+    ],
+    [
+      "C:\\Users\\admin\\AppData\\Local\\Microsoft\\WindowsApps\\julia.EXE",
+      "--project=.",
+      "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\born_ai\\benchmark_beta3_large_throughput.jl",
+      "--worker=2",
+      "--output=D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\born_ai\\data\\born_scaling\\beta3_large_throughput\\round_3_workers_4",
+      "--timed-sweeps=20"
+    ],
+    [
+      "C:\\Users\\admin\\AppData\\Local\\Microsoft\\WindowsApps\\julia.EXE",
+      "--project=.",
+      "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\born_ai\\benchmark_beta3_large_throughput.jl",
+      "--worker=3",
+      "--output=D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\born_ai\\data\\born_scaling\\beta3_large_throughput\\round_3_workers_4",
+      "--timed-sweeps=20"
+    ],
+    [
+      "C:\\Users\\admin\\AppData\\Local\\Microsoft\\WindowsApps\\julia.EXE",
+      "--project=.",
+      "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\born_ai\\benchmark_beta3_large_throughput.jl",
+      "--worker=4",
+      "--output=D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\born_ai\\data\\born_scaling\\beta3_large_throughput\\round_3_workers_4",
+      "--timed-sweeps=20"
+    ]
+  ]
+}

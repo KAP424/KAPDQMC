@@ -1,0 +1,10 @@
+L,beta,observable,MCSE,precision_target,precision_target_met,sampling_screen_pass,precision_and_sampling_screen_pass
+6,3.0,p3_group_D,0.00045294066719344544,0.004,True,False,False
+6,3.0,p2_group_D,0.000528329155279899,0.004,True,False,False
+6,3.0,half_minus_third_group_D,0.000139596133134012,0.003,True,False,False
+18,3.0,p3_group_D,0.005077311590746274,0.004,False,False,False
+18,3.0,p2_group_D,0.006321801002307509,0.004,False,False,False
+18,3.0,half_minus_third_group_D,0.004134471598951146,0.003,False,False,False
+36,3.0,p3_group_D,0.007126128800777384,0.004,False,False,False
+36,3.0,p2_group_D,0.010331517592761054,0.004,False,False,False
+36,3.0,half_minus_third_group_D,0.0072044274058737,0.003,False,False,False

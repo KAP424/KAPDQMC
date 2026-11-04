@@ -1,0 +1,471 @@
+{
+  "generated_utc": "2026-10-19T07:12:42.076344+00:00",
+  "stage": "final",
+  "script_sha256": "774c1c39bd7618e8869d5bf8b72e3f52b4b99c9ce1db14e2673a11a377c1aae4",
+  "plan_sha256": "52c097b3ceff521fac6ea5f50f34d71d41598288cbc516db9daa5f8e4059c5d0",
+  "plan": {
+    "status": "Posthoc redesign prompted by scale-separation review; recorded before dense finite-time scan, not blind preregistration.",
+    "pattern": "uniform_A",
+    "betas": [
+      0,
+      0.1,
+      0.2,
+      0.3,
+      0.4,
+      0.5,
+      0.6,
+      0.7,
+      0.8,
+      0.9,
+      1,
+      1.1,
+      1.2,
+      1.3,
+      1.4,
+      1.5,
+      1.6,
+      1.7,
+      1.8,
+      1.9,
+      2
+    ],
+    "primary": {
+      "L": 180,
+      "comparison_L": 144,
+      "window": [
+        4,
+        7
+      ],
+      "model": "log_inv1_inv2"
+    },
+    "primary_status": "Retained after beta=0,1 calibration as a unified finite-window estimate, not asymptotic certification. Beta=1 still fails the three-versus-four-parameter local gate. Every dense beta needs its own diagnostics; no equilibrium proximity was used for selection.",
+    "theta_min_screen": 4,
+    "theta_over_L_max_screen": 0.05,
+    "screen_interpretation": "Operational grid screen, not a proof of asymptotic scale separation. Region width is L/3 and velocity factors also matter.",
+    "equilibrium_primary": {
+      "window": [
+        18,
+        144
+      ],
+      "model": "log_inv1"
+    },
+    "required_finite_grids": [
+      {
+        "L": [
+          216
+        ],
+        "theta": [
+          7.5
+        ],
+        "beta": [
+          0,
+          1
+        ]
+      },
+      {
+        "L": [
+          144,
+          180
+        ],
+        "theta": [
+          4,
+          4.5,
+          5,
+          5.5,
+          6,
+          6.5,
+          7
+        ],
+        "beta": [
+          0,
+          0.1,
+          0.2,
+          0.3,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          1,
+          1.1,
+          1.2,
+          1.3,
+          1.4,
+          1.5,
+          1.6,
+          1.7,
+          1.8,
+          1.9,
+          2
+        ]
+      },
+      {
+        "L": [
+          180,
+          216
+        ],
+        "theta": [
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "beta": [
+          0,
+          1
+        ]
+      },
+      {
+        "L": [
+          216
+        ],
+        "theta": [
+          4,
+          4.5,
+          5,
+          5.5,
+          6,
+          6.5,
+          7
+        ],
+        "beta": [
+          0,
+          1
+        ]
+      },
+      {
+        "L": [
+          180
+        ],
+        "theta": [
+          7.5,
+          8
+        ],
+        "beta": [
+          0,
+          0.1,
+          0.2,
+          0.3,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          1,
+          1.1,
+          1.2,
+          1.3,
+          1.4,
+          1.5,
+          1.6,
+          1.7,
+          1.8,
+          1.9,
+          2
+        ]
+      }
+    ],
+    "required_equilibrium_grids": [
+      {
+        "L": [
+          18,
+          24,
+          30,
+          36,
+          42,
+          48,
+          54,
+          60,
+          66,
+          72,
+          78,
+          84,
+          90,
+          108,
+          126,
+          144
+        ],
+        "theta": [
+          "Inf"
+        ],
+        "beta": [
+          0,
+          0.1,
+          0.2,
+          0.3,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          1,
+          1.1,
+          1.2,
+          1.3,
+          1.4,
+          1.5,
+          1.6,
+          1.7,
+          1.8,
+          1.9,
+          2
+        ]
+      }
+    ],
+    "preexisting_evidence": [
+      "analysis_time_scale/summary.json",
+      "analysis_time_scale/all_patterns_summary.csv",
+      "analysis_uniformA_dense/ref_notebook/inspection_summary.json"
+    ],
+    "coefficient_comparison": "Single species natural-log Renyi2. Equilibrium is compared only after independent time diagnostics. No enforced agreement and no statistical confidence intervals.",
+    "fallback": "Report unresolved estimates if no window is stable. Do not silently replace the primary with a target-matched fit. Any added grids or revised model must be recorded as a dated revision.",
+    "recorded_utc": "2026-10-19T02:24:10.271537+00:00",
+    "preexisting_evidence_sha256": {
+      "analysis_time_scale/summary.json": "f9dabd9ade0dfd923a036d8980502395f196dcbaa796d1cd626acc552d6079a7",
+      "analysis_time_scale/all_patterns_summary.csv": "56bfdc599e8b826df54faa60067190d61861d98191ba7bd6c43d994ed125fa8e",
+      "analysis_uniformA_dense/ref_notebook/inspection_summary.json": "6262ac3a68ca87b9d606d7534bb77bc6eb49e50a75e9c525b8d55e1e592bc097"
+    },
+    "revisions": [
+      {
+        "recorded_utc": "2026-10-19T02:25:22.891847+00:00",
+        "reason": "Add same-L shifted-window check 4-7 versus 5-8 at every beta; max theta/L=8/180. No equilibrium coefficient used.",
+        "added_L": [
+          180
+        ],
+        "added_theta": [
+          7.5,
+          8
+        ]
+      },
+      {
+        "recorded_utc": "2026-10-19T02:39:34+00:00",
+        "reason": "Independent calibration review retains the original numerical primary specification; its status is only a finite-window estimate. No grid or threshold changed.",
+        "review": "analysis_uniformA_dense/calibration_review.json",
+        "limitations": "The primary window ratio is 1.75; the five-parameter check has only two residual degrees of freedom. Third-size evidence exists only for beta=0,1. Beta=1 model drift is about 6.98 percent, so its current estimate remains unresolved. The prescheduled 7.5 and 8 points are still pending for the dense scan."
+      },
+      {
+        "recorded_utc": "2026-10-19T02:56:30+00:00",
+        "reason": "Complete the seven-point 5-8 shifted-window grid at the third calibration size for beta=0,1; enables the five-parameter check and a common-grid size comparison. No primary specification or gate changes; no equilibrium target used.",
+        "added_L": [
+          216
+        ],
+        "added_theta": [
+          7.5
+        ],
+        "added_beta": [
+          0,
+          1
+        ]
+      }
+    ]
+  },
+  "arguments": {
+    "inputs": [
+      "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\ai\\data\\ground_observations_baseline.csv",
+      "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\ai\\data\\ref_calibration_observations.csv",
+      "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\ai\\data\\ref_calibration_equilibrium.csv",
+      "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\ai\\data\\ref_calibration_late.csv",
+      "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\ai\\data\\uniformA_dense_benchmark.csv",
+      "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\ai\\data\\uniformA_dense_observations.csv",
+      "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\ai\\data\\uniformA_dense_equilibrium.csv"
+    ],
+    "output": "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\ai\\analysis_uniformA_dense",
+    "figures": "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\ai\\figures_uniformA_dense",
+    "plan": "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\ai\\analysis_uniformA_dense\\plan.json",
+    "stage": "final",
+    "primary_L": null,
+    "comparison_L": null,
+    "primary_window": null,
+    "primary_model": null,
+    "theta_min": 4.0,
+    "max_theta_over_L": 0.05,
+    "eq_max": 144,
+    "plot_betas": [
+      0,
+      0.5,
+      1,
+      1.5,
+      2
+    ],
+    "no_plots": false
+  },
+  "sources": [
+    {
+      "path": "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\ai\\data\\ground_observations_baseline.csv",
+      "sha256": "8ba744bfef3730840ae3f143bffebc44dd27c8286644dfaf3f24c4604e3a5033",
+      "size_bytes": 498490,
+      "rows": 3201,
+      "ignored_incomplete_tail_bytes": 0,
+      "parsed_snapshot": "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\ai\\analysis_uniformA_dense\\source_snapshots\\ground_observations_baseline_8ba744bfef37.csv",
+      "parsed_sha256": "8ba744bfef3730840ae3f143bffebc44dd27c8286644dfaf3f24c4604e3a5033"
+    },
+    {
+      "path": "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\ai\\data\\ref_calibration_observations.csv",
+      "sha256": "a10427b188eb38ef7d98064a31766ba471f4732432c4d682f197afde72306a43",
+      "size_bytes": 457464,
+      "rows": 873,
+      "ignored_incomplete_tail_bytes": 0,
+      "parsed_snapshot": "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\ai\\analysis_uniformA_dense\\source_snapshots\\ref_calibration_observations_a10427b188eb.csv",
+      "parsed_sha256": "a10427b188eb38ef7d98064a31766ba471f4732432c4d682f197afde72306a43"
+    },
+    {
+      "path": "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\ai\\data\\ref_calibration_equilibrium.csv",
+      "sha256": "3c2e1ad4f4f2e617972ce37d7be14a303bf41babd054cdb19646e4aea4aa115f",
+      "size_bytes": 19139,
+      "rows": 36,
+      "ignored_incomplete_tail_bytes": 0,
+      "parsed_snapshot": "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\ai\\analysis_uniformA_dense\\source_snapshots\\ref_calibration_equilibrium_3c2e1ad4f4f2.csv",
+      "parsed_sha256": "3c2e1ad4f4f2e617972ce37d7be14a303bf41babd054cdb19646e4aea4aa115f"
+    },
+    {
+      "path": "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\ai\\data\\ref_calibration_late.csv",
+      "sha256": "bacd00aa7784eb08fe808341ee46c66c0c9e5ee2120da9f142dd96cc921ed77d",
+      "size_bytes": 60540,
+      "rows": 115,
+      "ignored_incomplete_tail_bytes": 0,
+      "parsed_snapshot": "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\ai\\analysis_uniformA_dense\\source_snapshots\\ref_calibration_late_bacd00aa7784.csv",
+      "parsed_sha256": "bacd00aa7784eb08fe808341ee46c66c0c9e5ee2120da9f142dd96cc921ed77d"
+    },
+    {
+      "path": "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\ai\\data\\uniformA_dense_benchmark.csv",
+      "missing": true
+    },
+    {
+      "path": "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\ai\\data\\uniformA_dense_observations.csv",
+      "sha256": "cdf1860c2b0dd5c38f06821526308e9948d72fc9c6a0a330705710b372fbe224",
+      "size_bytes": 391520,
+      "rows": 698,
+      "ignored_incomplete_tail_bytes": 0,
+      "parsed_snapshot": "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\ai\\analysis_uniformA_dense\\source_snapshots\\uniformA_dense_observations_cdf1860c2b0d.csv",
+      "parsed_sha256": "cdf1860c2b0dd5c38f06821526308e9948d72fc9c6a0a330705710b372fbe224"
+    },
+    {
+      "path": "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\ai\\data\\uniformA_dense_equilibrium.csv",
+      "missing": true
+    }
+  ],
+  "sources_changed_during_analysis": [],
+  "rows": 1192,
+  "duplicates": 72,
+  "betas": [
+    0.0,
+    0.1,
+    0.2,
+    0.3,
+    0.4,
+    0.5,
+    0.6,
+    0.7,
+    0.8,
+    0.9,
+    1.0,
+    1.1,
+    1.2,
+    1.3,
+    1.4,
+    1.5,
+    1.6,
+    1.7,
+    1.8,
+    1.9,
+    2.0
+  ],
+  "windows": [
+    [
+      4.0,
+      7.0
+    ],
+    [
+      4.5,
+      7.0
+    ],
+    [
+      4.0,
+      6.5
+    ],
+    [
+      5.0,
+      7.0
+    ],
+    [
+      5.0,
+      8.0
+    ],
+    [
+      4.0,
+      8.0
+    ],
+    [
+      5.0,
+      9.0
+    ],
+    [
+      4.0,
+      10.0
+    ],
+    [
+      5.0,
+      10.0
+    ],
+    [
+      6.0,
+      10.0
+    ],
+    [
+      6.0,
+      12.0
+    ],
+    [
+      8.0,
+      12.0
+    ]
+  ],
+  "primary": {
+    "default": {
+      "L": 180,
+      "comparison_L": 144,
+      "window": [
+        4,
+        7
+      ],
+      "model": "log_inv1_inv2"
+    },
+    "by_beta": {}
+  },
+  "required_keys": 698,
+  "required_grid_complete": true,
+  "missing_required_keys": 0,
+  "primary_complete": true,
+  "fit_counts": {
+    "equilibrium": 126,
+    "time_individual": 797,
+    "time_pairs": 1093
+  },
+  "figures": [
+    "coefficients_beta",
+    "corner_coefficient_beta",
+    "time_diagnostics_beta",
+    "scaling_beta_0",
+    "scaling_beta_0p5",
+    "scaling_beta_1",
+    "scaling_beta_1p5",
+    "scaling_beta_2"
+  ],
+  "conventions": {
+    "entropy": "single-species natural-log Renyi-2",
+    "observable": "D=(2SA+SC)/3-SB",
+    "time_fit": "measured common grids, both window endpoints required, n>=parameters+2",
+    "primary": "explicit external configuration; never selected using equilibrium closeness",
+    "scale_screen": "theta_min>=configured minimum and theta_max/L<=configured maximum for BOTH primary/comparison sizes; operational only, not a proof",
+    "sensitivity": "main time value and same-window model checks use the explicit common-grid size pair; shifted-window checks and shaded ranges use individual measured grids at primary L, with separate per-window size-check status; ranges are not statistical confidence intervals",
+    "axes": "raw scaling uses explicit ln(L)/ln(theta) on linear axes; beta and coefficient axes are linear",
+    "raw_scaling_scope": "equilibrium only within requested 18..eq_max; time only configured primary/comparison and available third size, with each point satisfying theta_min and theta/L screens; fit line only inside configured primary window",
+    "missing": "missing/screen-excluded primary values remain gaps, never extrapolated across beta"
+  }
+}

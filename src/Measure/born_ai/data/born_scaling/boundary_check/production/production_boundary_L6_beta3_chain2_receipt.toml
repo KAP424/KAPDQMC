@@ -1,0 +1,61 @@
+final_E = [27, 15, 44, 29, 36, 62, 42, 57, 9, 39, 20, 3, 12, 7, 11, 26, 13, 47, 10, 46, 24, 8, 51, 69, 55, 4, 56, 32, 72, 63, 25, 65, 5, 50, 48, 34]
+elapsed_seconds = 1.0069999694824219
+started_at = "2026-10-28T15:20:06.305"
+snapshot_format = "Int32 native little endian, n=L^2 indices per recorded sweep, original E order"
+legacy_entropy_max_difference = 5.180995606493544e-16
+refresh_seconds = 0.04135159999999998
+rows_per_measurement = 13
+acceptance = 0.2199435763888889
+accepted = 36486
+initial_E = [1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35, 37, 39, 41, 43, 45, 47, 49, 51, 53, 55, 57, 59, 61, 63, 65, 67, 69, 71]
+julia_version = "1.12.1"
+status = "complete"
+plan_sha256 = "7892391aadb4c1f0df1edc00568dd17cb28eb796639a0112176344a149078ac7"
+records = 2304
+proposed = 165888
+unique_regions = 21
+update_seconds = 0.09022689999999985
+maximum_logweight_drift = 6.260023610593635e-10
+entropy_seconds = 0.3807938000000001
+maximum_inverse_drift = 6.208045352786916e-10
+completed_at = "2026-10-28T15:20:07.308"
+
+[source_sha256]
+"run_born_scaling.jl" = "3d9004c1d112a29ee1a7b440a945dc89516f7cabba8e279e0e5dd145e5a65c76"
+"prepare_born_boundary_check.py" = "28556776bf056d3334904e7f8c2473a68ebca191da366adc426de745147e0c40"
+"../../public/Geometry.jl" = "079c2052642d46a7072656ccd738411faa57c9f07791f786a0a6872a5a5970ad"
+"run_born_boundary_check.jl" = "3e8fb7d0c4b01387d51daf53ad6f5a3298b6948f06581ec6a9ada0e4ae807f2c"
+"run_born_boundary_check_fast.jl" = "4640197946287bbae8e86a2d6f2faf8242bbed0578aab9afbf0814031c8eb559"
+"analyze_born_scaling.py" = "461ad6cdc32e3abbb1ede135cdffcb8167b817fda861b03d319deb534728a3c7"
+"analyze_born_boundary_check.py" = "d29682d79e29cacf278ca5b7c93ea758f7a768ff3ad86e35bc2089dcda8e9925"
+"fused_original_swap_kernel.jl" = "da7d40a574902763417225417d30abce265a15f9804dbfa47882b46f8ed20d70"
+"launch_born_boundary_production.py" = "0e4bea4f9dddc6f2520303e9915fc8a7ab17a41ea5e79318694deccc107f419e"
+"original_swap_scaling.jl" = "1af51fff868fbe63025323618506295ce5622179c1381de5ea64549e8c0d40cb"
+"prepare_born_boundary_production.py" = "999b3782b47f20ea45e1c7b181743950116a937a1a83217111c3140dc4868e98"
+
+[job]
+retained_records = 2048
+snapshot_path = "data/born_scaling/boundary_check/production/production_boundary_L6_beta3_chain2_E.bin"
+chain = 2
+L = 6
+mu = 1.0e-8
+run_id = "production_boundary_L6_beta3_chain2"
+sweeps = 2304
+refresh_every = 5
+warmup_sweeps = 256
+start = "uniform_A"
+model_manifest_sha256 = "d958ed08ecc990148d0ffaef2dc256d0de42b78c464cfda60f79b96a61816770"
+stage = "production"
+analysis_burnin = 256
+sample_path = "data/born_scaling/boundary_check/production/production_boundary_L6_beta3_chain2_samples.csv"
+beta = 3.0
+receipt_path = "data/born_scaling/boundary_check/production/production_boundary_L6_beta3_chain2_receipt.toml"
+model_manifest = "data/born_scaling/production/models/state_L6_staggered_mu1.0e-8_model.toml"
+seed = 2500060002
+retained_sweeps = 2048
+measure_every = 1
+
+[files]
+"data/born_scaling/boundary_check/production/production_boundary_L6_beta3_chain2_samples.csv" = "c9a8f542d662e76b52d7fed57ee7700508ccbe6c4b1a2c7e84bb9db7b03f301e"
+"data/born_scaling/boundary_check/production/production_boundary_L6_beta3_chain2_E.bin" = "e943501f5952871bbc1b4509a44bd20268fb9d8585b6a46acfaa55227a95bd66"
+"data/born_scaling/boundary_check/production/production_boundary_L6_beta3_chain2_samples.csv.initial.csv" = "e20572baf59a0981b1a939de0fe6a3883160a763c6f8f13b13a2a165501a281f"

@@ -1,0 +1,57 @@
+final_E = [45, 25, 169, 166, 83, 158, 122, 76, 93, 152, 108, 244, 218, 286, 161, 237, 87, 32, 181, 243, 264, 171, 33, 74, 70, 257, 111, 71, 185, 34, 189, 232, 276, 106, 240, 162, 42, 56, 139, 173, 213, 127, 280, 109, 8, 288, 65, 131, 265, 11, 258, 151, 66, 35, 91, 262, 238, 123, 138, 250, 115, 120, 113, 251, 10, 163, 182, 199, 241, 17, 6, 118, 99, 274, 18, 61, 96, 3, 52, 253, 208, 98, 255, 4, 89, 23, 270, 75, 187, 53, 246, 124, 137, 153, 148, 58, 47, 233, 157, 203, 14, 175, 159, 197, 101, 69, 73, 143, 85, 54, 80, 228, 196, 221, 214, 144, 82, 271, 227, 78, 284, 229, 179, 41, 201, 62, 12, 239, 19, 28, 256, 172, 223, 102, 278, 236, 13, 192, 209, 177, 275, 249, 136, 215]
+maximum_inverse_asymmetry = 1.9826984498649836e-10
+elapsed_seconds = 5.503999948501587
+blas_threads = 1
+initial_state_definition = "E is the suppressed set. Even L: both sublattices on odd x columns; odd L: alternate full/empty through L-1 and only A on final column. uniform_A/B mean E=A/B."
+started_at = "2026-10-27T15:53:48.854"
+acceptance = 0.1864767192322531
+accepted = 123737
+initial_E = [1, 2, 5, 6, 9, 10, 13, 14, 17, 18, 21, 22, 25, 26, 29, 30, 33, 34, 37, 38, 41, 42, 45, 46, 49, 50, 53, 54, 57, 58, 61, 62, 65, 66, 69, 70, 73, 74, 77, 78, 81, 82, 85, 86, 89, 90, 93, 94, 97, 98, 101, 102, 105, 106, 109, 110, 113, 114, 117, 118, 121, 122, 125, 126, 129, 130, 133, 134, 137, 138, 141, 142, 145, 146, 149, 150, 153, 154, 157, 158, 161, 162, 165, 166, 169, 170, 173, 174, 177, 178, 181, 182, 185, 186, 189, 190, 193, 194, 197, 198, 201, 202, 205, 206, 209, 210, 213, 214, 217, 218, 221, 222, 225, 226, 229, 230, 233, 234, 237, 238, 241, 242, 245, 246, 249, 250, 253, 254, 257, 258, 261, 262, 265, 266, 269, 270, 273, 274, 277, 278, 281, 282, 285, 286]
+julia_version = "1.12.1"
+status = "complete"
+refreshes = 460
+plan_sha256 = "3f3929b15eec47c5720b7f481240ab66f36e843a4a09761cf98f7658ae427909"
+records = 2304
+model_manifest_sha256 = "166830ba189efb767434d6940fcd6ddcb44f5b6c63ffd26ad203b2ce1f5a9992"
+proposed = 663552
+model_manifest = "data/born_scaling/production/models/state_L12_staggered_mu1.0e-8_model.toml"
+maximum_logweight_drift = 2.18997797674092e-9
+maximum_inverse_drift = 2.117775891534631e-9
+completed_at = "2026-10-27T15:53:54.356"
+
+[source_sha256]
+"run_born_scaling.jl" = "3d9004c1d112a29ee1a7b440a945dc89516f7cabba8e279e0e5dd145e5a65c76"
+"fused_original_swap_kernel.jl" = "da7d40a574902763417225417d30abce265a15f9804dbfa47882b46f8ed20d70"
+"original_swap_scaling.jl" = "1af51fff868fbe63025323618506295ce5622179c1381de5ea64549e8c0d40cb"
+"prepare_born_scaling_production.jl" = "9bda7e2de8c87d7d050cff3be7c62444c289281174d87ad7e8cf6a1ecf6a80a4"
+"run_born_scaling_fused.jl" = "3734470f7c633617a2a2b43d7d581c94e9c29f11af6efb0f523cabf266499fe3"
+"../../public/Geometry.jl" = "079c2052642d46a7072656ccd738411faa57c9f07791f786a0a6872a5a5970ad"
+
+[job]
+chain = 4
+output_dir = "data/born_scaling/production"
+L = 12
+mu = 1.0e-8
+state = "staggered"
+run_id = "production_L12_beta2p5_mu1p0em8_chain4_02_stripe"
+sweeps = 2304
+refresh_every = 5
+start = "02_stripe"
+model_manifest_sha256 = "166830ba189efb767434d6940fcd6ddcb44f5b6c63ffd26ad203b2ce1f5a9992"
+stage = "production"
+grid = "main"
+analysis_burnin = 256
+beta = 2.5
+model_manifest = "data/born_scaling/production/models/state_L12_staggered_mu1.0e-8_model.toml"
+seed = 1612250004
+retained_sweeps = 2048
+measure_every = 1
+
+[model_files]
+"state_L12_staggered_mu1.0e-8_G.bin" = "7047fe4445cfcaf330205a8f8bfa08c1b4695bfbccb69e6bc2ed88a0590a6c51"
+"state_L12_staggered_mu1.0e-8_Q.bin" = "c151aabb06fe3d3404812b46fa9dc06b99d3dbd207966c5c8ecb4eee06e5257c"
+"state_L12_staggered_mu1.0e-8_energies.bin" = "cab0c3e38e47d9783911c579bad81577aaf7fe3de16bef7ff345bde0c4ba3cc7"
+
+[files]
+"data/born_scaling/production/production_L12_beta2p5_mu1p0em8_chain4_02_stripe_initial.csv" = "4ba0fbecc25917037d244183e6bd9a0c5e866e3cf48e65e4699f02a52b673f30"
+"data/born_scaling/production/production_L12_beta2p5_mu1p0em8_chain4_02_stripe_samples.csv" = "005db3f746b10fc445bae7b97d8e0853783e7ef1fa1ec72872039221804b2c6d"

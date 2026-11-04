@@ -1,0 +1,7 @@
+shard 1/2 of L30_beta3.2231.csv : L=30 beta=3.2231 z=1.4279  320 samples -> L30_beta3.2231.csv.shard1of2.csv
+PROGRESS 64/320
+PROGRESS 128/320
+PROGRESS 192/320
+PROGRESS 256/320
+PROGRESS 320/320
+DONE L30_beta3.2231.csv.shard1of2.csv : 320 samples

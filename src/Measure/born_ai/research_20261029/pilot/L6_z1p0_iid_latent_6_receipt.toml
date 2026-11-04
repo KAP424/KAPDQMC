@@ -1,0 +1,32 @@
+sampling_seconds = 0.09171430000000005
+created_at = "2026-10-29T09:24:50.847"
+julia_version = "1.12.1"
+maximum_reference_entropy_error = 4.3298697960381105e-15
+status = "complete"
+matrix_format = "Float64 native-endian column-major Nsites x Nsites"
+elapsed_seconds = 0.24099993705749512
+blas_threads = 1
+plan_sha256 = "c51cd1a47e6edb80aaee924a9944909b85dc6ca750289dfb68dbb1c28c29347b"
+records = 320
+j_counts = [136, 144, 35, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+entropy_seconds = 0.04477419999999997
+fluctuation_seconds = 0.07397149999999997
+
+[job]
+method = "iid_latent"
+jhi = 36
+model = "pilot/models/stratified_L6_staggered_mu1.0e-8_model.toml"
+L = 6
+jlo = 0
+id = "L6_z1p0_iid_latent_6"
+z = 1.0
+stratum_probability = 1.0
+records = 320
+case = "z1p0"
+beta = 1.791759469228055
+seed = 291089306
+
+[files]
+"pilot/L6_z1p0_iid_latent_6_meanG.bin" = "9f6f656f6ac1b39cc9249c7e780108caed2fd11f01246288bc80e4578f383726"
+"pilot/L6_z1p0_iid_latent_6_meanGsquare.bin" = "d1b01169b93ec5c87d327c44785b44dd779e96ce525338ca236654cef4aedc77"
+"pilot/L6_z1p0_iid_latent_6.csv" = "28ac393e2638b09e8dc87a84bed935febe6537626253264e095a771a0e829c17"

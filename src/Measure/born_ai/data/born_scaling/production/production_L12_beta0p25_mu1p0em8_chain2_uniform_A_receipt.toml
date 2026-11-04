@@ -1,0 +1,57 @@
+final_E = [111, 109, 12, 35, 68, 170, 46, 90, 284, 273, 102, 236, 172, 16, 55, 164, 48, 33, 271, 128, 51, 210, 223, 95, 275, 20, 266, 249, 84, 14, 176, 279, 19, 243, 81, 262, 134, 115, 263, 152, 91, 80, 108, 200, 206, 240, 143, 235, 131, 237, 61, 93, 169, 202, 49, 83, 99, 283, 110, 92, 199, 247, 31, 246, 85, 32, 168, 22, 125, 162, 221, 207, 228, 160, 66, 42, 216, 17, 107, 180, 41, 43, 70, 86, 171, 54, 190, 211, 126, 287, 34, 208, 265, 222, 165, 57, 4, 39, 141, 129, 233, 174, 36, 142, 150, 94, 10, 173, 166, 117, 175, 23, 103, 144, 3, 74, 250, 218, 136, 255, 73, 285, 138, 8, 44, 67, 120, 9, 154, 156, 229, 232, 60, 269, 194, 182, 256, 127, 241, 137, 186, 63, 97, 187]
+maximum_inverse_asymmetry = 2.220446049250313e-16
+elapsed_seconds = 7.925999879837036
+blas_threads = 1
+initial_state_definition = "E is the suppressed set. Even L: both sublattices on odd x columns; odd L: alternate full/empty through L-1 and only A on final column. uniform_A/B mean E=A/B."
+started_at = "2026-10-27T15:53:59.436"
+acceptance = 0.9673107759452161
+accepted = 641861
+initial_E = [1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35, 37, 39, 41, 43, 45, 47, 49, 51, 53, 55, 57, 59, 61, 63, 65, 67, 69, 71, 73, 75, 77, 79, 81, 83, 85, 87, 89, 91, 93, 95, 97, 99, 101, 103, 105, 107, 109, 111, 113, 115, 117, 119, 121, 123, 125, 127, 129, 131, 133, 135, 137, 139, 141, 143, 145, 147, 149, 151, 153, 155, 157, 159, 161, 163, 165, 167, 169, 171, 173, 175, 177, 179, 181, 183, 185, 187, 189, 191, 193, 195, 197, 199, 201, 203, 205, 207, 209, 211, 213, 215, 217, 219, 221, 223, 225, 227, 229, 231, 233, 235, 237, 239, 241, 243, 245, 247, 249, 251, 253, 255, 257, 259, 261, 263, 265, 267, 269, 271, 273, 275, 277, 279, 281, 283, 285, 287]
+julia_version = "1.12.1"
+status = "complete"
+refreshes = 460
+plan_sha256 = "3f3929b15eec47c5720b7f481240ab66f36e843a4a09761cf98f7658ae427909"
+records = 2304
+model_manifest_sha256 = "166830ba189efb767434d6940fcd6ddcb44f5b6c63ffd26ad203b2ce1f5a9992"
+proposed = 663552
+model_manifest = "data/born_scaling/production/models/state_L12_staggered_mu1.0e-8_model.toml"
+maximum_logweight_drift = 2.6290081223123707e-13
+maximum_inverse_drift = 8.160062011902743e-16
+completed_at = "2026-10-27T15:54:07.360"
+
+[source_sha256]
+"run_born_scaling.jl" = "3d9004c1d112a29ee1a7b440a945dc89516f7cabba8e279e0e5dd145e5a65c76"
+"fused_original_swap_kernel.jl" = "da7d40a574902763417225417d30abce265a15f9804dbfa47882b46f8ed20d70"
+"original_swap_scaling.jl" = "1af51fff868fbe63025323618506295ce5622179c1381de5ea64549e8c0d40cb"
+"prepare_born_scaling_production.jl" = "9bda7e2de8c87d7d050cff3be7c62444c289281174d87ad7e8cf6a1ecf6a80a4"
+"run_born_scaling_fused.jl" = "3734470f7c633617a2a2b43d7d581c94e9c29f11af6efb0f523cabf266499fe3"
+"../../public/Geometry.jl" = "079c2052642d46a7072656ccd738411faa57c9f07791f786a0a6872a5a5970ad"
+
+[job]
+chain = 2
+output_dir = "data/born_scaling/production"
+L = 12
+mu = 1.0e-8
+state = "staggered"
+run_id = "production_L12_beta0p25_mu1p0em8_chain2_uniform_A"
+sweeps = 2304
+refresh_every = 5
+start = "uniform_A"
+model_manifest_sha256 = "166830ba189efb767434d6940fcd6ddcb44f5b6c63ffd26ad203b2ce1f5a9992"
+stage = "production"
+grid = "dense"
+analysis_burnin = 256
+beta = 0.25
+model_manifest = "data/born_scaling/production/models/state_L12_staggered_mu1.0e-8_model.toml"
+seed = 1612025002
+retained_sweeps = 2048
+measure_every = 1
+
+[model_files]
+"state_L12_staggered_mu1.0e-8_G.bin" = "7047fe4445cfcaf330205a8f8bfa08c1b4695bfbccb69e6bc2ed88a0590a6c51"
+"state_L12_staggered_mu1.0e-8_Q.bin" = "c151aabb06fe3d3404812b46fa9dc06b99d3dbd207966c5c8ecb4eee06e5257c"
+"state_L12_staggered_mu1.0e-8_energies.bin" = "cab0c3e38e47d9783911c579bad81577aaf7fe3de16bef7ff345bde0c4ba3cc7"
+
+[files]
+"data/born_scaling/production/production_L12_beta0p25_mu1p0em8_chain2_uniform_A_initial.csv" = "cb40170f031592bdb8cc530c733921acd768659d80862c58ebcde697e8d24194"
+"data/born_scaling/production/production_L12_beta0p25_mu1p0em8_chain2_uniform_A_samples.csv" = "3d9992f1c63ae0ccafb0ed6c6e541d032bf25e93a8d3d0d9ed06d8af31800397"

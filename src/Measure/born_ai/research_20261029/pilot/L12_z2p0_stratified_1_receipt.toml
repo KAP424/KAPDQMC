@@ -1,0 +1,32 @@
+sampling_seconds = 0.7237867
+created_at = "2026-10-29T09:25:29.203"
+julia_version = "1.12.1"
+maximum_reference_entropy_error = 1.0880185641326534e-14
+status = "complete"
+matrix_format = "Float64 native-endian column-major Nsites x Nsites"
+elapsed_seconds = 1.2050001621246338
+blas_threads = 1
+plan_sha256 = "c51cd1a47e6edb80aaee924a9944909b85dc6ca750289dfb68dbb1c28c29347b"
+records = 64
+j_counts = [64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+entropy_seconds = 0.28366269999999993
+fluctuation_seconds = 0.14600300000000002
+
+[job]
+method = "stratified"
+jhi = 0
+model = "pilot/models/stratified_L12_staggered_mu1.0e-8_model.toml"
+L = 12
+jlo = 0
+id = "L12_z2p0_stratified_1"
+z = 2.0
+stratum_probability = 0.08987323914930913
+records = 64
+case = "z2p0"
+beta = 2.1383330595080277
+seed = 291149401
+
+[files]
+"pilot/L12_z2p0_stratified_1_meanGsquare.bin" = "55459d5b4e5f1a9a8054f60ca8b5fbc31e47ffac16e80b3ca65e2cb8977c66aa"
+"pilot/L12_z2p0_stratified_1.csv" = "23cb6d38fc4175bf3eb82dcce969572f8117c886fbcacea8b957a0bd324acab0"
+"pilot/L12_z2p0_stratified_1_meanG.bin" = "5a0ebac5dcc0d3270c667425174ab3b136cd0407d7171ee0458b034f6ae6835d"

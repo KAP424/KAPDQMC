@@ -1,0 +1,247 @@
+random_streams = "local seed=3701+10beta; iid seed=103701+10beta; each reference replays its own sampler seed"
+created_at = "2026-10-27T09:59:42.044"
+script_sha256 = "56c007bb3670932c2696c1abc848e9be8239d35fcb6e70954dbcd6ba1752f2d9"
+status = "PASS"
+sampler_sha256 = "c05d61daa476af103f46cc461745563a538e65db51a4e0f9511edb7ccfa48c54"
+iat_convention = "Geyer initial positive monotone pairs (rho0+rho1),(rho2+rho3),...; g=-1+2sum(pairs), conservatively clamped g>=1"
+source_sha256 = "14315631313b93e9c12bbe6f090ee9b7864beae720d7d5797b71acd88fa79390"
+elapsed_seconds = 6.375999927520752
+blas_threads = 1
+
+[[results]]
+burnin = 100
+L = 6
+max_S2_reference_error = 2.6645352591003757e-15
+sampler = "local"
+elapsed_seconds = 1.806999921798706
+proposed = 72000.0
+beta = 0.0
+samples = 1000
+acceptance = 1.0
+accepted = 72000.0
+seed = 3701
+
+    [results.S2_A]
+    ess = 1000.0
+    naive_se = 0.0
+    lag1 = 0.0
+    iat = 1.0
+    mean = 3.6301725773628015
+    block_se = 0.0
+
+    [results.S2_B]
+    ess = 1000.0
+    naive_se = 0.0
+    lag1 = 0.0
+    iat = 1.0
+    mean = 3.3416442987632617
+    block_se = 0.0
+
+    [results.paired_A_minus_B]
+    ess = 1000.0
+    naive_se = 0.0
+    lag1 = 0.0
+    iat = 1.0
+    mean = 0.28852827859954594
+    block_se = 0.0
+[[results]]
+burnin = 0
+L = 6
+max_S2_reference_error = 2.6645352591003757e-15
+sampler = "iid"
+elapsed_seconds = 0.49900007247924805
+proposed = 0.0
+beta = 0.0
+samples = 1000
+accepted = 0.0
+seed = 103701
+
+    [results.S2_A]
+    ess = 1000.0
+    naive_se = 0.0
+    lag1 = 0.0
+    iat = 1.0
+    mean = 3.6301725773628015
+    block_se = 0.0
+
+    [results.S2_B]
+    ess = 1000.0
+    naive_se = 0.0
+    lag1 = 0.0
+    iat = 1.0
+    mean = 3.3416442987632617
+    block_se = 0.0
+
+    [results.paired_A_minus_B]
+    ess = 1000.0
+    naive_se = 0.0
+    lag1 = 0.0
+    iat = 1.0
+    mean = 0.28852827859954594
+    block_se = 0.0
+[[results]]
+burnin = 100
+L = 6
+max_S2_reference_error = 1.3766765505351941e-14
+sampler = "local"
+elapsed_seconds = 1.3259999752044678
+proposed = 72000.0
+beta = 1.0
+samples = 1000
+acceptance = 0.6665277777777778
+accepted = 47990.0
+seed = 3711
+
+    [results.S2_A]
+    ess = 884.6647237706965
+    naive_se = 0.011534399863643742
+    lag1 = 0.06518586823362374
+    iat = 1.1303717364672474
+    blocks = 31
+    block_size = 32
+    mean = 2.013775070090213
+    block_se = 0.01453104768676927
+
+    [results.S2_B]
+    ess = 910.37384018858
+    naive_se = 0.011251835707961311
+    lag1 = 0.04922492049686659
+    iat = 1.0984498409937333
+    blocks = 31
+    block_size = 32
+    mean = 1.7096172237494804
+    block_se = 0.011569347600877933
+
+    [results.paired_A_minus_B]
+    ess = 958.8147356139139
+    naive_se = 0.00775855105074924
+    lag1 = -0.005356605642279803
+    iat = 1.042954350675176
+    blocks = 31
+    block_size = 32
+    mean = 0.30415784634073273
+    block_se = 0.008517327206487181
+[[results]]
+burnin = 0
+L = 6
+max_S2_reference_error = 1.4210854715202004e-14
+sampler = "iid"
+elapsed_seconds = 0.820000171661377
+proposed = 0.0
+beta = 1.0
+samples = 1000
+accepted = 0.0
+seed = 103711
+
+    [results.S2_A]
+    ess = 967.1774749343201
+    naive_se = 0.012073982631800755
+    lag1 = 0.016968201760441486
+    iat = 1.0339364035208831
+    blocks = 31
+    block_size = 32
+    mean = 2.031546612511296
+    block_se = 0.011894309190095799
+
+    [results.S2_B]
+    ess = 837.604818034147
+    naive_se = 0.011314796235758977
+    lag1 = 0.0700777166467808
+    iat = 1.193880429612372
+    blocks = 31
+    block_size = 32
+    mean = 1.7319836738883974
+    block_se = 0.012404373129296039
+
+    [results.paired_A_minus_B]
+    ess = 966.5935440142251
+    naive_se = 0.007981360553340937
+    lag1 = -0.01042860335048214
+    iat = 1.0345610170817396
+    blocks = 31
+    block_size = 32
+    mean = 0.2995629386228987
+    block_se = 0.00837675270171912
+[[results]]
+burnin = 100
+L = 6
+max_S2_reference_error = 1.5765166949677223e-14
+sampler = "local"
+elapsed_seconds = 0.7999999523162842
+proposed = 72000.0
+beta = 3.0
+samples = 1000
+acceptance = 0.21919444444444444
+accepted = 15782.0
+seed = 3731
+
+    [results.S2_A]
+    ess = 1000.0
+    naive_se = 0.0008817638389923948
+    lag1 = -0.005166503897823221
+    iat = 1.0
+    blocks = 31
+    block_size = 32
+    mean = 0.007166401200402925
+    block_se = 0.000769361562406559
+
+    [results.S2_B]
+    ess = 1000.0
+    naive_se = 0.0009118145892255065
+    lag1 = -0.005732697349661769
+    iat = 1.0
+    blocks = 31
+    block_size = 32
+    mean = 0.005765660232314074
+    block_se = 0.000826836838202659
+
+    [results.paired_A_minus_B]
+    ess = 1000.0
+    naive_se = 0.0002116501197884227
+    lag1 = -0.00273332396892078
+    iat = 1.0
+    blocks = 31
+    block_size = 32
+    mean = 0.0014007409680888516
+    block_se = 0.00022870022792040721
+[[results]]
+burnin = 0
+L = 6
+max_S2_reference_error = 3.3306690738754696e-14
+sampler = "iid"
+elapsed_seconds = 0.7569999694824219
+proposed = 0.0
+beta = 3.0
+samples = 1000
+accepted = 0.0
+seed = 103731
+
+    [results.S2_A]
+    ess = 965.8856272774761
+    naive_se = 0.0013307916497701945
+    lag1 = 0.006436666268704089
+    iat = 1.0353192673740073
+    blocks = 31
+    block_size = 32
+    mean = 0.007890509971631965
+    block_se = 0.0012398063889989559
+
+    [results.S2_B]
+    ess = 968.1239108240517
+    naive_se = 0.001140757437709118
+    lag1 = 0.0019416735678473445
+    iat = 1.0329256294773423
+    blocks = 31
+    block_size = 32
+    mean = 0.006276308019153884
+    block_se = 0.0010646408585706718
+
+    [results.paired_A_minus_B]
+    ess = 1000.0
+    naive_se = 0.00031236320133420106
+    lag1 = -0.00743411355989109
+    iat = 1.0
+    blocks = 31
+    block_size = 32
+    mean = 0.001614201952478079
+    block_se = 0.0003000836528482424

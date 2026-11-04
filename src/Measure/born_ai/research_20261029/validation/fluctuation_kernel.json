@@ -1,0 +1,42 @@
+{
+  "status": "PASS",
+  "rows": [
+    {
+      "L": 6,
+      "beta": 0.0,
+      "full": 0.129405592523809,
+      "subgroup": 0.12940559252380904,
+      "full_error": 6.38378239159465e-16,
+      "subgroup_error": 9.159339953157541e-16
+    },
+    {
+      "L": 6,
+      "beta": 3.0,
+      "full": 0.04833336087599067,
+      "subgroup": 0.04320526259423037,
+      "full_error": 3.608224830031759e-16,
+      "subgroup_error": 2.636779683484747e-16
+    },
+    {
+      "L": 12,
+      "beta": 0.0,
+      "full": 0.18303464537767744,
+      "subgroup": 0.18303464537767744,
+      "full_error": 2.9976021664879227e-15,
+      "subgroup_error": 4.524158825347513e-15
+    },
+    {
+      "L": 12,
+      "beta": 3.0,
+      "full": 0.12402460539333711,
+      "subgroup": 0.11096953291454018,
+      "full_error": 1.0547118733938987e-15,
+      "subgroup_error": 4.579669976578771e-16
+    }
+  ],
+  "sources_sha256": {
+    "validate_fluctuation_kernel.py": "705a8410efe83d006e7ada1b846261200fc732e22d004a8110ce6ba7d02ef860",
+    "pilot/models/stratified_L6_staggered_mu1.0e-8_Q.bin": "b9ec7d35b36deb37bfd04222f08534b151ccfca6f2e566e6c23ea8b9067e44f7",
+    "pilot/models/stratified_L12_staggered_mu1.0e-8_Q.bin": "c151aabb06fe3d3404812b46fa9dc06b99d3dbd207966c5c8ecb4eee06e5257c"
+  }
+}

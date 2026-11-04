@@ -1,0 +1,5 @@
+shard 1/2 of L36_beta2.6931_w2.csv : L=36 beta=2.6931 z=5.9348  192 samples -> L36_beta2.6931_w2.csv.shard1of2.csv
+PROGRESS 64/192
+PROGRESS 128/192
+PROGRESS 192/192
+DONE L36_beta2.6931_w2.csv.shard1of2.csv : 192 samples

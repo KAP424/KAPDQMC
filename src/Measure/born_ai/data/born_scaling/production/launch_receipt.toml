@@ -1,0 +1,66 @@
+status = "launched"
+started_at = "2026-10-27T07:52:36.289798+00:00"
+plan_path = "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\born_ai\\data\\born_scaling\\production\\production_plan.toml"
+plan_sha256 = "3f3929b15eec47c5720b7f481240ab66f36e843a4a09761cf98f7658ae427909"
+working_directory = "D:\\JuliaDQMC\\code\\KAPDQMC"
+launcher_sha256 = "f978b57712226b7a5ee0a92999cbfa5a8d3f461c95ce065d1f633339017beeb3"
+window_mode = "Windows CREATE_NO_WINDOW"
+update_kernel = "fused_rank_updates"
+workers = 4
+blas_threads_per_worker = 1
+
+[[worker_processes]]
+worker = 1
+pid = 1960
+command = ["C:\\Users\\admin\\AppData\\Local\\Microsoft\\WindowsApps\\julia.EXE", "--project=.", "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\born_ai\\run_born_scaling_fused.jl", "--plan=D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\born_ai\\data\\born_scaling\\production\\production_plan.toml", "--worker=1", "--workers=4"]
+log = "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\born_ai\\data\\born_scaling\\production\\worker_1.log"
+started_at = "2026-10-27T07:52:36.342670+00:00"
+
+[[worker_processes]]
+worker = 2
+pid = 50144
+command = ["C:\\Users\\admin\\AppData\\Local\\Microsoft\\WindowsApps\\julia.EXE", "--project=.", "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\born_ai\\run_born_scaling_fused.jl", "--plan=D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\born_ai\\data\\born_scaling\\production\\production_plan.toml", "--worker=2", "--workers=4"]
+log = "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\born_ai\\data\\born_scaling\\production\\worker_2.log"
+started_at = "2026-10-27T07:52:36.371843+00:00"
+
+[[worker_processes]]
+worker = 3
+pid = 50204
+command = ["C:\\Users\\admin\\AppData\\Local\\Microsoft\\WindowsApps\\julia.EXE", "--project=.", "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\born_ai\\run_born_scaling_fused.jl", "--plan=D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\born_ai\\data\\born_scaling\\production\\production_plan.toml", "--worker=3", "--workers=4"]
+log = "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\born_ai\\data\\born_scaling\\production\\worker_3.log"
+started_at = "2026-10-27T07:52:36.398160+00:00"
+
+[[worker_processes]]
+worker = 4
+pid = 102892
+command = ["C:\\Users\\admin\\AppData\\Local\\Microsoft\\WindowsApps\\julia.EXE", "--project=.", "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\born_ai\\run_born_scaling_fused.jl", "--plan=D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\born_ai\\data\\born_scaling\\production\\production_plan.toml", "--worker=4", "--workers=4"]
+log = "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\born_ai\\data\\born_scaling\\production\\worker_4.log"
+started_at = "2026-10-27T07:52:36.428859+00:00"
+
+[[actual_julia_processes]]
+worker = 1
+launcher_pid = 1960
+pid = 30004
+created_at = "2026-10-27T15:52:36.371888+08:00"
+command_line = "C:\\Users\\admin\\.julia\\juliaup\\julia-1.12.1+0.x64.w64.mingw32\\bin\\julia.exe"
+
+[[actual_julia_processes]]
+worker = 2
+launcher_pid = 50144
+pid = 97424
+created_at = "2026-10-27T15:52:36.399006+08:00"
+command_line = "C:\\Users\\admin\\.julia\\juliaup\\julia-1.12.1+0.x64.w64.mingw32\\bin\\julia.exe"
+
+[[actual_julia_processes]]
+worker = 3
+launcher_pid = 50204
+pid = 31700
+created_at = "2026-10-27T15:52:36.426414+08:00"
+command_line = "C:\\Users\\admin\\.julia\\juliaup\\julia-1.12.1+0.x64.w64.mingw32\\bin\\julia.exe"
+
+[[actual_julia_processes]]
+worker = 4
+launcher_pid = 102892
+pid = 102572
+created_at = "2026-10-27T15:52:36.458528+08:00"
+command_line = "C:\\Users\\admin\\.julia\\juliaup\\julia-1.12.1+0.x64.w64.mingw32\\bin\\julia.exe"

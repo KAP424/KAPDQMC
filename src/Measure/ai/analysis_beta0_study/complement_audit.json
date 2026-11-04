@@ -1,0 +1,169 @@
+{
+  "status": "PASS",
+  "generated_utc": "2026-10-22T01:00:19.002482+00:00",
+  "scope": "Exact occupation bits at a fixed site origin; no fits or entropy values used",
+  "indexing": "bits[2*(x+y*m)+a], x,y zero-based cell coordinates, a=0 A / a=1 B; compare different m on lcm(m1,m2)",
+  "checked_patterns": 17,
+  "checked_distinct_pairs": 136,
+  "patterns": [
+    {
+      "name": "uniform_A",
+      "m": 1,
+      "bits": "10",
+      "complement_bits": "01",
+      "cohort": "confirmation"
+    },
+    {
+      "name": "one_B_2",
+      "m": 2,
+      "bits": "10101001",
+      "complement_bits": "01010110",
+      "cohort": "confirmation"
+    },
+    {
+      "name": "one_B_3",
+      "m": 3,
+      "bits": "101010101010101001",
+      "complement_bits": "010101010101010110",
+      "cohort": "confirmation"
+    },
+    {
+      "name": "two_B_3",
+      "m": 3,
+      "bits": "011010101010101001",
+      "complement_bits": "100101010101010110",
+      "cohort": "pilot_only"
+    },
+    {
+      "name": "diagonal_B_3",
+      "m": 3,
+      "bits": "011010100110101001",
+      "complement_bits": "100101011001010110",
+      "cohort": "confirmation"
+    },
+    {
+      "name": "special_matched_a",
+      "m": 3,
+      "bits": "100110011010101010",
+      "complement_bits": "011001100101010101",
+      "cohort": "confirmation"
+    },
+    {
+      "name": "special_matched_b",
+      "m": 3,
+      "bits": "101001011010101010",
+      "complement_bits": "010110100101010101",
+      "cohort": "pilot_only"
+    },
+    {
+      "name": "general_matched_a",
+      "m": 3,
+      "bits": "011010111001011000",
+      "complement_bits": "100101000110100111",
+      "cohort": "confirmation"
+    },
+    {
+      "name": "general_matched_b",
+      "m": 3,
+      "bits": "101001010110101100",
+      "complement_bits": "010110101001010011",
+      "cohort": "pilot_only"
+    },
+    {
+      "name": "random_half_3",
+      "m": 3,
+      "bits": "100110001011010110",
+      "complement_bits": "011001110100101001",
+      "cohort": "confirmation"
+    },
+    {
+      "name": "full_empty_cluster3",
+      "m": 3,
+      "bits": "111111111000000000",
+      "complement_bits": "000000000111111111",
+      "cohort": "pilot_only"
+    },
+    {
+      "name": "near02_irregular3",
+      "m": 3,
+      "bits": "111100000011001110",
+      "complement_bits": "000011111100110001",
+      "cohort": "confirmation"
+    },
+    {
+      "name": "pure02_block4",
+      "m": 4,
+      "bits": "11111111110011001100110000000000",
+      "complement_bits": "00000000001100110011001111111111",
+      "cohort": "confirmation"
+    },
+    {
+      "name": "pure02_irregular4",
+      "m": 4,
+      "bits": "11001111001100000011001111001100",
+      "complement_bits": "00110000110011111100110000110011",
+      "cohort": "pilot_only"
+    },
+    {
+      "name": "pure02_staircase4",
+      "m": 4,
+      "bits": "11111111111111001100000000000000",
+      "complement_bits": "00000000000000110011111111111111",
+      "cohort": "pilot_only"
+    },
+    {
+      "name": "pure02_notched_stripe4",
+      "m": 4,
+      "bits": "00110000111111001111000011110000",
+      "complement_bits": "11001111000000110000111100001111",
+      "cohort": "confirmation"
+    },
+    {
+      "name": "uniform_B",
+      "m": 1,
+      "bits": "01",
+      "complement_bits": "10",
+      "cohort": "analytic_complement_control"
+    }
+  ],
+  "fixed_origin_duplicates": [],
+  "fixed_origin_complements": [
+    {
+      "pattern_a": "uniform_A",
+      "pattern_b": "uniform_B",
+      "comparison_period": 1
+    }
+  ],
+  "pilot_only_to_confirmation_complement": {
+    "full_empty_cluster3": [],
+    "general_matched_b": [],
+    "pure02_irregular4": [],
+    "pure02_staircase4": [],
+    "special_matched_b": [],
+    "two_B_3": []
+  },
+  "translated_relations_not_used_to_infer_same_cut_entropy": [
+    {
+      "pattern_a": "two_B_3",
+      "pattern_b": "special_matched_b",
+      "comparison_period": 3,
+      "relation": "translated_duplicate",
+      "shifts": [
+        [
+          0,
+          1
+        ]
+      ],
+      "same_fixed_cut_entropy_equality_proved": false
+    }
+  ],
+  "self_translated_complements_not_used_to_infer_same_cut_entropy": [],
+  "proven_identity": "At beta=0, C_Pc(theta)=I-Gamma C_P(theta) Gamma. Gamma is diagonal by site, so each fixed-region spectrum maps lambda to 1-lambda and S2 is unchanged.",
+  "limitations": "Translation relations alone do not prove equal D for the same anchored cuts. No rotations, sublattice exchanges, or arbitrary orbital permutations were admitted as fixed-site complements.",
+  "files": {
+    "analysis_beta0_study/baseline_provenance.json": "44041f58277255017e3c5d39c9d8b309494340babcdfd9377a2891c78d7cf77f",
+    "analysis_beta0_study/study_design.json": "1b706ed6da19a3892037f97af6dbca7051ab4cd26b5b581964ddc21d29dd3e31",
+    "analysis_beta0_study/confirmation_plan.json": "2e7408b6fa17a0129a19d519cccedc29497b5c8c560297b9e8d87f1e49bb849c",
+    "beta0_complement_audit.py": "6d93e2063387d1619a617dac17a6da35ee8d6afd2d2b3bf56567f6d7ca676618"
+  }
+}

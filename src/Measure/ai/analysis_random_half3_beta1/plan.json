@@ -1,0 +1,193 @@
+{
+  "version": "random-half3-beta1-expanded-v1",
+  "status": "registered before expanded-data analysis; no asymptotic verdict is preset",
+  "pattern": "random_half_3",
+  "beta": 1,
+  "observable": "D=(2*S_A+S_C)/3-S_B; one-species natural-log Renyi-2",
+  "new_input": "data/random_half3_beta1_observations.csv",
+  "new_equilibrium_input": "data/random_half3_beta1_equilibrium.csv",
+  "planned_finite_sizes": [
+    90,
+    108,
+    144
+  ],
+  "planned_times": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    10,
+    12,
+    14,
+    16,
+    18,
+    20,
+    24,
+    28,
+    32
+  ],
+  "planned_equilibrium_maximum_L": 180,
+  "planned_new_equilibrium_sizes": [
+    99,
+    108,
+    117,
+    126,
+    135,
+    144,
+    153,
+    162,
+    171,
+    180
+  ],
+  "possible_adaptive_sizes": [
+    180,
+    216
+  ],
+  "adaptive_rule": "Any additional sizes must be motivated by common-grid inter-size curve differences or coefficient drift, not by closeness of a time coefficient to the equilibrium target. Record the actual simulation decision separately. No new time window is selected to improve matching.",
+  "time_windows": [
+    [
+      2,
+      6
+    ],
+    [
+      4,
+      8
+    ],
+    [
+      6,
+      12
+    ],
+    [
+      8,
+      16
+    ],
+    [
+      10,
+      20
+    ],
+    [
+      12,
+      24
+    ],
+    [
+      16,
+      32
+    ]
+  ],
+  "equilibrium_Lmin_checks": [
+    18,
+    27,
+    36,
+    45,
+    54,
+    72,
+    90
+  ],
+  "equilibrium_reference": "Use corrected D fit from L=18 through the largest complete equilibrium size. Preserve the old L=18..90 reference separately; show every requested lower-cutoff check.",
+  "D_and_time_models": {
+    "log": "c*ln(x)+b (2 parameters)",
+    "log_inv": "c*ln(x)+b+d/x (3 parameters; main model)",
+    "log_inv2": "c*ln(x)+b+d/x+e/x^2 (4 parameters; sensitivity only)"
+  },
+  "independent_raw_B_models": {
+    "area_log": "a*L-c_B*ln(L)+b (3 parameters)",
+    "area_log_inv": "a*L-c_B*ln(L)+b+d/L (4 parameters; main independent check)",
+    "area_log_inv2": "a*L-c_B*ln(L)+b+d/L+e/L^2 (5 parameters; sensitivity only)"
+  },
+  "minimum_points": "At least parameter count + 2. Missing endpoints or too few points produce a missing-model record, not a truncated or lower-degree substitute.",
+  "time_grid_rule": "For each fixed window, choose the largest two sizes with both endpoints and at least five common measured times. Main rolling curves refit every size containing that identical grid; retain per-size full-grid fits and all-pair common-grid fits separately as diagnostics.",
+  "finite_size_metrics": "Unshifted pointwise D differences, maximum window difference, and common-grid coefficient drift. Report absolute values plus normalizations using equilibrium log span and time-only fitted log span; no coefficient target is used to select the fitting window.",
+  "correction_diagnostics": "Retain coefficients of inverse powers, their endpoint span relative to the log contribution, design condition numbers, RMSE, maximum residual, and model/window drift. A small residual is not sufficient evidence of an asymptotic logarithm.",
+  "finite_difference_times": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "finite_difference_diagnostics": "s(t)=[D(2t)-D(t)]/ln2 and c_eff(t)=[2D(4t)-3D(2t)+D(t)]/ln2. Only actual complete pairs/triples; no interpolation. The second expression cancels a 1/theta correction. These do not refer to c_eq and are diagnostics only, never window/pass selectors; compare sizes before time drift.",
+  "plot_rules": "Actual unshifted D curves; fits only inside their measured fit interval; stable size colors/markers; all fixed windows visible including unavailable fits; no statistical error bars or confidence claims for deterministic data.",
+  "scope": "Expanded finite-size/time evidence for this one pattern and beta. Neither an equivalence theorem nor a proof that an asymptotic corner logarithm is absent. No locked previous analysis or input is overwritten.",
+  "adaptive_finite_grids": [
+    {
+      "sizes": [
+        180,
+        216
+      ],
+      "times": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        10,
+        12,
+        14,
+        16,
+        18,
+        20,
+        24,
+        28,
+        32
+      ],
+      "reason": "Inter-size drift in complete 108/144 window 8..16; no criterion based on closeness to equilibrium coefficient.",
+      "trigger": {
+        "size_small": 108,
+        "size_large": 144,
+        "window": "8-16",
+        "model": "log_inv",
+        "c_small": 0.1380249412078176,
+        "c_large": 0.18145528566298408,
+        "absolute_coefficient_difference": 0.04343034445516647,
+        "maximum_unshifted_D_difference": 0.008163058010765667,
+        "coefficient_drift_normalized_with_eq18_to180": 0.21143607331704364,
+        "curve_difference_normalized_with_eq18_to180": 0.05733413076645665,
+        "preliminary_quoted_percentages": "21.13% coefficient drift and 5.729% curve difference used the then-available equilibrium fit through L162; completed equilibrium through L180 gives 21.144% and 5.733%, respectively."
+      }
+    }
+  ],
+  "adaptive_equilibrium_sizes": [
+    198,
+    216
+  ],
+  "adaptive_sampling_grids": [
+    {
+      "sizes": [
+        144,
+        180,
+        216
+      ],
+      "times": [
+        9,
+        11
+      ],
+      "registered_utc": "2026-10-18T13:40:14.588712+00:00",
+      "registered_before_any_added_sample": true,
+      "snapshot": [
+        {
+          "path": "data/random_half3_beta1_observations.csv",
+          "sha256": "033d0b8e986793e81eaa8624c3dba2c3bc1bf2a815c85b5ca6cbd8d8560aaf15",
+          "rows": 65
+        },
+        {
+          "path": "data/random_half3_beta1_equilibrium.csv",
+          "sha256": "90c4fdf5df45e724c959fa6cab9d517b47509335fe61bac22d03820a664a4df8",
+          "rows": 10
+        }
+      ],
+      "reason": "Fixed windows 6..12 and 8..16 contain only five original common times, preventing a four-parameter sensitivity fit under n >= parameters+2. Adding 9 and 11 gives seven common times without changing window boundaries; no closeness to equilibrium is used to choose these samples."
+    }
+  ],
+  "sparse_original_grid_diagnostic": {
+    "excluded_added_times": [
+      9,
+      11
+    ],
+    "rule": "Repeat all seven windows after excluding the registered densification times. Keep this diagnostic separate from the primary common-grid analysis. Compare model/grid sensitivity only at the same L and same fixed window; do not mix dense and sparse size curves."
+  }
+}

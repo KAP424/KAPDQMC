@@ -1,0 +1,4 @@
+sampler=local; beta=0.2; L=12; retained=1000; burnin=100; refresh_every=100
+one local sweep = 288 attempted swaps; iid has no acceptance ratio
+ensemble: |E|=Nsites/2; fixed ground-state Slater; real orbitals
+purity columns: A,B; entropy columns: S2(A),S2(B); average per-sample entropy

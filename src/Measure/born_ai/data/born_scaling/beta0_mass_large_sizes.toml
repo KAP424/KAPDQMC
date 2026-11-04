@@ -1,0 +1,17 @@
+beta = 0.0
+calculation = "Deterministic entropies of the staggered-mass negative-energy Slater. No Monte Carlo and no positive-beta data."
+combined_sizes = [3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 36]
+fit_scope = "Unweighted finite-size diagnostics of D=b+c log(L)+d/L (or d=0). No stochastic uncertainty, no fitted model selection, and no assertion that c_window is the asymptotic coefficient."
+mu = 1.0e-8
+new_sizes = [27, 30, 36]
+status = "PASS"
+
+[files]
+"data/born_scaling/beta0_mass_combined_local_slopes.csv" = "0b924726cbf9626fbe17143847945f418cf22f56b63cb35d04c3509ee41bf34e"
+"data/born_scaling/beta0_mass_combined_window_fits.csv" = "52286eb46a20701e128ec0926c2a2d27871d52a561a91df6de98e840c7c9ef3c"
+"data/born_scaling/beta0_mass_large_sizes.csv" = "4d777d318dc40ed64d47afe22d7a87f6a5cce070a0fdd58721a1c7b6efa00cf0"
+
+[source_hashes]
+"D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\born_ai\\analysis\\born_scaling_beta0_large_sizes.jl" = "c9bc06083e2e3deb3498b57812863cb1d8f6bd592fb4f0c947a7e9d8737b7acd"
+"D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\born_ai\\analysis\\born_scaling_state_audit.csv" = "6abdd8ea10d452c55197223f857019b147a525efa32928ecb89a7d33e0e9f74e"
+"D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\born_ai\\original_swap_scaling.jl" = "1af51fff868fbe63025323618506295ce5622179c1381de5ea64549e8c0d40cb"

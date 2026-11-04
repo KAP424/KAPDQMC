@@ -1,0 +1,32 @@
+sampling_seconds = 0.039266699999999995
+created_at = "2026-10-29T09:38:23.253"
+N0 = [12.000000000000002, 8.0, 12.000000000000002]
+matrix_format = "Float64 native-endian column-major Nsites x Nsites"
+maximum_reference_entropy_error = 4.800847219765814e-15
+status = "complete"
+kappa = 0.005383603305987195
+julia_version = "1.12.1"
+elapsed_seconds = 0.08500003814697266
+maximum_single_state_bound_violation = 0.0
+blas_threads = 1
+plan_sha256 = "97a04ea18174d4fa6adf8ef69721b75af0fe82444ee5cb5f0daabafd5100400e"
+records = 512
+DV0_full = 0.12940559252380907
+V0 = [1.4676826910461607, 1.33827709852235, 1.4676826910461624]
+diagnostic_seconds = 0.007212399999999985
+j_counts = [507, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+entropy_seconds = 0.021616000000000007
+
+[job]
+records = 512
+batch = 4
+model = "iid_targeted/models/iid_targeted_L6_staggered_mu1.0e-8_model.toml"
+id = "L6_beta3_batch4"
+seed = 729163104
+L = 6
+beta = 3.0
+
+[files]
+"iid_targeted/L6_beta3_batch4_meanG.bin" = "55c98ab6a121795524fdc19e1ffe47b781a0f2d91aede6452b47d2e6d07cfe45"
+"iid_targeted/L6_beta3_batch4_meanGsquare.bin" = "4f283107781dc825019023de49fadd208472dbad915c77f100e9e5556d8c7e67"
+"iid_targeted/L6_beta3_batch4.csv" = "44fed8dd2d9cb798be202eeccdc0a9c6ad038239c98b8a639078e9bdc29940f6"

@@ -1,0 +1,159 @@
+{
+  "status": "PASS",
+  "stage": "final",
+  "utc": "2026-10-18T14:02:31.677972+00:00",
+  "algorithm": "80-digit Decimal normal equations, pivoted elimination; raw B uses explicit negative log column",
+  "script_sha256": "a9c419305b30f3a3340257f1a8bcf2582c9c23dba3ba70db57b496566184b7c2",
+  "plan_sha256": "6337486d1ff3f6869adafc8483123a712821cd5e8484c0f2697e687d1a64ea49",
+  "identity": {
+    "duplicate_rows": 14,
+    "max_duplicate_entropy_error": 0.0,
+    "max_D_reconstruction_error": 1.696666666667e-14,
+    "max_delta_reconstruction_error": 9e-15,
+    "configuration_bits": "100110001011010110",
+    "run_ids": [
+      "20261018T132539929",
+      "20261018T132654180",
+      "20261018T132951806",
+      "20261018T135304461",
+      "20261018T135650978"
+    ],
+    "all_selected_rows_general_m3_beta1": true
+  },
+  "sources": [
+    {
+      "file": "equilibrium_extended.csv",
+      "sha256": "8d26ae7ebb69e7b378b62e40329f749f266288634a944e0cce36c73fca7ecb23",
+      "complete_prefix_sha256": "8d26ae7ebb69e7b378b62e40329f749f266288634a944e0cce36c73fca7ecb23",
+      "trimmed_partial_tail": false,
+      "total_rows": 1345,
+      "selected_rows": 10
+    },
+    {
+      "file": "observations.csv",
+      "sha256": "b6e6403a7cf5a228b77f37c6f167bff7da93cc800f768de662a0ae9be34666dc",
+      "complete_prefix_sha256": "b6e6403a7cf5a228b77f37c6f167bff7da93cc800f768de662a0ae9be34666dc",
+      "trimmed_partial_tail": false,
+      "total_rows": 1937,
+      "selected_rows": 60
+    },
+    {
+      "file": "extraction_observations.csv",
+      "sha256": "aabd6735c4e8ab7d5f8ea74181a4b24b7b32508ac5ed18e9a0919ea752b93b37",
+      "complete_prefix_sha256": "aabd6735c4e8ab7d5f8ea74181a4b24b7b32508ac5ed18e9a0919ea752b93b37",
+      "trimmed_partial_tail": false,
+      "total_rows": 1189,
+      "selected_rows": 22
+    },
+    {
+      "file": "random_half3_beta1_observations.csv",
+      "sha256": "89eb5964c39ff255318bd0085989e24cbc24e5d926aa3c610106e2cd8a418e47",
+      "complete_prefix_sha256": "89eb5964c39ff255318bd0085989e24cbc24e5d926aa3c610106e2cd8a418e47",
+      "trimmed_partial_tail": false,
+      "total_rows": 82,
+      "selected_rows": 82
+    },
+    {
+      "file": "random_half3_beta1_equilibrium.csv",
+      "sha256": "2d420b431567711b10f3a2da003c09e7e45aef55812c80eab946c9329c6e1826",
+      "complete_prefix_sha256": "2d420b431567711b10f3a2da003c09e7e45aef55812c80eab946c9329c6e1826",
+      "trimmed_partial_tail": false,
+      "total_rows": 12,
+      "selected_rows": 12
+    }
+  ],
+  "sources_changed_during_audit": [],
+  "raw_unique_rows": 172,
+  "fitted_rows": 270,
+  "compared_fit_rows": 270,
+  "missing_required_keys": [],
+  "max_compared_c_error": 1.7566531562707155e-11,
+  "max_compared_coefficient_or_residual_error": 5.494329124999808e-08,
+  "max_compared_prediction_error_bound": 2.1219268515056767e-10,
+  "max_c_change_from_reconstructing_D": 1.7269822724652606e-12,
+  "primary": {
+    "primary_stage": "final",
+    "primary_stale_sources": [],
+    "primary_selected_rows_verified": 172,
+    "unmatched_fit_rows": [],
+    "coverage_windows_differing_from_primary": [],
+    "primary_plan_sha256": "6337486d1ff3f6869adafc8483123a712821cd5e8484c0f2697e687d1a64ea49",
+    "primary_script_sha256": "70855d2a5745db72bfe2b164d8fd70c55b6e59f00f39d8fc1ee81077fbe743f2",
+    "primary_summary_sha256": "d67fa6c128e8087932e004bcb6ce430029d1e78023d4a2fd18afb01f13ad2c0b"
+  },
+  "notes": [
+    "No entropy calculation or source-data changes.",
+    "Checks implementation and identity only; does not validate the physical asymptotic fit ansatz or create statistical error bars."
+  ],
+  "comparison_by_model": [
+    {
+      "domain": "equilibrium",
+      "model": "area_log",
+      "rows": 12,
+      "max_c_error": 3.195499420627357e-13,
+      "max_prediction_error_bound": 2.8965804403511357e-12
+    },
+    {
+      "domain": "equilibrium",
+      "model": "area_log_inv",
+      "rows": 11,
+      "max_c_error": 1.5509260542501124e-12,
+      "max_prediction_error_bound": 1.7596122897587082e-11
+    },
+    {
+      "domain": "equilibrium",
+      "model": "area_log_inv2",
+      "rows": 10,
+      "max_c_error": 1.7566531562707155e-11,
+      "max_prediction_error_bound": 2.1219268515056767e-10
+    },
+    {
+      "domain": "equilibrium",
+      "model": "log",
+      "rows": 12,
+      "max_c_error": 7.216449660063518e-16,
+      "max_prediction_error_bound": 6.688956372918522e-15
+    },
+    {
+      "domain": "equilibrium",
+      "model": "log_inv",
+      "rows": 12,
+      "max_c_error": 5.2735593669694936e-15,
+      "max_prediction_error_bound": 6.397966371975997e-14
+    },
+    {
+      "domain": "equilibrium",
+      "model": "log_inv2",
+      "rows": 11,
+      "max_c_error": 1.7014167852380524e-14,
+      "max_prediction_error_bound": 2.664968552970667e-13
+    },
+    {
+      "domain": "time",
+      "model": "log",
+      "rows": 78,
+      "max_c_error": 3.608224830031759e-16,
+      "max_prediction_error_bound": 1.753919873925745e-15
+    },
+    {
+      "domain": "time",
+      "model": "log_inv",
+      "rows": 78,
+      "max_c_error": 4.052314039881821e-15,
+      "max_prediction_error_bound": 2.6347356218258194e-14
+    },
+    {
+      "domain": "time",
+      "model": "log_inv2",
+      "rows": 46,
+      "max_c_error": 5.800915303666443e-14,
+      "max_prediction_error_bound": 4.966403736800399e-13
+    }
+  ],
+  "output_sha256": {
+    "recomputed_fits.csv": "6ff70900e2ed3d31fb75571f2a146b50a4d437fca638422e8364f4a4a7e01651",
+    "fit_comparisons.csv": "823bc00888afe6b4b7d4b75a84febcae5c7be09bcd53dd1f18aaf10cebd5e3bf",
+    "common_grid_coverage.csv": "c427130293191a4901b1854b3821bc77a600a8c89bdefe9873e8885184296a8e",
+    "raw_selected_observations.csv": "27d0a17df4db3f0974576dcdf7f1e66d0439eb5b8434e3a6899f9103d06e8e64"
+  }
+}

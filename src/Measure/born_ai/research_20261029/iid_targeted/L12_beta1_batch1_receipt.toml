@@ -1,0 +1,32 @@
+sampling_seconds = 1.3571684000000002
+created_at = "2026-10-29T09:38:20.743"
+N0 = [48.0, 32.0, 48.0]
+matrix_format = "Float64 native-endian column-major Nsites x Nsites"
+maximum_reference_entropy_error = 5.240252676230739e-14
+status = "complete"
+kappa = 0.4179433201601924
+julia_version = "1.12.1"
+elapsed_seconds = 2.5190000534057617
+maximum_single_state_bound_violation = 0.0
+blas_threads = 1
+plan_sha256 = "97a04ea18174d4fa6adf8ef69721b75af0fe82444ee5cb5f0daabafd5100400e"
+records = 512
+DV0_full = 0.183034645377678
+V0 = [3.0771248583804223, 2.8940902130027446, 3.077124858380415]
+diagnostic_seconds = 0.29865099999999983
+j_counts = [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 5, 10, 27, 39, 83, 69, 65, 66, 59, 41, 19, 16, 5, 4, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+entropy_seconds = 0.7539723000000002
+
+[job]
+records = 512
+batch = 1
+model = "iid_targeted/models/iid_targeted_L12_staggered_mu1.0e-8_model.toml"
+id = "L12_beta1_batch1"
+seed = 729223001
+L = 12
+beta = 1.0
+
+[files]
+"iid_targeted/L12_beta1_batch1.csv" = "f3384e9f584b913a6b1519d07223e6c1e5214d7678130457bb5be937d560a4e4"
+"iid_targeted/L12_beta1_batch1_meanG.bin" = "f09624a26ac2b468649cb6a3f29aa0b2372d80e26db9a6e505a1bc2522c25878"
+"iid_targeted/L12_beta1_batch1_meanGsquare.bin" = "762612e6a99639d6c616e849f97bb11f30453a53b2a2e880b0b4c6018235c092"

@@ -1,0 +1,111 @@
+{
+  "status": "FROZEN",
+  "created_utc": "2026-10-27T12:47:27.752769+00:00",
+  "decimal_precision": 80,
+  "scope": "Old L12-24 beta3 data only; no new-size pilot or production observation was read",
+  "beta": 3.0,
+  "mu": 1e-08,
+  "old_sizes": [
+    12,
+    15,
+    18,
+    21,
+    24
+  ],
+  "prediction_sizes": [
+    27,
+    30,
+    36,
+    42
+  ],
+  "models": {
+    "D_log_invL": {
+      "terms": [
+        "intercept",
+        "logL",
+        "invL"
+      ],
+      "old_sizes": [
+        12,
+        15,
+        18,
+        21,
+        24
+      ],
+      "n_points": 5,
+      "n_parameters": 3,
+      "residual_dof": 2,
+      "coefficient": {
+        "intercept": -1.5085321046216733,
+        "logL": 0.4532589056795359,
+        "invL": 4.832091146770578
+      },
+      "coefficient_decimal80": {
+        "intercept": "-1.5085321046216732454443653457003389540604746128354065632029991600596347157245493",
+        "logL": "0.45325890567953592494891581144855996276233253968468719673907987524902250012800116",
+        "invL": "4.8320911467705784735428682519804628108216530166465177161878884408289524784798006"
+      },
+      "chi_square": 1.6355844007617615,
+      "reduced_chi_square": 0.8177922003808807
+    },
+    "D_linear_log_diagnostic": {
+      "terms": [
+        "intercept",
+        "L",
+        "logL"
+      ],
+      "old_sizes": [
+        12,
+        15,
+        18,
+        21,
+        24
+      ],
+      "n_points": 5,
+      "n_parameters": 3,
+      "residual_dof": 2,
+      "coefficient": {
+        "intercept": 0.1587387282346791,
+        "L": 0.017655768869426117,
+        "logL": -0.1409584992745307
+      },
+      "coefficient_decimal80": {
+        "intercept": "0.15873872823467910209218125726112142291363668161448422823599480921762235407598841",
+        "L": "0.017655768869426117613055198139797788642694082057728556265066793352467937013862302",
+        "logL": "-0.14095849927453069213944318340413640184855189397454139855056429712588236859138769"
+      },
+      "chi_square": 0.9202258797496411,
+      "reduced_chi_square": 0.46011293987482055
+    }
+  },
+  "maximum_existing_coefficient_difference": 9.473542868251981e-15,
+  "future_test": {
+    "per_model": "For completed preregistered new sizes, residual=y_new-prediction; V_total=diag(new_MCSE^2)+corresponding block of frozen prediction_covariance. Report residual^T V_total^-1 residual without refitting old coefficients.",
+    "degrees_of_freedom": "Number of new size means tested, because coefficients were fixed from independent old data; chi-square is an approximate diagnostic conditional on estimated MCSE and model adequacy.",
+    "missing_optional_size": "L42 is an optional cost-driven size; if not run, take the corresponding covariance submatrix. Do not select test sizes by their observed agreement.",
+    "cross_model_dependence": "Both predictions use the same five old means. Full cross-model covariance is supplied; the two predictive tests also share the new data, so their statistics are not independent evidence.",
+    "sequence": "Score frozen predictions before examining refitted combined-size models; keep both results with distinct interpretations."
+  },
+  "limitations": [
+    "Each old model had only five points and two residual degrees of freedom; its good fit is not evidence for an asymptotic law.",
+    "Prediction intervals omit model/finite-size bias and uncertainty in the estimated old/new MCSE.",
+    "A failed extrapolation identifies failure of this fixed finite-window continuation, not a proof against every logarithmic or linear asymptotic scenario.",
+    "Four predictions in one model share three fitted coefficients; the parameter-only covariance has rank at most three. New independent MCSE must be added for the future predictive test."
+  ],
+  "files": {
+    "analysis/born_scaling/beta3_large_holdout/freeze_predictions.py": "0c858be811aba0b38667a38b8e02756e298e75c07225086f955faa1bf8e8a2f8",
+    "analysis/born_scaling/beta3_large_protocol.json": "6156666e911cfd21b3a63d677664e4876aa93c4bd2f03a8330f03313ca66551e",
+    "analysis/born_scaling/production/summary.json": "edb5db7350274bd779d6cc30c0396a8fce6ad6077c8a574c0ebd525ee951dea5",
+    "analysis/born_scaling/production/means.csv": "01b195cc6bb8908c2085e3183d218d0d5ae876724f76dcfe54860cd766eb5385",
+    "analysis/born_scaling/linear_crossover/summary.json": "fc74de29d66e78415705e03178ba5ef95ccdfd903a5f142979b155508228cae3",
+    "analysis/born_scaling/linear_crossover/fits.csv": "f2b2fe3ebf5e84639649983ccc3c72954798c901d0a003ec1af633db5262b570",
+    "analysis/born_scaling_production_validation.json": "ab50e58b9ea395ca2e4ab230ccaab6ef91d394d6073ce94a6f30af5d5c6296ed",
+    "analysis/born_scaling/linear_crossover/validation.json": "3265bd73c9fcee23d5bb533f3516c919995c48775a9eb8a0cf6420f9a871205a",
+    "analysis/born_scaling/beta3_large_holdout/old_points.csv": "9b7adc8ece9b366d88d0e47a57e40a92648e8273ccd989605909d689f6d00507",
+    "analysis/born_scaling/beta3_large_holdout/old_fit_residuals.csv": "ccc8b3d1b141b0aa02a898748eb421733ce271c2d5e6a8355ee9a2bc53a1a9d2",
+    "analysis/born_scaling/beta3_large_holdout/predictions.csv": "b3f6b7f237f943338f3e9d300935db77c0304f8f6c5146da869a41599a6fdfdf",
+    "analysis/born_scaling/beta3_large_holdout/parameter_covariance.csv": "408863e8ad277387d9ee15e3c48f6753f1989802085636ecc7388dd5bbec78d8",
+    "analysis/born_scaling/beta3_large_holdout/prediction_covariance.csv": "650a4c26a4ba72ae29c63c471a8d156fbff8715280aa469a8b9d65c21cf54e96",
+    "analysis/born_scaling/beta3_large_holdout/prediction_influence.csv": "636e9013fe1a5e58ba862e9147fdaa3ad3b640ef6e38a24f52000c996c38af1c"
+  }
+}

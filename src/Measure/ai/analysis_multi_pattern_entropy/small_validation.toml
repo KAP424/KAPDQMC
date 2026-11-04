@@ -1,0 +1,25 @@
+generated_utc = "2026-10-19T07:23:43.554"
+synthetic_max_error = 2.842170943040401e-14
+L = [18, 36]
+data_sha256 = "c47da22eb90c637c33bc41b7e6168a8d2d984f0543ee57aa0218bbeab2d7c50a"
+theta = ["0", "4", "Inf"]
+status = "PASS"
+formula = "S2=-n*log(2)-2*logabsdet(C-(1+i)I/2); full real covariance; no half-size assumption"
+synthetic_cases = 96
+patterns = ["one_B_2", "two_B_3", "random_half_3", "general_matched_a"]
+elapsed_seconds = 6.583999872207642
+blas_threads = 4
+methods = ["bunchkaufman", "bunchkaufman_rook", "lu"]
+scope = "Small-size correctness and warmed end-to-end timings only. No large benchmark; no state/kernel/data replacement. Timing ratios do not predict large-size speedup."
+timings_sha256 = "50f92540383ce530e769065d1436b27468d2f57e3c87f5523ceefaaf55d3a95f"
+max_entropy_error = 1.0835776720341528e-12
+beta = [0.0, 0.3, 1.0, 2.0]
+julia = "1.12.1"
+method_comparisons = 288
+physical_cases = 96
+
+[source_sha256]
+"real_entropy_extension.jl" = "56ef0aa79ec2e2c04f35d1120093dd32a513cb76d3f5cfc4c17acc41887065c9"
+"fermion_experiment.jl" = "9efd053e7d469082ad8cead86ec256dade17e40279902842013c9a8dc9864fab"
+"validate_multi_pattern_entropy_extension.jl" = "c60d2448f3e78bed00c42d93994b0ed4d9a68be927f201529cab0e3a0b646e30"
+"multi_pattern_entropy_extension.jl" = "a2d8b3c7ce70a8ccc7f6e1a87cfec0e22786d6ca89af8623c1077eb7afe3778c"

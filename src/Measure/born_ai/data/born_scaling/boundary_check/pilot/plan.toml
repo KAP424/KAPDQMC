@@ -1,0 +1,292 @@
+version = 1
+stage = "pilot"
+state = "staggered"
+mu = 1e-08
+beta = 3.0
+created_at = "2026-10-28T04:44:41.988788+00:00"
+execution_workers = 4
+blas_threads = 1
+purpose = "Paired p=1/3 and p=1/2 entropies with exact local-boundary-mask subgroup averaging"
+translations = "p=1/m: all (tx,ty)=(i*L/m,j*L/m), i,j=0,...,m-1; 9/4 shifts, not all L^2"
+update = "Original uniform E/S Metropolis swap, fused numerical kernel; rejected states retained"
+snapshot_format = "Int32 little-endian original E order, L^2 indices per recorded sweep"
+analysis = "One draw per recorded sweep after subgroup mean. All differences paired within the same E. At least 3 residual df for each reported fit."
+fits = ["constant", "log", "linear", "log_plus_inverse_L", "constant_plus_inverse_L"]
+L_min = [6, 12, 18]
+minimum_residual_dof = 3
+precision_target_D = 0.004
+precision_target_paired_geometry_difference = 0.003
+pilot_used_for_means = false
+
+[source_sha256]
+"run_born_boundary_check.jl" = "3e8fb7d0c4b01387d51daf53ad6f5a3298b6948f06581ec6a9ada0e4ae807f2c"
+"prepare_born_boundary_check.py" = "28556776bf056d3334904e7f8c2473a68ebca191da366adc426de745147e0c40"
+"launch_born_boundary_check.py" = "389531733f1005f286a1037338981b7469d472048845e61c854109052ef7c9ea"
+"run_born_scaling.jl" = "3d9004c1d112a29ee1a7b440a945dc89516f7cabba8e279e0e5dd145e5a65c76"
+"original_swap_scaling.jl" = "1af51fff868fbe63025323618506295ce5622179c1381de5ea64549e8c0d40cb"
+"fused_original_swap_kernel.jl" = "da7d40a574902763417225417d30abce265a15f9804dbfa47882b46f8ed20d70"
+"../../public/Geometry.jl" = "079c2052642d46a7072656ccd738411faa57c9f07791f786a0a6872a5a5970ad"
+
+[[jobs]]
+run_id = "pilot_boundary_L6_beta3_chain1"
+stage = "pilot"
+L = 6
+beta = 3.0
+mu = 1e-08
+chain = 1
+start = "random"
+seed = 2400060001
+model_manifest = "data/born_scaling/production/models/state_L6_staggered_mu1.0e-8_model.toml"
+model_manifest_sha256 = "d958ed08ecc990148d0ffaef2dc256d0de42b78c464cfda60f79b96a61816770"
+warmup_sweeps = 128
+analysis_burnin = 128
+retained_sweeps = 128
+retained_records = 32
+sweeps = 256
+measure_every = 4
+refresh_every = 5
+sample_path = "data/born_scaling/boundary_check/pilot/pilot_boundary_L6_beta3_chain1_samples.csv"
+receipt_path = "data/born_scaling/boundary_check/pilot/pilot_boundary_L6_beta3_chain1_receipt.toml"
+snapshot_path = "data/born_scaling/boundary_check/pilot/pilot_boundary_L6_beta3_chain1_E.bin"
+
+[[jobs]]
+run_id = "pilot_boundary_L6_beta3_chain2"
+stage = "pilot"
+L = 6
+beta = 3.0
+mu = 1e-08
+chain = 2
+start = "uniform_A"
+seed = 2400060002
+model_manifest = "data/born_scaling/production/models/state_L6_staggered_mu1.0e-8_model.toml"
+model_manifest_sha256 = "d958ed08ecc990148d0ffaef2dc256d0de42b78c464cfda60f79b96a61816770"
+warmup_sweeps = 128
+analysis_burnin = 128
+retained_sweeps = 128
+retained_records = 32
+sweeps = 256
+measure_every = 4
+refresh_every = 5
+sample_path = "data/born_scaling/boundary_check/pilot/pilot_boundary_L6_beta3_chain2_samples.csv"
+receipt_path = "data/born_scaling/boundary_check/pilot/pilot_boundary_L6_beta3_chain2_receipt.toml"
+snapshot_path = "data/born_scaling/boundary_check/pilot/pilot_boundary_L6_beta3_chain2_E.bin"
+
+[[jobs]]
+run_id = "pilot_boundary_L6_beta3_chain3"
+stage = "pilot"
+L = 6
+beta = 3.0
+mu = 1e-08
+chain = 3
+start = "uniform_B"
+seed = 2400060003
+model_manifest = "data/born_scaling/production/models/state_L6_staggered_mu1.0e-8_model.toml"
+model_manifest_sha256 = "d958ed08ecc990148d0ffaef2dc256d0de42b78c464cfda60f79b96a61816770"
+warmup_sweeps = 128
+analysis_burnin = 128
+retained_sweeps = 128
+retained_records = 32
+sweeps = 256
+measure_every = 4
+refresh_every = 5
+sample_path = "data/born_scaling/boundary_check/pilot/pilot_boundary_L6_beta3_chain3_samples.csv"
+receipt_path = "data/born_scaling/boundary_check/pilot/pilot_boundary_L6_beta3_chain3_receipt.toml"
+snapshot_path = "data/born_scaling/boundary_check/pilot/pilot_boundary_L6_beta3_chain3_E.bin"
+
+[[jobs]]
+run_id = "pilot_boundary_L6_beta3_chain4"
+stage = "pilot"
+L = 6
+beta = 3.0
+mu = 1e-08
+chain = 4
+start = "02_stripe"
+seed = 2400060004
+model_manifest = "data/born_scaling/production/models/state_L6_staggered_mu1.0e-8_model.toml"
+model_manifest_sha256 = "d958ed08ecc990148d0ffaef2dc256d0de42b78c464cfda60f79b96a61816770"
+warmup_sweeps = 128
+analysis_burnin = 128
+retained_sweeps = 128
+retained_records = 32
+sweeps = 256
+measure_every = 4
+refresh_every = 5
+sample_path = "data/born_scaling/boundary_check/pilot/pilot_boundary_L6_beta3_chain4_samples.csv"
+receipt_path = "data/born_scaling/boundary_check/pilot/pilot_boundary_L6_beta3_chain4_receipt.toml"
+snapshot_path = "data/born_scaling/boundary_check/pilot/pilot_boundary_L6_beta3_chain4_E.bin"
+
+[[jobs]]
+run_id = "pilot_boundary_L18_beta3_chain1"
+stage = "pilot"
+L = 18
+beta = 3.0
+mu = 1e-08
+chain = 1
+start = "random"
+seed = 2400180001
+model_manifest = "data/born_scaling/production/models/state_L18_staggered_mu1.0e-8_model.toml"
+model_manifest_sha256 = "5acff16cf93676c94b25584e5860145080040e01c9a7b513e54491130c9c00c3"
+warmup_sweeps = 128
+analysis_burnin = 128
+retained_sweeps = 128
+retained_records = 32
+sweeps = 256
+measure_every = 4
+refresh_every = 5
+sample_path = "data/born_scaling/boundary_check/pilot/pilot_boundary_L18_beta3_chain1_samples.csv"
+receipt_path = "data/born_scaling/boundary_check/pilot/pilot_boundary_L18_beta3_chain1_receipt.toml"
+snapshot_path = "data/born_scaling/boundary_check/pilot/pilot_boundary_L18_beta3_chain1_E.bin"
+
+[[jobs]]
+run_id = "pilot_boundary_L18_beta3_chain2"
+stage = "pilot"
+L = 18
+beta = 3.0
+mu = 1e-08
+chain = 2
+start = "uniform_A"
+seed = 2400180002
+model_manifest = "data/born_scaling/production/models/state_L18_staggered_mu1.0e-8_model.toml"
+model_manifest_sha256 = "5acff16cf93676c94b25584e5860145080040e01c9a7b513e54491130c9c00c3"
+warmup_sweeps = 128
+analysis_burnin = 128
+retained_sweeps = 128
+retained_records = 32
+sweeps = 256
+measure_every = 4
+refresh_every = 5
+sample_path = "data/born_scaling/boundary_check/pilot/pilot_boundary_L18_beta3_chain2_samples.csv"
+receipt_path = "data/born_scaling/boundary_check/pilot/pilot_boundary_L18_beta3_chain2_receipt.toml"
+snapshot_path = "data/born_scaling/boundary_check/pilot/pilot_boundary_L18_beta3_chain2_E.bin"
+
+[[jobs]]
+run_id = "pilot_boundary_L18_beta3_chain3"
+stage = "pilot"
+L = 18
+beta = 3.0
+mu = 1e-08
+chain = 3
+start = "uniform_B"
+seed = 2400180003
+model_manifest = "data/born_scaling/production/models/state_L18_staggered_mu1.0e-8_model.toml"
+model_manifest_sha256 = "5acff16cf93676c94b25584e5860145080040e01c9a7b513e54491130c9c00c3"
+warmup_sweeps = 128
+analysis_burnin = 128
+retained_sweeps = 128
+retained_records = 32
+sweeps = 256
+measure_every = 4
+refresh_every = 5
+sample_path = "data/born_scaling/boundary_check/pilot/pilot_boundary_L18_beta3_chain3_samples.csv"
+receipt_path = "data/born_scaling/boundary_check/pilot/pilot_boundary_L18_beta3_chain3_receipt.toml"
+snapshot_path = "data/born_scaling/boundary_check/pilot/pilot_boundary_L18_beta3_chain3_E.bin"
+
+[[jobs]]
+run_id = "pilot_boundary_L18_beta3_chain4"
+stage = "pilot"
+L = 18
+beta = 3.0
+mu = 1e-08
+chain = 4
+start = "02_stripe"
+seed = 2400180004
+model_manifest = "data/born_scaling/production/models/state_L18_staggered_mu1.0e-8_model.toml"
+model_manifest_sha256 = "5acff16cf93676c94b25584e5860145080040e01c9a7b513e54491130c9c00c3"
+warmup_sweeps = 128
+analysis_burnin = 128
+retained_sweeps = 128
+retained_records = 32
+sweeps = 256
+measure_every = 4
+refresh_every = 5
+sample_path = "data/born_scaling/boundary_check/pilot/pilot_boundary_L18_beta3_chain4_samples.csv"
+receipt_path = "data/born_scaling/boundary_check/pilot/pilot_boundary_L18_beta3_chain4_receipt.toml"
+snapshot_path = "data/born_scaling/boundary_check/pilot/pilot_boundary_L18_beta3_chain4_E.bin"
+
+[[jobs]]
+run_id = "pilot_boundary_L36_beta3_chain1"
+stage = "pilot"
+L = 36
+beta = 3.0
+mu = 1e-08
+chain = 1
+start = "random"
+seed = 2400360001
+model_manifest = "data/born_scaling/pilot_beta3_large/models/state_L36_staggered_mu1.0e-8_model.toml"
+model_manifest_sha256 = "99f70eed188cb397e655b1ed0ae17e31bedb0baa247efe416ab9e93b7879d0f0"
+warmup_sweeps = 128
+analysis_burnin = 128
+retained_sweeps = 128
+retained_records = 32
+sweeps = 256
+measure_every = 4
+refresh_every = 5
+sample_path = "data/born_scaling/boundary_check/pilot/pilot_boundary_L36_beta3_chain1_samples.csv"
+receipt_path = "data/born_scaling/boundary_check/pilot/pilot_boundary_L36_beta3_chain1_receipt.toml"
+snapshot_path = "data/born_scaling/boundary_check/pilot/pilot_boundary_L36_beta3_chain1_E.bin"
+
+[[jobs]]
+run_id = "pilot_boundary_L36_beta3_chain2"
+stage = "pilot"
+L = 36
+beta = 3.0
+mu = 1e-08
+chain = 2
+start = "uniform_A"
+seed = 2400360002
+model_manifest = "data/born_scaling/pilot_beta3_large/models/state_L36_staggered_mu1.0e-8_model.toml"
+model_manifest_sha256 = "99f70eed188cb397e655b1ed0ae17e31bedb0baa247efe416ab9e93b7879d0f0"
+warmup_sweeps = 128
+analysis_burnin = 128
+retained_sweeps = 128
+retained_records = 32
+sweeps = 256
+measure_every = 4
+refresh_every = 5
+sample_path = "data/born_scaling/boundary_check/pilot/pilot_boundary_L36_beta3_chain2_samples.csv"
+receipt_path = "data/born_scaling/boundary_check/pilot/pilot_boundary_L36_beta3_chain2_receipt.toml"
+snapshot_path = "data/born_scaling/boundary_check/pilot/pilot_boundary_L36_beta3_chain2_E.bin"
+
+[[jobs]]
+run_id = "pilot_boundary_L36_beta3_chain3"
+stage = "pilot"
+L = 36
+beta = 3.0
+mu = 1e-08
+chain = 3
+start = "uniform_B"
+seed = 2400360003
+model_manifest = "data/born_scaling/pilot_beta3_large/models/state_L36_staggered_mu1.0e-8_model.toml"
+model_manifest_sha256 = "99f70eed188cb397e655b1ed0ae17e31bedb0baa247efe416ab9e93b7879d0f0"
+warmup_sweeps = 128
+analysis_burnin = 128
+retained_sweeps = 128
+retained_records = 32
+sweeps = 256
+measure_every = 4
+refresh_every = 5
+sample_path = "data/born_scaling/boundary_check/pilot/pilot_boundary_L36_beta3_chain3_samples.csv"
+receipt_path = "data/born_scaling/boundary_check/pilot/pilot_boundary_L36_beta3_chain3_receipt.toml"
+snapshot_path = "data/born_scaling/boundary_check/pilot/pilot_boundary_L36_beta3_chain3_E.bin"
+
+[[jobs]]
+run_id = "pilot_boundary_L36_beta3_chain4"
+stage = "pilot"
+L = 36
+beta = 3.0
+mu = 1e-08
+chain = 4
+start = "02_stripe"
+seed = 2400360004
+model_manifest = "data/born_scaling/pilot_beta3_large/models/state_L36_staggered_mu1.0e-8_model.toml"
+model_manifest_sha256 = "99f70eed188cb397e655b1ed0ae17e31bedb0baa247efe416ab9e93b7879d0f0"
+warmup_sweeps = 128
+analysis_burnin = 128
+retained_sweeps = 128
+retained_records = 32
+sweeps = 256
+measure_every = 4
+refresh_every = 5
+sample_path = "data/born_scaling/boundary_check/pilot/pilot_boundary_L36_beta3_chain4_samples.csv"
+receipt_path = "data/born_scaling/boundary_check/pilot/pilot_boundary_L36_beta3_chain4_receipt.toml"
+snapshot_path = "data/born_scaling/boundary_check/pilot/pilot_boundary_L36_beta3_chain4_E.bin"

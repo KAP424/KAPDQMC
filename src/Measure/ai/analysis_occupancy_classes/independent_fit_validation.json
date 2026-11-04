@@ -1,0 +1,22 @@
+{
+  "status": "PASS",
+  "stage": "final",
+  "generated_utc": "2026-10-20T15:54:18.702852+00:00",
+  "precision_digits": 80,
+  "method": "Independent mpmath rectangular QR from merged observation CSV numeric strings; no fit helper called",
+  "fit_count_including_small_pairs": 4834,
+  "max_c_or_raw_logcoefficient_error": 4.701519173977431e-10,
+  "max_parameter_error": 4.1596649680286646e-08,
+  "primary_anchor_rows": 54,
+  "table_sha256": {
+    "observations": "3f578e6b6ffe1c64dfb7a3240289068910adb69236b2d4119c3693ab719d59a9",
+    "equilibrium_fits": "138287ea2fdca3d08544f9f803b9da275ecd7955baf7b13865f62c54a2942d13",
+    "time_individual_fits": "09da46dc0a797b0ea72ce55c1f58fc4ae713717bc3dec149aabd1017db6aaa9d",
+    "time_pair_fits": "5ae2abea86f73b80533b09bacf2ee358c713d43cecaad7a8f545449b7fdea490",
+    "raw_entropy_fits": "343e2c8b1092cdb9b485b802a428f836cae6e51d9b563506c73f0664f8fe3106",
+    "primary_coefficients": "2eba55d7a88ffbe38ce72110ea4ba0a29dad21d58ce648c8b8cff7efdaf0c7b4"
+  },
+  "summary_sha256": "81a4f2a4fe944dd22eb8e1ca2745aa70602db88837cc4060e981fe7a80bd99f5",
+  "script_sha256": "f997cd25ad9d7cf757b8a1c076a4a56faa70416f2606f48249ed241f192deb5e",
+  "scope": "Numerical fits and true per-pattern equilibrium anchors; does not independently reimplement every local diagnostic gate"
+}

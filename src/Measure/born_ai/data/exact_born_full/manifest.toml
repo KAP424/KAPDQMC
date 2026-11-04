@@ -1,0 +1,71 @@
+L = 2
+ensemble = "full_local"
+ground_orbital_sha256 = "92f3c634d56097f0e7333664c8410fa8fd939312ecd5333483a57e61df995b21"
+numerical_audit = "PASS"
+region_A = [1, 2, 5, 6]
+region_B = [1, 2]
+region_C = [1, 2, 3, 4]
+samples_per_beta = 30000
+status = "complete"
+
+[outputs]
+"L2_beta0p0_samples.csv" = "de8e1929b9e45545af5dc5303ce3b838b7448a54fac6ef5e66a5bff616f514f4"
+"L2_beta0p0_trajectories.csv" = "d251433ae656fea7a4103acd06c3e4e085e4d7f5e6715f92b0ed21e6b4080582"
+"L2_beta0p5_samples.csv" = "fd822e8cde27162d7ccce46f4d9d64b58171ed31ba3d8aa5fdd2f6b8dde11926"
+"L2_beta0p5_trajectories.csv" = "5e92aaea63e7ef1620eea104281d7b9d3395ce47e1a5dfbf7c84ebbb797b4578"
+"L2_beta1p0_samples.csv" = "00bb0b7d5d710a780ef002008cfb3a752bafd245f716dfe38f1aae4e50650d3a"
+"L2_beta1p0_trajectories.csv" = "6bb443d94aca13be791ddaf91014e309ebd508ff689490a6d6c1553faece026e"
+"L2_beta2p0_samples.csv" = "6218baaf3fcf459e1fe977b734d4a623aac270fbe793e4730d115d8225aaddf2"
+"L2_beta2p0_trajectories.csv" = "b6da6895c09a7b7248fa9ce3d119bb29815fd794bde0882f312b58e49bbb705b"
+"L2_beta3p0_samples.csv" = "3205b164affbf22e7ab65012e8b4412d4b9d714c7caf54e8fdd688989d468703"
+"L2_beta3p0_trajectories.csv" = "e3f8f1c374e7353cd2a366306597c473d48fd1d32fb869b089a1f7cd28f78326"
+"summary.csv" = "d84235d76728f703b8a76f88b84761cfd3301ec21cdc23cc512d7361bf72c171"
+
+[[runs]]
+beta = 0.0
+maximum_entropy_reference_error = 4.440892098500626e-16
+maximum_mixture_probability_error = 8.673617379884035e-19
+n = 30000
+nconfigurations = 256
+normalization_error = 0.0
+seed = 31000000
+[[runs]]
+beta = 0.5
+maximum_entropy_reference_error = 2.6645352591003757e-15
+maximum_mixture_probability_error = 2.0816681711721685e-17
+n = 30000
+nconfigurations = 256
+normalization_error = 0.0
+seed = 31005000
+[[runs]]
+beta = 1.0
+maximum_entropy_reference_error = 3.9968028886505635e-15
+maximum_mixture_probability_error = 4.85722573273506e-17
+n = 30000
+nconfigurations = 256
+normalization_error = 4.440892098500627e-16
+seed = 31010000
+[[runs]]
+beta = 2.0
+maximum_entropy_reference_error = 1.0186296250935811e-14
+maximum_mixture_probability_error = 2.949029909160572e-17
+n = 30000
+nconfigurations = 256
+normalization_error = 4.440892098500625e-16
+seed = 31020000
+[[runs]]
+beta = 3.0
+maximum_entropy_reference_error = 6.306066779870889e-14
+maximum_mixture_probability_error = 6.245004513516506e-17
+n = 30000
+nconfigurations = 256
+normalization_error = 0.0
+seed = 31030000
+
+[sources]
+"D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\born_ai\\BornSampler.jl" = "c05d61daa476af103f46cc461745563a538e65db51a4e0f9511edb7ccfa48c54"
+"D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\born_ai\\ExactBorn.jl" = "ac4ef87ef3a9b1ac38d163475f53ef5455af1bc8a5d6aa236053aff8707e26de"
+"D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\born_ai\\Free_M.jl" = "14315631313b93e9c12bbe6f090ee9b7864beae720d7d5797b71acd88fa79390"
+"D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\born_ai\\compare_exact_born.jl" = "d3542bc9930728d188c5166f48c3dd8c83b15618d4aa92a13a63be7d579a415e"
+"D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\born_ai\\compare_full_local_born.jl" = "c7927a01cfdfc0f4f361435c95650c8cbaa00aaf0e86c1f0fde58a507cf5789a"
+"D:\\JuliaDQMC\\code\\KAPDQMC\\src\\public\\Geometry.jl" = "079c2052642d46a7072656ccd738411faa57c9f07791f786a0a6872a5a5970ad"

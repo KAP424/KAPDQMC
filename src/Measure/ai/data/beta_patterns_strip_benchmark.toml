@@ -1,0 +1,103 @@
+julia = "1.12.1"
+script_sha256 = "bbf80831032b2118d61cab8bac10c325dfd677a2fe3b69e228db0bb335d811ef"
+status = "complete"
+blas_config = "LBTConfig([ILP64] libopenblas64_.dll)"
+strip_extension_sha256 = "94d04924a186701c575710f10d7d55f00b533b5f27076914f5a3dc7a90bdaf1b"
+finished_utc = "2026-10-19T09:24:41.985"
+
+[[observations]]
+S_A = 56.151206244525916
+method = "original"
+repeat = 1
+L = 180
+theta = 4.0
+pattern = "random_half_3"
+threads = 8
+S_C = 71.81446821398099
+seconds = 4.299999952316284
+beta = 1.0
+absolute_error = 0.0
+[[observations]]
+S_A = 56.151206244525916
+method = "original"
+repeat = 2
+L = 180
+theta = 4.0
+pattern = "random_half_3"
+threads = 8
+S_C = 71.81446821398099
+seconds = 4.479000091552734
+beta = 1.0
+absolute_error = 0.0
+[[observations]]
+S_A = 56.15120624452554
+method = "original"
+repeat = 1
+L = 180
+theta = 4.0
+pattern = "random_half_3"
+threads = 1
+S_C = 71.81446821398114
+seconds = 2.2100000381469727
+beta = 1.0
+absolute_error = 3.765876499528531e-13
+[[observations]]
+S_A = 56.15120624452554
+method = "original"
+repeat = 2
+L = 180
+theta = 4.0
+pattern = "random_half_3"
+threads = 1
+S_C = 71.81446821398114
+seconds = 2.003999948501587
+beta = 1.0
+absolute_error = 3.765876499528531e-13
+[[observations]]
+S_A = 56.151206244525426
+method = "folded"
+repeat = 1
+L = 180
+theta = 4.0
+pattern = "random_half_3"
+threads = 1
+S_C = 71.81446821398099
+seconds = 0.7850000858306885
+beta = 1.0
+absolute_error = 4.902744876744691e-13
+[[observations]]
+S_A = 56.151206244525426
+method = "folded"
+repeat = 2
+L = 180
+theta = 4.0
+pattern = "random_half_3"
+threads = 1
+S_C = 71.81446821398099
+seconds = 0.8190000057220459
+beta = 1.0
+absolute_error = 4.902744876744691e-13
+[[observations]]
+S_A = 56.1512062445258
+method = "folded"
+repeat = 1
+L = 180
+theta = 4.0
+pattern = "random_half_3"
+threads = 8
+S_C = 71.8144682139812
+seconds = 2.7760000228881836
+beta = 1.0
+absolute_error = 2.1316282072803006e-13
+[[observations]]
+S_A = 56.1512062445258
+method = "folded"
+repeat = 2
+L = 180
+theta = 4.0
+pattern = "random_half_3"
+threads = 8
+S_C = 71.8144682139812
+seconds = 1.9709999561309814
+beta = 1.0
+absolute_error = 2.1316282072803006e-13

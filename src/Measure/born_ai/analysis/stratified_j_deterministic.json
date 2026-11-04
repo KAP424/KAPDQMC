@@ -1,0 +1,213 @@
+{
+  "status": "PASS",
+  "L": 2,
+  "Nsites": 8,
+  "Nparticles": 4,
+  "beta": 3.0,
+  "deterministic_FE_pairs": 4900,
+  "sampling": "No random samples. All 70 F and all 70 E were summed.",
+  "conditional_formula": "P(F,E|j)=pG(F)/binom(a,j)^2 when |F intersect E|=j. j has exact probability w_j proportional to binom(a,j)^2 exp(-4 beta j).",
+  "j_probabilities": [
+    0.9999017009069562,
+    9.829773412522258e-05,
+    1.3589148427118182e-09,
+    3.7108717172049e-15,
+    1.425023990404163e-21
+  ],
+  "marginal_probability_max_error": 1.0408340855860843e-16,
+  "observables": {
+    "S_A": {
+      "mean": 0.00011037748171131412,
+      "conditional_mean": [
+        8.908600184689603e-05,
+        0.21668836389142782,
+        0.19262058311094774,
+        0.21668836389142784,
+        8.908600184689603e-05
+      ],
+      "conditional_variance": [
+        8.964145977360338e-10,
+        0.25332929480618516,
+        0.22981565992514258,
+        0.25332929480618516,
+        8.964145977360338e-10
+      ],
+      "variance_times_total_samples": {
+        "unstratified_iid": 2.9514163834092074e-05,
+        "proportional_allocation": 2.4902904294320943e-05,
+        "equal_allocation": 1.672009316639583e-08,
+        "oracle_neyman_allocation": 6.306414859016666e-09
+      },
+      "between_strata_variance": 4.611259539771129e-06,
+      "variance_reduction_ratio": {
+        "proportional": 1.18516954830938,
+        "equal": 1765.1913503334936,
+        "oracle_neyman": 4680.02256335767
+      },
+      "oracle_neyman_sample_fractions": [
+        0.3769818998983881,
+        0.6230098967367463,
+        8.203341346048892e-06,
+        2.3519461825986447e-11,
+        5.372610635786213e-22
+      ],
+      "j0_fraction_of_proportional_variance": 3.599284928378778e-05
+    },
+    "S_B": {
+      "mean": 8.186413867325758e-05,
+      "conditional_mean": [
+        6.681444122243054e-05,
+        0.15316813107485885,
+        0.1361559779199196,
+        0.15316813107485885,
+        6.681444122243053e-05
+      ],
+      "conditional_variance": [
+        1.0137896561468138e-09,
+        0.10442157659686586,
+        0.09513448600338817,
+        0.10442157659686585,
+        1.0137896561468138e-09
+      ],
+      "variance_times_total_samples": {
+        "unstratified_iid": 1.2569446198457081e-05,
+        "proportional_allocation": 1.0265547343309408e-05,
+        "equal_allocation": 1.0112790244734992e-08,
+        "oracle_neyman_allocation": 4.045164131052437e-09
+      },
+      "between_strata_variance": 2.3038988551476813e-06,
+      "variance_reduction_ratio": {
+        "proportional": 1.224430201147457,
+        "equal": 1242.9256312322996,
+        "oracle_neyman": 3107.2771811577563
+      },
+      "oracle_neyman_sample_fractions": [
+        0.5005680902963969,
+        0.4994253195672727,
+        6.590117476444335e-06,
+        1.8853977761860386e-11,
+        7.133916632566461e-22
+      ],
+      "j0_fraction_of_proportional_variance": 9.874680498198198e-05
+    },
+    "S_C": {
+      "mean": 0.00011037748171116276,
+      "conditional_mean": [
+        8.908600184674465e-05,
+        0.2166883638914277,
+        0.1926205831109476,
+        0.2166883638914277,
+        8.908600184674463e-05
+      ],
+      "conditional_variance": [
+        8.964145977229694e-10,
+        0.25332929480618527,
+        0.22981565992514263,
+        0.25332929480618527,
+        8.964145977229694e-10
+      ],
+      "variance_times_total_samples": {
+        "unstratified_iid": 2.9514163834092064e-05,
+        "proportional_allocation": 2.490290429432094e-05,
+        "equal_allocation": 1.6720093166330526e-08,
+        "oracle_neyman_allocation": 6.3064148589820195e-09
+      },
+      "between_strata_variance": 4.61125953977113e-06,
+      "variance_reduction_ratio": {
+        "proportional": 1.1851695483093798,
+        "equal": 1765.1913503403873,
+        "oracle_neyman": 4680.02256338338
+      },
+      "oracle_neyman_sample_fractions": [
+        0.3769818998966766,
+        0.623009896738458,
+        8.203341346071427e-06,
+        2.3519461826051058e-11,
+        5.372610635761821e-22
+      ],
+      "j0_fraction_of_proportional_variance": 3.599284928326322e-05
+    },
+    "A_minus_B": {
+      "mean": 2.851334303805657e-05,
+      "conditional_mean": [
+        2.2271560624465495e-05,
+        0.06352023281656896,
+        0.056464605191028125,
+        0.06352023281656896,
+        2.2271560624465495e-05
+      ],
+      "conditional_variance": [
+        7.16558639535351e-10,
+        0.059678712039864724,
+        0.0534459990924166,
+        0.05967871203986472,
+        7.165586395353509e-10
+      ],
+      "variance_times_total_samples": {
+        "unstratified_iid": 6.263372242865334e-06,
+        "proportional_allocation": 5.867071286015724e-06,
+        "equal_allocation": 6.4653000869203365e-09,
+        "oracle_neyman_allocation": 2.5785751047136867e-09
+      },
+      "between_strata_variance": 3.9630095684961195e-07,
+      "variance_reduction_ratio": {
+        "proportional": 1.0675466408247334,
+        "equal": 968.7674444588405,
+        "oracle_neyman": 2429.005163128956
+      },
+      "oracle_neyman_sample_fractions": [
+        0.5271003235332552,
+        0.4728934897361796,
+        6.186712712948873e-06,
+        1.7852365488677442e-11,
+        7.512044491007217e-22
+      ],
+      "j0_fraction_of_proportional_variance": 0.00012212024833901973
+    },
+    "D": {
+      "mean": 2.8513343038006102e-05,
+      "conditional_mean": [
+        2.2271560624415026e-05,
+        0.06352023281656893,
+        0.056464605191028076,
+        0.06352023281656893,
+        2.2271560624415026e-05
+      ],
+      "conditional_variance": [
+        6.494583305273044e-10,
+        0.03298782427004193,
+        0.029720765508055767,
+        0.032987824270041946,
+        6.494583305273045e-10
+      ],
+      "variance_times_total_samples": {
+        "unstratified_iid": 3.6396191189169203e-06,
+        "proportional_allocation": 3.2433181620673086e-06,
+        "equal_allocation": 4.8403683841983016e-09,
+        "oracle_neyman_allocation": 1.8779722487120196e-09
+      },
+      "between_strata_variance": 3.963009568496121e-07,
+      "variance_reduction_ratio": {
+        "proportional": 1.1221899724438404,
+        "equal": 751.9301900241094,
+        "oracle_neyman": 1938.0579885635163
+      },
+      "oracle_neyman_sample_fractions": [
+        0.5880149499497376,
+        0.4119796440146522,
+        5.4060200575641254e-06,
+        1.555278585659519e-11,
+        8.380177867830746e-22
+      ],
+      "j0_fraction_of_proportional_variance": 0.0002002253423538677
+    }
+  },
+  "variance_formula": "With fixed positive integer n_j and independent samples within each stratum: Var(sum_j w_j mean_j)=sum_j w_j^2 sigma_j^2/n_j. Numbers report the asymptotic n*Var assuming equal per-sample cost and ignore integer rounding/pilot costs.",
+  "limitations": "Neyman allocations use exact variances only available in this small enumeration and are benchmarks, not a deployable zero-cost allocation. Large-system results and variation within j=0 are not settled. Separate optimal allocations cannot simultaneously be claimed for every observable at a single shared budget.",
+  "files": {
+    "data/local_orbitals_L2.bin": "92f3c634d56097f0e7333664c8410fa8fd939312ecd5333483a57e61df995b21",
+    "data/exact_born/exact_born_L2_beta3p0_trajectories.csv": "e6e2a8736aa4d3730df28eaebb1e2f3c743178ec10ab09b43bf82dfca9e100b6",
+    "data/exact_born_full/manifest.toml": "80797dec96b4efff9a0643f3208ff150fe430442cf105a4f3ecea1b37fbe27e2",
+    "analysis/stratified_j_deterministic.py": "c9d36edb250b1e196846e428ba331c1ffa8da55ea13edf314e762842f91c064d"
+  }
+}

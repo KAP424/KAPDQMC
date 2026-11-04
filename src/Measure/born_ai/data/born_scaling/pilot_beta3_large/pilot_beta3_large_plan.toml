@@ -1,0 +1,261 @@
+created_at = "2026-10-27T20:47:21.029"
+mu = 1.0e-8
+state = "staggered"
+kernel_validation_path = "data/born_scaling/fused_wrapper_validation/validation.toml"
+max_inverse_drift_tolerance = 1.0e-5
+precision_target_D_absolute_MCSE = 0.003
+update_kernel = "fused_rank_updates"
+burnin_discarded = 0
+seed_formula = "1900000000 + 1000000*L + 300000 + chain; distinct from old stages and forthcoming production"
+acceptance_columns = "Actual accepted/proposed attempts since previous sample; measure_every=1"
+version = 1
+blas_threads = 1
+purpose = "Independent 512-sweep pilot for beta=3 at L27/30/36; timing, thermalization and variance allocation only. Never pooled with production."
+stage = "pilot_beta3_large"
+planned_production_burnin_if_supported = 256
+planned_production_minimum_retained_per_chain = 2048
+kernel_validation_sha256 = "f530d3e2007830fb0a4af103da0fac1fdda0fcda92504e9bc6a1076bd148687d"
+initial_02_stripe = "E is the suppressed set; E=A/B for uniform_A/B. Even L: both sublattices on odd x columns. Odd L27: alternate full/empty through L-1, then only A on the final column; not pure 0/2."
+max_logweight_drift_tolerance = 1.0e-5
+phase = "all_recorded_no_burnin_discard"
+precision_target_SA_absolute_MCSE = 0.01
+pilot_burnin_candidates = [32, 64, 128, 256]
+production_rule = "No production or L42 is scheduled by this pilot plan. Report measured timing/variance to root and freeze a separate fixed-count plan and fresh seeds before production."
+columns = ["L", "beta", "mu", "chain", "seed", "start", "sweep", "record_index", "measure_every", "SA", "SB", "SC", "D", "accepted", "proposed", "log_weight", "stage", "phase", "run_id", "refreshed", "inverse_drift", "logweight_drift"]
+sweep_definition = "2L^2 uniform E/S pairs with original Metropolis; rejected states remain in the trace"
+
+[[models]]
+model_manifest = "data/born_scaling/pilot_beta3_large/models/state_L27_staggered_mu1.0e-8_model.toml"
+model_manifest_sha256 = "9e98a698e84bc94e9504033ee90e6eba9a16114c417211afbd5c989204e3b08d"
+L = 27
+mu = 1.0e-8
+
+    [models.files]
+    "data/born_scaling/pilot_beta3_large/models/state_L27_staggered_mu1.0e-8_Q.bin" = "cba4534625b832eef86e288f573fbb7d85246e2f73cac1ef0c51912666e046d5"
+    "data/born_scaling/pilot_beta3_large/models/state_L27_staggered_mu1.0e-8_energies.bin" = "826ce99b8869fdfb72ad79c4d07826514d466992754af8c5f26a80e821de418d"
+    "data/born_scaling/pilot_beta3_large/models/state_L27_staggered_mu1.0e-8_G.bin" = "cfe6f34aee081bb0952f0c4c95f0f83cc17cc341e6d3613d93d9bff100b40580"
+    "data/born_scaling/pilot_beta3_large/models/state_L27_staggered_mu1.0e-8_model.toml" = "9e98a698e84bc94e9504033ee90e6eba9a16114c417211afbd5c989204e3b08d"
+[[models]]
+model_manifest = "data/born_scaling/pilot_beta3_large/models/state_L30_staggered_mu1.0e-8_model.toml"
+model_manifest_sha256 = "e9bd82ca34c3764d4ec1473d8e2261b3a9ca1eb830333b6261405ca3ddbc2a19"
+L = 30
+mu = 1.0e-8
+
+    [models.files]
+    "data/born_scaling/pilot_beta3_large/models/state_L30_staggered_mu1.0e-8_Q.bin" = "cb6e051aa11c8ba5c0e45ff57b0cc0abe27dab3c9092b5d10caeaa357700d4c4"
+    "data/born_scaling/pilot_beta3_large/models/state_L30_staggered_mu1.0e-8_G.bin" = "15fce81dea3eed7398726ef079e5808f3297a8aab9e5e26af445285aebdcff50"
+    "data/born_scaling/pilot_beta3_large/models/state_L30_staggered_mu1.0e-8_energies.bin" = "0fc0344c0092d5125b7ffa8b8ebaa15048488c89b991bccf3bb3df9e0c9691ea"
+    "data/born_scaling/pilot_beta3_large/models/state_L30_staggered_mu1.0e-8_model.toml" = "e9bd82ca34c3764d4ec1473d8e2261b3a9ca1eb830333b6261405ca3ddbc2a19"
+[[models]]
+model_manifest = "data/born_scaling/pilot_beta3_large/models/state_L36_staggered_mu1.0e-8_model.toml"
+model_manifest_sha256 = "99f70eed188cb397e655b1ed0ae17e31bedb0baa247efe416ab9e93b7879d0f0"
+L = 36
+mu = 1.0e-8
+
+    [models.files]
+    "data/born_scaling/pilot_beta3_large/models/state_L36_staggered_mu1.0e-8_Q.bin" = "b051fe60c462d72f000ebcdaa4b9feb8cafe80b4505bfdeb9f268afb309c92e3"
+    "data/born_scaling/pilot_beta3_large/models/state_L36_staggered_mu1.0e-8_G.bin" = "673c5b840702472860dfc85ce1eed6f206cfba82989fd3161cff2e7bdc88b8bd"
+    "data/born_scaling/pilot_beta3_large/models/state_L36_staggered_mu1.0e-8_model.toml" = "99f70eed188cb397e655b1ed0ae17e31bedb0baa247efe416ab9e93b7879d0f0"
+    "data/born_scaling/pilot_beta3_large/models/state_L36_staggered_mu1.0e-8_energies.bin" = "621e5f0d2d9fdd57f2e97973594bb1040b6325f3b20b9e375db304904bbba2d0"
+
+[source_sha256]
+"prepare_born_beta3_large_pilot.jl" = "c55c71203eee76a985dc03594a7b69cf660d91a50c984f2517e0f4b2c3de8db1"
+"run_born_scaling.jl" = "3d9004c1d112a29ee1a7b440a945dc89516f7cabba8e279e0e5dd145e5a65c76"
+"fused_original_swap_kernel.jl" = "da7d40a574902763417225417d30abce265a15f9804dbfa47882b46f8ed20d70"
+"original_swap_scaling.jl" = "1af51fff868fbe63025323618506295ce5622179c1381de5ea64549e8c0d40cb"
+"launch_born_beta3_large.py" = "d85becbdc16a0a6c336f434424fac87ff716d3481fb6f9963b83419dfe7a8f49"
+"run_born_scaling_fused.jl" = "3734470f7c633617a2a2b43d7d581c94e9c29f11af6efb0f523cabf266499fe3"
+"../../public/Geometry.jl" = "079c2052642d46a7072656ccd738411faa57c9f07791f786a0a6872a5a5970ad"
+
+[[jobs]]
+chain = 1
+output_dir = "data/born_scaling/pilot_beta3_large"
+L = 27
+mu = 1.0e-8
+state = "staggered"
+run_id = "pilot_beta3_large_L27_beta3p0_mu1p0em8_chain1_random"
+sweeps = 512
+refresh_every = 5
+start = "random"
+model_manifest_sha256 = "9e98a698e84bc94e9504033ee90e6eba9a16114c417211afbd5c989204e3b08d"
+stage = "pilot_beta3_large"
+beta = 3.0
+model_manifest = "data/born_scaling/pilot_beta3_large/models/state_L27_staggered_mu1.0e-8_model.toml"
+seed = 1927300001
+measure_every = 1
+[[jobs]]
+chain = 2
+output_dir = "data/born_scaling/pilot_beta3_large"
+L = 27
+mu = 1.0e-8
+state = "staggered"
+run_id = "pilot_beta3_large_L27_beta3p0_mu1p0em8_chain2_uniform_A"
+sweeps = 512
+refresh_every = 5
+start = "uniform_A"
+model_manifest_sha256 = "9e98a698e84bc94e9504033ee90e6eba9a16114c417211afbd5c989204e3b08d"
+stage = "pilot_beta3_large"
+beta = 3.0
+model_manifest = "data/born_scaling/pilot_beta3_large/models/state_L27_staggered_mu1.0e-8_model.toml"
+seed = 1927300002
+measure_every = 1
+[[jobs]]
+chain = 3
+output_dir = "data/born_scaling/pilot_beta3_large"
+L = 27
+mu = 1.0e-8
+state = "staggered"
+run_id = "pilot_beta3_large_L27_beta3p0_mu1p0em8_chain3_uniform_B"
+sweeps = 512
+refresh_every = 5
+start = "uniform_B"
+model_manifest_sha256 = "9e98a698e84bc94e9504033ee90e6eba9a16114c417211afbd5c989204e3b08d"
+stage = "pilot_beta3_large"
+beta = 3.0
+model_manifest = "data/born_scaling/pilot_beta3_large/models/state_L27_staggered_mu1.0e-8_model.toml"
+seed = 1927300003
+measure_every = 1
+[[jobs]]
+chain = 4
+output_dir = "data/born_scaling/pilot_beta3_large"
+L = 27
+mu = 1.0e-8
+state = "staggered"
+run_id = "pilot_beta3_large_L27_beta3p0_mu1p0em8_chain4_02_stripe"
+sweeps = 512
+refresh_every = 5
+start = "02_stripe"
+model_manifest_sha256 = "9e98a698e84bc94e9504033ee90e6eba9a16114c417211afbd5c989204e3b08d"
+stage = "pilot_beta3_large"
+beta = 3.0
+model_manifest = "data/born_scaling/pilot_beta3_large/models/state_L27_staggered_mu1.0e-8_model.toml"
+seed = 1927300004
+measure_every = 1
+[[jobs]]
+chain = 1
+output_dir = "data/born_scaling/pilot_beta3_large"
+L = 30
+mu = 1.0e-8
+state = "staggered"
+run_id = "pilot_beta3_large_L30_beta3p0_mu1p0em8_chain1_random"
+sweeps = 512
+refresh_every = 5
+start = "random"
+model_manifest_sha256 = "e9bd82ca34c3764d4ec1473d8e2261b3a9ca1eb830333b6261405ca3ddbc2a19"
+stage = "pilot_beta3_large"
+beta = 3.0
+model_manifest = "data/born_scaling/pilot_beta3_large/models/state_L30_staggered_mu1.0e-8_model.toml"
+seed = 1930300001
+measure_every = 1
+[[jobs]]
+chain = 2
+output_dir = "data/born_scaling/pilot_beta3_large"
+L = 30
+mu = 1.0e-8
+state = "staggered"
+run_id = "pilot_beta3_large_L30_beta3p0_mu1p0em8_chain2_uniform_A"
+sweeps = 512
+refresh_every = 5
+start = "uniform_A"
+model_manifest_sha256 = "e9bd82ca34c3764d4ec1473d8e2261b3a9ca1eb830333b6261405ca3ddbc2a19"
+stage = "pilot_beta3_large"
+beta = 3.0
+model_manifest = "data/born_scaling/pilot_beta3_large/models/state_L30_staggered_mu1.0e-8_model.toml"
+seed = 1930300002
+measure_every = 1
+[[jobs]]
+chain = 3
+output_dir = "data/born_scaling/pilot_beta3_large"
+L = 30
+mu = 1.0e-8
+state = "staggered"
+run_id = "pilot_beta3_large_L30_beta3p0_mu1p0em8_chain3_uniform_B"
+sweeps = 512
+refresh_every = 5
+start = "uniform_B"
+model_manifest_sha256 = "e9bd82ca34c3764d4ec1473d8e2261b3a9ca1eb830333b6261405ca3ddbc2a19"
+stage = "pilot_beta3_large"
+beta = 3.0
+model_manifest = "data/born_scaling/pilot_beta3_large/models/state_L30_staggered_mu1.0e-8_model.toml"
+seed = 1930300003
+measure_every = 1
+[[jobs]]
+chain = 4
+output_dir = "data/born_scaling/pilot_beta3_large"
+L = 30
+mu = 1.0e-8
+state = "staggered"
+run_id = "pilot_beta3_large_L30_beta3p0_mu1p0em8_chain4_02_stripe"
+sweeps = 512
+refresh_every = 5
+start = "02_stripe"
+model_manifest_sha256 = "e9bd82ca34c3764d4ec1473d8e2261b3a9ca1eb830333b6261405ca3ddbc2a19"
+stage = "pilot_beta3_large"
+beta = 3.0
+model_manifest = "data/born_scaling/pilot_beta3_large/models/state_L30_staggered_mu1.0e-8_model.toml"
+seed = 1930300004
+measure_every = 1
+[[jobs]]
+chain = 1
+output_dir = "data/born_scaling/pilot_beta3_large"
+L = 36
+mu = 1.0e-8
+state = "staggered"
+run_id = "pilot_beta3_large_L36_beta3p0_mu1p0em8_chain1_random"
+sweeps = 512
+refresh_every = 5
+start = "random"
+model_manifest_sha256 = "99f70eed188cb397e655b1ed0ae17e31bedb0baa247efe416ab9e93b7879d0f0"
+stage = "pilot_beta3_large"
+beta = 3.0
+model_manifest = "data/born_scaling/pilot_beta3_large/models/state_L36_staggered_mu1.0e-8_model.toml"
+seed = 1936300001
+measure_every = 1
+[[jobs]]
+chain = 2
+output_dir = "data/born_scaling/pilot_beta3_large"
+L = 36
+mu = 1.0e-8
+state = "staggered"
+run_id = "pilot_beta3_large_L36_beta3p0_mu1p0em8_chain2_uniform_A"
+sweeps = 512
+refresh_every = 5
+start = "uniform_A"
+model_manifest_sha256 = "99f70eed188cb397e655b1ed0ae17e31bedb0baa247efe416ab9e93b7879d0f0"
+stage = "pilot_beta3_large"
+beta = 3.0
+model_manifest = "data/born_scaling/pilot_beta3_large/models/state_L36_staggered_mu1.0e-8_model.toml"
+seed = 1936300002
+measure_every = 1
+[[jobs]]
+chain = 3
+output_dir = "data/born_scaling/pilot_beta3_large"
+L = 36
+mu = 1.0e-8
+state = "staggered"
+run_id = "pilot_beta3_large_L36_beta3p0_mu1p0em8_chain3_uniform_B"
+sweeps = 512
+refresh_every = 5
+start = "uniform_B"
+model_manifest_sha256 = "99f70eed188cb397e655b1ed0ae17e31bedb0baa247efe416ab9e93b7879d0f0"
+stage = "pilot_beta3_large"
+beta = 3.0
+model_manifest = "data/born_scaling/pilot_beta3_large/models/state_L36_staggered_mu1.0e-8_model.toml"
+seed = 1936300003
+measure_every = 1
+[[jobs]]
+chain = 4
+output_dir = "data/born_scaling/pilot_beta3_large"
+L = 36
+mu = 1.0e-8
+state = "staggered"
+run_id = "pilot_beta3_large_L36_beta3p0_mu1p0em8_chain4_02_stripe"
+sweeps = 512
+refresh_every = 5
+start = "02_stripe"
+model_manifest_sha256 = "99f70eed188cb397e655b1ed0ae17e31bedb0baa247efe416ab9e93b7879d0f0"
+stage = "pilot_beta3_large"
+beta = 3.0
+model_manifest = "data/born_scaling/pilot_beta3_large/models/state_L36_staggered_mu1.0e-8_model.toml"
+seed = 1936300004
+measure_every = 1

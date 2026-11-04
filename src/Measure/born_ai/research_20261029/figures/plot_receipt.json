@@ -1,0 +1,15 @@
+{
+  "role": "Plots of verified saved summaries; no resampling or refitting",
+  "inputs_sha256": {
+    "iid_targeted_analysis\\summary.json": "bbe6493316f1ac96d8a0635219d234b4382ae0e843d44f9b17a5acff23ef920a",
+    "plot_iid_targeted.py": "323394772bb91055aa164ff1359c6e996dec4b1823a09eb9195f0b3af3e4bef0",
+    "iid_targeted_analysis\\means.csv": "dcc5062899dd92570b95c0c10b2d6a77300826a9c17c3a0184a598e1cb01aa09",
+    "iid_targeted_analysis\\bounds.csv": "3930cc96a73f418f66d970bf6250d2a145f7b8fb7903c7c62e83ee20fd5cfe87"
+  },
+  "outputs_sha256": {
+    "figures\\iid_identity_checks.png": "585e70a4d9c4f23ed36721d9160bee113c3bfba4436cddbd2cfbe8c93d7b0583",
+    "figures\\iid_identity_checks.pdf": "b4703278420f3d8d3d94d5229c71795ab645ae23d47159cd52ce2e7988db02fd",
+    "figures\\iid_bounds_checks.png": "bb34431723d3b91fa4979382b029f02fd1d41e73aa037d4284987fe399ea471d",
+    "figures\\iid_bounds_checks.pdf": "5b47d22905986aedf705bcf22ddf12f74f98a874b498420de17309d89aa29b44"
+  }
+}

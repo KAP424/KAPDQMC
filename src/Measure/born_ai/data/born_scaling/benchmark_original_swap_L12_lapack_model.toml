@@ -1,0 +1,17 @@
+zero_mode_count = 4
+null_singular_count = 0
+L = 12
+Nsites = 288
+mu = 0.0
+eigenvector_residual = 3.361953733417784e-14
+Nparticles = 144
+format = "Float64 native-endian column-major; Q=Nsites x Nparticles, G=Nsites x Nsites, energies=Nsites"
+orthogonality_error = 1.493785905468604e-14
+ground_energy_error = 1.7053025658242404e-13
+zero_mode_rule = "lapack"
+zero_singular_tolerance = 1.0e-12
+
+[files]
+"benchmark_original_swap_L12_lapack_G.bin" = "f2213ead5cfb6bf8663f2e4273ed269c7f00efef548320f96ea5d88481496b31"
+"benchmark_original_swap_L12_lapack_Q.bin" = "3360d98f8d5acc276e322c357526390e00c34fc491d7605f5798197eaae12935"
+"benchmark_original_swap_L12_lapack_energies.bin" = "88d7d670ddea7e3e6caa5840f5adc9a856d05a4fe4d8a8c25f5902cbb7f43aba"

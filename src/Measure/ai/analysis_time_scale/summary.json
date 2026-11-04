@@ -1,0 +1,92 @@
+{
+  "generated_utc": "2026-10-19T02:14:04.310388+00:00",
+  "script_sha256": "d3468874e6fc5942e4c06bbfeb8b70742dd37999487b2850d695be5548e6a8c0",
+  "sources": [
+    {
+      "path": "analysis_ref_calibration\\calibration_points.csv",
+      "sha256": "d67c9cea7c69d9b1721ea267521f0de57082e166b073ccb56b1de03f28cc368d",
+      "rows": 3546
+    },
+    {
+      "path": "data\\random_half3_beta1_observations.csv",
+      "sha256": "89eb5964c39ff255318bd0085989e24cbc24e5d926aa3c610106e2cd8a418e47",
+      "rows": 82
+    }
+  ],
+  "finite_observations": 3049,
+  "pattern_beta_groups": 48,
+  "duplicate_max_abs_difference": 0.0,
+  "fit_comparisons": 2770,
+  "windows": [
+    [
+      2,
+      4
+    ],
+    [
+      2,
+      5
+    ],
+    [
+      2,
+      6
+    ],
+    [
+      3,
+      6
+    ],
+    [
+      3,
+      8
+    ],
+    [
+      4,
+      8
+    ],
+    [
+      4,
+      10
+    ],
+    [
+      6,
+      12
+    ],
+    [
+      8,
+      16
+    ],
+    [
+      10,
+      20
+    ],
+    [
+      12,
+      24
+    ],
+    [
+      16,
+      32
+    ]
+  ],
+  "models": {
+    "log": [],
+    "log_inv1": [
+      1
+    ],
+    "log_inv2": [
+      2
+    ],
+    "log_inv1_inv2": [
+      1,
+      2
+    ],
+    "log_inv1_inv2_inv3": [
+      1,
+      2,
+      3
+    ]
+  },
+  "source_files_modified": false,
+  "classification": "No asymptotic pass list is constructed; no equilibrium coefficient is read or used.",
+  "geometric_ratio": "theta/L is only a dimensional screening variable; region width is L/3; velocity factors are not fitted.",
+  "denominator": "Each size drift uses that window/model's own absolute large-size time coefficient; floor 1e-10 gives undefined, never epsilon-regularized."
+}

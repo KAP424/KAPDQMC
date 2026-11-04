@@ -1,0 +1,70 @@
+{
+  "status": "PASS",
+  "generated_utc": "2026-10-21T12:02:31.268163+00:00",
+  "rows": 26,
+  "numpy_version": "2.5.1",
+  "patterns": [
+    "pure02_alternating_x",
+    "pure02_alternating_checker"
+  ],
+  "grid": {
+    "theta": [
+      4.0,
+      7.0
+    ],
+    "delta_over_width": [
+      0.1,
+      1.0,
+      10.0
+    ],
+    "sizes": [
+      144,
+      180
+    ],
+    "exact_zero_included": true,
+    "exact_zero_infinite_time_included": true
+  },
+  "errors": {
+    "max_scaled_grid_n_positive_asymptotic_abs_error": 3.1615484033572366e-06,
+    "max_scaled_grid_sigma_slope_relative_error": 2.438122717052238e-05,
+    "max_orthogonality_error": 8.00737374006293e-16,
+    "max_projector_error": 8.430874328457587e-16,
+    "max_exact_zero_positive_occupation_error": 4.440892098500626e-16
+  },
+  "tolerances": {
+    "scaled_grid_n_positive_abs": 5e-06,
+    "scaled_grid_sigma_slope_relative": 0.0001,
+    "orthogonality": 1e-12,
+    "projector": 1e-12,
+    "exact_zero_positive_occupation": 1e-12
+  },
+  "derivation": {
+    "convention": "Primitive-cell momenta, not m=2 supercell momenta. f(q)=1+exp(i*q_x)+exp(-i*q_y), h(f)=[[0,f],[conj(f),0]]. In the paired momentum basis P0=[I;I]/sqrt(2). theta is the same exp(-theta*H) convention as the entropy protocol.",
+    "stripe_x": "Pair q=(0,delta), q+Q=(pi,delta), Q=(pi,0): f1=2+exp(-i*delta), f2=exp(-i*delta). Their phase difference is 2*delta/3+O(delta^3). The negative-overlap singular value is |sin(Delta_phi/4)|=|delta|/6+O(delta^3). The two-particle GS amplitude has magnitude |sin(Delta_phi/2)|/2 ~ |delta|/6, and the lowest excited Slater amplitude has magnitude |cos(Delta_phi/2)|/2 ~ 1/2. Its energy exceeds the GS by 2|f2|=2, so the leading excited/GS amplitude ratio is 3*exp(-2*theta)/|delta|. At large theta and small delta this gives n_positive ~ 1/[1+(delta/(3*exp(-2*theta)))^2]. Other Slater sectors provide subleading corrections.",
+    "checker": "Pair q=(pi+delta,0), q+Q=(delta,pi) modulo 2pi, Q=(pi,pi): f1=2-exp(i*delta), f2=exp(i*delta). The negative-overlap singular value is |delta|/2+O(delta^3). Both positive energies approach 1 and both negative energies approach -1. The leading rank-one graph singular value is 2*exp(-2*theta)/|delta|, giving n_positive ~ 1/[1+(delta/(2*exp(-2*theta)))^2].",
+    "nonzero_graph": "For delta!=0, A=V_minus^dagger P0 is invertible, B=V_plus^dagger P0, X=exp(-theta E_plus) B inv(A) exp(theta E_minus). QR([I;X]) constructs the exact occupied span without unstable large exponential columns. n_positive is the total occupation of the two positive-energy eigenstates.",
+    "exact_zero": "No inverse of A is used at delta=0. Stripe x has one supported negative sigma_x branch and one supported positive branch, evolved with explicit normalized weights 1 and exp(-2*theta); its limit occupies energy -3 and +1. Checker has identical sigma_x blocks and an invariant initial occupied projector, with one negative and one positive particle. Thus n_positive=1 for every finite theta and its strict limit. Local overlap rank is 1/2; in the full m=2 block the extra folded sector yields the previously audited rank 3/4.",
+    "grid_condition": "Resolving this local momentum layer requires (2*pi/L)/(C*exp(-2*theta)) << 1, C=3 for stripe x and C=2 for checker. Its local crossover time is theta_cross(L)=0.5*log(C*L/(2*pi)); a well-resolved layer needs theta below that value with a sufficient margin. Merely theta/L << 1 does not imply this condition."
+  },
+  "crossover_theta": {
+    "pure02_alternating_x": {
+      "144": 2.1152742609173822,
+      "180": 2.226846036574487
+    },
+    "pure02_alternating_checker": {
+      "144": 1.9125417068633002,
+      "180": 2.0241134825204052
+    }
+  },
+  "interpretation": [
+    "This is a local, gapped folded-mode mechanism for nonuniform projection near an exact overlap zero. It does not introduce a new Dirac node.",
+    "The shrinking momentum width is measured on specified cuts only. Its inverse is not asserted to be the unique correlation length of the full many-body state.",
+    "It supplies a reason why theta/L alone need not control finite-size effects for these alternating initial states. No total D, entropy scaling coefficient, or quantitative attribution of the observed D anomaly is derived here.",
+    "All calculations are at beta=0 before measurement; finite-beta behavior is not established by this local diagnostic.",
+    "The relative-width grid and tolerances test the asymptotic local formula. Nearest-grid rows at L144/180 are diagnostics with their own recorded asymptotic errors, not part of that asymptotic error gate."
+  ],
+  "files": {
+    "diagnose_alternating_boundary_layer.py": "01c150eabae0fd08fa648f1b7f4908974badcbd69b1d33b4e57a686cd25bfd51",
+    "analysis_second_class_extra/alternating_boundary_layer.csv": "e717bcc80d06fec8fd1a375c1b40047c0aa3cfc9f2bb9fd1ad25aa7635e79fd9"
+  }
+}

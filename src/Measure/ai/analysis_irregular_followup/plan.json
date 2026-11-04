@@ -1,0 +1,258 @@
+{
+  "recorded_utc": "2026-10-21T07:31:59.695075+00:00",
+  "status": "Prespecified follow-up: retain old fit windows, add held-out large-L observations and one GS-accessible 3x3 near-0/2 control selected without entropy data.",
+  "patterns": [
+    "pure02_block4",
+    "pure02_irregular4",
+    "near02_irregular3"
+  ],
+  "pattern_metadata": {
+    "pure02_block4": {
+      "m": 4,
+      "family": "general",
+      "occupied_bits": "11111111110011001100110000000000",
+      "occupancy_class": 2,
+      "class_label": "Every cell: nA+nB=0 or 2",
+      "equilibrium": {
+        "Lmin": 24,
+        "Lmax": 144,
+        "lower_cuts": [
+          24,
+          36,
+          48
+        ]
+      }
+    },
+    "pure02_irregular4": {
+      "m": 4,
+      "family": "general",
+      "occupied_bits": "11001111001100000011001111001100",
+      "occupancy_class": 2,
+      "class_label": "Every cell: nA+nB=0 or 2",
+      "equilibrium": {
+        "Lmin": 24,
+        "Lmax": 144,
+        "lower_cuts": [
+          24,
+          36,
+          48
+        ]
+      }
+    },
+    "near02_irregular3": {
+      "m": 3,
+      "family": "general",
+      "occupied_bits": "111100000011001110",
+      "occupancy_class": 3,
+      "class_label": "Near 0/2: one singly occupied cell",
+      "equilibrium": {
+        "Lmin": 18,
+        "Lmax": 144,
+        "lower_cuts": [
+          18,
+          36,
+          54
+        ]
+      }
+    }
+  },
+  "betas": [
+    0.0,
+    0.25,
+    0.5,
+    0.75,
+    1.0,
+    1.25,
+    1.5,
+    1.75,
+    2.0
+  ],
+  "inputs": [
+    "data/occupancy_classes_observations.csv",
+    "data/irregular_followup_observations.csv",
+    "data/irregular_followup_extended_equilibrium.csv"
+  ],
+  "primary": {
+    "L": 180,
+    "comparison_L": 144,
+    "window": [
+      4,
+      7
+    ],
+    "model": "log_inv1_inv2"
+  },
+  "windows": [
+    [
+      4,
+      7
+    ],
+    [
+      4.5,
+      7
+    ],
+    [
+      4,
+      6.5
+    ],
+    [
+      5,
+      7
+    ],
+    [
+      5,
+      8
+    ]
+  ],
+  "theta_min_screen": 4,
+  "theta_over_L_max_screen": 0.05,
+  "equilibrium_primary": {
+    "model": "log_inv1"
+  },
+  "required_equilibrium_grids": [
+    {
+      "patterns": [
+        "near02_irregular3"
+      ],
+      "L": [
+        18,
+        27,
+        36,
+        45,
+        54,
+        63,
+        72,
+        81,
+        90,
+        108,
+        126,
+        144
+      ],
+      "theta": [
+        "Inf"
+      ],
+      "beta": [
+        0.0,
+        0.25,
+        0.5,
+        0.75,
+        1.0,
+        1.25,
+        1.5,
+        1.75,
+        2.0
+      ]
+    },
+    {
+      "patterns": [
+        "pure02_block4",
+        "pure02_irregular4"
+      ],
+      "L": [
+        24,
+        36,
+        48,
+        60,
+        72,
+        84,
+        96,
+        108,
+        120,
+        132,
+        144
+      ],
+      "theta": [
+        "Inf"
+      ],
+      "beta": [
+        0.0,
+        0.25,
+        0.5,
+        0.75,
+        1.0,
+        1.25,
+        1.5,
+        1.75,
+        2.0
+      ]
+    },
+    {
+      "patterns": [
+        "pure02_block4",
+        "pure02_irregular4"
+      ],
+      "L": [
+        180,
+        216
+      ],
+      "theta": [
+        "Inf"
+      ],
+      "beta": [
+        0,
+        1,
+        2
+      ]
+    }
+  ],
+  "required_finite_grids": [
+    {
+      "patterns": [
+        "pure02_block4",
+        "pure02_irregular4",
+        "near02_irregular3"
+      ],
+      "L": [
+        144,
+        180
+      ],
+      "theta": [
+        4.0,
+        4.5,
+        5.0,
+        5.5,
+        6.0,
+        6.5,
+        7.0
+      ],
+      "beta": [
+        0.0,
+        0.25,
+        0.5,
+        0.75,
+        1.0,
+        1.25,
+        1.5,
+        1.75,
+        2.0
+      ]
+    },
+    {
+      "patterns": [
+        "pure02_block4",
+        "pure02_irregular4",
+        "near02_irregular3"
+      ],
+      "L": [
+        180
+      ],
+      "theta": [
+        7.5,
+        8
+      ],
+      "beta": [
+        0.0,
+        0.25,
+        0.5,
+        0.75,
+        1.0,
+        1.25,
+        1.5,
+        1.75,
+        2.0
+      ]
+    }
+  ],
+  "new_pattern_selection": "First GS-accessible pattern in a geometry-fixed sequence; candidate 3, (n0,n1,n2)=(4,1,4); pure 0/2 at half filling is impossible for 9 cells. No selection based on entropy coefficients.",
+  "protocol": "Same periodic HoneyComb120 real hopping; half-filled product state; exact finite-theta evolution then own-empty-site exp(-2beta) filter and QR. Equilibrium means the accessible ground state before measurement. Single-species natural-log S2; fixed origin (1,1); all three entropies independent; D=(2SA+SC)/3-SB.",
+  "interpretation": "The logarithmic coefficient is an ansatz parameter unless model/window diagnostics and local log slopes support it. Existing 24-144 equilibrium fits predict new180/216 without refitting; expanded fits are separately labelled. No conclusion of new universality solely from unstable fits."
+}

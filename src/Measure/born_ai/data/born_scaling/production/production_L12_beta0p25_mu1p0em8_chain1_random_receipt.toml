@@ -1,0 +1,57 @@
+final_E = [12, 263, 136, 124, 97, 105, 179, 71, 84, 22, 216, 148, 176, 210, 127, 169, 192, 122, 47, 109, 65, 166, 1, 262, 218, 258, 284, 94, 70, 17, 202, 266, 21, 191, 141, 283, 175, 114, 15, 269, 199, 117, 158, 106, 249, 155, 128, 56, 81, 203, 279, 288, 282, 43, 137, 254, 204, 72, 231, 36, 4, 174, 147, 139, 111, 219, 44, 194, 154, 234, 246, 237, 135, 197, 163, 133, 91, 108, 33, 41, 261, 123, 213, 250, 80, 142, 238, 201, 131, 270, 59, 189, 35, 115, 172, 38, 102, 233, 54, 113, 3, 93, 275, 272, 170, 67, 42, 140, 2, 116, 159, 87, 98, 167, 162, 6, 7, 58, 217, 121, 277, 251, 264, 229, 183, 34, 151, 260, 40, 46, 119, 9, 144, 209, 243, 207, 252, 224, 146, 101, 62, 177, 188, 276]
+maximum_inverse_asymmetry = 2.220446049250313e-16
+elapsed_seconds = 7.819999933242798
+blas_threads = 1
+initial_state_definition = "E is the suppressed set. Even L: both sublattices on odd x columns; odd L: alternate full/empty through L-1 and only A on final column. uniform_A/B mean E=A/B."
+started_at = "2026-10-27T15:54:01.940"
+acceptance = 0.9673243393132716
+accepted = 641870
+initial_E = [103, 121, 163, 108, 249, 76, 157, 256, 166, 214, 152, 10, 60, 93, 45, 86, 219, 136, 288, 85, 73, 199, 97, 209, 198, 287, 253, 11, 210, 212, 48, 275, 82, 150, 213, 200, 35, 268, 285, 243, 63, 83, 132, 129, 194, 169, 74, 284, 38, 32, 57, 228, 266, 180, 106, 71, 139, 138, 118, 165, 258, 88, 260, 26, 202, 175, 42, 216, 16, 28, 237, 283, 25, 101, 220, 217, 47, 271, 120, 190, 276, 177, 70, 168, 215, 116, 178, 196, 69, 247, 159, 124, 90, 80, 34, 15, 191, 269, 8, 29, 1, 135, 98, 111, 51, 78, 174, 77, 147, 104, 162, 12, 189, 164, 54, 173, 257, 218, 176, 146, 58, 141, 140, 281, 113, 4, 278, 66, 61, 154, 115, 96, 62, 22, 127, 211, 50, 24, 262, 203, 236, 21, 39, 31]
+julia_version = "1.12.1"
+status = "complete"
+refreshes = 460
+plan_sha256 = "3f3929b15eec47c5720b7f481240ab66f36e843a4a09761cf98f7658ae427909"
+records = 2304
+model_manifest_sha256 = "166830ba189efb767434d6940fcd6ddcb44f5b6c63ffd26ad203b2ce1f5a9992"
+proposed = 663552
+model_manifest = "data/born_scaling/production/models/state_L12_staggered_mu1.0e-8_model.toml"
+maximum_logweight_drift = 2.5579538487363607e-13
+maximum_inverse_drift = 8.474724570215573e-16
+completed_at = "2026-10-27T15:54:09.756"
+
+[source_sha256]
+"run_born_scaling.jl" = "3d9004c1d112a29ee1a7b440a945dc89516f7cabba8e279e0e5dd145e5a65c76"
+"fused_original_swap_kernel.jl" = "da7d40a574902763417225417d30abce265a15f9804dbfa47882b46f8ed20d70"
+"original_swap_scaling.jl" = "1af51fff868fbe63025323618506295ce5622179c1381de5ea64549e8c0d40cb"
+"prepare_born_scaling_production.jl" = "9bda7e2de8c87d7d050cff3be7c62444c289281174d87ad7e8cf6a1ecf6a80a4"
+"run_born_scaling_fused.jl" = "3734470f7c633617a2a2b43d7d581c94e9c29f11af6efb0f523cabf266499fe3"
+"../../public/Geometry.jl" = "079c2052642d46a7072656ccd738411faa57c9f07791f786a0a6872a5a5970ad"
+
+[job]
+chain = 1
+output_dir = "data/born_scaling/production"
+L = 12
+mu = 1.0e-8
+state = "staggered"
+run_id = "production_L12_beta0p25_mu1p0em8_chain1_random"
+sweeps = 2304
+refresh_every = 5
+start = "random"
+model_manifest_sha256 = "166830ba189efb767434d6940fcd6ddcb44f5b6c63ffd26ad203b2ce1f5a9992"
+stage = "production"
+grid = "dense"
+analysis_burnin = 256
+beta = 0.25
+model_manifest = "data/born_scaling/production/models/state_L12_staggered_mu1.0e-8_model.toml"
+seed = 1612025001
+retained_sweeps = 2048
+measure_every = 1
+
+[model_files]
+"state_L12_staggered_mu1.0e-8_G.bin" = "7047fe4445cfcaf330205a8f8bfa08c1b4695bfbccb69e6bc2ed88a0590a6c51"
+"state_L12_staggered_mu1.0e-8_Q.bin" = "c151aabb06fe3d3404812b46fa9dc06b99d3dbd207966c5c8ecb4eee06e5257c"
+"state_L12_staggered_mu1.0e-8_energies.bin" = "cab0c3e38e47d9783911c579bad81577aaf7fe3de16bef7ff345bde0c4ba3cc7"
+
+[files]
+"data/born_scaling/production/production_L12_beta0p25_mu1p0em8_chain1_random_samples.csv" = "307cd9fcaa45f4a3a4d93f0fbe08c1ddb06ef284a49d8c52487365382e276533"
+"data/born_scaling/production/production_L12_beta0p25_mu1p0em8_chain1_random_initial.csv" = "c5e3a94ff0a99360175e2b186006d6972b8a1cc53e05bf7b04570675637d4077"

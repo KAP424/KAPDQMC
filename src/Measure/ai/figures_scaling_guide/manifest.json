@@ -1,0 +1,400 @@
+{
+  "source_files": [
+    {
+      "path": "data\\patterns.csv",
+      "sha256": "f21b49dcf11ab4c4a708fe0e8b8de6c3d320d0d321146dd46fa8b47d92d05f1d"
+    },
+    {
+      "path": "data\\arrangement_selection.csv",
+      "sha256": "e2a77d15a4d0602d48abcdefee56b6fd02c16c4f5d4ca67553e96ca5b554b007"
+    },
+    {
+      "path": "data\\equilibrium_validation.json",
+      "sha256": "26a429716968a3514148df5d015284b59fc2ea40e3f4e7d33f37a92cfa4369fc"
+    }
+  ],
+  "script_sha256": "3e421b61e27cab51acf2a9b1da54e289096879b7a69b8681eb581b5cda75c719",
+  "groups": [
+    {
+      "group": "special_patterns",
+      "panels": [
+        {
+          "pattern": "uniform_A",
+          "m": 1,
+          "occupied_bits": "10",
+          "A_particles": 1,
+          "B_particles": 0,
+          "empty_cells": 0,
+          "double_cells": 0,
+          "projection_classification": "ground_state_accessible",
+          "checked_ground_sizes": [
+            12,
+            18,
+            24,
+            30,
+            36,
+            42,
+            48,
+            54,
+            60,
+            66,
+            72,
+            78,
+            84,
+            90
+          ]
+        },
+        {
+          "pattern": "uniform_B",
+          "m": 1,
+          "occupied_bits": "01",
+          "A_particles": 0,
+          "B_particles": 1,
+          "empty_cells": 0,
+          "double_cells": 0,
+          "projection_classification": "ground_state_accessible",
+          "checked_ground_sizes": [
+            12,
+            18,
+            24,
+            30,
+            36,
+            42,
+            48,
+            54,
+            60,
+            66,
+            72,
+            78,
+            84,
+            90
+          ]
+        },
+        {
+          "pattern": "one_B_2",
+          "m": 2,
+          "occupied_bits": "10101001",
+          "A_particles": 3,
+          "B_particles": 1,
+          "empty_cells": 0,
+          "double_cells": 0,
+          "projection_classification": "ground_state_accessible",
+          "checked_ground_sizes": [
+            6,
+            12,
+            18,
+            24,
+            30,
+            36,
+            42,
+            48,
+            54,
+            60,
+            66,
+            72,
+            78,
+            84,
+            90
+          ]
+        },
+        {
+          "pattern": "one_B_3",
+          "m": 3,
+          "occupied_bits": "101010101010101001",
+          "A_particles": 8,
+          "B_particles": 1,
+          "empty_cells": 0,
+          "double_cells": 0,
+          "projection_classification": "ground_state_accessible",
+          "checked_ground_sizes": [
+            9,
+            18,
+            27,
+            36,
+            45,
+            54,
+            63,
+            72,
+            81,
+            90
+          ]
+        },
+        {
+          "pattern": "two_B_3",
+          "m": 3,
+          "occupied_bits": "011010101010101001",
+          "A_particles": 7,
+          "B_particles": 2,
+          "empty_cells": 0,
+          "double_cells": 0,
+          "projection_classification": "ground_state_accessible",
+          "checked_ground_sizes": [
+            9,
+            18,
+            27,
+            36,
+            45,
+            54,
+            63,
+            72,
+            81,
+            90
+          ]
+        },
+        {
+          "pattern": "diagonal_B_3",
+          "m": 3,
+          "occupied_bits": "011010100110101001",
+          "A_particles": 6,
+          "B_particles": 3,
+          "empty_cells": 0,
+          "double_cells": 0,
+          "projection_classification": "ground_state_accessible",
+          "checked_ground_sizes": [
+            9,
+            18,
+            27,
+            36,
+            45,
+            54,
+            63,
+            72,
+            81,
+            90
+          ]
+        },
+        {
+          "pattern": "special_matched_a",
+          "m": 3,
+          "occupied_bits": "100110011010101010",
+          "A_particles": 7,
+          "B_particles": 2,
+          "empty_cells": 0,
+          "double_cells": 0,
+          "projection_classification": "ground_state_accessible",
+          "checked_ground_sizes": [
+            9,
+            18,
+            27,
+            36,
+            45,
+            54,
+            63,
+            72,
+            81,
+            90
+          ]
+        },
+        {
+          "pattern": "special_matched_b",
+          "m": 3,
+          "occupied_bits": "101001011010101010",
+          "A_particles": 7,
+          "B_particles": 2,
+          "empty_cells": 0,
+          "double_cells": 0,
+          "projection_classification": "ground_state_accessible",
+          "checked_ground_sizes": [
+            9,
+            18,
+            27,
+            36,
+            45,
+            54,
+            63,
+            72,
+            81,
+            90
+          ]
+        }
+      ],
+      "files": [
+        {
+          "path": "special_patterns.png",
+          "sha256": "f6f269d6a757642f354a4741e1d9843020bbcf8f9af632ae126c00568c9e9739"
+        },
+        {
+          "path": "special_patterns.pdf",
+          "sha256": "c7fbd07b66264fc45216d6d1f9a81d0348485c2f623a9350718ad089bcff69fd"
+        }
+      ]
+    },
+    {
+      "group": "general_patterns",
+      "panels": [
+        {
+          "pattern": "full_empty_cluster3",
+          "m": 3,
+          "occupied_bits": "111111111000000000",
+          "A_particles": 5,
+          "B_particles": 4,
+          "empty_cells": 4,
+          "double_cells": 4,
+          "projection_classification": "ground_state_accessible",
+          "checked_ground_sizes": [
+            9,
+            18,
+            27,
+            36,
+            45,
+            54,
+            63,
+            72,
+            81,
+            90
+          ]
+        },
+        {
+          "pattern": "random_half_3",
+          "m": 3,
+          "occupied_bits": "100110001011010110",
+          "A_particles": 5,
+          "B_particles": 4,
+          "empty_cells": 1,
+          "double_cells": 1,
+          "projection_classification": "ground_state_accessible",
+          "checked_ground_sizes": [
+            9,
+            18,
+            27,
+            36,
+            45,
+            54,
+            63,
+            72,
+            81,
+            90
+          ]
+        },
+        {
+          "pattern": "general_matched_a",
+          "m": 3,
+          "occupied_bits": "011010111001011000",
+          "A_particles": 5,
+          "B_particles": 4,
+          "empty_cells": 1,
+          "double_cells": 1,
+          "projection_classification": "ground_state_accessible",
+          "checked_ground_sizes": [
+            9,
+            18,
+            27,
+            36,
+            45,
+            54,
+            63,
+            72,
+            81,
+            90
+          ]
+        },
+        {
+          "pattern": "general_matched_b",
+          "m": 3,
+          "occupied_bits": "101001010110101100",
+          "A_particles": 5,
+          "B_particles": 4,
+          "empty_cells": 1,
+          "double_cells": 1,
+          "projection_classification": "ground_state_accessible",
+          "checked_ground_sizes": [
+            9,
+            18,
+            27,
+            36,
+            45,
+            54,
+            63,
+            72,
+            81,
+            90
+          ]
+        }
+      ],
+      "files": [
+        {
+          "path": "general_patterns.png",
+          "sha256": "24a4c7436c5f55b5d290f76a794b7e41f41d360121fe10a9aabc954c43a7dd49"
+        },
+        {
+          "path": "general_patterns.pdf",
+          "sha256": "13319ffa2239e7bd6dd23c81bc75ffa40841aa4387bea3a8667ee4087c0319c6"
+        }
+      ]
+    },
+    {
+      "group": "obstructed_patterns",
+      "panels": [
+        {
+          "pattern": "stripe_AB_x",
+          "m": 2,
+          "occupied_bits": "10011001",
+          "A_particles": 2,
+          "B_particles": 2,
+          "empty_cells": 0,
+          "double_cells": 0,
+          "projection_classification": "obstructed",
+          "checked_ground_sizes": []
+        },
+        {
+          "pattern": "stripe_AB_y",
+          "m": 2,
+          "occupied_bits": "10100101",
+          "A_particles": 2,
+          "B_particles": 2,
+          "empty_cells": 0,
+          "double_cells": 0,
+          "projection_classification": "obstructed",
+          "checked_ground_sizes": []
+        },
+        {
+          "pattern": "checker_AB",
+          "m": 2,
+          "occupied_bits": "01101001",
+          "A_particles": 2,
+          "B_particles": 2,
+          "empty_cells": 0,
+          "double_cells": 0,
+          "projection_classification": "obstructed",
+          "checked_ground_sizes": []
+        },
+        {
+          "pattern": "full_empty_x",
+          "m": 2,
+          "occupied_bits": "11001100",
+          "A_particles": 2,
+          "B_particles": 2,
+          "empty_cells": 2,
+          "double_cells": 2,
+          "projection_classification": "obstructed",
+          "checked_ground_sizes": []
+        },
+        {
+          "pattern": "full_empty_checker",
+          "m": 2,
+          "occupied_bits": "11000011",
+          "A_particles": 2,
+          "B_particles": 2,
+          "empty_cells": 2,
+          "double_cells": 2,
+          "projection_classification": "obstructed",
+          "checked_ground_sizes": []
+        }
+      ],
+      "files": [
+        {
+          "path": "obstructed_patterns.png",
+          "sha256": "5f656eb53443b94ab3545befd5da8db13009a667b15a8f81582492faeaa3ad41"
+        },
+        {
+          "path": "obstructed_patterns.pdf",
+          "sha256": "2ea764658c1ea0b6c4fc80fa6331d44304f19e865bea974a4c3aff637070983d"
+        }
+      ]
+    }
+  ],
+  "bit_order": "A(1,1),B(1,1),A(2,1),B(2,1),...; x varies first",
+  "diagram_axes": "x rightward; y upward",
+  "no_new_simulations_or_fits": true,
+  "classification_scope": "Premeasurement ground-state reachability at checked sizes only; no scaling support labels."
+}

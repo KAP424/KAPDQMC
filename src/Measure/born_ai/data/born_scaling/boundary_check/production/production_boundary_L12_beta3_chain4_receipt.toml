@@ -1,0 +1,61 @@
+final_E = [48, 105, 3, 149, 134, 131, 284, 112, 285, 11, 117, 110, 102, 155, 9, 277, 13, 10, 172, 254, 111, 211, 1, 58, 260, 77, 204, 224, 147, 83, 221, 50, 6, 123, 76, 75, 5, 287, 217, 188, 216, 140, 185, 219, 138, 35, 191, 66, 87, 46, 174, 47, 225, 281, 223, 153, 100, 201, 19, 238, 108, 148, 39, 152, 22, 198, 120, 184, 167, 68, 52, 178, 218, 274, 31, 288, 30, 275, 193, 113, 69, 215, 212, 230, 272, 249, 129, 244, 259, 89, 80, 72, 37, 246, 199, 84, 67, 207, 242, 206, 109, 118, 231, 265, 61, 151, 97, 170, 137, 257, 163, 214, 98, 101, 127, 256, 267, 251, 16, 40, 262, 28, 183, 115, 82, 34, 282, 240, 142, 21, 179, 56, 145, 229, 136, 245, 122, 62, 94, 162, 258, 189, 74, 205]
+elapsed_seconds = 8.878000020980835
+started_at = "2026-10-28T15:19:52.002"
+snapshot_format = "Int32 native little endian, n=L^2 indices per recorded sweep, original E order"
+legacy_entropy_max_difference = 1.7763568394002505e-15
+refresh_seconds = 0.29252879999999987
+rows_per_measurement = 13
+acceptance = 0.13636610243055555
+accepted = 50270
+initial_E = [1, 2, 5, 6, 9, 10, 13, 14, 17, 18, 21, 22, 25, 26, 29, 30, 33, 34, 37, 38, 41, 42, 45, 46, 49, 50, 53, 54, 57, 58, 61, 62, 65, 66, 69, 70, 73, 74, 77, 78, 81, 82, 85, 86, 89, 90, 93, 94, 97, 98, 101, 102, 105, 106, 109, 110, 113, 114, 117, 118, 121, 122, 125, 126, 129, 130, 133, 134, 137, 138, 141, 142, 145, 146, 149, 150, 153, 154, 157, 158, 161, 162, 165, 166, 169, 170, 173, 174, 177, 178, 181, 182, 185, 186, 189, 190, 193, 194, 197, 198, 201, 202, 205, 206, 209, 210, 213, 214, 217, 218, 221, 222, 225, 226, 229, 230, 233, 234, 237, 238, 241, 242, 245, 246, 249, 250, 253, 254, 257, 258, 261, 262, 265, 266, 269, 270, 273, 274, 277, 278, 281, 282, 285, 286]
+julia_version = "1.12.1"
+status = "complete"
+plan_sha256 = "7892391aadb4c1f0df1edc00568dd17cb28eb796639a0112176344a149078ac7"
+records = 1280
+proposed = 368640
+unique_regions = 21
+update_seconds = 2.0288824000000023
+maximum_logweight_drift = 4.072342107974691e-8
+entropy_seconds = 6.083999600000006
+maximum_inverse_drift = 4.028926732592214e-8
+completed_at = "2026-10-28T15:20:00.875"
+
+[source_sha256]
+"run_born_scaling.jl" = "3d9004c1d112a29ee1a7b440a945dc89516f7cabba8e279e0e5dd145e5a65c76"
+"prepare_born_boundary_check.py" = "28556776bf056d3334904e7f8c2473a68ebca191da366adc426de745147e0c40"
+"../../public/Geometry.jl" = "079c2052642d46a7072656ccd738411faa57c9f07791f786a0a6872a5a5970ad"
+"run_born_boundary_check.jl" = "3e8fb7d0c4b01387d51daf53ad6f5a3298b6948f06581ec6a9ada0e4ae807f2c"
+"run_born_boundary_check_fast.jl" = "4640197946287bbae8e86a2d6f2faf8242bbed0578aab9afbf0814031c8eb559"
+"analyze_born_scaling.py" = "461ad6cdc32e3abbb1ede135cdffcb8167b817fda861b03d319deb534728a3c7"
+"analyze_born_boundary_check.py" = "d29682d79e29cacf278ca5b7c93ea758f7a768ff3ad86e35bc2089dcda8e9925"
+"fused_original_swap_kernel.jl" = "da7d40a574902763417225417d30abce265a15f9804dbfa47882b46f8ed20d70"
+"launch_born_boundary_production.py" = "0e4bea4f9dddc6f2520303e9915fc8a7ab17a41ea5e79318694deccc107f419e"
+"original_swap_scaling.jl" = "1af51fff868fbe63025323618506295ce5622179c1381de5ea64549e8c0d40cb"
+"prepare_born_boundary_production.py" = "999b3782b47f20ea45e1c7b181743950116a937a1a83217111c3140dc4868e98"
+
+[job]
+retained_records = 1024
+snapshot_path = "data/born_scaling/boundary_check/production/production_boundary_L12_beta3_chain4_E.bin"
+chain = 4
+L = 12
+mu = 1.0e-8
+run_id = "production_boundary_L12_beta3_chain4"
+sweeps = 1280
+refresh_every = 5
+warmup_sweeps = 256
+start = "02_stripe"
+model_manifest_sha256 = "166830ba189efb767434d6940fcd6ddcb44f5b6c63ffd26ad203b2ce1f5a9992"
+stage = "production"
+analysis_burnin = 256
+sample_path = "data/born_scaling/boundary_check/production/production_boundary_L12_beta3_chain4_samples.csv"
+beta = 3.0
+receipt_path = "data/born_scaling/boundary_check/production/production_boundary_L12_beta3_chain4_receipt.toml"
+model_manifest = "data/born_scaling/production/models/state_L12_staggered_mu1.0e-8_model.toml"
+seed = 2500120004
+retained_sweeps = 1024
+measure_every = 1
+
+[files]
+"data/born_scaling/boundary_check/production/production_boundary_L12_beta3_chain4_E.bin" = "4f5897d4a4d470ae12bbba3a62af81ace52b9dcb3bd1c743e516ca2fa687df5b"
+"data/born_scaling/boundary_check/production/production_boundary_L12_beta3_chain4_samples.csv.initial.csv" = "52d8fcbea6a271c0984fdd19bf30ff55a9bdda1511e64b56d1f85f358e4198be"
+"data/born_scaling/boundary_check/production/production_boundary_L12_beta3_chain4_samples.csv" = "b754dc67a856096817d8e22bc584e0a5a5fa62f9bac9c6d6b0e8e82000a65e4e"

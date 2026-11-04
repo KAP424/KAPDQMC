@@ -1,0 +1,1064 @@
+{
+  "status": "DESIGN_CALCULATION_ONLY",
+  "variants": [
+    {
+      "variance_budget_multiplier": 1.0,
+      "allocation_path": "analysis/born_scaling/allocation_proposal.csv",
+      "cases": 60,
+      "chains": 240,
+      "retained_total": 958464,
+      "burnin_total": 61440,
+      "per_chain_histogram": {
+        "2048": 31,
+        "4096": 15,
+        "8192": 14
+      },
+      "ideal_four_worker_minutes": 153.45885813198353,
+      "parallel_pilot_adjusted_four_worker_minutes": 240.9208249759178,
+      "theoretical_sequential_minutes": 613.8354325279341,
+      "allocation": [
+        {
+          "L": 6,
+          "beta": 0.5,
+          "retained_sweeps": 2048,
+          "burnin": 256,
+          "grid": "main"
+        },
+        {
+          "L": 6,
+          "beta": 1,
+          "retained_sweeps": 2048,
+          "burnin": 256,
+          "grid": "main"
+        },
+        {
+          "L": 6,
+          "beta": 1.5,
+          "retained_sweeps": 2048,
+          "burnin": 256,
+          "grid": "main"
+        },
+        {
+          "L": 6,
+          "beta": 2,
+          "retained_sweeps": 2048,
+          "burnin": 256,
+          "grid": "main"
+        },
+        {
+          "L": 6,
+          "beta": 2.5,
+          "retained_sweeps": 2048,
+          "burnin": 256,
+          "grid": "main"
+        },
+        {
+          "L": 6,
+          "beta": 3,
+          "retained_sweeps": 2048,
+          "burnin": 256,
+          "grid": "main"
+        },
+        {
+          "L": 9,
+          "beta": 0.5,
+          "retained_sweeps": 2048,
+          "burnin": 256,
+          "grid": "main"
+        },
+        {
+          "L": 9,
+          "beta": 1,
+          "retained_sweeps": 4096,
+          "burnin": 256,
+          "grid": "main"
+        },
+        {
+          "L": 9,
+          "beta": 1.5,
+          "retained_sweeps": 4096,
+          "burnin": 256,
+          "grid": "main"
+        },
+        {
+          "L": 9,
+          "beta": 2,
+          "retained_sweeps": 4096,
+          "burnin": 256,
+          "grid": "main"
+        },
+        {
+          "L": 9,
+          "beta": 2.5,
+          "retained_sweeps": 2048,
+          "burnin": 256,
+          "grid": "main"
+        },
+        {
+          "L": 9,
+          "beta": 3,
+          "retained_sweeps": 2048,
+          "burnin": 256,
+          "grid": "main"
+        },
+        {
+          "L": 12,
+          "beta": 0.5,
+          "retained_sweeps": 2048,
+          "burnin": 256,
+          "grid": "main"
+        },
+        {
+          "L": 12,
+          "beta": 1,
+          "retained_sweeps": 4096,
+          "burnin": 256,
+          "grid": "main"
+        },
+        {
+          "L": 12,
+          "beta": 1.5,
+          "retained_sweeps": 4096,
+          "burnin": 256,
+          "grid": "main"
+        },
+        {
+          "L": 12,
+          "beta": 2,
+          "retained_sweeps": 4096,
+          "burnin": 256,
+          "grid": "main"
+        },
+        {
+          "L": 12,
+          "beta": 2.5,
+          "retained_sweeps": 2048,
+          "burnin": 256,
+          "grid": "main"
+        },
+        {
+          "L": 12,
+          "beta": 3,
+          "retained_sweeps": 2048,
+          "burnin": 256,
+          "grid": "main"
+        },
+        {
+          "L": 15,
+          "beta": 0.5,
+          "retained_sweeps": 2048,
+          "burnin": 256,
+          "grid": "main"
+        },
+        {
+          "L": 15,
+          "beta": 1,
+          "retained_sweeps": 8192,
+          "burnin": 256,
+          "grid": "main"
+        },
+        {
+          "L": 15,
+          "beta": 1.5,
+          "retained_sweeps": 4096,
+          "burnin": 256,
+          "grid": "main"
+        },
+        {
+          "L": 15,
+          "beta": 2,
+          "retained_sweeps": 4096,
+          "burnin": 256,
+          "grid": "main"
+        },
+        {
+          "L": 15,
+          "beta": 2.5,
+          "retained_sweeps": 2048,
+          "burnin": 256,
+          "grid": "main"
+        },
+        {
+          "L": 15,
+          "beta": 3,
+          "retained_sweeps": 2048,
+          "burnin": 256,
+          "grid": "main"
+        },
+        {
+          "L": 18,
+          "beta": 0.5,
+          "retained_sweeps": 2048,
+          "burnin": 256,
+          "grid": "main"
+        },
+        {
+          "L": 18,
+          "beta": 1,
+          "retained_sweeps": 8192,
+          "burnin": 256,
+          "grid": "main"
+        },
+        {
+          "L": 18,
+          "beta": 1.5,
+          "retained_sweeps": 8192,
+          "burnin": 256,
+          "grid": "main"
+        },
+        {
+          "L": 18,
+          "beta": 2,
+          "retained_sweeps": 8192,
+          "burnin": 256,
+          "grid": "main"
+        },
+        {
+          "L": 18,
+          "beta": 2.5,
+          "retained_sweeps": 2048,
+          "burnin": 256,
+          "grid": "main"
+        },
+        {
+          "L": 18,
+          "beta": 3,
+          "retained_sweeps": 2048,
+          "burnin": 256,
+          "grid": "main"
+        },
+        {
+          "L": 21,
+          "beta": 0.5,
+          "retained_sweeps": 4096,
+          "burnin": 256,
+          "grid": "main"
+        },
+        {
+          "L": 21,
+          "beta": 1,
+          "retained_sweeps": 8192,
+          "burnin": 256,
+          "grid": "main"
+        },
+        {
+          "L": 21,
+          "beta": 1.5,
+          "retained_sweeps": 8192,
+          "burnin": 256,
+          "grid": "main"
+        },
+        {
+          "L": 21,
+          "beta": 2,
+          "retained_sweeps": 8192,
+          "burnin": 256,
+          "grid": "main"
+        },
+        {
+          "L": 21,
+          "beta": 2.5,
+          "retained_sweeps": 2048,
+          "burnin": 256,
+          "grid": "main"
+        },
+        {
+          "L": 21,
+          "beta": 3,
+          "retained_sweeps": 2048,
+          "burnin": 256,
+          "grid": "main"
+        },
+        {
+          "L": 24,
+          "beta": 0.5,
+          "retained_sweeps": 4096,
+          "burnin": 256,
+          "grid": "main"
+        },
+        {
+          "L": 24,
+          "beta": 1,
+          "retained_sweeps": 8192,
+          "burnin": 256,
+          "grid": "main"
+        },
+        {
+          "L": 24,
+          "beta": 1.5,
+          "retained_sweeps": 8192,
+          "burnin": 256,
+          "grid": "main"
+        },
+        {
+          "L": 24,
+          "beta": 2,
+          "retained_sweeps": 8192,
+          "burnin": 256,
+          "grid": "main"
+        },
+        {
+          "L": 24,
+          "beta": 2.5,
+          "retained_sweeps": 4096,
+          "burnin": 256,
+          "grid": "main"
+        },
+        {
+          "L": 24,
+          "beta": 3,
+          "retained_sweeps": 2048,
+          "burnin": 256,
+          "grid": "main"
+        },
+        {
+          "L": 6,
+          "beta": 0.25,
+          "retained_sweeps": 2048,
+          "burnin": 256,
+          "grid": "dense"
+        },
+        {
+          "L": 6,
+          "beta": 0.75,
+          "retained_sweeps": 2048,
+          "burnin": 256,
+          "grid": "dense"
+        },
+        {
+          "L": 6,
+          "beta": 1.25,
+          "retained_sweeps": 2048,
+          "burnin": 256,
+          "grid": "dense"
+        },
+        {
+          "L": 6,
+          "beta": 1.75,
+          "retained_sweeps": 2048,
+          "burnin": 256,
+          "grid": "dense"
+        },
+        {
+          "L": 6,
+          "beta": 2.25,
+          "retained_sweeps": 2048,
+          "burnin": 256,
+          "grid": "dense"
+        },
+        {
+          "L": 6,
+          "beta": 2.75,
+          "retained_sweeps": 2048,
+          "burnin": 256,
+          "grid": "dense"
+        },
+        {
+          "L": 12,
+          "beta": 0.25,
+          "retained_sweeps": 2048,
+          "burnin": 256,
+          "grid": "dense"
+        },
+        {
+          "L": 12,
+          "beta": 0.75,
+          "retained_sweeps": 4096,
+          "burnin": 256,
+          "grid": "dense"
+        },
+        {
+          "L": 12,
+          "beta": 1.25,
+          "retained_sweeps": 4096,
+          "burnin": 256,
+          "grid": "dense"
+        },
+        {
+          "L": 12,
+          "beta": 1.75,
+          "retained_sweeps": 4096,
+          "burnin": 256,
+          "grid": "dense"
+        },
+        {
+          "L": 12,
+          "beta": 2.25,
+          "retained_sweeps": 4096,
+          "burnin": 256,
+          "grid": "dense"
+        },
+        {
+          "L": 12,
+          "beta": 2.75,
+          "retained_sweeps": 2048,
+          "burnin": 256,
+          "grid": "dense"
+        },
+        {
+          "L": 18,
+          "beta": 0.25,
+          "retained_sweeps": 2048,
+          "burnin": 256,
+          "grid": "dense"
+        },
+        {
+          "L": 18,
+          "beta": 0.75,
+          "retained_sweeps": 8192,
+          "burnin": 256,
+          "grid": "dense"
+        },
+        {
+          "L": 18,
+          "beta": 1.25,
+          "retained_sweeps": 8192,
+          "burnin": 256,
+          "grid": "dense"
+        },
+        {
+          "L": 18,
+          "beta": 1.75,
+          "retained_sweeps": 8192,
+          "burnin": 256,
+          "grid": "dense"
+        },
+        {
+          "L": 18,
+          "beta": 2.25,
+          "retained_sweeps": 8192,
+          "burnin": 256,
+          "grid": "dense"
+        },
+        {
+          "L": 18,
+          "beta": 2.75,
+          "retained_sweeps": 2048,
+          "burnin": 256,
+          "grid": "dense"
+        }
+      ]
+    },
+    {
+      "variance_budget_multiplier": 1.25,
+      "allocation_path": "analysis/born_scaling/allocation_proposal_margin25.csv",
+      "cases": 60,
+      "chains": 240,
+      "retained_total": 1138688,
+      "burnin_total": 61440,
+      "per_chain_histogram": {
+        "2048": 23,
+        "4096": 18,
+        "8192": 18,
+        "16384": 1
+      },
+      "ideal_four_worker_minutes": 180.70724099917905,
+      "parallel_pilot_adjusted_four_worker_minutes": 282.6924840140075,
+      "theoretical_sequential_minutes": 722.8289639967162,
+      "allocation": [
+        {
+          "L": 6,
+          "beta": 0.5,
+          "retained_sweeps": 2048,
+          "burnin": 256,
+          "grid": "main"
+        },
+        {
+          "L": 6,
+          "beta": 1,
+          "retained_sweeps": 4096,
+          "burnin": 256,
+          "grid": "main"
+        },
+        {
+          "L": 6,
+          "beta": 1.5,
+          "retained_sweeps": 2048,
+          "burnin": 256,
+          "grid": "main"
+        },
+        {
+          "L": 6,
+          "beta": 2,
+          "retained_sweeps": 2048,
+          "burnin": 256,
+          "grid": "main"
+        },
+        {
+          "L": 6,
+          "beta": 2.5,
+          "retained_sweeps": 2048,
+          "burnin": 256,
+          "grid": "main"
+        },
+        {
+          "L": 6,
+          "beta": 3,
+          "retained_sweeps": 2048,
+          "burnin": 256,
+          "grid": "main"
+        },
+        {
+          "L": 9,
+          "beta": 0.5,
+          "retained_sweeps": 2048,
+          "burnin": 256,
+          "grid": "main"
+        },
+        {
+          "L": 9,
+          "beta": 1,
+          "retained_sweeps": 4096,
+          "burnin": 256,
+          "grid": "main"
+        },
+        {
+          "L": 9,
+          "beta": 1.5,
+          "retained_sweeps": 4096,
+          "burnin": 256,
+          "grid": "main"
+        },
+        {
+          "L": 9,
+          "beta": 2,
+          "retained_sweeps": 4096,
+          "burnin": 256,
+          "grid": "main"
+        },
+        {
+          "L": 9,
+          "beta": 2.5,
+          "retained_sweeps": 2048,
+          "burnin": 256,
+          "grid": "main"
+        },
+        {
+          "L": 9,
+          "beta": 3,
+          "retained_sweeps": 2048,
+          "burnin": 256,
+          "grid": "main"
+        },
+        {
+          "L": 12,
+          "beta": 0.5,
+          "retained_sweeps": 2048,
+          "burnin": 256,
+          "grid": "main"
+        },
+        {
+          "L": 12,
+          "beta": 1,
+          "retained_sweeps": 8192,
+          "burnin": 256,
+          "grid": "main"
+        },
+        {
+          "L": 12,
+          "beta": 1.5,
+          "retained_sweeps": 4096,
+          "burnin": 256,
+          "grid": "main"
+        },
+        {
+          "L": 12,
+          "beta": 2,
+          "retained_sweeps": 4096,
+          "burnin": 256,
+          "grid": "main"
+        },
+        {
+          "L": 12,
+          "beta": 2.5,
+          "retained_sweeps": 2048,
+          "burnin": 256,
+          "grid": "main"
+        },
+        {
+          "L": 12,
+          "beta": 3,
+          "retained_sweeps": 2048,
+          "burnin": 256,
+          "grid": "main"
+        },
+        {
+          "L": 15,
+          "beta": 0.5,
+          "retained_sweeps": 2048,
+          "burnin": 256,
+          "grid": "main"
+        },
+        {
+          "L": 15,
+          "beta": 1,
+          "retained_sweeps": 8192,
+          "burnin": 256,
+          "grid": "main"
+        },
+        {
+          "L": 15,
+          "beta": 1.5,
+          "retained_sweeps": 8192,
+          "burnin": 256,
+          "grid": "main"
+        },
+        {
+          "L": 15,
+          "beta": 2,
+          "retained_sweeps": 8192,
+          "burnin": 256,
+          "grid": "main"
+        },
+        {
+          "L": 15,
+          "beta": 2.5,
+          "retained_sweeps": 2048,
+          "burnin": 256,
+          "grid": "main"
+        },
+        {
+          "L": 15,
+          "beta": 3,
+          "retained_sweeps": 2048,
+          "burnin": 256,
+          "grid": "main"
+        },
+        {
+          "L": 18,
+          "beta": 0.5,
+          "retained_sweeps": 4096,
+          "burnin": 256,
+          "grid": "main"
+        },
+        {
+          "L": 18,
+          "beta": 1,
+          "retained_sweeps": 8192,
+          "burnin": 256,
+          "grid": "main"
+        },
+        {
+          "L": 18,
+          "beta": 1.5,
+          "retained_sweeps": 8192,
+          "burnin": 256,
+          "grid": "main"
+        },
+        {
+          "L": 18,
+          "beta": 2,
+          "retained_sweeps": 8192,
+          "burnin": 256,
+          "grid": "main"
+        },
+        {
+          "L": 18,
+          "beta": 2.5,
+          "retained_sweeps": 4096,
+          "burnin": 256,
+          "grid": "main"
+        },
+        {
+          "L": 18,
+          "beta": 3,
+          "retained_sweeps": 2048,
+          "burnin": 256,
+          "grid": "main"
+        },
+        {
+          "L": 21,
+          "beta": 0.5,
+          "retained_sweeps": 4096,
+          "burnin": 256,
+          "grid": "main"
+        },
+        {
+          "L": 21,
+          "beta": 1,
+          "retained_sweeps": 8192,
+          "burnin": 256,
+          "grid": "main"
+        },
+        {
+          "L": 21,
+          "beta": 1.5,
+          "retained_sweeps": 8192,
+          "burnin": 256,
+          "grid": "main"
+        },
+        {
+          "L": 21,
+          "beta": 2,
+          "retained_sweeps": 8192,
+          "burnin": 256,
+          "grid": "main"
+        },
+        {
+          "L": 21,
+          "beta": 2.5,
+          "retained_sweeps": 4096,
+          "burnin": 256,
+          "grid": "main"
+        },
+        {
+          "L": 21,
+          "beta": 3,
+          "retained_sweeps": 2048,
+          "burnin": 256,
+          "grid": "main"
+        },
+        {
+          "L": 24,
+          "beta": 0.5,
+          "retained_sweeps": 4096,
+          "burnin": 256,
+          "grid": "main"
+        },
+        {
+          "L": 24,
+          "beta": 1,
+          "retained_sweeps": 16384,
+          "burnin": 256,
+          "grid": "main"
+        },
+        {
+          "L": 24,
+          "beta": 1.5,
+          "retained_sweeps": 8192,
+          "burnin": 256,
+          "grid": "main"
+        },
+        {
+          "L": 24,
+          "beta": 2,
+          "retained_sweeps": 8192,
+          "burnin": 256,
+          "grid": "main"
+        },
+        {
+          "L": 24,
+          "beta": 2.5,
+          "retained_sweeps": 4096,
+          "burnin": 256,
+          "grid": "main"
+        },
+        {
+          "L": 24,
+          "beta": 3,
+          "retained_sweeps": 2048,
+          "burnin": 256,
+          "grid": "main"
+        },
+        {
+          "L": 6,
+          "beta": 0.25,
+          "retained_sweeps": 2048,
+          "burnin": 256,
+          "grid": "dense"
+        },
+        {
+          "L": 6,
+          "beta": 0.75,
+          "retained_sweeps": 4096,
+          "burnin": 256,
+          "grid": "dense"
+        },
+        {
+          "L": 6,
+          "beta": 1.25,
+          "retained_sweeps": 4096,
+          "burnin": 256,
+          "grid": "dense"
+        },
+        {
+          "L": 6,
+          "beta": 1.75,
+          "retained_sweeps": 2048,
+          "burnin": 256,
+          "grid": "dense"
+        },
+        {
+          "L": 6,
+          "beta": 2.25,
+          "retained_sweeps": 2048,
+          "burnin": 256,
+          "grid": "dense"
+        },
+        {
+          "L": 6,
+          "beta": 2.75,
+          "retained_sweeps": 2048,
+          "burnin": 256,
+          "grid": "dense"
+        },
+        {
+          "L": 12,
+          "beta": 0.25,
+          "retained_sweeps": 2048,
+          "burnin": 256,
+          "grid": "dense"
+        },
+        {
+          "L": 12,
+          "beta": 0.75,
+          "retained_sweeps": 8192,
+          "burnin": 256,
+          "grid": "dense"
+        },
+        {
+          "L": 12,
+          "beta": 1.25,
+          "retained_sweeps": 8192,
+          "burnin": 256,
+          "grid": "dense"
+        },
+        {
+          "L": 12,
+          "beta": 1.75,
+          "retained_sweeps": 4096,
+          "burnin": 256,
+          "grid": "dense"
+        },
+        {
+          "L": 12,
+          "beta": 2.25,
+          "retained_sweeps": 4096,
+          "burnin": 256,
+          "grid": "dense"
+        },
+        {
+          "L": 12,
+          "beta": 2.75,
+          "retained_sweeps": 2048,
+          "burnin": 256,
+          "grid": "dense"
+        },
+        {
+          "L": 18,
+          "beta": 0.25,
+          "retained_sweeps": 4096,
+          "burnin": 256,
+          "grid": "dense"
+        },
+        {
+          "L": 18,
+          "beta": 0.75,
+          "retained_sweeps": 8192,
+          "burnin": 256,
+          "grid": "dense"
+        },
+        {
+          "L": 18,
+          "beta": 1.25,
+          "retained_sweeps": 8192,
+          "burnin": 256,
+          "grid": "dense"
+        },
+        {
+          "L": 18,
+          "beta": 1.75,
+          "retained_sweeps": 8192,
+          "burnin": 256,
+          "grid": "dense"
+        },
+        {
+          "L": 18,
+          "beta": 2.25,
+          "retained_sweeps": 8192,
+          "burnin": 256,
+          "grid": "dense"
+        },
+        {
+          "L": 18,
+          "beta": 2.75,
+          "retained_sweeps": 4096,
+          "burnin": 256,
+          "grid": "dense"
+        }
+      ]
+    }
+  ],
+  "files": {
+    "data/born_scaling/pilot/pilot_L12_beta0p5_mu1p0em8_chain1_random_samples.csv": "72e509a24e8e210252ae340083920972a053e0f18b602457c3488b915dfbb5fd",
+    "data/born_scaling/pilot/pilot_L12_beta0p5_mu1p0em8_chain4_02_stripe_receipt.toml": "9c36395a809902a37a2beca0bcd92c19bd4a5098131350fadde596485ee0bfdf",
+    "data/born_scaling/pilot/models/state_L18_staggered_mu1.0e-8_energies.bin": "c621f584adef8c3e04565a0cac65042169fa852d9d35917b54da726f5b5ea617",
+    "data/born_scaling/pilot/pilot_L12_beta3p0_mu1p0em8_chain4_02_stripe_initial.csv": "32e3bbae6e0bf334b3f9a90a0ce521681cc63c109c3d494acfc4c2066ab19767",
+    "data/born_scaling/pilot/pilot_L18_beta3p0_mu1p0em8_chain2_uniform_A_initial.csv": "648b82d2d42656d5679add24c5b6a6ea7517e7de1dc44dd73f157f4cc76ccf26",
+    "data/born_scaling/pilot/pilot_L6_beta0p5_mu1p0em8_chain3_uniform_B_receipt.toml": "aaa72927ade39fa9c2b3215204465fc356e507fb56d68a16529cbcf58bca43a5",
+    "data/born_scaling/pilot/pilot_L18_beta3p0_mu1p0em8_chain1_random_receipt.toml": "ccbb07dd847eb8a8e74a3f298e800e625aa0eabe904f9c378bccac5ef0257aa3",
+    "data/born_scaling/pilot/models/state_L6_staggered_mu1.0e-8_energies.bin": "164533617d01eaba7967b8cd647f266aa728780d439848ccbed8a0c4f8d710d2",
+    "data/born_scaling/pilot/pilot_L6_beta3p0_mu1p0em8_chain3_uniform_B_receipt.toml": "ecfb0085c04ddcc8f6f5ff467d5576744db9265f3e28d5dd379c3aadd0ce50ff",
+    "data/born_scaling/pilot/pilot_L12_beta0p5_mu1p0em8_chain4_02_stripe_samples.csv": "fe7e7c2b5db435e6f4630e60dbce905b48052dde8db6df63346d9f664f2d915b",
+    "data/born_scaling/pilot/pilot_L6_beta0p5_mu1p0em8_chain2_uniform_A_initial.csv": "8d4b5cb101a9a70973e5c6011d55b46d983189c82ee27383314249f10767d5f8",
+    "data/born_scaling/pilot/pilot_L12_beta1p5_mu1p0em8_chain4_02_stripe_samples.csv": "3578bb87829a6eeb7ae094b8f96c6e6e27f1bf970a331d2dd49f8595e52dd641",
+    "data/born_scaling/pilot/pilot_L6_beta3p0_mu1p0em8_chain4_02_stripe_initial.csv": "bd87a99fd0fdf9f6b621d7370a64263d0e0f9a3a06fb9c2087bf75e18df9ab3e",
+    "data/born_scaling/pilot/pilot_L18_beta0p5_mu1p0em8_chain2_uniform_A_samples.csv": "55ad2639a0bdb51c6bcb5b5ed429c557580415d06a27aefe6e7cafe3e97235e2",
+    "data/born_scaling/pilot/pilot_L18_beta0p5_mu1p0em8_chain1_random_samples.csv": "2effc6b91b7e16893a6438b8daeb8772df335736bcd5193f97176e94404b6940",
+    "data/born_scaling/pilot/models/state_L18_staggered_mu1.0e-8_model.toml": "5acff16cf93676c94b25584e5860145080040e01c9a7b513e54491130c9c00c3",
+    "data/born_scaling/pilot/pilot_L6_beta3p0_mu1p0em8_chain3_uniform_B_initial.csv": "a4fabc4aca69617cfeaa1d6406abe3d88c5e91764fe407aa741369f64b9d3a4c",
+    "data/born_scaling/pilot/pilot_L12_beta0p5_mu1p0em8_chain2_uniform_A_samples.csv": "98762abc9d1d49abdf7f96cb8f49843b9ccbf93a86f3bea8fbbb6803eb82d1f7",
+    "data/born_scaling/pilot/pilot_L18_beta3p0_mu1p0em8_chain1_random_initial.csv": "23eee204070cb95bdb847d75943d74143a61fb5fb4ca70eb41ef865b3d56b95e",
+    "data/born_scaling/pilot/models/state_L18_staggered_mu1.0e-8_Q.bin": "e23ef6fc0f03bee5cd48f5e97b16426e15a8ea0f94c9960a5b61fbe00211ff34",
+    "data/born_scaling/pilot/pilot_L6_beta0p5_mu1p0em8_chain1_random_receipt.toml": "9ba2360420aea5ef5378bb74dd9ba46db85152c64dec3366a82c81d64a1bfef3",
+    "data/born_scaling/pilot/pilot_L18_beta3p0_mu1p0em8_chain3_uniform_B_receipt.toml": "899b780774ed129f99333e0be26ce00f8949c32b024241466ec3b766b8cf3881",
+    "data/born_scaling/pilot/pilot_L12_beta0p5_mu1p0em8_chain1_random_initial.csv": "3953e99ac8ef64aa59d7a9ad978c8f26b04405f9466f618a3f714601a1e7ddca",
+    "data/born_scaling/pilot/pilot_L12_beta1p5_mu1p0em8_chain4_02_stripe_initial.csv": "c4d024e8a56f1cbc56889f2f8299fcab11fa4558686c7cb327eb328ced68162e",
+    "data/born_scaling/pilot/pilot_L6_beta3p0_mu1p0em8_chain2_uniform_A_receipt.toml": "fce282089fcd9322ff02103e376f8dca6371abf5b81877c822c2c93812cfe755",
+    "data/born_scaling/pilot/pilot_L18_beta1p5_mu1p0em8_chain1_random_samples.csv": "bcf07700a17d3e1af03872da54b31a0dcbe5743c0be21bd9e010e7613ec90c8c",
+    "data/born_scaling/pilot/pilot_L12_beta1p5_mu1p0em8_chain3_uniform_B_samples.csv": "4f9c36cf842208acde151c425b774b9e470339885dd6125e2cb5748efba6c0da",
+    "data/born_scaling/pilot/pilot_L18_beta0p5_mu1p0em8_chain3_uniform_B_receipt.toml": "c0a02bec5f94a442e43d7a09381d8e803ea18f2567563a847b4548fb1a7e4bc7",
+    "data/born_scaling/pilot/pilot_L6_beta1p5_mu1p0em8_chain2_uniform_A_receipt.toml": "6daef433f43700fe9d7c82c462c486151af0a7a4882dd3ab195ea10c194c9b7a",
+    "data/born_scaling/pilot/pilot_L6_beta3p0_mu1p0em8_chain2_uniform_A_initial.csv": "06fd06342134cb691ba3ed0f3340b9ce27b718feaad67d231596d56f357dbf02",
+    "data/born_scaling/pilot/pilot_L6_beta1p5_mu1p0em8_chain4_02_stripe_samples.csv": "1934a7afa2d01557ff124b9123291d3aa1ce139fdeb8a175bead8434e9d4427d",
+    "data/born_scaling/pilot/models/state_L6_staggered_mu1.0e-8_Q.bin": "b9ec7d35b36deb37bfd04222f08534b151ccfca6f2e566e6c23ea8b9067e44f7",
+    "data/born_scaling/pilot/pilot_L12_beta3p0_mu1p0em8_chain3_uniform_B_initial.csv": "ca6bab528d26b69221e77d3358d523c586634758e621eefc9a1b498b355a70b4",
+    "data/born_scaling/pilot/pilot_L12_beta0p5_mu1p0em8_chain4_02_stripe_initial.csv": "1200dfc144dc8a77e04a7a9b71fc44c16718c459d42247e51527e6be558a0212",
+    "data/born_scaling/pilot/pilot_L6_beta1p5_mu1p0em8_chain3_uniform_B_initial.csv": "2f095a91c64bb68ed8e5c66939f496a75f94ae36903a620ffd398ebb2a71d70c",
+    "data/born_scaling/pilot/pilot_L6_beta3p0_mu1p0em8_chain3_uniform_B_samples.csv": "353121d599a28a795897cad8d8b50c1373e8a74edd505d42eee53d3d785a4ecd",
+    "data/born_scaling/pilot/pilot_L12_beta3p0_mu1p0em8_chain3_uniform_B_samples.csv": "6bea838b2985a618d9dc8829a887a514c976faef278f742c952bb420a1ee2b73",
+    "data/born_scaling/pilot/pilot_L12_beta0p5_mu1p0em8_chain1_random_receipt.toml": "88f42a3883a31526e0dcc9f4d2f1e65834325c5c017b3ddf50960c9536a39a5a",
+    "data/born_scaling/pilot/pilot_L6_beta0p5_mu1p0em8_chain1_random_samples.csv": "3df7765c5cc0c4abb32710e034fc36b5f440965a9e31d6c4e1ba5b781d5685d9",
+    "data/born_scaling/pilot/pilot_L12_beta0p5_mu1p0em8_chain3_uniform_B_samples.csv": "288d787fc376d0cfdfe50ab66417ba7d0ee60e791e6de35a980bfaf85e8d1233",
+    "data/born_scaling/pilot/pilot_L6_beta1p5_mu1p0em8_chain2_uniform_A_initial.csv": "4d17163e51172a133483b3188c928439c0ab219ae8f88d03914bbf057b4d5425",
+    "data/born_scaling/pilot/pilot_L6_beta0p5_mu1p0em8_chain1_random_initial.csv": "a9d90de39a121780ef165fb9e8f560295dc3d95e04986e1b7e64782527c7e92b",
+    "data/born_scaling/pilot/pilot_L12_beta0p5_mu1p0em8_chain3_uniform_B_initial.csv": "3d9e5dc766b97b7d5f6b53d74ebd9704dc2358d96ede067f55bb756ff9a6e2cb",
+    "data/born_scaling/pilot/pilot_L6_beta1p5_mu1p0em8_chain1_random_samples.csv": "ff464ac209f54c24b76e4c6e20978d509b09d18eaa87004c507d6f16ae55cd98",
+    "data/born_scaling/pilot/models/state_L12_staggered_mu1.0e-8_G.bin": "7047fe4445cfcaf330205a8f8bfa08c1b4695bfbccb69e6bc2ed88a0590a6c51",
+    "data/born_scaling/pilot/pilot_L6_beta0p5_mu1p0em8_chain4_02_stripe_receipt.toml": "48676fea909f9229f7a76a466226c2958c8da6fdef3a68419a2a3a49c92e8e5d",
+    "data/born_scaling/pilot/pilot_L12_beta1p5_mu1p0em8_chain2_uniform_A_initial.csv": "86b230237f5a3892e0ba8e3ebeb8cd2f79e2ca3f4feac92d8e3f9ef68ca6398b",
+    "data/born_scaling/pilot/pilot_L18_beta0p5_mu1p0em8_chain3_uniform_B_samples.csv": "3792cb76ea0e8ea5ccdc5b21bbc1e54288529f490626a451a01b39e4133f7d67",
+    "data/born_scaling/pilot/pilot_L6_beta3p0_mu1p0em8_chain1_random_samples.csv": "bbede91589e0c91c5619fb78d2f79f844d624d61a81cfc9ca09945f674199e7d",
+    "data/born_scaling/pilot/pilot_L18_beta1p5_mu1p0em8_chain3_uniform_B_samples.csv": "17816239b06f7a19d2692191dc80a5136694251066107bac29086ed0b2ddeb07",
+    "data/born_scaling/pilot/pilot_L18_beta0p5_mu1p0em8_chain2_uniform_A_receipt.toml": "16a11c65101c056d7d00791e78e1c8d0195ea430d1d234170199d15d5414044d",
+    "data/born_scaling/pilot/pilot_L12_beta1p5_mu1p0em8_chain4_02_stripe_receipt.toml": "560dc3de0c2a842e60a5e6855b84798eced4518b2bd9edd3863c1fa0e09b8306",
+    "data/born_scaling/pilot/pilot_L18_beta3p0_mu1p0em8_chain1_random_samples.csv": "5baf3ac8369f8a0f9dc1b98c41c3720c36ce89788f9733fde915d4691cba21c3",
+    "data/born_scaling/pilot/models/state_L12_staggered_mu1.0e-8_model.toml": "166830ba189efb767434d6940fcd6ddcb44f5b6c63ffd26ad203b2ce1f5a9992",
+    "data/born_scaling/pilot/pilot_L6_beta1p5_mu1p0em8_chain4_02_stripe_receipt.toml": "090f8ec58a112f0b519495cd38234d00520f4e3a83dc4975c179853f09747b58",
+    "data/born_scaling/pilot/pilot_L6_beta3p0_mu1p0em8_chain1_random_receipt.toml": "b769fe4ae3913d7b17767f02a295b40d14475815c344f3535ad79717e4c8c561",
+    "data/born_scaling/pilot/models/state_L12_staggered_mu1.0e-8_energies.bin": "cab0c3e38e47d9783911c579bad81577aaf7fe3de16bef7ff345bde0c4ba3cc7",
+    "data/born_scaling/pilot/pilot_L18_beta1p5_mu1p0em8_chain3_uniform_B_receipt.toml": "2d89ae5e54a5fa2d5e279f234f3c16d22b2c63ee42d1db5e10d805e6a7d5b962",
+    "data/born_scaling/pilot/pilot_L18_beta3p0_mu1p0em8_chain4_02_stripe_receipt.toml": "564d5098a955044f72c4b04b845e806a1dceba63be3413df9146f959d3ec8591",
+    "data/born_scaling/pilot/models/state_L12_staggered_mu1.0e-8_Q.bin": "c151aabb06fe3d3404812b46fa9dc06b99d3dbd207966c5c8ecb4eee06e5257c",
+    "data/born_scaling/pilot/pilot_L18_beta0p5_mu1p0em8_chain1_random_initial.csv": "0854c97efa9ca94caddfbe7da488762a0b2062a443fe949ffae66bfaf1925ba1",
+    "data/born_scaling/pilot/pilot_L18_beta0p5_mu1p0em8_chain4_02_stripe_samples.csv": "595c57afbf26aee5ba56aebdab69eaa79e29ba066c683e00b2d5d33a983433f6",
+    "data/born_scaling/pilot/pilot_L18_beta1p5_mu1p0em8_chain4_02_stripe_samples.csv": "d30bc59bb2eaae5ddc0f8f90d81f900cc40e77328794ad3427f03d713eea7216",
+    "data/born_scaling/pilot/pilot_L18_beta0p5_mu1p0em8_chain2_uniform_A_initial.csv": "3d7f04246351eb55497469b84c2f1a7bc10f589fdbb1b9603a25c7963840d717",
+    "data/born_scaling/pilot/pilot_L12_beta1p5_mu1p0em8_chain1_random_samples.csv": "9aa1bf33d4a741f54cd10bb5d5673ba9364bc01864d5436d893c81049bf0a93e",
+    "data/born_scaling/pilot/pilot_L18_beta0p5_mu1p0em8_chain4_02_stripe_initial.csv": "9702e1f392872c98e034cc4f1b54f8065843759b86c9601a97a9affcfe54d4a7",
+    "data/born_scaling/pilot/pilot_L18_beta1p5_mu1p0em8_chain3_uniform_B_initial.csv": "c9a99419c2630eea094526143240d8cea1ef283bb41f551fc50923f3b5d774c0",
+    "data/born_scaling/pilot/pilot_L18_beta1p5_mu1p0em8_chain4_02_stripe_initial.csv": "26f12e1e7e6d4b385d81cf2b02c7d869b6b4ce58cd2b35f1b8cae1f64bbcfb2c",
+    "data/born_scaling/pilot/pilot_L12_beta1p5_mu1p0em8_chain2_uniform_A_receipt.toml": "059139ce7ff3fd0f64d4b5811f34ba4c3e47fa91bda4221b800d50268aae5348",
+    "data/born_scaling/pilot/pilot_L12_beta3p0_mu1p0em8_chain1_random_samples.csv": "89e2a9c6110d95e203c35009b1b819171029c068a1882f0955af361db51f6cd0",
+    "data/born_scaling/pilot/models/state_L6_staggered_mu1.0e-8_model.toml": "d958ed08ecc990148d0ffaef2dc256d0de42b78c464cfda60f79b96a61816770",
+    "data/born_scaling/pilot/pilot_L18_beta3p0_mu1p0em8_chain4_02_stripe_initial.csv": "c8b6ac8052c1b47082e26192184c2984f176115013048d63e3e0f8bbb342265f",
+    "data/born_scaling/pilot/pilot_L18_beta3p0_mu1p0em8_chain2_uniform_A_receipt.toml": "4577cd05e8300037851b4d3581468cf86da82ec6fa847dca9ab5d79d88cf2984",
+    "data/born_scaling/pilot/pilot_L6_beta0p5_mu1p0em8_chain4_02_stripe_samples.csv": "e23fd5ab1377e052fa0456072f999858cad0d33312139db621509ee103c7f5d4",
+    "data/born_scaling/pilot/pilot_L12_beta3p0_mu1p0em8_chain4_02_stripe_receipt.toml": "78cee978a2f883d3d5b16a68bff96648a122a5035cbd99321e8ea3b1805a1b95",
+    "data/born_scaling/pilot/pilot_L12_beta3p0_mu1p0em8_chain1_random_initial.csv": "3ad00aae21b13449eb8a0f2bd7caa814788dc39002bd1d3402fc028048d99870",
+    "data/born_scaling/pilot/pilot_L18_beta3p0_mu1p0em8_chain4_02_stripe_samples.csv": "1dbe0473dbb19406b651fe997b8759395f8165485f1b1d8ae0a2f59de19567dc",
+    "data/born_scaling/pilot/pilot_L12_beta0p5_mu1p0em8_chain2_uniform_A_initial.csv": "a89f691916809d75664e6ad14b1913d5f043d44059d8bab0ff40579b92cec9ba",
+    "data/born_scaling/pilot/pilot_L12_beta3p0_mu1p0em8_chain1_random_receipt.toml": "7a5d4eef610a43a4a8ccb614b57871ed438a121d20d4a787f4499ca0244ad353",
+    "data/born_scaling/pilot/models/state_L6_staggered_mu1.0e-8_G.bin": "adc4a1a4cb1c3108e8377129a5535471a8d5e15e5512f297def5daab54806556",
+    "data/born_scaling/pilot/pilot_L6_beta0p5_mu1p0em8_chain3_uniform_B_samples.csv": "ecc969b0e815c53185ec8882b34e13042dba9ae40842ebd46d05fecd6a0f2630",
+    "data/born_scaling/pilot/pilot_L6_beta1p5_mu1p0em8_chain3_uniform_B_samples.csv": "b03675fdc3206b7995365aa23d7eba4248316025223e19d6318fcfaf50df6362",
+    "data/born_scaling/pilot/pilot_L18_beta1p5_mu1p0em8_chain1_random_initial.csv": "b475fd6025cee9d7d0e7761c5d809483acc2b4a49efc6c141cc864b5018da026",
+    "data/born_scaling/pilot/pilot_L6_beta0p5_mu1p0em8_chain4_02_stripe_initial.csv": "021bd4d8f701c8db52030ea18464112f0a6b11ff3facda5f1052e98a7618423d",
+    "data/born_scaling/pilot/pilot_L6_beta1p5_mu1p0em8_chain4_02_stripe_initial.csv": "d042287f85577b4893c931a1f6f22ab2c455e8e4384dcd706992c57938a496b0",
+    "data/born_scaling/pilot/pilot_L18_beta3p0_mu1p0em8_chain2_uniform_A_samples.csv": "8abc269054b2f04853f4cb60fc0fe8aa2e84d9e25e386e37fc50110b61cbbdf5",
+    "data/born_scaling/pilot/pilot_L6_beta0p5_mu1p0em8_chain3_uniform_B_initial.csv": "f94416aa31ad8ee28e6d73944b9cb8f0daaf4029cb7af0f4fbd0c225a30e20c4",
+    "data/born_scaling/pilot/pilot_L12_beta3p0_mu1p0em8_chain2_uniform_A_initial.csv": "5b59524a1cf1088414fa95d7bf174740d34df9d9fb4417a58de953725fefdb73",
+    "data/born_scaling/pilot/pilot_L6_beta0p5_mu1p0em8_chain2_uniform_A_samples.csv": "a89b3f904dff37d42b180d0a1f632d2206d16017788d3c243ef0d8fe20bcfcc5",
+    "data/born_scaling/pilot/pilot_L18_beta0p5_mu1p0em8_chain3_uniform_B_initial.csv": "f825c085e96689b47c789670450dbf1c1f988de989d720d4ad68625b16a270ba",
+    "data/born_scaling/pilot/pilot_L6_beta0p5_mu1p0em8_chain2_uniform_A_receipt.toml": "bc2303086d084cce28cf6e600ab9a871f7a76a6b0f3f74a8be350cba4c8581c8",
+    "data/born_scaling/pilot/pilot_L12_beta1p5_mu1p0em8_chain3_uniform_B_receipt.toml": "39dc76d93cf03fa1dc0c104719453efead8e925633bc034541e74ff0092d8229",
+    "data/born_scaling/pilot/pilot_L12_beta1p5_mu1p0em8_chain1_random_initial.csv": "0ac3639e61c91b6e06af829cb4310bf660b2e762f8f6daca825af043343dcf8e",
+    "data/born_scaling/pilot/pilot_L6_beta1p5_mu1p0em8_chain3_uniform_B_receipt.toml": "8a77cb57aca87423a3566072c08f8950a60c982322c5e7a413a5346d8189ee40",
+    "data/born_scaling/pilot/pilot_L12_beta3p0_mu1p0em8_chain2_uniform_A_receipt.toml": "be1ae301b229f818d06ff3c2b355b45b409b4a35259a4b699fae1c84a0fa8141",
+    "data/born_scaling/pilot/pilot_L6_beta3p0_mu1p0em8_chain1_random_initial.csv": "469f430524495c300825522d41f8939d59829d6de0907087a1031657f001e3a9",
+    "data/born_scaling/pilot/pilot_L6_beta1p5_mu1p0em8_chain1_random_receipt.toml": "af213b2e9d5899751bbd09f3c30c6c7802de8a03e6e309f87c920f7353a7347e",
+    "data/born_scaling/pilot/pilot_L6_beta1p5_mu1p0em8_chain1_random_initial.csv": "95139aa64d7b9410d7787c8e3b9df3942542bdfcf413966089b7f4da9cc2b2b7",
+    "data/born_scaling/pilot/pilot_L6_beta3p0_mu1p0em8_chain4_02_stripe_receipt.toml": "07a54540d273c14abe31d0d8bb14a0c3aa3b866220ae791a9e0025d4dde6f7f7",
+    "data/born_scaling/pilot/pilot_L12_beta0p5_mu1p0em8_chain3_uniform_B_receipt.toml": "02eedda54cc272a1d311eb940c4f58700573695caaa4b0f70d4f697cb45dfd7a",
+    "data/born_scaling/pilot/pilot_L12_beta1p5_mu1p0em8_chain3_uniform_B_initial.csv": "0638ebaeb9c57c3ac24e40033b23f5a7116c02839b04cae9e363d326dd01f723",
+    "data/born_scaling/pilot/pilot_L18_beta1p5_mu1p0em8_chain2_uniform_A_samples.csv": "448062ef6447b690aa3441d292a45783d2a81b757479e58dbff0e9cbfdbb3ba2",
+    "data/born_scaling/pilot/pilot_L18_beta0p5_mu1p0em8_chain1_random_receipt.toml": "b842a5667be79837616ac3bce0a118a5939b47492767c83d85266b6f41cc29f2",
+    "data/born_scaling/pilot/pilot_L6_beta3p0_mu1p0em8_chain4_02_stripe_samples.csv": "6d980315fc34cce466b75df140312f462d35eca739aab9ded01098941738b484",
+    "data/born_scaling/pilot/models/state_L18_staggered_mu1.0e-8_G.bin": "6484b9dc101e25e55c23b5a038b8d2d669d4a3f0ab7e107113f916f0f5a0a9d8",
+    "data/born_scaling/pilot/pilot_L6_beta3p0_mu1p0em8_chain2_uniform_A_samples.csv": "b03c2628354b523db72628f4e9981e3c80a2a0405ba096e869bdab7f25532a9c",
+    "data/born_scaling/pilot/pilot_plan.toml": "19dde87d9227436fa49f3355692324c20369b50839dbf869ba38c3872365d296",
+    "data/born_scaling/pilot/pilot_L18_beta1p5_mu1p0em8_chain4_02_stripe_receipt.toml": "66d69ef09f3e280be5ad5deb08980c556e1442aeb36f47d1d48d386f4614d920",
+    "data/born_scaling/pilot/pilot_L12_beta1p5_mu1p0em8_chain2_uniform_A_samples.csv": "e6c6bcd292b13b02f6d6c1ad858ddc4eab058ddab92e34fb4ba369bc892b22c4",
+    "data/born_scaling/pilot/pilot_L12_beta3p0_mu1p0em8_chain4_02_stripe_samples.csv": "adce165ccd20ccb08a2a95bc90a6910a9881b813a41f0ba394fa291d6eb0ee19",
+    "data/born_scaling/pilot/pilot_L18_beta1p5_mu1p0em8_chain1_random_receipt.toml": "864add551e8eebfdcd8a6fb910a0073b7d9186a822475bc60d26fa02aa76b324",
+    "data/born_scaling/pilot/pilot_L18_beta1p5_mu1p0em8_chain2_uniform_A_receipt.toml": "bb7291fb7fa3549ca7286e01d9eafc3a5c92156682c1c4e0340486dd9d4114f6",
+    "data/born_scaling/pilot/pilot_L6_beta1p5_mu1p0em8_chain2_uniform_A_samples.csv": "c5a331a72b58d481cf2ceccee17793d348ad28dbd5f92cf511eeeb85659a8fc7",
+    "data/born_scaling/pilot/pilot_L18_beta1p5_mu1p0em8_chain2_uniform_A_initial.csv": "60c58540e37b6edbc5432a8efe680e8849d48a75224b0fb37c0df508c01b3692",
+    "data/born_scaling/pilot/pilot_L18_beta3p0_mu1p0em8_chain3_uniform_B_initial.csv": "c4fab46f47e151691418dcf385dc781c58739e69e628f58b17ee9a3d1ee01237",
+    "data/born_scaling/pilot/pilot_L18_beta0p5_mu1p0em8_chain4_02_stripe_receipt.toml": "e1585754369d8c17cdc541d1a81b47cb28e04ff15937c24714a1d7eaa5c0eb33",
+    "data/born_scaling/pilot/pilot_L12_beta0p5_mu1p0em8_chain2_uniform_A_receipt.toml": "eba847f3a6905e1582dd740259a1d32053977b2a9242651dc69b986048831463",
+    "data/born_scaling/pilot/pilot_L12_beta3p0_mu1p0em8_chain3_uniform_B_receipt.toml": "386b61a746f4f36ea1e2045bad66520b2e7466abdb4326bddec2661392cfa5c8",
+    "data/born_scaling/pilot/pilot_L12_beta3p0_mu1p0em8_chain2_uniform_A_samples.csv": "b0d8a38e1a366023fa775da354bb4ef12f6e12389f84d8a22136f8778706026b",
+    "data/born_scaling/pilot/pilot_L18_beta3p0_mu1p0em8_chain3_uniform_B_samples.csv": "f29a0adea7a12b9f482b6a91974d323c91493d97167e4393a771d52d12b9e196",
+    "data/born_scaling/pilot/pilot_L12_beta1p5_mu1p0em8_chain1_random_receipt.toml": "a6ae3997425f2c2877c02988f9beaf0d6a67faf8b5d0ccaa044d5ac4a14f654b",
+    "data/born_scaling/pilot/pilot_manifest.toml": "215335707ec7d0e3718fee44a4ff14dd0f648f5582bef4df82111f67b0649c15",
+    "run_born_scaling.jl": "3d9004c1d112a29ee1a7b440a945dc89516f7cabba8e279e0e5dd145e5a65c76",
+    "original_swap_scaling.jl": "1af51fff868fbe63025323618506295ce5622179c1381de5ea64549e8c0d40cb",
+    "../../public/Geometry.jl": "079c2052642d46a7072656ccd738411faa57c9f07791f786a0a6872a5a5970ad",
+    "data/born_scaling/pilot_extra/pilot_extra_L18_beta2p5_mu1p0em8_chain3_uniform_B_samples.csv": "98c3908ce8aa833c304c834c9c7614ab1dfabfa001647f0bf6c301f689374f3c",
+    "data/born_scaling/pilot_extra/pilot_extra_L18_beta2p5_mu1p0em8_chain4_02_stripe_receipt.toml": "e7085c9135155c8bec6dafcd309672fb6813b30d9982b4a4a3e4269910574c87",
+    "data/born_scaling/pilot_extra/pilot_extra_L18_beta2p5_mu1p0em8_chain4_02_stripe_samples.csv": "69dc7a4ad9222aafdfbc635706f30874b3294708a3b6bcaccfa4149735702e5d",
+    "data/born_scaling/pilot_extra/pilot_extra_L18_beta2p5_mu1p0em8_chain3_uniform_B_receipt.toml": "29d23091e20dfca88201059bbe30de0787e17ba706d9fae6ec7bf342159a37ea",
+    "data/born_scaling/pilot_extra/pilot_extra_L18_beta2p0_mu1p0em8_chain2_uniform_A_receipt.toml": "336606c90e8cb949b81321f64563194b5ed80db3a3ce8dc41b33e207bbe29f17",
+    "data/born_scaling/pilot_extra/pilot_extra_L18_beta1p0_mu1p0em8_chain3_uniform_B_receipt.toml": "616df26aee8ff5f0e7e5c7a6e4de4db05e6e1e5db217129f73b46f75780e294f",
+    "data/born_scaling/pilot_extra/pilot_extra_L18_beta2p0_mu1p0em8_chain4_02_stripe_initial.csv": "67f28112f7882a90e35cd5c887fbea0952e04aec9fc2f058e5f30b77ac716667",
+    "data/born_scaling/pilot_extra/pilot_extra_L18_beta1p0_mu1p0em8_chain3_uniform_B_samples.csv": "a0f65887205f60bfcbf7721f92beffdba7884207fa68503c4eb0bed8a130a55f",
+    "data/born_scaling/pilot_extra/pilot_extra_L18_beta2p5_mu1p0em8_chain1_random_receipt.toml": "f127ad9d88805ca9a309490ef30b63fb59d742c0ef2b89979f3a44d28babcbe5",
+    "data/born_scaling/pilot_extra/pilot_extra_L18_beta2p0_mu1p0em8_chain1_random_samples.csv": "2b791730a017e8487068c7b3f449d794f7ae527628f1ad4407da2daea43545cd",
+    "data/born_scaling/pilot_extra/pilot_extra_L18_beta2p5_mu1p0em8_chain2_uniform_A_initial.csv": "4ba6d1701efa5623de453ddce107d35042a42806c020b5ca0c0c2c0987a4ef71",
+    "data/born_scaling/pilot_extra/pilot_extra_L18_beta2p5_mu1p0em8_chain3_uniform_B_initial.csv": "7f0ed6c7d8863d3d68897cc6dcf69c2c26359f09456d0010bec12dab671b686a",
+    "data/born_scaling/pilot_extra/pilot_extra_L18_beta1p0_mu1p0em8_chain3_uniform_B_initial.csv": "07e0e89e8f94674ca30bb007ea86f2654be38dfd9817df30bb9db22acf3fd920",
+    "data/born_scaling/pilot_extra/pilot_extra_L18_beta2p0_mu1p0em8_chain3_uniform_B_samples.csv": "3aa502794809c16179ed49603f4eb6ecd5498bad3a9b4caa79515adc0d87a527",
+    "data/born_scaling/pilot_extra/pilot_extra_L18_beta2p0_mu1p0em8_chain3_uniform_B_initial.csv": "296a7417010a7008002e3a92a0b2444a9dcf67b7ed8c3d52bd3f3501e7bee10b",
+    "data/born_scaling/pilot_extra/pilot_extra_L18_beta2p0_mu1p0em8_chain2_uniform_A_initial.csv": "32769649061cffe576a5cd99afe6bf9c801f8040165f45bd3d5b5dca10b61a51",
+    "data/born_scaling/pilot_extra/pilot_extra_L18_beta2p0_mu1p0em8_chain3_uniform_B_receipt.toml": "ab098c6220aabf1b109fdd1fc291ef839320ec54322b0969153c33b19c8ce133",
+    "data/born_scaling/pilot_extra/pilot_extra_L18_beta2p0_mu1p0em8_chain4_02_stripe_samples.csv": "5cbd42f00d7c1dac5c9e6be669e8dceaa491a3897f89249858ed84141134b17b",
+    "data/born_scaling/pilot_extra/pilot_extra_L18_beta1p0_mu1p0em8_chain4_02_stripe_initial.csv": "e0ecb9d23d1d1f7efc27267907a2f9301fde92dcc1ec34d70c71bf9fb97eb731",
+    "data/born_scaling/pilot_extra/pilot_extra_L18_beta1p0_mu1p0em8_chain1_random_initial.csv": "0709232c3ca5f9d41039d93bb11642082de56e56a6fd9ed1134bb71c1c1a3aff",
+    "data/born_scaling/pilot_extra/pilot_extra_L18_beta1p0_mu1p0em8_chain2_uniform_A_samples.csv": "aa860859ff6041c2e023f29ca8003197d26d119fc337081482ef8f90b63c2a65",
+    "data/born_scaling/pilot_extra/pilot_extra_L18_beta1p0_mu1p0em8_chain1_random_samples.csv": "575dafbbcc0f944f033c2c9c99990b63efa17b8aea94f8ddc484327a0aa50d71",
+    "data/born_scaling/pilot_extra/pilot_extra_L18_beta1p0_mu1p0em8_chain4_02_stripe_samples.csv": "32e934da960379c80b2fa5f0d73f9c88ee87f302ef6e9ca16887b77682c7cdf2",
+    "data/born_scaling/pilot_extra/pilot_extra_L18_beta2p5_mu1p0em8_chain2_uniform_A_samples.csv": "e9ad0fb11244a8b85e2de9b5342a8ad016ecc80b897a7507031e516087c176bc",
+    "data/born_scaling/pilot_extra/pilot_extra_L18_beta2p0_mu1p0em8_chain1_random_initial.csv": "2d3451325c283bfe79d4df71c62f934dc36866947361564563dfc5b834f7debb",
+    "data/born_scaling/pilot_extra/pilot_extra_L18_beta1p0_mu1p0em8_chain2_uniform_A_receipt.toml": "35567e03b5de2cd5d705ddd47d052f869622376cffb2f09f6e16b455688055b9",
+    "data/born_scaling/pilot_extra/pilot_extra_L18_beta1p0_mu1p0em8_chain2_uniform_A_initial.csv": "48911696470323256b1713e532abb992863d17f78682214f6d508eae92745b20",
+    "data/born_scaling/pilot_extra/pilot_extra_L18_beta1p0_mu1p0em8_chain4_02_stripe_receipt.toml": "3ce9ec40be763b3cfd9716989646f54c5bcb6620d47e920d3a8452f24754402b",
+    "data/born_scaling/pilot_extra/pilot_extra_L18_beta2p5_mu1p0em8_chain1_random_initial.csv": "97d0da27136edb1bbc4f00d4a992237a6e106809ed52cd458faf17c3c32c6832",
+    "data/born_scaling/pilot_extra/pilot_extra_L18_beta2p5_mu1p0em8_chain2_uniform_A_receipt.toml": "e446ebbbe34626abef587beda179a62692bd6a94191313d23e5d29ea23cebb1c",
+    "data/born_scaling/pilot_extra/pilot_extra_L18_beta1p0_mu1p0em8_chain1_random_receipt.toml": "5bd24fb14293fc948a5b535dccd0a8b9634a3b06f7152f7aaca9835301214c8f",
+    "data/born_scaling/pilot_extra/pilot_extra_L18_beta2p5_mu1p0em8_chain4_02_stripe_initial.csv": "9556cd00e483a101b6356f2672ab60ac410ebf60597a3535ba0c1e1499142c68",
+    "data/born_scaling/pilot_extra/pilot_extra_L18_beta2p5_mu1p0em8_chain1_random_samples.csv": "b0f35b590f5b134d3eb4c3b2456c828eef46af71345d15f861d26d0dc20b41d5",
+    "data/born_scaling/pilot_extra/pilot_extra_L18_beta2p0_mu1p0em8_chain4_02_stripe_receipt.toml": "362ef9753ac36f3a609b3bf9173535df6d1f4fdec5c20c59fc9c58f067144acd",
+    "data/born_scaling/pilot_extra/pilot_extra_L18_beta2p0_mu1p0em8_chain2_uniform_A_samples.csv": "64280b35b61a457d867d641040496f4a2e1198ca51633fa864374386dddb73df",
+    "data/born_scaling/pilot_extra/pilot_extra_plan.toml": "0f1811ccdcc34e34beb484a4364f6745c9c54847a9d2ccf2910b5f90d67fa863",
+    "data/born_scaling/pilot_extra/pilot_extra_L18_beta2p0_mu1p0em8_chain1_random_receipt.toml": "95cde42d5eedcbe874ef573ec3133253f64b85ccc248535680a02bc34c0669c3",
+    "data/born_scaling/pilot_extra/pilot_extra_manifest.toml": "1d2743e78b20ccb8018e7bd42c19e3ddb7ebf97c9b07a3a436b38d240772bb80",
+    "prepare_born_scaling_extra.jl": "90649f6456012d6974746e36b4f31faafd1cb939ae7872fbc6b16ddd7b6e6261",
+    "data/born_scaling/benchmark_fused_original_swap.toml": "e3675025158e2dd41dafa7d80c66c207b8b3b69353a9aa5e4d2c8ff9eefc4a42",
+    "data/born_scaling/benchmark_fused_original_swap.csv": "9754ca3500d47f1d4509c531c63987bb311b970004991396cd66d57c91321c8f",
+    "analysis/born_scaling/allocation_proposal.csv": "3ff9ef37c4a10988b4fbcd3f90a3c8eec3fc7dd4995a0725e43947d5f19a0be9",
+    "analysis/born_scaling/allocation_proposal_margin25.csv": "a0d35338ea86f7d1984b0f6fd80c085d6b4b8dd6085e789ac6c2c554c46a96de",
+    "analysis/born_scaling/allocation_design_evidence.csv": "ff02367956c9f332c4629a9a517410d3a7d235890a2c469bcd0a5baf48b44050",
+    "analysis/born_scaling/provenance/analyze_born_scaling_c99fb815aaa3038d2f991a4a4722d35396f058f70d218a8edb8edceef320c3f1.py": "c99fb815aaa3038d2f991a4a4722d35396f058f70d218a8edb8edceef320c3f1"
+  },
+  "analysis_source": {
+    "original_entrypoint": "analyze_born_scaling.py",
+    "executed_source_sha256": "c99fb815aaa3038d2f991a4a4722d35396f058f70d218a8edb8edceef320c3f1",
+    "source_snapshot": "analysis/born_scaling/provenance/analyze_born_scaling_c99fb815aaa3038d2f991a4a4722d35396f058f70d218a8edb8edceef320c3f1.py"
+  },
+  "production_plan_already_frozen": true,
+  "rule": "Per observable n*MCSE^2; nondecreasing L envelope then linear size interpolation; outside measured sizes proportional to L; beta interpolation takes maximum of neighboring anchors",
+  "below_smallest_beta": "beta=.25 uses beta=.5 as an allocation estimate, not a proven variance bound",
+  "parallel_timing_factor_at_L18": 1.6203298621042985,
+  "timing_note": "Planning range only; four workers, 1 BLAS thread each. Larger-size/cache contention and beta-dependent acceptance can change wall time. No new MC launched."
+}

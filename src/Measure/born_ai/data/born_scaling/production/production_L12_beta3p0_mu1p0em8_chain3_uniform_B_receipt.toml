@@ -1,0 +1,57 @@
+final_E = [105, 41, 258, 197, 110, 201, 55, 166, 162, 178, 16, 69, 101, 223, 176, 117, 268, 86, 229, 181, 95, 271, 149, 165, 160, 30, 63, 147, 66, 192, 287, 49, 173, 236, 48, 196, 84, 93, 262, 275, 59, 5, 128, 216, 138, 207, 80, 82, 211, 33, 75, 92, 12, 137, 193, 126, 202, 241, 267, 253, 167, 227, 156, 15, 118, 194, 245, 220, 232, 209, 213, 71, 244, 103, 91, 240, 42, 31, 6, 46, 212, 185, 129, 203, 22, 43, 249, 120, 272, 112, 90, 124, 8, 285, 119, 242, 127, 266, 190, 153, 73, 88, 97, 260, 23, 145, 180, 122, 214, 286, 34, 279, 198, 25, 205, 151, 148, 132, 231, 163, 264, 276, 164, 215, 247, 53, 36, 278, 274, 56, 136, 157, 52, 284, 277, 67, 14, 62, 17, 37, 169, 225, 222, 133]
+maximum_inverse_asymmetry = 1.3842509360983968e-9
+elapsed_seconds = 7.447000026702881
+blas_threads = 1
+initial_state_definition = "E is the suppressed set. Even L: both sublattices on odd x columns; odd L: alternate full/empty through L-1 and only A on final column. uniform_A/B mean E=A/B."
+started_at = "2026-10-27T15:53:54.065"
+acceptance = 0.13312144338348766
+accepted = 88333
+initial_E = [2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50, 52, 54, 56, 58, 60, 62, 64, 66, 68, 70, 72, 74, 76, 78, 80, 82, 84, 86, 88, 90, 92, 94, 96, 98, 100, 102, 104, 106, 108, 110, 112, 114, 116, 118, 120, 122, 124, 126, 128, 130, 132, 134, 136, 138, 140, 142, 144, 146, 148, 150, 152, 154, 156, 158, 160, 162, 164, 166, 168, 170, 172, 174, 176, 178, 180, 182, 184, 186, 188, 190, 192, 194, 196, 198, 200, 202, 204, 206, 208, 210, 212, 214, 216, 218, 220, 222, 224, 226, 228, 230, 232, 234, 236, 238, 240, 242, 244, 246, 248, 250, 252, 254, 256, 258, 260, 262, 264, 266, 268, 270, 272, 274, 276, 278, 280, 282, 284, 286, 288]
+julia_version = "1.12.1"
+status = "complete"
+refreshes = 460
+plan_sha256 = "3f3929b15eec47c5720b7f481240ab66f36e843a4a09761cf98f7658ae427909"
+records = 2304
+model_manifest_sha256 = "166830ba189efb767434d6940fcd6ddcb44f5b6c63ffd26ad203b2ce1f5a9992"
+proposed = 663552
+model_manifest = "data/born_scaling/production/models/state_L12_staggered_mu1.0e-8_model.toml"
+maximum_logweight_drift = 5.0309978405493894e-8
+maximum_inverse_drift = 4.752745303469063e-8
+completed_at = "2026-10-27T15:54:01.509"
+
+[source_sha256]
+"run_born_scaling.jl" = "3d9004c1d112a29ee1a7b440a945dc89516f7cabba8e279e0e5dd145e5a65c76"
+"fused_original_swap_kernel.jl" = "da7d40a574902763417225417d30abce265a15f9804dbfa47882b46f8ed20d70"
+"original_swap_scaling.jl" = "1af51fff868fbe63025323618506295ce5622179c1381de5ea64549e8c0d40cb"
+"prepare_born_scaling_production.jl" = "9bda7e2de8c87d7d050cff3be7c62444c289281174d87ad7e8cf6a1ecf6a80a4"
+"run_born_scaling_fused.jl" = "3734470f7c633617a2a2b43d7d581c94e9c29f11af6efb0f523cabf266499fe3"
+"../../public/Geometry.jl" = "079c2052642d46a7072656ccd738411faa57c9f07791f786a0a6872a5a5970ad"
+
+[job]
+chain = 3
+output_dir = "data/born_scaling/production"
+L = 12
+mu = 1.0e-8
+state = "staggered"
+run_id = "production_L12_beta3p0_mu1p0em8_chain3_uniform_B"
+sweeps = 2304
+refresh_every = 5
+start = "uniform_B"
+model_manifest_sha256 = "166830ba189efb767434d6940fcd6ddcb44f5b6c63ffd26ad203b2ce1f5a9992"
+stage = "production"
+grid = "main"
+analysis_burnin = 256
+beta = 3.0
+model_manifest = "data/born_scaling/production/models/state_L12_staggered_mu1.0e-8_model.toml"
+seed = 1612300003
+retained_sweeps = 2048
+measure_every = 1
+
+[model_files]
+"state_L12_staggered_mu1.0e-8_G.bin" = "7047fe4445cfcaf330205a8f8bfa08c1b4695bfbccb69e6bc2ed88a0590a6c51"
+"state_L12_staggered_mu1.0e-8_Q.bin" = "c151aabb06fe3d3404812b46fa9dc06b99d3dbd207966c5c8ecb4eee06e5257c"
+"state_L12_staggered_mu1.0e-8_energies.bin" = "cab0c3e38e47d9783911c579bad81577aaf7fe3de16bef7ff345bde0c4ba3cc7"
+
+[files]
+"data/born_scaling/production/production_L12_beta3p0_mu1p0em8_chain3_uniform_B_initial.csv" = "f5338e746654518570fdec25c429ae6eb57ee2eeb3ea1c6068f34b60ca1f151f"
+"data/born_scaling/production/production_L12_beta3p0_mu1p0em8_chain3_uniform_B_samples.csv" = "46815208cdfce548121d3621c8885d3a85a7989a392e7acafc63592a45b0f10f"

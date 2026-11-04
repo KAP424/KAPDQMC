@@ -1,0 +1,12 @@
+Q_sha256 = "2907b68467db033bbe94cb6bad8c9a2320a38973ace2fd903ef281efbd1d2a0d"
+L = 3
+mu = 1.0e-8
+julia_version = "1.12.1"
+orthogonality_error = 1.3175108335252244e-15
+format = "Float64 little-endian column-major"
+N = 18
+description = "OriginalSwapScaling.ground_model, same production state"
+model_source_sha256 = "1af51fff868fbe63025323618506295ce5622179c1381de5ea64549e8c0d40cb"
+export_script_sha256 = "16a77221cc5bd4d0685a6445dcc750879896dfc380cf8a0c58f2b527e0bdc901"
+Q_file = "Q_L3_mu1e-8.bin"
+n = 9

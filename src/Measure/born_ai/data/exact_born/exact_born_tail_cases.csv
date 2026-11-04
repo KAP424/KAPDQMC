@@ -1,0 +1,6 @@
+L,beta,observable,definition,threshold,configurations,probability_mass,exact_mean_contribution,iid_n,iid_expected_hits,iid_zero_hit_probability,iid_observed_hits,local_observed_hits,iid_observed_mean_contribution,local_observed_mean_contribution
+2,3.0,S_A,abs(observable)>0.01; post-hoc explanatory threshold,0.01,10,1.5359209695818655e-05,2.1292385792571353e-05,30000,0.4607762908745597,0.630791543805855,0,2,0.0,9.241962407465942e-05
+2,3.0,S_B,abs(observable)>0.01; post-hoc explanatory threshold,0.01,12,1.843105163498243e-05,1.5050433518480676e-05,30000,0.5529315490494728,0.575257999136742,0,2,0.0,5.4438686106277786e-05
+2,3.0,S_C,abs(observable)>0.01; post-hoc explanatory threshold,0.01,10,1.535920969581861e-05,2.1292385792571292e-05,30000,0.46077629087455835,0.6307915438058559,0,2,0.0,9.241962407465938e-05
+2,3.0,A_minus_B,abs(observable)>0.01; post-hoc explanatory threshold,0.01,12,1.843105163498243e-05,6.242027769823576e-06,30000,0.5529315490494728,0.575257999136742,0,2,0.0,3.798093796838163e-05
+2,3.0,D,abs(observable)>0.01; post-hoc explanatory threshold,0.01,12,1.843105163498243e-05,6.242027769823556e-06,30000,0.5529315490494728,0.575257999136742,0,2,0.0,3.798093796838161e-05

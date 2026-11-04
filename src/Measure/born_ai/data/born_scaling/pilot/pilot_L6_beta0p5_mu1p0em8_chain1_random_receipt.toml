@@ -1,0 +1,51 @@
+final_E = [40, 47, 18, 39, 20, 3, 22, 14, 32, 56, 60, 9, 38, 26, 55, 41, 36, 4, 49, 53, 46, 51, 45, 16, 7, 64, 34, 59, 68, 61, 37, 57, 66, 11, 29, 52]
+maximum_inverse_asymmetry = 8.881784197001252e-16
+elapsed_seconds = 0.7109999656677246
+blas_threads = 1
+initial_state_definition = "Even L: E contains both A/B on odd x columns. Odd L: alternate full/empty for x<=L-1, and place only A in the final column; this is half-filled but not pure 0/2."
+started_at = "2026-10-27T15:24:03.852"
+acceptance = 0.8831787109375
+accepted = 130230
+initial_E = [53, 4, 14, 11, 21, 19, 30, 66, 38, 55, 51, 48, 18, 39, 58, 67, 15, 63, 68, 1, 40, 43, 22, 17, 5, 20, 47, 41, 10, 33, 24, 16, 27, 8, 25, 72]
+julia_version = "1.12.1"
+status = "complete"
+refreshes = 409
+plan_sha256 = "19dde87d9227436fa49f3355692324c20369b50839dbf869ba38c3872365d296"
+records = 2048
+model_manifest_sha256 = "d958ed08ecc990148d0ffaef2dc256d0de42b78c464cfda60f79b96a61816770"
+proposed = 147456
+model_manifest = "data/born_scaling/pilot/models/state_L6_staggered_mu1.0e-8_model.toml"
+maximum_logweight_drift = 7.105427357601002e-14
+maximum_inverse_drift = 2.3231645011381993e-15
+completed_at = "2026-10-27T15:24:04.356"
+
+[source_sha256]
+"run_born_scaling.jl" = "3d9004c1d112a29ee1a7b440a945dc89516f7cabba8e279e0e5dd145e5a65c76"
+"original_swap_scaling.jl" = "1af51fff868fbe63025323618506295ce5622179c1381de5ea64549e8c0d40cb"
+"../../public/Geometry.jl" = "079c2052642d46a7072656ccd738411faa57c9f07791f786a0a6872a5a5970ad"
+
+[job]
+chain = 1
+output_dir = "data/born_scaling/pilot"
+L = 6
+mu = 1.0e-8
+state = "staggered"
+run_id = "pilot_L6_beta0p5_mu1p0em8_chain1_random"
+sweeps = 2048
+refresh_every = 5
+start = "random"
+model_manifest_sha256 = "d958ed08ecc990148d0ffaef2dc256d0de42b78c464cfda60f79b96a61816770"
+stage = "pilot"
+beta = 0.5
+model_manifest = "data/born_scaling/pilot/models/state_L6_staggered_mu1.0e-8_model.toml"
+seed = 1036050001
+measure_every = 1
+
+[model_files]
+"state_L6_staggered_mu1.0e-8_energies.bin" = "164533617d01eaba7967b8cd647f266aa728780d439848ccbed8a0c4f8d710d2"
+"state_L6_staggered_mu1.0e-8_G.bin" = "adc4a1a4cb1c3108e8377129a5535471a8d5e15e5512f297def5daab54806556"
+"state_L6_staggered_mu1.0e-8_Q.bin" = "b9ec7d35b36deb37bfd04222f08534b151ccfca6f2e566e6c23ea8b9067e44f7"
+
+[files]
+"data/born_scaling/pilot/pilot_L6_beta0p5_mu1p0em8_chain1_random_samples.csv" = "3df7765c5cc0c4abb32710e034fc36b5f440965a9e31d6c4e1ba5b781d5685d9"
+"data/born_scaling/pilot/pilot_L6_beta0p5_mu1p0em8_chain1_random_initial.csv" = "a9d90de39a121780ef165fb9e8f560295dc3d95e04986e1b7e64782527c7e92b"

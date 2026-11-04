@@ -1,0 +1,240 @@
+{
+  "partial_render": false,
+  "input_sha256": {
+    "calibration_points.csv": "d67c9cea7c69d9b1721ea267521f0de57082e166b073ccb56b1de03f28cc368d",
+    "calibration_fits.csv": "c043bf8da22cbbded368d2f514641b53b5a815df5f65eed407ab50202594049b",
+    "calibration_comparison.csv": "26c41d68b18fc2417d7ef723c1574d529da4c3f707c287b2b0919640a1eac508",
+    "calibration_order_diagnostics.csv": "c7487b693d183ddd471e31360b7414ac51473b2bef39c6711c23436b27bd32d0",
+    "calibration_late_diagnostics.csv": "77b88028b4a8d1775f6995b469aea0335ba5caf4fab71027640a2f50ff009852"
+  },
+  "files": [
+    {
+      "file": "scaling_uniform_A.png",
+      "sha256": "19de2d16d2132dab29e4df87bd23d48c9f1edc0ad3997a5d444b3fe5e89ed181"
+    },
+    {
+      "file": "scaling_uniform_A.pdf",
+      "sha256": "2c1c79a71ddf86ba9fc18cd2d2aa8a4f757d9e563249b2ee3c54b42c81df5e3d"
+    },
+    {
+      "file": "coefficients_uniform_A.png",
+      "sha256": "849e5341044ff2e47a2d4b017ce0120ccc186330f34379944bac2ba421885ad9"
+    },
+    {
+      "file": "coefficients_uniform_A.pdf",
+      "sha256": "4d455c117a5180721d96a190f7c2d34e02b3aa0dbfb5615fad495e089dd124f2"
+    },
+    {
+      "file": "scaling_uniform_B.png",
+      "sha256": "466a5a082a6055238f2e46f735e73c3842c719cdd3db3564188297fe7b35d2f0"
+    },
+    {
+      "file": "scaling_uniform_B.pdf",
+      "sha256": "fb30d1a99091654e2b4cbf1a250b3e3b75014aa67b3aa1c6f36c4c412eb2db13"
+    },
+    {
+      "file": "coefficients_uniform_B.png",
+      "sha256": "ebeb71c8db2ea13641cd16ca418945aa592f0b1a2465be76275cf6c6e58d2a28"
+    },
+    {
+      "file": "coefficients_uniform_B.pdf",
+      "sha256": "ecbc057ca3840fa0e94a58655d740226905f44dccc4721b69efdb1a84960c8f9"
+    },
+    {
+      "file": "scaling_one_B_2.png",
+      "sha256": "bc3a1e756afbab6e8fabcfa7f0a4a2af59b2d92df4586173cc0564eb27adcaa2"
+    },
+    {
+      "file": "scaling_one_B_2.pdf",
+      "sha256": "eb206a955804dff20a33e6b6190aebd3864c0786561f41222e0fe51df9227257"
+    },
+    {
+      "file": "coefficients_one_B_2.png",
+      "sha256": "8b65bf430a31f042520c3891c824d80906cf92663bdfa7695c48f2ea6e11d540"
+    },
+    {
+      "file": "coefficients_one_B_2.pdf",
+      "sha256": "05fe572ac6f0278193f90abd924a88e1b82f1ab41d9656af74d8eb58b4ccfeec"
+    },
+    {
+      "file": "scaling_one_B_3.png",
+      "sha256": "726f1242d7dfdff1c1528cdef110f446e2a2ed295ba6d9ff98b68f7b3ed2345d"
+    },
+    {
+      "file": "scaling_one_B_3.pdf",
+      "sha256": "7c6c70bef121624b8b42cd08e388696562f110162a9e3d58e7fded2a06d1583b"
+    },
+    {
+      "file": "coefficients_one_B_3.png",
+      "sha256": "aaeb7134cfaac90f6a28b27666e129b8316cac96102b9a6ff8782abeae5cebbd"
+    },
+    {
+      "file": "coefficients_one_B_3.pdf",
+      "sha256": "691fb3f3dd84498828a95319c1c34c7ad9a2bc5a6eefaad48e302bca14315054"
+    },
+    {
+      "file": "scaling_two_B_3.png",
+      "sha256": "6a99223f35c04a70b48da590e65c243d9e624a7ba06780def1e022470ff0417d"
+    },
+    {
+      "file": "scaling_two_B_3.pdf",
+      "sha256": "bf3cebeab512bf7378d0075fe96b58ff201a4a55f6625ff8c298dc49e4676046"
+    },
+    {
+      "file": "coefficients_two_B_3.png",
+      "sha256": "10e91272a148d368f8208b623f6226f29b2bdf3da78bff2d862d4d5a276036da"
+    },
+    {
+      "file": "coefficients_two_B_3.pdf",
+      "sha256": "72c3c56ba4343364bdbbe6e5c1e1b5fdd4fe97fd807e8064a911d0b2ac1c00e6"
+    },
+    {
+      "file": "scaling_diagonal_B_3.png",
+      "sha256": "20c20a5f7b821b021041865ab3a5eaf082dca0f041fbcc1b68efa9a86b7ed924"
+    },
+    {
+      "file": "scaling_diagonal_B_3.pdf",
+      "sha256": "96279a5efeaaae6e6748923411e678ac811a3d60c409383a4075bd114d0405bb"
+    },
+    {
+      "file": "coefficients_diagonal_B_3.png",
+      "sha256": "c03840751c45bb389e363e767f385599e19ed348d50cab1b966c84f004c973ed"
+    },
+    {
+      "file": "coefficients_diagonal_B_3.pdf",
+      "sha256": "8666cb305aef35643d56526947be70fe90ed8f192c22ab687aa7538a2a866f83"
+    },
+    {
+      "file": "scaling_special_matched_a.png",
+      "sha256": "94068b307496e281753e283af21d063b103a2c5151bf54f8691648d723f5fe2a"
+    },
+    {
+      "file": "scaling_special_matched_a.pdf",
+      "sha256": "91e0a84e5a1ea9f23a353dd9f1d4225fb7303dcc89aa2556a1888a0152e4e805"
+    },
+    {
+      "file": "coefficients_special_matched_a.png",
+      "sha256": "ea500b0e6cd4cabc8e734e41c6662b635d2a5af5e8225c97f672bb44dc90a30a"
+    },
+    {
+      "file": "coefficients_special_matched_a.pdf",
+      "sha256": "c7158f2da006e63b864ae1f9352167c32329598357483ae205ef8d91125644b0"
+    },
+    {
+      "file": "scaling_special_matched_b.png",
+      "sha256": "53ee9be266e4f49b0438bd22569a06027083a0f8205da57e2dd196782b8bf0a6"
+    },
+    {
+      "file": "scaling_special_matched_b.pdf",
+      "sha256": "578a17283675e029034e9166be31ab78e475c33d9002a62278eaa3c39e0bc80b"
+    },
+    {
+      "file": "coefficients_special_matched_b.png",
+      "sha256": "eaa91beb00b5bafa462e33cb4bd8193bf8b8e43a6079ba45db239e345ff73032"
+    },
+    {
+      "file": "coefficients_special_matched_b.pdf",
+      "sha256": "8706f26215fb2a7d1594a6ebeabfd270bc1f9c5aca6099009a12e7cd409b3144"
+    },
+    {
+      "file": "scaling_full_empty_cluster3.png",
+      "sha256": "34e3c5e84144482ebe302e26bdbcd2af2f79c877a8ee82396dc921778affe131"
+    },
+    {
+      "file": "scaling_full_empty_cluster3.pdf",
+      "sha256": "5fe92db02db8128a6824fee66d3def02e409d52681eac004bf2a59c46a703d6c"
+    },
+    {
+      "file": "coefficients_full_empty_cluster3.png",
+      "sha256": "8a33cab9a93ae2dfadcc028367d13404d20ec144a875f010cc5fa1f8a4e7c0ee"
+    },
+    {
+      "file": "coefficients_full_empty_cluster3.pdf",
+      "sha256": "44144efeee190d0457aae7c3d6c70c4e8c2acb84aa96784167efe7d28ac7329e"
+    },
+    {
+      "file": "scaling_random_half_3.png",
+      "sha256": "02e6a802b5569af606e2d0381e9f9ea2bb2f33844254c8dda8d196f39830bf18"
+    },
+    {
+      "file": "scaling_random_half_3.pdf",
+      "sha256": "35ccd410ec9b9e6906e4460dca08be4e5f8b57ddc20f95cd09506122fabfd83e"
+    },
+    {
+      "file": "coefficients_random_half_3.png",
+      "sha256": "f148a3413e5cbfacec86053065a19a0081d4dce31eef1c3a09e8e1ca759d8dc9"
+    },
+    {
+      "file": "coefficients_random_half_3.pdf",
+      "sha256": "5541cc0763570be42fa562fffd1fe9ef9da29f826c300f13fb230f4763415b81"
+    },
+    {
+      "file": "scaling_general_matched_a.png",
+      "sha256": "8da0f102a5b7995112c95b57aa2c2c38c9438670c8f07e1db2c4ef41adf68c4d"
+    },
+    {
+      "file": "scaling_general_matched_a.pdf",
+      "sha256": "86b1dc47f801fe001e74702dc55e2b22c93ed865dff18f5119781c6d5bad25fc"
+    },
+    {
+      "file": "coefficients_general_matched_a.png",
+      "sha256": "1bef8dc2e4cba850d2a9d6e471a8fb8277deb1ac1e3ade296e49e4e4c804947d"
+    },
+    {
+      "file": "coefficients_general_matched_a.pdf",
+      "sha256": "941b7f4226c7e22f040f84c796cf13132be1416cb8c8bbcfd20b459c75aaf987"
+    },
+    {
+      "file": "scaling_general_matched_b.png",
+      "sha256": "123afa897671c986d802ee7b7281e5a112abba9ca149ea986e549575795a27c3"
+    },
+    {
+      "file": "scaling_general_matched_b.pdf",
+      "sha256": "9887f6b578ff750134fd7d5408a86785613fe2d12714470fb27e6776f0c5c958"
+    },
+    {
+      "file": "coefficients_general_matched_b.png",
+      "sha256": "bd6dc7b38aa7244d6741c542f8f212bf869974124095b6a455f147f2cabd4d8c"
+    },
+    {
+      "file": "coefficients_general_matched_b.pdf",
+      "sha256": "d6caa623a91af1ee277df4b46acace6d4c2dbb75ce91a0ad7374de7264322acb"
+    },
+    {
+      "file": "coefficient_overview.png",
+      "sha256": "2f01f12d1933cc2a9e39005775a2f909d507ed3044bf05409e2928ce168f40f9"
+    },
+    {
+      "file": "coefficient_overview.pdf",
+      "sha256": "c11671e514be21d2b2d42a0bcc3a9d43e870dea1dc38958ede833c96d67637a2"
+    },
+    {
+      "file": "beta0_all_patterns.png",
+      "sha256": "2e39ee1b11ce69f39db67ffca8fe8da8ecfa11508311eb2d187d2f0ec93b4209"
+    },
+    {
+      "file": "beta0_all_patterns.pdf",
+      "sha256": "3720aba407618853bd619b7dc1587fa068b8badc74ed9405c211fd9c334a4de0"
+    },
+    {
+      "file": "hierarchy_coefficient_overview.png",
+      "sha256": "d4474aabf326378d87c336938deb044f7885de25699e7eab8f522abf3260ee52"
+    },
+    {
+      "file": "hierarchy_coefficient_overview.pdf",
+      "sha256": "91812d15d90ca4d5bfb2cacac5f0d812e718fd110fdf7c13df858ff7fa3c10d1"
+    },
+    {
+      "file": "late_beta0_diagnostics.png",
+      "sha256": "87e37a3bab94bcef35ca3d2ffdf6874b72183ecca4eab7ed124f27a956ad2e2c"
+    },
+    {
+      "file": "late_beta0_diagnostics.pdf",
+      "sha256": "5cab24ee05a49d33c2541f71eb1f678e9ed9a791fbfd2fc6e78414542ad86f90"
+    }
+  ],
+  "script_sha256": "32516ad6bdd77c4e2cd987cdf9208eb8a4ece45f7657014ee59345de2a5af9fb",
+  "figures": 28,
+  "scaling_coordinates": "x=ln(L) or ln(theta), linear axes; y=D",
+  "note": "Plots evaluate recorded fit coefficients at physical L/theta; no refitting or target selection"
+}

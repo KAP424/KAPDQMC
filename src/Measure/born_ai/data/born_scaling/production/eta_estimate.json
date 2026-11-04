@@ -1,0 +1,14 @@
+{
+  "created_at": "2026-10-27T10:28:38.385974+00:00",
+  "method": "most recent completed L24 beta=1.5 four-chain median seconds/sweep divided by L21 beta=1.5 median, applied to completed L21 remaining beta rates; subtract observed partial rows",
+  "L24_beta15_seconds_per_sweep": 0.21965192945561174,
+  "L24_beta15_elapsed_minutes": [
+    30.847233335177105,
+    31.015516666571298,
+    30.85181666612625,
+    31.002166668574016
+  ],
+  "ratio_to_L21_beta15": 2.888939832683915,
+  "remaining_minutes": 46.06261340003713,
+  "case_maximum_inverse_drift": 4.464536118690903e-12
+}

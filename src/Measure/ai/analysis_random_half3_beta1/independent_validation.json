@@ -1,0 +1,86 @@
+{
+  "status": "PASS",
+  "new_rows": 94,
+  "distinct_new_keys": 94,
+  "coverage_checked": 94,
+  "maxima": {
+    "D_arithmetic": 0.0,
+    "delta_arithmetic": 0.0,
+    "ground_excess": 2.1827872842550278e-11,
+    "ground_residual": 8.121658010592658e-13,
+    "projector_error": 2.5631663968877888e-15,
+    "reconstruction_error": 5.843308821896632e-16,
+    "rectangle_imag_error": 1.827776425121131e-15,
+    "rectangle_real_error_bound": 1.3811551959232689e-24
+  },
+  "runs": {
+    "20261018T132539929": {
+      "manifest": "random_half3_beta1_run_20261018T132539929.toml",
+      "manifest_sha256": "05d695cae844766cfd8526de51f4762deb43dded19d004c1f8123364f30be4fb",
+      "rows": 48
+    },
+    "20261018T132654180": {
+      "manifest": "random_half3_beta1_run_20261018T132654180.toml",
+      "manifest_sha256": "2bce3f14beee297926bd2c7ccfe307609c71570d2855befc60fd5f0fb2866a67",
+      "rows": 10
+    },
+    "20261018T132951806": {
+      "manifest": "random_half3_beta1_run_20261018T132951806.toml",
+      "manifest_sha256": "c503cb7699a72f21ac2f718421d055b605f13c227f2334d345dc3582697c4266",
+      "rows": 28
+    },
+    "20261018T135304461": {
+      "manifest": "random_half3_beta1_run_20261018T135304461.toml",
+      "manifest_sha256": "a1e3871544745e157dc76e02fbc809662f8eee6586222ba8e95757ded4a9c618",
+      "rows": 6
+    },
+    "20261018T135650978": {
+      "manifest": "random_half3_beta1_run_20261018T135650978.toml",
+      "manifest_sha256": "4a6479acd609dfde675079ddfe114e9d1f59e9d397475b7028ac3b45a8603a33",
+      "rows": 2
+    }
+  },
+  "locked_sources_unchanged": {
+    "data/observations.csv": "b6e6403a7cf5a228b77f37c6f167bff7da93cc800f768de662a0ae9be34666dc",
+    "data/extraction_observations.csv": "aabd6735c4e8ab7d5f8ea74181a4b24b7b32508ac5ed18e9a0919ea752b93b37",
+    "data/equilibrium_extended.csv": "8d26ae7ebb69e7b378b62e40329f749f266288634a944e0cce36c73fca7ecb23",
+    "data/equilibrium_arrangements.csv": "f6be3cd1d0d03622d278ad793ad56556240e851014417053cd4889d4d61b073b",
+    "fermion_experiment.jl": "9efd053e7d469082ad8cead86ec256dade17e40279902842013c9a8dc9864fab"
+  },
+  "historical_artifacts": [
+    {
+      "path": "analysis_extraction/support_summary.csv",
+      "historical_sha256": "fb4f6ba5ab403098383002a542a6c49ea717fecc0ce07eecee3d9b2b0884a518",
+      "current_sha256": null,
+      "currently_present": false,
+      "matches_historical_hash": null,
+      "required_for_validation": false
+    }
+  ],
+  "sources": [
+    {
+      "path": "data\\random_half3_beta1_observations.csv",
+      "sha256": "89eb5964c39ff255318bd0085989e24cbc24e5d926aa3c610106e2cd8a418e47"
+    },
+    {
+      "path": "data\\random_half3_beta1_equilibrium.csv",
+      "sha256": "2d420b431567711b10f3a2da003c09e7e45aef55812c80eab946c9329c6e1826"
+    }
+  ],
+  "solver_audit": {
+    "path": "data\\random_half3_beta1_solver_audit.csv",
+    "sha256": "0172b9e90c0bb6220b32f1837386fdcf20cc88ebbebb3a80329158e61601eddf",
+    "rows": 48,
+    "maxima": {
+      "normalized_projector_difference": 6.630406777672837e-15,
+      "max_block_projector_difference": 1.0294800790980165e-13,
+      "energy_difference": 9.094947017729282e-13,
+      "premeasurement_limit_excess": 1.4551915228366852e-11,
+      "premeasurement_limit_residual": 8.121658010592658e-13,
+      "reconstruction_error": 5.843308821896632e-16,
+      "orthogonality_error": 2.5000812797675073e-15
+    }
+  },
+  "script_sha256": "08ece515ff47139eea1be777ed524124cb4e3173f4c37471c1d3335db7ab8fb7",
+  "note": "No fitted coefficient or equilibrium agreement is used by these validation checks."
+}

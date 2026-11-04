@@ -1,0 +1,25 @@
+L=6 p=1/3 D=0.28852827641414 eig/chol=4.88e-15 boundary=0.06s entropy=0.00s
+L=6 p=1/2 D=0.32130652603708 eig/chol=7.99e-15 boundary=0.00s entropy=0.00s
+finished L=6 total 1.06s
+L=12 p=1/3 D=0.45709925584378 eig/chol=2.66e-14 boundary=0.01s entropy=0.00s
+L=12 p=1/2 D=0.49259284221452 eig/chol=5.15e-14 boundary=0.00s entropy=0.01s
+finished L=12 total 0.04s
+L=18 p=1/3 D=0.54090900629382 eig/chol=4.26e-14 boundary=0.02s entropy=0.01s
+L=18 p=1/2 D=0.57693409477555 eig/chol=1.07e-14 boundary=0.04s entropy=0.03s
+finished L=18 total 0.21s
+L=24 p=1/3 D=0.59593289427913 eig/chol=1.14e-13 boundary=0.08s entropy=0.04s
+L=24 p=1/2 D=0.63226726839179 eig/chol=1.74e-13 boundary=0.08s entropy=0.11s
+finished L=24 total 0.77s
+L=30 p=1/3 D=0.63675401120425 eig/chol=2.63e-13 boundary=0.16s entropy=0.13s
+L=30 p=1/2 D=0.67329984085517 eig/chol=3.84e-13 boundary=0.12s entropy=0.38s
+finished L=30 total 2.45s
+L=36 p=1/3 D=0.66918933678367 eig/chol=4.51e-13 boundary=0.32s entropy=0.33s
+L=36 p=1/2 D=0.70586039743251 eig/chol=1.08e-12 boundary=0.21s entropy=0.97s
+finished L=36 total 6.72s
+L=42 p=1/3 D=0.69607498048485 eig/chol=9.73e-13 boundary=0.44s entropy=0.82s
+L=42 p=1/2 D=0.73283124324872 eig/chol=1.98e-12 boundary=0.42s entropy=2.49s
+finished L=42 total 16.33s
+L=48 p=1/3 D=0.71902032591455 eig/chol=1.1e-12 boundary=0.64s entropy=1.76s
+L=48 p=1/2 D=0.75584271610948 eig/chol=1.53e-12 boundary=0.60s entropy=5.48s
+finished L=48 total 35.18s
+PASS: D:\JuliaDQMC\code\KAPDQMC\src\Measure\born_ai\data\born_scaling\boundary_check\boundary_audit.json

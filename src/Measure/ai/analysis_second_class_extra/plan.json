@@ -1,0 +1,286 @@
+{
+  "recorded_utc": "2026-10-21T11:36:16.511131+00:00",
+  "status": "Prespecified and frozen before entropy computation; new class-2 geometries selected by rank without entropy data",
+  "patterns": [
+    "pure02_staircase4",
+    "pure02_notched_stripe4",
+    "pure02_alternating_x",
+    "pure02_alternating_checker"
+  ],
+  "pattern_metadata": {
+    "pure02_staircase4": {
+      "m": 4,
+      "occupied_bits": "11111111111111001100000000000000",
+      "family": "general",
+      "occupancy_class": 2,
+      "ground_reachable": true,
+      "limit_state": "ground_state",
+      "projection_method": "strict_spectral_support",
+      "limit_fit": {
+        "Lmin": 24,
+        "Lmax": 144,
+        "lower_cuts": [
+          24,
+          36,
+          48
+        ]
+      }
+    },
+    "pure02_notched_stripe4": {
+      "m": 4,
+      "occupied_bits": "00110000111111001111000011110000",
+      "family": "general",
+      "occupancy_class": 2,
+      "ground_reachable": true,
+      "limit_state": "ground_state",
+      "projection_method": "strict_spectral_support",
+      "limit_fit": {
+        "Lmin": 24,
+        "Lmax": 144,
+        "lower_cuts": [
+          24,
+          36,
+          48
+        ]
+      }
+    },
+    "pure02_alternating_x": {
+      "m": 2,
+      "occupied_bits": "11001100",
+      "family": "general",
+      "occupancy_class": 2,
+      "ground_reachable": false,
+      "limit_state": "accessible_excited_state",
+      "projection_method": "strict_spectral_support",
+      "limit_fit": {
+        "Lmin": 18,
+        "Lmax": 144,
+        "lower_cuts": [
+          18,
+          36,
+          54
+        ]
+      }
+    },
+    "pure02_alternating_checker": {
+      "m": 2,
+      "occupied_bits": "11000011",
+      "family": "general",
+      "occupancy_class": 2,
+      "ground_reachable": false,
+      "limit_state": "accessible_excited_state",
+      "projection_method": "strict_spectral_support",
+      "limit_fit": {
+        "Lmin": 18,
+        "Lmax": 144,
+        "lower_cuts": [
+          18,
+          36,
+          54
+        ]
+      }
+    }
+  },
+  "betas": [
+    0,
+    0.5,
+    1,
+    1.5,
+    2
+  ],
+  "inputs": [
+    "data/second_class_extra_observations.csv"
+  ],
+  "primary": {
+    "L": 180,
+    "comparison_L": 144,
+    "window": [
+      4,
+      7
+    ],
+    "model": "log_inv1_inv2"
+  },
+  "windows": [
+    [
+      4,
+      7
+    ],
+    [
+      4.5,
+      7
+    ],
+    [
+      4,
+      6.5
+    ],
+    [
+      5,
+      7
+    ],
+    [
+      5,
+      8
+    ]
+  ],
+  "theta_min_screen": 4,
+  "theta_over_L_max_screen": 0.05,
+  "limit_primary": {
+    "model": "log_inv1"
+  },
+  "limit_sensitivity_models": [
+    "log_inv1",
+    "log_inv1_inv2"
+  ],
+  "time_sensitivity_models": [
+    "log_inv1",
+    "log_inv1_inv2",
+    "log_inv1_inv2_inv3"
+  ],
+  "diagnostic_thresholds": {
+    "size_drift": 0.02,
+    "D_difference_to_log_span": 0.01,
+    "model_drift": 0.05,
+    "window_drift": 0.05,
+    "all_three_time_models_required": true,
+    "at_least_two_time_windows_required": true,
+    "no_sign_change": true,
+    "third_size_gate": "Only if a third size exists; absent here, so local two-size check only"
+  },
+  "required_limit_grids": [
+    {
+      "patterns": [
+        "pure02_staircase4",
+        "pure02_notched_stripe4"
+      ],
+      "L": [
+        24,
+        36,
+        48,
+        60,
+        72,
+        84,
+        96,
+        108,
+        120,
+        132,
+        144
+      ],
+      "theta": [
+        "Inf"
+      ],
+      "beta": [
+        0,
+        0.5,
+        1,
+        1.5,
+        2
+      ]
+    },
+    {
+      "patterns": [
+        "pure02_alternating_x",
+        "pure02_alternating_checker"
+      ],
+      "L": [
+        18,
+        24,
+        30,
+        36,
+        42,
+        48,
+        54,
+        60,
+        66,
+        72,
+        78,
+        84,
+        90,
+        108,
+        126,
+        144
+      ],
+      "theta": [
+        "Inf"
+      ],
+      "beta": [
+        0,
+        0.5,
+        1,
+        1.5,
+        2
+      ]
+    }
+  ],
+  "required_finite_grids": [
+    {
+      "patterns": [
+        "pure02_staircase4",
+        "pure02_notched_stripe4",
+        "pure02_alternating_x",
+        "pure02_alternating_checker"
+      ],
+      "L": [
+        144,
+        180
+      ],
+      "theta": [
+        4.0,
+        4.5,
+        5.0,
+        5.5,
+        6.0,
+        6.5,
+        7.0
+      ],
+      "beta": [
+        0,
+        0.5,
+        1,
+        1.5,
+        2
+      ]
+    },
+    {
+      "patterns": [
+        "pure02_staircase4",
+        "pure02_notched_stripe4",
+        "pure02_alternating_x",
+        "pure02_alternating_checker"
+      ],
+      "L": [
+        180
+      ],
+      "theta": [
+        7.5,
+        8
+      ],
+      "beta": [
+        0,
+        0.5,
+        1,
+        1.5,
+        2
+      ]
+    }
+  ],
+  "expected_observation_count": 590,
+  "validation_sources": [
+    "data/second_class_extra_reachability.json"
+  ],
+  "run_manifest_glob": "data/second_class_extra_run_*.toml",
+  "projection_protocol": "Exact spectral-support finite theta or accessible Inf; blocked excited state never ground. CSV retains existing 39-column BP layout; projection method is bound by runner code SHA and run-manifest protocol, not a CSV column.",
+  "frozen_code_sha256": {
+    "second_class_extra_patterns.jl": "6dcc2e5d7bd44e093e256d05ae07a20c8d30778fe54164b89e914b1f580175b8",
+    "second_class_extra_experiments.jl": "5710d7858e9a6a73fdd2ada903937c79d826778c3fa483e69477723c77ea1147",
+    "fermion_experiment.jl": "9efd053e7d469082ad8cead86ec256dade17e40279902842013c9a8dc9864fab",
+    "analyze_occupancy_classes.py": "f997cd25ad9d7cf757b8a1c076a4a56faa70416f2606f48249ed241f192deb5e",
+    "analyze_uniformA_dense.py": "774c1c39bd7618e8869d5bf8b72e3f52b4b99c9ce1db14e2673a11a377c1aae4",
+    "analyze_beta_patterns.py": "b6383180df431286f4e9a8692c6e9a35203a02553f951462e79bf0e808b9fb6f"
+  },
+  "interpretation": {
+    "blocked_endpoint": "Accessible-limit entropy of the exact initial spectral support, not equilibrium ground-state entropy",
+    "blocked_parameter": "c_fit describes a finite-window log model only; never a ground-state corner coefficient",
+    "bands": "Model/window sensitivity ranges, not statistical confidence intervals",
+    "selection": "No entropy-based selection or target matching; original fit windows and thresholds retained"
+  }
+}

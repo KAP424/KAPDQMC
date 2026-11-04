@@ -1,0 +1,76 @@
+{
+  "status": "PASS",
+  "stage": "final",
+  "generated_utc": "2026-10-19T07:13:28.959148+00:00",
+  "precision_digits": 80,
+  "primary_summary_sha256": "2175ca41ab6a6e2d59a7dc28dde9b1ef8cfe5b0bd52ee6e39aead5cd774bfa24",
+  "primary_script_sha256": "774c1c39bd7618e8869d5bf8b72e3f52b4b99c9ce1db14e2673a11a377c1aae4",
+  "plan_sha256": "52c097b3ceff521fac6ea5f50f34d71d41598288cbc516db9daa5f8e4059c5d0",
+  "audit_script_sha256": "7e98fa6689cb331cad63da58688aa94925fabc9faa9db7a74450c1a4f4a4084c",
+  "source_receipts": [
+    {
+      "path": "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\ai\\data\\ground_observations_baseline.csv",
+      "source_sha256": "8ba744bfef3730840ae3f143bffebc44dd27c8286644dfaf3f24c4604e3a5033",
+      "snapshot_sha256": "8ba744bfef3730840ae3f143bffebc44dd27c8286644dfaf3f24c4604e3a5033",
+      "rows": 3201
+    },
+    {
+      "path": "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\ai\\data\\ref_calibration_observations.csv",
+      "source_sha256": "a10427b188eb38ef7d98064a31766ba471f4732432c4d682f197afde72306a43",
+      "snapshot_sha256": "a10427b188eb38ef7d98064a31766ba471f4732432c4d682f197afde72306a43",
+      "rows": 873
+    },
+    {
+      "path": "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\ai\\data\\ref_calibration_equilibrium.csv",
+      "source_sha256": "3c2e1ad4f4f2e617972ce37d7be14a303bf41babd054cdb19646e4aea4aa115f",
+      "snapshot_sha256": "3c2e1ad4f4f2e617972ce37d7be14a303bf41babd054cdb19646e4aea4aa115f",
+      "rows": 36
+    },
+    {
+      "path": "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\ai\\data\\ref_calibration_late.csv",
+      "source_sha256": "bacd00aa7784eb08fe808341ee46c66c0c9e5ee2120da9f142dd96cc921ed77d",
+      "snapshot_sha256": "bacd00aa7784eb08fe808341ee46c66c0c9e5ee2120da9f142dd96cc921ed77d",
+      "rows": 115
+    },
+    {
+      "path": "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\ai\\data\\uniformA_dense_benchmark.csv",
+      "missing": true
+    },
+    {
+      "path": "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\ai\\data\\uniformA_dense_observations.csv",
+      "source_sha256": "cdf1860c2b0dd5c38f06821526308e9948d72fc9c6a0a330705710b372fbe224",
+      "snapshot_sha256": "cdf1860c2b0dd5c38f06821526308e9948d72fc9c6a0a330705710b372fbe224",
+      "rows": 698
+    },
+    {
+      "path": "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\ai\\data\\uniformA_dense_equilibrium.csv",
+      "missing": true
+    }
+  ],
+  "fit_table_sha256": {
+    "equilibrium_fits.csv": "297f656a9779d106912a7301513e1e9783edae448f6014feb26782f2d1bb57bd",
+    "time_individual_fits.csv": "ced0995e9303849ab622347e2a92b2da0fec9e662e81fe0d9e1ba70613b0893f",
+    "time_pair_fits.csv": "3c63a7ab39623cf9b41d9a742deeff3d71a6ae0b09940658e02e81bb963dbebe",
+    "primary_coefficients.csv": "d70bf9b5fb50a494414fc1b3a1b25b82f2b0f0a83751d123e69e16189e6a52c2",
+    "time_sensitivity.csv": "55cf404405d473076984d301f82280278f5032761cddbb64a77dbbff1441db0d"
+  },
+  "coverage": {
+    "expected": 698,
+    "missing": 0,
+    "merged": 1192
+  },
+  "fit_count": 2016,
+  "maxima": {
+    "c": "8.978336282381156526743538900E-13",
+    "parameter": "8.864059731841649946583805824E-11",
+    "residual": "1.304125345216180180086412845E-15",
+    "metric": "1.4360249075626037319296122846591918481115351335779930489847054887056119E-7"
+  },
+  "errors": [],
+  "diagnostics": {
+    "primary_rows": 21,
+    "sensitivity_rows": 444,
+    "maximum_numeric_error": "4.552233867848612962E-12"
+  },
+  "scope": "Independent raw-source merge, fit coverage, 80-digit unweighted least squares, common grids, residuals and time size diagnostics. No simulation rerun; no claim that finite-window fits are asymptotic coefficients."
+}

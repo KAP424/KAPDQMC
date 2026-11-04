@@ -1,0 +1,79 @@
+{
+  "created_utc": "2026-10-19T01:52:59.350928+00:00",
+  "purpose": "Retained raw control entropy tables, not scaling-coefficient classifications.",
+  "tables": [
+    {
+      "original_path": "analysis_all_ground_scaling/inventory_controls_values.csv",
+      "current_path": "data/ground_controls/inventory_controls_values.csv",
+      "sha256": "afad13ef5fd5fd6a6618a2fc2e77ad03df579b8b9e2b87584efb0095b66d188d",
+      "bytes": 150131,
+      "byte_identical": true,
+      "rows": 536
+    },
+    {
+      "original_path": "analysis_all_ground_scaling/inventory_screening_values.csv",
+      "current_path": "data/ground_controls/inventory_screening_values.csv",
+      "sha256": "8c1c84eac93f753aafcb85f82b255ea78428fb50801bb080e25468b9fa788f9b",
+      "bytes": 37272,
+      "byte_identical": true,
+      "rows": 136
+    },
+    {
+      "original_path": "analysis_all_ground_scaling/inventory_fixed_measurement_values.csv",
+      "current_path": "data/ground_controls/inventory_fixed_measurement_values.csv",
+      "sha256": "51591a6f750f5b3270c0db3105565e28abeeffbd4c752dd9a2eba2ad7100559b",
+      "bytes": 10012,
+      "byte_identical": true,
+      "rows": 30
+    }
+  ],
+  "source_sha256": {
+    "arrangement_controls.csv": "c95484984801512b71d15dc1705788e0e71dcbc26d30a296e87c67d3270ec9bf",
+    "arrangement_covariance.csv": "8c2de6a526cf03c09d4fd7da7235ef28ea2ca376f2688d0093fd0f7c0e149ce1",
+    "arrangement_phase_averages.csv": "b48e1da1385fee9e87c668236dd96a47e56d340d28c625ac8d41f05a3678d003",
+    "arrangement_screening.csv": "f6697395dfd39d92fb75f1cf6d8574b9bab6261ab33d13e890d714975ef1ca11",
+    "arrangement_selection.csv": "e2a77d15a4d0602d48abcdefee56b6fd02c16c4f5d4ca67553e96ca5b554b007",
+    "arrangement_validation.csv": "20adc9b0c8892cdbe0cd034ff33ba3f0e9716f636488b172890d2a9e6ef7c9e0",
+    "configuration_census.csv": "5cba394c233fbb9ac398012841db514ac93795bbc5bcd7baf2abecf8a549424d",
+    "configuration_census_benchmark.csv": "e740997d78cf74901c072eb98e6cbdf907500fcd4e52b89ff9cb7e645ebf4c83",
+    "configuration_census_overview.csv": "7a2473ddfe840543045833c934a6885729ff75aa79484beeccbab49bed087391",
+    "configuration_census_sizes.csv": "94da668fa448216336e2201b71d3ed47cb261838ed083934d1514b878cb5fbb6",
+    "configuration_census_sizes_overview.csv": "75629e7717778c0afee37b7fd51b75b0bdd01d4d5f958a4658be9cd5f9238ebd",
+    "configuration_census_sizes_validation.csv": "d138afb32e14688a771154bb72f32a2946e165d0d8f487ecd43ca52658ebc42a",
+    "configuration_census_summary.csv": "c4cd69ac079ab1c1d16c17e73d4455da95bab07d5058703fc17bad034f77f5bc",
+    "configuration_census_validation.csv": "d32cba0083c56d927bcbdc9b9643f7b6d45556ab68b10ca4a9058ede318fb462",
+    "convergence.csv": "152475154951ef8ddcfc66fc76b08c407122e5bd7fb745ccdb20b4094792f420",
+    "equilibrium_arrangements.csv": "f6be3cd1d0d03622d278ad793ad56556240e851014417053cd4889d4d61b073b",
+    "equilibrium_extended.csv": "8d26ae7ebb69e7b378b62e40329f749f266288634a944e0cce36c73fca7ecb23",
+    "extended_observations.csv": "e5f9eb9f4340c04b8b580737d6f0650d38c1eda2547691164a0426329ccb2d8d",
+    "extraction_observations.csv": "aabd6735c4e8ab7d5f8ea74181a4b24b7b32508ac5ed18e9a0919ea752b93b37",
+    "extraction_smoke_observations.csv": "975dae6395869f17f04313907a852830a969ebe08e3fa8d33d042e0e9927955d",
+    "fixed_measurement_controls.csv": "517e6f6044addf6fa682c0f978ccef6ca508e8c277ba549903d4aee025c73105",
+    "late_time_observations.csv": "6a5685a19ce1fd686771e9862a98f540bc09f37b7bd1eef3e5ac732ac4d241b7",
+    "numerical_sensitivity.csv": "665925bc30834169fc420ee4aab3a558a46727339b7edda800ab72ae4cf315fe",
+    "observations.csv": "b6e6403a7cf5a228b77f37c6f167bff7da93cc800f768de662a0ae9be34666dc",
+    "obstruction_exact_excess.csv": "a0d5b5b383a52d72f2d912ecc5caf4d9ce0251c14087d585ea5bbd779bad9a96",
+    "obstruction_gamma_masks.csv": "8507ce3a7f086b07b129ffecd9c54df903070d11ac52099ce9e958310f6d4c65",
+    "obstruction_gamma_sizes.csv": "1a6b7f58400f494d1eb2124b28a09c89e083f2d97c0979abd13fddfcc2165640",
+    "obstruction_witness_checks.csv": "d6985f8522a2d710932ba203f8705428f84ebd83ff85a68e3ad74aa4055260d7",
+    "patterns.csv": "f21b49dcf11ab4c4a708fe0e8b8de6c3d320d0d321146dd46fa8b47d92d05f1d",
+    "random_half3_beta1_equilibrium.csv": "2d420b431567711b10f3a2da003c09e7e45aef55812c80eab946c9329c6e1826",
+    "random_half3_beta1_observations.csv": "89eb5964c39ff255318bd0085989e24cbc24e5d926aa3c610106e2cd8a418e47",
+    "random_half3_beta1_solver_audit.csv": "0172b9e90c0bb6220b32f1837386fdcf20cc88ebbebb3a80329158e61601eddf",
+    "real_entropy_benchmark.csv": "8475d41972522a5e30817587525dc3c5aea2d5bbb6a20142a51042dbb32649ad",
+    "real_entropy_validation.csv": "f0f86f611adc1fde79d96369b0f26b66d45a709b95d04f3a78f4fb0fa2ea3741",
+    "state_counterexamples.csv": "caad1630429bf6580b7cf932f2460dfc16f571bf5b08a2e7fdff722ec3a18f52",
+    "strong_measurement_controls.csv": "13c2e45d1e7d7657bf62b9bf0e417d772baeab9e912cc3cf579c26f4768cf606",
+    "strong_measurement_previous_pairs.csv": "45127a60649cdc3b6694de833fb2b3fc7c0cabfc8a540a22206fc716b74ba301",
+    "uniform_A_measurement_kernel.csv": "21ea1e1e76f5c582a1af426f7a89a5476ad52bbc63f75b28113ce60c4216b7e5"
+  },
+  "independent_control_checks": {
+    "extra_mask_rows": 536,
+    "extra_actual_masks": 67,
+    "phase_average_rows": 136,
+    "phase_average_orbits": 68,
+    "fixed_target_ground_rows": 30
+  },
+  "original_inventory_receipt_sha256": "de5cbb7e6b45f8e614a4c7cffdadbd44500e061173f8c550dfdfb474b5bcd280",
+  "original_control_audit_receipt_sha256": "79559043b43660bd21b1594a90836903d143e844f75c49df0f520983fe6bd130"
+}

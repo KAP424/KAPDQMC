@@ -1,0 +1,60 @@
+{
+  "status": "complete",
+  "started_utc": "2026-10-21T07:39:21.8937314Z",
+  "backend": "openblas",
+  "processor_affinity": 4095,
+  "stages": [
+    {
+      "name": "equilibrium_m3",
+      "status": "complete",
+      "started_utc": "2026-10-21T07:39:21.9325373Z",
+      "log": "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\ai\\data\\irregular_followup_equilibrium_m3_run.log",
+      "arguments": [
+        "--startup-file=no",
+        "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\ai\\irregular_followup_experiments.jl",
+        "--backend=openblas",
+        "--threads=8",
+        "--patterns=near02_irregular3",
+        "--Ls=18,27,36,45,54,63,72,81,90,108,126,144",
+        "--thetas=Inf",
+        "--betas=0:0.25:2"
+      ],
+      "finished_utc": "2026-10-21T07:41:09.3402030Z"
+    },
+    {
+      "name": "finite_L144",
+      "status": "complete",
+      "started_utc": "2026-10-21T07:41:09.3440812Z",
+      "log": "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\ai\\data\\irregular_followup_finite_L144_run.log",
+      "arguments": [
+        "--startup-file=no",
+        "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\ai\\irregular_followup_experiments.jl",
+        "--backend=openblas",
+        "--threads=8",
+        "--patterns=near02_irregular3",
+        "--Ls=144",
+        "--thetas=4:0.5:7",
+        "--betas=0:0.25:2"
+      ],
+      "finished_utc": "2026-10-21T07:46:52.1314424Z"
+    },
+    {
+      "name": "finite_L180",
+      "status": "complete",
+      "started_utc": "2026-10-21T07:46:52.1333796Z",
+      "log": "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\ai\\data\\irregular_followup_finite_L180_run.log",
+      "arguments": [
+        "--startup-file=no",
+        "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\ai\\irregular_followup_experiments.jl",
+        "--backend=openblas",
+        "--threads=8",
+        "--patterns=near02_irregular3",
+        "--Ls=180",
+        "--thetas=4:0.5:8",
+        "--betas=0:0.25:2"
+      ],
+      "finished_utc": "2026-10-21T08:11:08.8906271Z"
+    }
+  ],
+  "finished_utc": "2026-10-21T08:11:08.8928667Z"
+}

@@ -1,0 +1,57 @@
+final_E = [229, 120, 269, 293, 354, 391, 106, 86, 227, 291, 411, 188, 231, 110, 136, 11, 108, 415, 381, 328, 93, 119, 104, 207, 88, 321, 19, 68, 347, 422, 398, 359, 271, 221, 301, 296, 123, 273, 163, 304, 60, 114, 209, 327, 127, 213, 255, 356, 76, 160, 79, 33, 233, 115, 183, 361, 70, 280, 258, 74, 270, 313, 306, 365, 211, 375, 186, 131, 223, 417, 337, 34, 245, 140, 427, 316, 335, 65, 311, 367, 226, 97, 117, 84, 436, 54, 128, 146, 426, 432, 189, 49, 326, 424, 413, 421, 12, 246, 172, 242, 310, 122, 235, 69, 168, 380, 91, 56, 324, 7, 264, 349, 200, 404, 383, 201, 177, 266, 300, 244, 437, 275, 23, 344, 38, 259, 129, 24, 305, 51, 390, 298, 25, 191, 249, 403, 372, 193, 267, 27, 254, 125, 85, 377, 171, 394, 44, 26, 412, 290, 449, 190, 101, 52, 135, 61, 109, 379, 48, 252, 408, 237, 286, 107, 392, 443, 405, 47, 30, 195, 314, 153, 43, 42, 433, 82, 239, 147, 178, 331, 260, 282, 40, 158, 370, 39, 257, 95, 434, 340, 447, 435, 21, 179, 389, 401, 263, 318, 445, 80, 320, 152, 176, 165, 385, 358, 218, 181, 31, 161, 341, 428, 143, 206, 142, 216, 374, 363, 430, 400, 159, 17, 393, 346, 62]
+maximum_inverse_asymmetry = 1.2300915841478854e-10
+elapsed_seconds = 18.963000059127808
+blas_threads = 1
+initial_state_definition = "E is the suppressed set. Even L: both sublattices on odd x columns; odd L: alternate full/empty through L-1 and only A on final column. uniform_A/B mean E=A/B."
+started_at = "2026-10-27T15:58:11.480"
+acceptance = 0.18235435956790125
+accepted = 189065
+initial_E = [1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35, 37, 39, 41, 43, 45, 47, 49, 51, 53, 55, 57, 59, 61, 63, 65, 67, 69, 71, 73, 75, 77, 79, 81, 83, 85, 87, 89, 91, 93, 95, 97, 99, 101, 103, 105, 107, 109, 111, 113, 115, 117, 119, 121, 123, 125, 127, 129, 131, 133, 135, 137, 139, 141, 143, 145, 147, 149, 151, 153, 155, 157, 159, 161, 163, 165, 167, 169, 171, 173, 175, 177, 179, 181, 183, 185, 187, 189, 191, 193, 195, 197, 199, 201, 203, 205, 207, 209, 211, 213, 215, 217, 219, 221, 223, 225, 227, 229, 231, 233, 235, 237, 239, 241, 243, 245, 247, 249, 251, 253, 255, 257, 259, 261, 263, 265, 267, 269, 271, 273, 275, 277, 279, 281, 283, 285, 287, 289, 291, 293, 295, 297, 299, 301, 303, 305, 307, 309, 311, 313, 315, 317, 319, 321, 323, 325, 327, 329, 331, 333, 335, 337, 339, 341, 343, 345, 347, 349, 351, 353, 355, 357, 359, 361, 363, 365, 367, 369, 371, 373, 375, 377, 379, 381, 383, 385, 387, 389, 391, 393, 395, 397, 399, 401, 403, 405, 407, 409, 411, 413, 415, 417, 419, 421, 423, 425, 427, 429, 431, 433, 435, 437, 439, 441, 443, 445, 447, 449]
+julia_version = "1.12.1"
+status = "complete"
+refreshes = 460
+plan_sha256 = "3f3929b15eec47c5720b7f481240ab66f36e843a4a09761cf98f7658ae427909"
+records = 2304
+model_manifest_sha256 = "91192ca1ded610c918ac176159ff3e78f8a04c1f2364dbc90514b5f0ccc4056f"
+proposed = 1036800
+model_manifest = "data/born_scaling/production/models/state_L15_staggered_mu1.0e-8_model.toml"
+maximum_logweight_drift = 5.604874786513392e-9
+maximum_inverse_drift = 5.530426070979798e-9
+completed_at = "2026-10-27T15:58:30.435"
+
+[source_sha256]
+"run_born_scaling.jl" = "3d9004c1d112a29ee1a7b440a945dc89516f7cabba8e279e0e5dd145e5a65c76"
+"fused_original_swap_kernel.jl" = "da7d40a574902763417225417d30abce265a15f9804dbfa47882b46f8ed20d70"
+"original_swap_scaling.jl" = "1af51fff868fbe63025323618506295ce5622179c1381de5ea64549e8c0d40cb"
+"prepare_born_scaling_production.jl" = "9bda7e2de8c87d7d050cff3be7c62444c289281174d87ad7e8cf6a1ecf6a80a4"
+"run_born_scaling_fused.jl" = "3734470f7c633617a2a2b43d7d581c94e9c29f11af6efb0f523cabf266499fe3"
+"../../public/Geometry.jl" = "079c2052642d46a7072656ccd738411faa57c9f07791f786a0a6872a5a5970ad"
+
+[job]
+chain = 2
+output_dir = "data/born_scaling/production"
+L = 15
+mu = 1.0e-8
+state = "staggered"
+run_id = "production_L15_beta2p5_mu1p0em8_chain2_uniform_A"
+sweeps = 2304
+refresh_every = 5
+start = "uniform_A"
+model_manifest_sha256 = "91192ca1ded610c918ac176159ff3e78f8a04c1f2364dbc90514b5f0ccc4056f"
+stage = "production"
+grid = "main"
+analysis_burnin = 256
+beta = 2.5
+model_manifest = "data/born_scaling/production/models/state_L15_staggered_mu1.0e-8_model.toml"
+seed = 1615250002
+retained_sweeps = 2048
+measure_every = 1
+
+[model_files]
+"state_L15_staggered_mu1.0e-8_G.bin" = "a22d3ec8d7b2a6716a8824c1a14eb8262f3cfa644d03613f7021da3472cecfdf"
+"state_L15_staggered_mu1.0e-8_energies.bin" = "4c381357272ed135d47030d39d5e2a3abc90c71be5370da22506c909a99998b2"
+"state_L15_staggered_mu1.0e-8_Q.bin" = "52bd8ecdcfd8067fd5f189121b87324adc71886aaa7bcc35c746aa019d255642"
+
+[files]
+"data/born_scaling/production/production_L15_beta2p5_mu1p0em8_chain2_uniform_A_initial.csv" = "aaa74487d2c51a31cf3e96b0b3c1adbcdf18793a4a4e64064baedbdff224f1fd"
+"data/born_scaling/production/production_L15_beta2p5_mu1p0em8_chain2_uniform_A_samples.csv" = "a14a71007e5657baf85917f31206138af3ebf4fa39bbadcbcf48a8025664082e"

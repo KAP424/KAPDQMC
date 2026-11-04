@@ -1,0 +1,50 @@
+generated_utc = "2026-10-21T07:58:00.973"
+scope = "Independent real-space Hamiltonian and product orbitals evolved by exp(-0.25H) plus QR to theta64/128 (256 only if needed). Convergence, energy and residual are checked before measurement. The full covariance and the four-dimensional zero-energy sector are compared to FE theta=Inf, validating the initial-state-selected zero modes, followed by beta0,1,2 filtering and three regional entropy and D comparisons. L12 only; this checks implementation, not asymptotic scaling."
+blas_config = "LBTConfig([ILP64] libopenblas64_.dll)"
+zero_mode_dimension = 4
+max_covariance_error = 2.313933986320166e-14
+max_covariance_element_error = 3.0531133177191805e-15
+L = 12
+max_D_error = 3.5638159090467525e-14
+states = 6
+max_entropy_error = 5.595524044110789e-14
+BLAS_threads = 1
+max_zero_sector_error = 2.7592517234565295e-13
+julia = "1.12.1"
+step = 0.25
+status = "PASS"
+failures = []
+csv_sha256 = "748380ef22aee83460225cf4b644d2bba00704a7c523c8093c5b2057dbbbe7ff"
+
+[code_sha256]
+"real_entropy_extension.jl" = "56ef0aa79ec2e2c04f35d1120093dd32a513cb76d3f5cfc4c17acc41887065c9"
+"beta_patterns_strip_extension.jl" = "94d04924a186701c575710f10d7d55f00b533b5f27076914f5a3dc7a90bdaf1b"
+"occupancy_classes_patterns.jl" = "0b76349c8e42df6cd71d76278d06b86887e832ce3e6df6d2d0d47b144e1cb6ae"
+"validate_occupancy_classes.jl" = "485b1e79a56f819a04be8a8ad9712bfc84b234c58c9f25abbeec79e622e3af3d"
+"fermion_experiment.jl" = "9efd053e7d469082ad8cead86ec256dade17e40279902842013c9a8dc9864fab"
+"validate_irregular_ground.jl" = "749c870c011285a5a60bc4e1d7b706bc99938ee4cfec2d9dfb4894675d389fe2"
+
+[[patterns]]
+theta64_128_convergence = 9.839704621075965e-15
+pattern = "pure02_block4"
+reference_theta = 128.0
+occupied_bits = "11111111110011001100110000000000"
+reference_convergence = 9.839704621075965e-15
+premeasurement_zero_sector_particles = 2.0000000000000004
+seconds = 3.3550000190734863
+dense_ground_excess = -8.242295734817162e-13
+theta128_256_convergence = nan
+dense_ground_residual = 4.0918643123346703e-14
+premeasurement_zero_sector_error = 2.372298223046668e-13
+[[patterns]]
+theta64_128_convergence = 1.1091859286463189e-14
+pattern = "pure02_irregular4"
+reference_theta = 128.0
+occupied_bits = "11001111001100000011001111001100"
+reference_convergence = 1.1091859286463189e-14
+premeasurement_zero_sector_particles = 2.0
+seconds = 2.1039998531341553
+dense_ground_excess = -8.242295734817162e-13
+theta128_256_convergence = nan
+dense_ground_residual = 4.144057694252971e-14
+premeasurement_zero_sector_error = 2.7592517234565295e-13

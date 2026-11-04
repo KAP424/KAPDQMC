@@ -1,0 +1,229 @@
+{
+  "status": "PASS",
+  "generated_utc": "2026-10-21T09:44:15.767420+00:00",
+  "patterns": [
+    {
+      "name": "pure02_m2_cells_12",
+      "bits": "11110000",
+      "m": 2,
+      "class_id": 2,
+      "n0": 2,
+      "n1": 0,
+      "n2": 2,
+      "occupied_cells": [
+        1,
+        2
+      ],
+      "arrangement": "rows"
+    },
+    {
+      "name": "pure02_m2_cells_13",
+      "bits": "11001100",
+      "m": 2,
+      "class_id": 2,
+      "n0": 2,
+      "n1": 0,
+      "n2": 2,
+      "occupied_cells": [
+        1,
+        3
+      ],
+      "arrangement": "columns"
+    },
+    {
+      "name": "pure02_m2_cells_14",
+      "bits": "11000011",
+      "m": 2,
+      "class_id": 2,
+      "n0": 2,
+      "n1": 0,
+      "n2": 2,
+      "occupied_cells": [
+        1,
+        4
+      ],
+      "arrangement": "checkerboard"
+    },
+    {
+      "name": "pure02_m2_cells_23",
+      "bits": "00111100",
+      "m": 2,
+      "class_id": 2,
+      "n0": 2,
+      "n1": 0,
+      "n2": 2,
+      "occupied_cells": [
+        2,
+        3
+      ],
+      "arrangement": "checkerboard"
+    },
+    {
+      "name": "pure02_m2_cells_24",
+      "bits": "00110011",
+      "m": 2,
+      "class_id": 2,
+      "n0": 2,
+      "n1": 0,
+      "n2": 2,
+      "occupied_cells": [
+        2,
+        4
+      ],
+      "arrangement": "columns"
+    },
+    {
+      "name": "pure02_m2_cells_34",
+      "bits": "00001111",
+      "m": 2,
+      "class_id": 2,
+      "n0": 2,
+      "n1": 0,
+      "n2": 2,
+      "occupied_cells": [
+        3,
+        4
+      ],
+      "arrangement": "rows"
+    }
+  ],
+  "sizes": [
+    6,
+    12,
+    18,
+    24,
+    36,
+    72,
+    144,
+    180,
+    216
+  ],
+  "rank_tolerance": 1e-10,
+  "numpy_version": "2.5.1",
+  "all_six_ground_reachable": false,
+  "reachable_patterns": [],
+  "gamma": {
+    "energies": [
+      -3.0000000000000004,
+      -1.0000000000000002,
+      -1.0000000000000002,
+      -0.9999999999999992,
+      1.0,
+      1.0,
+      1.0000000000000009,
+      2.9999999999999982
+    ],
+    "analytic_projector_max_error": 5.551115123125783e-16,
+    "proof": "In A/B-grouped ordering, T_Gamma=I+Sx+Sy has eigenvalues (3,1,1,-1). Its polar matrix U=sign(T)=I-ss^T/2, s=(1,-1,-1,1). A negative-band frame is [I;-U]/sqrt(2). For any two occupied primitive cells F and their two-cell complement E, U[E,F]=-s_E s_F^T/2 has rank 1. Hence rank(V_negative^dagger P)=2+rank(U[E,F])=3<4. Gamma contains no zero modes; occupying a positive energy +1 instead of a negative energy -1 costs exactly 2 in that block. Every compatible periodic lattice includes Gamma.",
+    "numerical_rank_tolerances": [
+      1e-08,
+      1e-10,
+      1e-12
+    ]
+  },
+  "realspace_checks": [
+    {
+      "pattern": "pure02_m2_cells_12",
+      "realspace_L": 6,
+      "ground_energy": -56.266812711800824,
+      "accessible_energy": -54.266812711800824,
+      "accessible_excess": 2.0,
+      "realspace_vs_bloch_accessible_energy_error": 1.4210854715202004e-14,
+      "spectral_support_reconstruction_error": 1.110940407697137e-15,
+      "small_time_direct_vs_strict_projector_error": 6.296257088951813e-13,
+      "reference_theta128_vs_infinity_error": 0.0,
+      "direct_theta128_excess": 1.4210854715202004e-14,
+      "direct_theta128_negative_support_violation": 1.0,
+      "direct_theta128_distance_to_accessible_limit": 0.23570226039551592
+    },
+    {
+      "pattern": "pure02_m2_cells_13",
+      "realspace_L": 6,
+      "ground_energy": -56.266812711800824,
+      "accessible_energy": -54.266812711800824,
+      "accessible_excess": 2.0,
+      "realspace_vs_bloch_accessible_energy_error": 1.4210854715202004e-14,
+      "spectral_support_reconstruction_error": 1.093372911684465e-15,
+      "small_time_direct_vs_strict_projector_error": 2.989676163180549e-13,
+      "reference_theta128_vs_infinity_error": 0.0,
+      "direct_theta128_excess": 1.4210854715202004e-14,
+      "direct_theta128_negative_support_violation": 1.0,
+      "direct_theta128_distance_to_accessible_limit": 0.23570226039551587
+    },
+    {
+      "pattern": "pure02_m2_cells_14",
+      "realspace_L": 6,
+      "ground_energy": -56.266812711800824,
+      "accessible_energy": -50.266812711800824,
+      "accessible_excess": 6.0,
+      "realspace_vs_bloch_accessible_energy_error": 1.4210854715202004e-14,
+      "spectral_support_reconstruction_error": 1.2649808782918325e-15,
+      "small_time_direct_vs_strict_projector_error": 7.067050487483677e-13,
+      "reference_theta128_vs_infinity_error": 0.0,
+      "direct_theta128_excess": 1.4210854715202004e-14,
+      "direct_theta128_negative_support_violation": 3.0,
+      "direct_theta128_distance_to_accessible_limit": 0.4082482904638631
+    },
+    {
+      "pattern": "pure02_m2_cells_23",
+      "realspace_L": 6,
+      "ground_energy": -56.266812711800824,
+      "accessible_energy": -50.266812711800824,
+      "accessible_excess": 6.0,
+      "realspace_vs_bloch_accessible_energy_error": 1.4210854715202004e-14,
+      "spectral_support_reconstruction_error": 1.2076828876462809e-15,
+      "small_time_direct_vs_strict_projector_error": 6.017547467014248e-13,
+      "reference_theta128_vs_infinity_error": 0.0,
+      "direct_theta128_excess": 1.4210854715202004e-14,
+      "direct_theta128_negative_support_violation": 3.0,
+      "direct_theta128_distance_to_accessible_limit": 0.4082482904638631
+    },
+    {
+      "pattern": "pure02_m2_cells_24",
+      "realspace_L": 6,
+      "ground_energy": -56.266812711800824,
+      "accessible_energy": -54.266812711800824,
+      "accessible_excess": 2.0,
+      "realspace_vs_bloch_accessible_energy_error": 1.4210854715202004e-14,
+      "spectral_support_reconstruction_error": 1.0761939150399226e-15,
+      "small_time_direct_vs_strict_projector_error": 3.052140530473293e-13,
+      "reference_theta128_vs_infinity_error": 0.0,
+      "direct_theta128_excess": 1.4210854715202004e-14,
+      "direct_theta128_negative_support_violation": 1.0,
+      "direct_theta128_distance_to_accessible_limit": 0.2357022603955159
+    },
+    {
+      "pattern": "pure02_m2_cells_34",
+      "realspace_L": 6,
+      "ground_energy": -56.266812711800824,
+      "accessible_energy": -54.266812711800824,
+      "accessible_excess": 2.0,
+      "realspace_vs_bloch_accessible_energy_error": 1.4210854715202004e-14,
+      "spectral_support_reconstruction_error": 1.0026947758863352e-15,
+      "small_time_direct_vs_strict_projector_error": 5.333890863527504e-13,
+      "reference_theta128_vs_infinity_error": 0.0,
+      "direct_theta128_excess": 1.4210854715202004e-14,
+      "direct_theta128_negative_support_violation": 1.0,
+      "direct_theta128_distance_to_accessible_limit": 0.23570226039551587
+    }
+  ],
+  "projection_methods": {
+    "strict_spectral_support": "Independent full real-space spectral-support reference. Numerical null components smaller than rank tolerance are removed before evolution; reconstruction error is recorded. This preserves the mathematically forbidden ground sector and is checked against independently enumerated Bloch-block accessible energies.",
+    "direct_qr": "Actual floating-point real-space evolution q <- qr(exp(-0.25 H) q), repeated to each recorded theta. No rank cleaning or symmetry projection. It can amplify roundoff into an exactly forbidden energy sector; a small final ground excess is not evidence of mathematical reachability."
+  },
+  "interpretation": [
+    "All six exact initial configurations are excluded from the finite periodic half-filled ground state by Gamma rank 3<4, on every compatible periodic size. Gamma is gapped and has no zero modes; other zero-energy sectors cannot repair its fixed particle sector.",
+    "Gamma alone proves obstruction. Additional symmetry-line momenta are obstructed on larger meshes; counts and coordinates are in the CSV. Generic non-symmetry probes are full rank, so obstruction is not asserted at every momentum.",
+    "The strict-support infinite-time state is a configuration-dependent accessible excited state, not the ground state. No equilibrium or nonequilibrium corner coefficients are reported under the previous ground-state protocol.",
+    "Total excitation energy and excitation energy per site are distinct. A decreasing energy density does not make the state the exact finite-size ground state or restore the missing many-body overlap.",
+    "Direct Float64 QR can leave the exact spectral-support sector because forbidden amplitudes are seeded by roundoff and exponentially amplified. Its departure is measured by negative-band occupation exceeding the maximum allowed by the initial support, not merely by a fit or a small energy difference."
+  ],
+  "files": {
+    "data/pure02_m2_gamma.csv": "5672671734b889eb7db3578291ad7eb46c53f08ba7c6b81be33656d214c05a13",
+    "data/pure02_m2_reachability.csv": "2b67b8e09efe46af71a600ee518884cf514af9ec8f52d709c5457005f35d87aa",
+    "data/pure02_m2_blocked_momenta.csv": "994ca6c4757d9c5d04067162f6d3094078a85a1f811783d1059e878c5fec75a4",
+    "data/pure02_m2_generic_probes.csv": "97082cc6ba39d0e3944ee03001708e903c4cd977f3d79a065f4d394c579e057e",
+    "data/pure02_m2_projection.csv": "aae0c7c8ff58f7373b80ab5cc4eea01036399efac5438e1dd9661ed7da3f52e0",
+    "check_pure02_m2.py": "ad1a9b5b303fd3a3740f2488b86a46fb3ae6321f0276aa07cb901185a6191baa"
+  }
+}

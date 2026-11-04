@@ -1,0 +1,32 @@
+sampling_seconds = 15.519223300000004
+created_at = "2026-10-29T09:38:18.098"
+N0 = [108.0, 72.0, 108.00000000000001]
+matrix_format = "Float64 native-endian column-major Nsites x Nsites"
+maximum_reference_entropy_error = 1.0147438445073931e-13
+status = "complete"
+kappa = 0.008005492050918495
+julia_version = "1.12.1"
+elapsed_seconds = 23.539000034332275
+maximum_single_state_bound_violation = 0.0
+blas_threads = 1
+plan_sha256 = "97a04ea18174d4fa6adf8ef69721b75af0fe82444ee5cb5f0daabafd5100400e"
+records = 512
+DV0_full = 0.21154446337187238
+V0 = [4.677263658348124, 4.465719194976245, 4.677263658348139]
+diagnostic_seconds = 2.402233599999997
+j_counts = [298, 183, 29, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+entropy_seconds = 5.145399700000005
+
+[job]
+records = 512
+batch = 2
+model = "iid_targeted/models/iid_targeted_L18_staggered_mu1.0e-8_model.toml"
+id = "L18_beta3_batch2"
+seed = 729283102
+L = 18
+beta = 3.0
+
+[files]
+"iid_targeted/L18_beta3_batch2_meanGsquare.bin" = "71e7cc4cae854848efcd0051608b3332985d193ef773590aac1601267afb65f2"
+"iid_targeted/L18_beta3_batch2_meanG.bin" = "1042f66218b59edf9e24f8fb59abfb70f8cad475958308a0cc55ccf0516bef3f"
+"iid_targeted/L18_beta3_batch2.csv" = "150a746a65191ece17b468f72ba88da2b5cdacbe5f19f62b664c0ec9d902d231"

@@ -1,0 +1,6 @@
+threads = 1
+proposals_per_sweep = 648
+seconds_per_sweep = 0.01659284
+L = 18
+seconds_rebuild = 0.0459437
+beta = 3.0

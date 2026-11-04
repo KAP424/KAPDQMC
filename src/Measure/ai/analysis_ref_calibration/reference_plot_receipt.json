@@ -1,0 +1,71 @@
+{
+  "created_utc": "2026-10-19T01:54:55.518869+00:00",
+  "script_sha256": "2a0c8d1cd2a7011ce6edb1e7267f145a3a9ec683a803193bcb0c8ae7ef82db69",
+  "inputs": [
+    {
+      "path": "data\\ground_observations_baseline.csv",
+      "sha256": "8ba744bfef3730840ae3f143bffebc44dd27c8286644dfaf3f24c4604e3a5033",
+      "bytes": 498490
+    },
+    {
+      "path": "data\\ref_calibration_observations.csv",
+      "sha256": "a10427b188eb38ef7d98064a31766ba471f4732432c4d682f197afde72306a43",
+      "bytes": 457464
+    },
+    {
+      "path": "Ref\\neq-eqC_H0.csv",
+      "sha256": "004aa86a36f393aa42a3124e2cd9cd5c01d83e0a583176e6606c1f84cd8d7f26",
+      "bytes": 386
+    }
+  ],
+  "pattern": "uniform_A",
+  "beta": 0,
+  "normalization": "one species, natural log Renyi2",
+  "grids": {
+    "early": [
+      2,
+      2.5,
+      3,
+      3.5,
+      4,
+      4.5,
+      5,
+      5.5,
+      6
+    ],
+    "raw_time": [
+      2,
+      2.5,
+      3,
+      3.5,
+      4,
+      4.5,
+      5,
+      5.5,
+      6,
+      7,
+      8
+    ],
+    "eq_common": [
+      18,
+      24,
+      30,
+      36,
+      42,
+      48,
+      54,
+      60,
+      66,
+      72
+    ]
+  },
+  "scaling_coordinates": "Panels A/B: x=ln(L) / ln(theta), linear axes; y=D",
+  "reference_neq_coefficients": "Transcribed rounded labels only; source CSV missing; no fabricated reconstruction.",
+  "c_eq_ref": 0.1553240603455604,
+  "c_eq_current": 0.15532501704301785,
+  "c_time_L108_early": 0.15603016620738946,
+  "figures": {
+    "png": "2cd48f7cca97288884e517ffca2521f676e7cb8bceb612b98c57df09cc4101f1",
+    "pdf": "c342c31c51718cdb8934fddd4448c6d5b7f79b69dfddfa683f468bca7bb3be94"
+  }
+}

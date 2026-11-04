@@ -1,0 +1,729 @@
+{
+  "validated_utc": "2026-10-19T01:56:02.487608+00:00",
+  "rows": 1189,
+  "duplicates": 0,
+  "source_counts": {
+    "reused": 128,
+    "computed": 1061
+  },
+  "ground_limit_rows": 1189,
+  "complete_requested_grids": true,
+  "provenance_rows_match": true,
+  "reused_rows_identical": true,
+  "source_hashes_match": true,
+  "generating_code_hashes_match": true,
+  "named_pattern_bits_match": true,
+  "numerical_maxima": {
+    "entropy_identity_error": 0.0,
+    "projector_error": 3.56761606708638e-15,
+    "reconstruction_error": 6.378922179649513e-16,
+    "limit_stationarity_residual": 4.0166351098526426e-13
+  },
+  "requested_grids": [
+    {
+      "patterns": [
+        "uniform_A",
+        "uniform_B",
+        "one_B_2",
+        "one_B_3",
+        "two_B_3",
+        "diagonal_B_3",
+        "full_empty_cluster3",
+        "random_half_3",
+        "special_matched_a",
+        "special_matched_b",
+        "general_matched_a",
+        "general_matched_b"
+      ],
+      "L": [
+        54,
+        72
+      ],
+      "theta": [
+        2.0,
+        3.0,
+        4.0,
+        5.0,
+        6.0,
+        7.0,
+        8.0,
+        10.0,
+        12.0,
+        14.0,
+        16.0
+      ],
+      "beta": [
+        0.0,
+        0.5,
+        1.0,
+        2.0
+      ],
+      "requested_rows": 1056
+    },
+    {
+      "patterns": [
+        "one_B_3"
+      ],
+      "L": [
+        90
+      ],
+      "theta": [
+        4.0,
+        5.0,
+        6.0,
+        7.0,
+        8.0,
+        10.0,
+        12.0
+      ],
+      "beta": [
+        0.5,
+        1.0
+      ],
+      "requested_rows": 14
+    },
+    {
+      "patterns": [
+        "one_B_3"
+      ],
+      "L": [
+        90
+      ],
+      "theta": [
+        6.0,
+        7.0,
+        8.0,
+        10.0,
+        12.0,
+        14.0,
+        16.0
+      ],
+      "beta": [
+        2.0
+      ],
+      "requested_rows": 7
+    },
+    {
+      "patterns": [
+        "two_B_3"
+      ],
+      "L": [
+        90
+      ],
+      "theta": [
+        4.0,
+        5.0,
+        6.0,
+        7.0,
+        8.0,
+        10.0,
+        12.0
+      ],
+      "beta": [
+        0.5
+      ],
+      "requested_rows": 7
+    },
+    {
+      "patterns": [
+        "two_B_3"
+      ],
+      "L": [
+        90
+      ],
+      "theta": [
+        6.0,
+        7.0,
+        8.0,
+        10.0,
+        12.0,
+        14.0,
+        16.0
+      ],
+      "beta": [
+        1.0,
+        2.0
+      ],
+      "requested_rows": 14
+    },
+    {
+      "patterns": [
+        "uniform_B"
+      ],
+      "L": [
+        90
+      ],
+      "theta": [
+        4.0,
+        5.0,
+        6.0,
+        7.0,
+        8.0,
+        10.0,
+        12.0
+      ],
+      "beta": [
+        0.5,
+        1.0,
+        2.0
+      ],
+      "requested_rows": 21
+    },
+    {
+      "patterns": [
+        "special_matched_a"
+      ],
+      "L": [
+        90
+      ],
+      "theta": [
+        4.0,
+        5.0,
+        6.0,
+        7.0,
+        8.0,
+        10.0,
+        12.0
+      ],
+      "beta": [
+        1.0,
+        2.0
+      ],
+      "requested_rows": 14
+    },
+    {
+      "patterns": [
+        "special_matched_b"
+      ],
+      "L": [
+        90
+      ],
+      "theta": [
+        4.0,
+        5.0,
+        6.0,
+        7.0,
+        8.0,
+        10.0,
+        12.0
+      ],
+      "beta": [
+        0.5,
+        1.0,
+        2.0
+      ],
+      "requested_rows": 21
+    },
+    {
+      "patterns": [
+        "general_matched_a"
+      ],
+      "L": [
+        90
+      ],
+      "theta": [
+        6.0,
+        7.0,
+        8.0,
+        10.0,
+        12.0,
+        14.0,
+        16.0
+      ],
+      "beta": [
+        1.0,
+        2.0
+      ],
+      "requested_rows": 14
+    },
+    {
+      "patterns": [
+        "one_B_3"
+      ],
+      "L": [
+        108
+      ],
+      "theta": [
+        6.0,
+        7.0,
+        8.0,
+        10.0,
+        12.0,
+        14.0,
+        16.0
+      ],
+      "beta": [
+        2.0
+      ],
+      "requested_rows": 7
+    },
+    {
+      "patterns": [
+        "two_B_3"
+      ],
+      "L": [
+        108
+      ],
+      "theta": [
+        4.0,
+        5.0,
+        6.0,
+        7.0,
+        8.0,
+        10.0,
+        12.0
+      ],
+      "beta": [
+        0.5
+      ],
+      "requested_rows": 7
+    },
+    {
+      "patterns": [
+        "general_matched_a"
+      ],
+      "L": [
+        108
+      ],
+      "theta": [
+        6.0,
+        7.0,
+        8.0,
+        10.0,
+        12.0,
+        14.0,
+        16.0
+      ],
+      "beta": [
+        1.0
+      ],
+      "requested_rows": 7
+    }
+  ],
+  "sizes_by_pattern_beta": [
+    {
+      "pattern": "diagonal_B_3",
+      "beta": 0.0,
+      "sizes": [
+        54,
+        72
+      ]
+    },
+    {
+      "pattern": "diagonal_B_3",
+      "beta": 0.5,
+      "sizes": [
+        54,
+        72
+      ]
+    },
+    {
+      "pattern": "diagonal_B_3",
+      "beta": 1.0,
+      "sizes": [
+        54,
+        72
+      ]
+    },
+    {
+      "pattern": "diagonal_B_3",
+      "beta": 2.0,
+      "sizes": [
+        54,
+        72
+      ]
+    },
+    {
+      "pattern": "full_empty_cluster3",
+      "beta": 0.0,
+      "sizes": [
+        54,
+        72
+      ]
+    },
+    {
+      "pattern": "full_empty_cluster3",
+      "beta": 0.5,
+      "sizes": [
+        54,
+        72
+      ]
+    },
+    {
+      "pattern": "full_empty_cluster3",
+      "beta": 1.0,
+      "sizes": [
+        54,
+        72
+      ]
+    },
+    {
+      "pattern": "full_empty_cluster3",
+      "beta": 2.0,
+      "sizes": [
+        54,
+        72
+      ]
+    },
+    {
+      "pattern": "general_matched_a",
+      "beta": 0.0,
+      "sizes": [
+        54,
+        72
+      ]
+    },
+    {
+      "pattern": "general_matched_a",
+      "beta": 0.5,
+      "sizes": [
+        54,
+        72
+      ]
+    },
+    {
+      "pattern": "general_matched_a",
+      "beta": 1.0,
+      "sizes": [
+        54,
+        72,
+        90,
+        108
+      ]
+    },
+    {
+      "pattern": "general_matched_a",
+      "beta": 2.0,
+      "sizes": [
+        54,
+        72,
+        90
+      ]
+    },
+    {
+      "pattern": "general_matched_b",
+      "beta": 0.0,
+      "sizes": [
+        54,
+        72
+      ]
+    },
+    {
+      "pattern": "general_matched_b",
+      "beta": 0.5,
+      "sizes": [
+        54,
+        72
+      ]
+    },
+    {
+      "pattern": "general_matched_b",
+      "beta": 1.0,
+      "sizes": [
+        54,
+        72
+      ]
+    },
+    {
+      "pattern": "general_matched_b",
+      "beta": 2.0,
+      "sizes": [
+        54,
+        72
+      ]
+    },
+    {
+      "pattern": "one_B_2",
+      "beta": 0.0,
+      "sizes": [
+        54,
+        72
+      ]
+    },
+    {
+      "pattern": "one_B_2",
+      "beta": 0.5,
+      "sizes": [
+        54,
+        72
+      ]
+    },
+    {
+      "pattern": "one_B_2",
+      "beta": 1.0,
+      "sizes": [
+        54,
+        72
+      ]
+    },
+    {
+      "pattern": "one_B_2",
+      "beta": 2.0,
+      "sizes": [
+        54,
+        72
+      ]
+    },
+    {
+      "pattern": "one_B_3",
+      "beta": 0.0,
+      "sizes": [
+        54,
+        72
+      ]
+    },
+    {
+      "pattern": "one_B_3",
+      "beta": 0.5,
+      "sizes": [
+        54,
+        72,
+        90
+      ]
+    },
+    {
+      "pattern": "one_B_3",
+      "beta": 1.0,
+      "sizes": [
+        54,
+        72,
+        90
+      ]
+    },
+    {
+      "pattern": "one_B_3",
+      "beta": 2.0,
+      "sizes": [
+        54,
+        72,
+        90,
+        108
+      ]
+    },
+    {
+      "pattern": "random_half_3",
+      "beta": 0.0,
+      "sizes": [
+        54,
+        72
+      ]
+    },
+    {
+      "pattern": "random_half_3",
+      "beta": 0.5,
+      "sizes": [
+        54,
+        72
+      ]
+    },
+    {
+      "pattern": "random_half_3",
+      "beta": 1.0,
+      "sizes": [
+        54,
+        72
+      ]
+    },
+    {
+      "pattern": "random_half_3",
+      "beta": 2.0,
+      "sizes": [
+        54,
+        72
+      ]
+    },
+    {
+      "pattern": "special_matched_a",
+      "beta": 0.0,
+      "sizes": [
+        54,
+        72
+      ]
+    },
+    {
+      "pattern": "special_matched_a",
+      "beta": 0.5,
+      "sizes": [
+        54,
+        72
+      ]
+    },
+    {
+      "pattern": "special_matched_a",
+      "beta": 1.0,
+      "sizes": [
+        54,
+        72,
+        90
+      ]
+    },
+    {
+      "pattern": "special_matched_a",
+      "beta": 2.0,
+      "sizes": [
+        54,
+        72,
+        90
+      ]
+    },
+    {
+      "pattern": "special_matched_b",
+      "beta": 0.0,
+      "sizes": [
+        54,
+        72
+      ]
+    },
+    {
+      "pattern": "special_matched_b",
+      "beta": 0.5,
+      "sizes": [
+        54,
+        72,
+        90
+      ]
+    },
+    {
+      "pattern": "special_matched_b",
+      "beta": 1.0,
+      "sizes": [
+        54,
+        72,
+        90
+      ]
+    },
+    {
+      "pattern": "special_matched_b",
+      "beta": 2.0,
+      "sizes": [
+        54,
+        72,
+        90
+      ]
+    },
+    {
+      "pattern": "two_B_3",
+      "beta": 0.0,
+      "sizes": [
+        54,
+        72
+      ]
+    },
+    {
+      "pattern": "two_B_3",
+      "beta": 0.5,
+      "sizes": [
+        54,
+        72,
+        90,
+        108
+      ]
+    },
+    {
+      "pattern": "two_B_3",
+      "beta": 1.0,
+      "sizes": [
+        54,
+        72,
+        90
+      ]
+    },
+    {
+      "pattern": "two_B_3",
+      "beta": 2.0,
+      "sizes": [
+        54,
+        72,
+        90
+      ]
+    },
+    {
+      "pattern": "uniform_A",
+      "beta": 0.0,
+      "sizes": [
+        54,
+        72
+      ]
+    },
+    {
+      "pattern": "uniform_A",
+      "beta": 0.5,
+      "sizes": [
+        54,
+        72
+      ]
+    },
+    {
+      "pattern": "uniform_A",
+      "beta": 1.0,
+      "sizes": [
+        54,
+        72
+      ]
+    },
+    {
+      "pattern": "uniform_A",
+      "beta": 2.0,
+      "sizes": [
+        54,
+        72
+      ]
+    },
+    {
+      "pattern": "uniform_B",
+      "beta": 0.0,
+      "sizes": [
+        54,
+        72
+      ]
+    },
+    {
+      "pattern": "uniform_B",
+      "beta": 0.5,
+      "sizes": [
+        54,
+        72,
+        90
+      ]
+    },
+    {
+      "pattern": "uniform_B",
+      "beta": 1.0,
+      "sizes": [
+        54,
+        72,
+        90
+      ]
+    },
+    {
+      "pattern": "uniform_B",
+      "beta": 2.0,
+      "sizes": [
+        54,
+        72,
+        90
+      ]
+    }
+  ],
+  "sha256": {
+    "extraction_observations.csv": "aabd6735c4e8ab7d5f8ea74181a4b24b7b32508ac5ed18e9a0919ea752b93b37",
+    "extraction_provenance.tsv": "e5347a05b1ad506749a632efdb23f7f991c04b25901ea16ddd0526ba0ebf5702",
+    "extraction_manifest.txt": "abbfdcc6ca9e284593bc44ea9f88ebebc512f01b0c5639942f923913be459ba8"
+  },
+  "source_sha256": {
+    "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\ai\\data\\observations.csv": "b6e6403a7cf5a228b77f37c6f167bff7da93cc800f768de662a0ae9be34666dc",
+    "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\ai\\extraction_experiments.jl": "fe8f45a38aba995b52ba8c0b210a64f3f8986625b6efebc898829497479fb83a"
+  },
+  "code_sha256": {
+    "fermion_experiment.jl": "9efd053e7d469082ad8cead86ec256dade17e40279902842013c9a8dc9864fab",
+    "experiment_patterns.jl": "58f0ed0bfe931f4494986966adb8c1c04a7801fc5e46d4a0881173d376207f0e",
+    "arrangement_patterns.jl": "e15fefb68b7680dc7296bb702391a0f389347786cc29bc59270550b522548725",
+    "extraction_experiments.jl": "fe8f45a38aba995b52ba8c0b210a64f3f8986625b6efebc898829497479fb83a"
+  },
+  "catalogue_sha256": {
+    "patterns.csv": "f21b49dcf11ab4c4a708fe0e8b8de6c3d320d0d321146dd46fa8b47d92d05f1d",
+    "arrangement_selection.csv": "e2a77d15a4d0602d48abcdefee56b6fd02c16c4f5d4ca67553e96ca5b554b007"
+  },
+  "scope": "Raw-data provenance and diagnostics audit; superseded extraction classifications have been removed.",
+  "validator_sha256": "79c025b1a64af7efd326123b700a0ba688b6bad81d9e75da5d13ae7fdd90745f"
+}

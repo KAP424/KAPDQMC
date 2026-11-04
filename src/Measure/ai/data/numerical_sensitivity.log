@@ -1,0 +1,16 @@
+UTC=2026-10-18T05:14:56.665; Julia=1.12.1; BLAS_threads=1
+Patterns: all 13 actual experiment patterns. L=[18,36]; theta=[6,256,Inf]; beta=[0,1,8]; tol=[1e-8,1e-10,1e-12].
+Reference tolerance=1e-10. Projector distances use Frobenius norm divided by sqrt(Npart). All entropies are single-species S2 with natural logarithm.
+Rows=702; runtime_seconds=21.121000051498413
+maximum_projector_change_with_tolerance=0.0
+maximum_entropy_or_D_change_with_tolerance=0.0
+maximum_initial_orbital_reconstruction_error=1.552417697374994e-15
+minimum_retained_pivot_singular_value=0.011075098764397977
+maximum_theta256_vs_infinite_projector_distance=9.155164810698092e-16
+maximum_theta256_vs_infinite_entropy_or_D_difference=3.872457909892546e-13
+worst_theta256_projector_case=random_half_3, L=36, beta=8.0, tol=1.0e-8
+Original occupied row sets F and complementary E verified unchanged in every preparation.
+Boundary cancellation: A=(L/3)xL, C=Lx(L/3), B=(L/3)x(2L/3). For local boundary coefficients ax,ay, SA=2axL, SC=2ayL, SB=4axL/3+2ayL/3, hence (2SA+SC)/3-SB cancels them. Origin x0=y0=1 and L divisible by3m ensure matching microscopic phases and integer periods along each side. Corners and nonlocal shape contributions remain. For LlogL states this cancellation alone does not establish a pure corner-log form.
+SHA256 fermion_experiment.jl 9efd053e7d469082ad8cead86ec256dade17e40279902842013c9a8dc9864fab
+SHA256 experiment_patterns.jl 58f0ed0bfe931f4494986966adb8c1c04a7801fc5e46d4a0881173d376207f0e
+SHA256 sensitivity_checks.jl e4996cbe05e387c82cb5c14eadce3df133d930c709046de3d5bc9bf8622414cc

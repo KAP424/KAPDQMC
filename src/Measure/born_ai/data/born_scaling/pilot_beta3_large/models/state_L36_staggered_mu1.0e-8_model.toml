@@ -1,0 +1,17 @@
+zero_mode_count = 0
+null_singular_count = 2
+L = 36
+Nsites = 2592
+mu = 1.0e-8
+eigenvector_residual = 1.6921854478161461e-13
+Nparticles = 1296
+format = "Float64 native-endian column-major; Q=Nsites x Nparticles, G=Nsites x Nsites, energies=Nsites"
+orthogonality_error = 5.499743220351812e-14
+ground_energy_error = 9.094947017729282e-13
+zero_mode_rule = "staggered"
+zero_singular_tolerance = 1.0e-12
+
+[files]
+"state_L36_staggered_mu1.0e-8_G.bin" = "673c5b840702472860dfc85ce1eed6f206cfba82989fd3161cff2e7bdc88b8bd"
+"state_L36_staggered_mu1.0e-8_energies.bin" = "621e5f0d2d9fdd57f2e97973594bb1040b6325f3b20b9e375db304904bbba2d0"
+"state_L36_staggered_mu1.0e-8_Q.bin" = "b051fe60c462d72f000ebcdaa4b9feb8cafe80b4505bfdeb9f268afb309c92e3"

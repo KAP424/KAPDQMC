@@ -1,0 +1,51 @@
+final_E = [1, 3, 4, 5, 6, 14, 17, 8, 11]
+maximum_inverse_asymmetry = 1.1102230246251565e-15
+elapsed_seconds = 0.2049999237060547
+blas_threads = 1
+initial_state_definition = "Even L: E contains both A/B on odd x columns. Odd L: alternate full/empty for x<=L-1, and place only A in the final column; this is half-filled but not pure 0/2."
+started_at = "2026-10-27T15:27:39.479"
+acceptance = 0.8454725477430556
+accepted = 249340
+initial_E = [9, 16, 14, 10, 2, 8, 13, 12, 17]
+julia_version = "1.12.1"
+status = "complete"
+refreshes = 3276
+plan_sha256 = "ad99569160e385b297861789ac1f445d8aaff8abfb2b9b044b7477612ce6267d"
+records = 16384
+model_manifest_sha256 = "4d6ffe387f29f3fe6c64ed85b2f836c04aa2f92a73e9a415ed16783bc613f735"
+proposed = 294912
+model_manifest = "data/born_scaling/smallcheck/models/state_L3_staggered_mu1.0e-8_model.toml"
+maximum_logweight_drift = 1.509903313490213e-14
+maximum_inverse_drift = 2.0457992699747884e-15
+completed_at = "2026-10-27T15:27:39.684"
+
+[source_sha256]
+"run_born_scaling.jl" = "3d9004c1d112a29ee1a7b440a945dc89516f7cabba8e279e0e5dd145e5a65c76"
+"original_swap_scaling.jl" = "1af51fff868fbe63025323618506295ce5622179c1381de5ea64549e8c0d40cb"
+"../../public/Geometry.jl" = "079c2052642d46a7072656ccd738411faa57c9f07791f786a0a6872a5a5970ad"
+
+[job]
+chain = 1
+output_dir = "data/born_scaling/smallcheck"
+L = 3
+mu = 1.0e-8
+state = "staggered"
+run_id = "smallcheck_L3_beta0p5_mu1p0em8_chain1_random"
+sweeps = 16384
+refresh_every = 5
+start = "random"
+model_manifest_sha256 = "4d6ffe387f29f3fe6c64ed85b2f836c04aa2f92a73e9a415ed16783bc613f735"
+stage = "smallcheck"
+beta = 0.5
+model_manifest = "data/born_scaling/smallcheck/models/state_L3_staggered_mu1.0e-8_model.toml"
+seed = 1133050001
+measure_every = 1
+
+[model_files]
+"state_L3_staggered_mu1.0e-8_G.bin" = "b2a8fadcfe2f4d16c0c9b80f18148b57bf08f204589bd074ea5826475e6a4881"
+"state_L3_staggered_mu1.0e-8_energies.bin" = "901d1d74f6bc6241722f0644ac2db02d075b01525dbc615ae17798887ba29d26"
+"state_L3_staggered_mu1.0e-8_Q.bin" = "2907b68467db033bbe94cb6bad8c9a2320a38973ace2fd903ef281efbd1d2a0d"
+
+[files]
+"data/born_scaling/smallcheck/smallcheck_L3_beta0p5_mu1p0em8_chain1_random_samples.csv" = "225cf82958ca89f86de80d328360e6e934cd20e2406b485a98c55b3e4532669e"
+"data/born_scaling/smallcheck/smallcheck_L3_beta0p5_mu1p0em8_chain1_random_initial.csv" = "772cfbd4ad8e4dd932b569ba6748a7a35b5bb35d9211658afd4227b1951a2d9a"

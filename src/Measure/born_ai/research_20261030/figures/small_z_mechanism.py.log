@@ -1,0 +1,50 @@
+============================================================================
+Identity check on random particle-hole symmetric states, N = 8, 10, 12
+============================================================================
+  max |sum_S adjugate form - (r(M-r) + 4 V0)| = 5.0e-14
+
+============================================================================
+L = 3: exact enumeration of all C(18,9) = 48620 outputs
+============================================================================
+  full-rank weight sum        = 1.000000000000   (+ node outputs: weight O(q))
+  full-rank sum det^2 ||X||^2 = 64.361305   (Cauchy-Binet incl. nodes: n^2 = 81)
+  node outputs (rank n-1)     = 14067,  rank <= n-2: 181
+  node weight sum W_S         = 16.638695   (full + node = 81.000000, Cauchy-Binet n^2 = 81)
+  C_A: full-rank   57.68418 + node adjugate  16.87935 =   74.56353   closed form r(M-r)+4V0 =   74.56353   diff +1.4e-13
+  C_B: full-rank   45.40710 + node adjugate  12.85659 =   58.26369   closed form r(M-r)+4V0 =   58.26369   diff -1.8e-13
+  C_C: full-rank   57.68418 + node adjugate  16.87935 =   74.56353   closed form r(M-r)+4V0 =   74.56353   diff +3.0e-13
+  C_D full-rank part  = 12.2770783921
+  C_D node part       = 2.3606729969
+  C_D total           = 14.6377513890   (known lim D/q = 14.6377513890)
+  C_D bright formula  = 16.2998418127   (= 16 + 4 D_V0(3), legacy 16.2998418127)
+  -> A(3) = 0.180713;  bright formula/81 = 0.201233;  16/81 = 0.197531
+
+============================================================================
+L >= 6: projection-DPP sampling (node weight, and the heavy tail of ||X||^2)
+============================================================================
+  L= 6 n=40000: E||X||^2/L^4 = 0.9375 (max single 294)   A_full sample mean = 0.1773   closed form = 0.19793   |X|<1e-6 fraction = 1.8e-04   [45s]
+  L= 9 n= 4000: E||X||^2/L^4 = 0.9755 (max single 352)   A_full sample mean = 0.1862   closed form = 0.19763   |X|<1e-6 fraction = 8.5e-06   [13s]
+  L=12 n= 1500: E||X||^2/L^4 = 0.9080 (max single 50)   A_full sample mean = 0.1910   closed form = 0.19757   |X|<1e-6 fraction = 1.5e-05   [14s]
+  L=18 n=  300: E||X||^2/L^4 = 0.7567 (max single 18)   A_full sample mean = 0.1436   closed form = 0.19754   |X|<1e-6 fraction = 3.2e-05   [50s]
+  Cauchy-Binet fixes E||X||^2 = n^2 exactly (full-rank part = n^2 minus node weight); sample means below 1 are the heavy tail, not missing weight.
+
+============================================================================
+Closed form A(L) = 16/81 + 4 D_V0(L)/L^4 (node weight <= 1e-4 for L >= 6)
+============================================================================
+  L= 6: D_V0 = 0.12941   A = 0.197930
+  L= 9: D_V0 = 0.16163   A = 0.197629
+  L=12: D_V0 = 0.18303   A = 0.197566
+  L=18: D_V0 = 0.21154   A = 0.197539
+  L=24: D_V0 = 0.23116   A = 0.197534
+  L=30: D_V0 = 0.24618   A = 0.197532
+  L=36: D_V0 = 0.25837   A = 0.197531
+
+============================================================================
+Born data at z = 0.089: per-region volume-fraction law S2(R)/z^2 -> 4 f_R (1 - f_R)
+============================================================================
+  SA: pooled over L=[6, 12, 18, 24, 30]: 0.8472 +- 0.0095   leading order 0.8889   ratio 0.953 +- 0.011
+  SB: pooled over L=[6, 12, 18, 24, 30]: 0.6649 +- 0.0079   leading order 0.6914   ratio 0.962 +- 0.011
+  SC: pooled over L=[6, 12, 18, 24, 30]: 0.8429 +- 0.0093   leading order 0.8889   ratio 0.948 +- 0.010
+  D: pooled over L=[6, 12, 18, 24, 30]: 0.1813 +- 0.0039   leading order 0.1975   ratio 0.918 +- 0.020
+
+figure -> D:\JuliaDQMC\code\KAPDQMC\src\Measure\born_ai\research_20261030\figures\small_z_mechanism.png

@@ -1,0 +1,71 @@
+generated_utc = "2026-10-21T11:35:50.477"
+scope = "Four pure-0/2 patterns, including two blocked alternating controls; m4 L12 and m2 L6; theta0,4,7,Inf and beta0,1,2. Finite-time reference is full real-space exact exp(-0.25H) plus QR, cross-checked at step0.125. Infinite-time reference is a separate real-space energy-block/nullspace spectral-support construction, not long QR evolution. Full C, three S2 and weighted D are compared; blocked accessible limits retain positive excitation energy and are never labeled ground states. No scaling claim."
+max_covariance_error = 2.780423513115716e-10
+max_covariance_element_error = 4.9299585247466725e-11
+max_D_error = 1.5864465296999697e-10
+states = 48
+max_entropy_error = 2.58171040101729e-10
+BLAS_threads = 1
+max_finite_step_difference = 1.9190815012097417e-10
+julia = "1.12.1"
+status = "PASS"
+csv_sha256 = "f7a3164aaf43903b75ec6c159bee1a4f81408b8b300589be9d9aab112d5a1051"
+
+[code_sha256]
+"real_entropy_extension.jl" = "56ef0aa79ec2e2c04f35d1120093dd32a513cb76d3f5cfc4c17acc41887065c9"
+"second_class_extra_patterns.jl" = "6dcc2e5d7bd44e093e256d05ae07a20c8d30778fe54164b89e914b1f580175b8"
+"beta_patterns_strip_extension.jl" = "94d04924a186701c575710f10d7d55f00b533b5f27076914f5a3dc7a90bdaf1b"
+"second_class_extra_experiments.jl" = "5710d7858e9a6a73fdd2ada903937c79d826778c3fa483e69477723c77ea1147"
+"validate_occupancy_classes.jl" = "485b1e79a56f819a04be8a8ad9712bfc84b234c58c9f25abbeec79e622e3af3d"
+"occupancy_classes_patterns.jl" = "0b76349c8e42df6cd71d76278d06b86887e832ce3e6df6d2d0d47b144e1cb6ae"
+"fermion_experiment.jl" = "9efd053e7d469082ad8cead86ec256dade17e40279902842013c9a8dc9864fab"
+"second_class_extra_validation.jl" = "d519c3927a0cde6dc0dcf4bd0bb29c3683eb5e29fbd0362f0f7fc976bae39706"
+
+[[patterns]]
+L = 12
+min_retained_sv = 0.022650766616610057
+pattern = "pure02_staircase4"
+occupied_bits = "11111111111111001100000000000000"
+limit_state = "ground_state"
+independent_limit_excess = -2.842170943040401e-14
+ground_reachable = true
+max_discarded_sv = 0.0
+m = 4
+finite_step_difference = 4.125425505496216e-15
+independent_limit_residual = 3.048139871491554e-14
+[[patterns]]
+L = 12
+min_retained_sv = 0.05028709645197635
+pattern = "pure02_notched_stripe4"
+occupied_bits = "00110000111111001111000011110000"
+limit_state = "ground_state"
+independent_limit_excess = -2.842170943040401e-14
+ground_reachable = true
+max_discarded_sv = 0.0
+m = 4
+finite_step_difference = 4.504700195124759e-15
+independent_limit_residual = 3.0705233684274814e-14
+[[patterns]]
+L = 6
+min_retained_sv = 0.2470177392321981
+pattern = "pure02_alternating_x"
+occupied_bits = "11001100"
+limit_state = "accessible_excited_state"
+independent_limit_excess = 2.000000000000007
+ground_reachable = false
+max_discarded_sv = 5.100971818828016e-16
+m = 2
+finite_step_difference = 1.4305140740882808e-10
+independent_limit_residual = 2.7395900540519713e-14
+[[patterns]]
+L = 6
+min_retained_sv = 0.49999999999999944
+pattern = "pure02_alternating_checker"
+occupied_bits = "11000011"
+limit_state = "accessible_excited_state"
+independent_limit_excess = 6.0
+ground_reachable = false
+max_discarded_sv = 4.2892848048995606e-16
+m = 2
+finite_step_difference = 1.9190815012097417e-10
+independent_limit_residual = 2.7300389726768973e-14

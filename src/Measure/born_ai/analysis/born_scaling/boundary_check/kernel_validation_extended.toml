@@ -1,0 +1,132 @@
+created_at = "2026-10-28T12:49:18.913"
+julia_version = "1.12.1"
+method = "Independent full translations at L=6; Gram-normalized weighted projector; eigenvalue S2; direct complement identity; production subgroup/full workspace comparison"
+status = "PASS"
+
+[[cases]]
+max_complement_error = 2.7533531010703882e-14
+start = "random"
+max_subgroup_entry_error = 0.0
+subgroup_entries = 13
+max_independent_entropy_error = 1.2434497875801753e-14
+L = 6
+full_entries = 72
+max_D_translation_range = 6.661338147750939e-15
+beta = 0.0
+[[cases]]
+max_complement_error = 3.9968028886505635e-14
+start = "random"
+max_subgroup_entry_error = 0.0
+subgroup_entries = 13
+max_independent_entropy_error = 2.1760371282653068e-14
+L = 6
+full_entries = 72
+max_D_translation_range = 1.1941864092507697
+beta = 1.0
+[[cases]]
+max_complement_error = 2.518887876057363e-13
+start = "random"
+max_subgroup_entry_error = 0.0
+subgroup_entries = 13
+max_independent_entropy_error = 1.8606644003327233e-13
+L = 6
+full_entries = 72
+max_D_translation_range = 0.10561508054718885
+beta = 3.0
+[[cases]]
+max_complement_error = 2.7533531010703882e-14
+start = "uniform_A"
+max_subgroup_entry_error = 0.0
+subgroup_entries = 13
+max_independent_entropy_error = 1.2434497875801753e-14
+L = 6
+full_entries = 72
+max_D_translation_range = 6.661338147750939e-15
+beta = 0.0
+[[cases]]
+max_complement_error = 2.4424906541753444e-14
+start = "uniform_A"
+max_subgroup_entry_error = 0.0
+subgroup_entries = 13
+max_independent_entropy_error = 1.301736496372996e-14
+L = 6
+full_entries = 72
+max_D_translation_range = 5.218048215738236e-15
+beta = 1.0
+[[cases]]
+max_complement_error = 2.5979252657546553e-14
+start = "uniform_A"
+max_subgroup_entry_error = 0.0
+subgroup_entries = 13
+max_independent_entropy_error = 1.1937655453996693e-14
+L = 6
+full_entries = 72
+max_D_translation_range = 4.2010665779468326e-15
+beta = 3.0
+[[cases]]
+max_complement_error = 2.7533531010703882e-14
+start = "uniform_B"
+max_subgroup_entry_error = 0.0
+subgroup_entries = 13
+max_independent_entropy_error = 1.2434497875801753e-14
+L = 6
+full_entries = 72
+max_D_translation_range = 6.661338147750939e-15
+beta = 0.0
+[[cases]]
+max_complement_error = 2.842170943040401e-14
+start = "uniform_B"
+max_subgroup_entry_error = 0.0
+subgroup_entries = 13
+max_independent_entropy_error = 1.2878587085651816e-14
+L = 6
+full_entries = 72
+max_D_translation_range = 4.884981308350689e-15
+beta = 1.0
+[[cases]]
+max_complement_error = 3.352873534367973e-14
+start = "uniform_B"
+max_subgroup_entry_error = 0.0
+subgroup_entries = 13
+max_independent_entropy_error = 1.1546319456101628e-14
+L = 6
+full_entries = 72
+max_D_translation_range = 7.105427357601002e-15
+beta = 3.0
+[[cases]]
+max_complement_error = 2.7533531010703882e-14
+start = "02_stripe"
+max_subgroup_entry_error = 0.0
+subgroup_entries = 13
+max_independent_entropy_error = 1.2434497875801753e-14
+L = 6
+full_entries = 72
+max_D_translation_range = 6.661338147750939e-15
+beta = 0.0
+[[cases]]
+max_complement_error = 5.639932965095795e-14
+start = "02_stripe"
+max_subgroup_entry_error = 0.0
+subgroup_entries = 13
+max_independent_entropy_error = 3.108624468950438e-14
+L = 6
+full_entries = 72
+max_D_translation_range = 0.00714982536736386
+beta = 1.0
+[[cases]]
+max_complement_error = 6.68387567515083e-12
+start = "02_stripe"
+max_subgroup_entry_error = 0.0
+subgroup_entries = 13
+max_independent_entropy_error = 2.9140023727336484e-12
+L = 6
+full_entries = 72
+max_D_translation_range = 4.274460726483298e-7
+beta = 3.0
+
+[source_sha256]
+"run_born_boundary_check.jl" = "3e8fb7d0c4b01387d51daf53ad6f5a3298b6948f06581ec6a9ada0e4ae807f2c"
+"run_born_scaling.jl" = "3d9004c1d112a29ee1a7b440a945dc89516f7cabba8e279e0e5dd145e5a65c76"
+"fused_original_swap_kernel.jl" = "da7d40a574902763417225417d30abce265a15f9804dbfa47882b46f8ed20d70"
+"original_swap_scaling.jl" = "1af51fff868fbe63025323618506295ce5622179c1381de5ea64549e8c0d40cb"
+"validate_born_boundary_check.jl" = "976abb90dd28add6ce3ad16762fc8c9ab82d9fc60f124e393bae7ec78a450a67"

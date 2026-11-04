@@ -1,0 +1,626 @@
+{
+  "generated_utc": "2026-10-19T01:52:28.311553+00:00",
+  "sources": [
+    {
+      "path": "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\ai\\data\\equilibrium_extended.csv",
+      "sha256": "8d26ae7ebb69e7b378b62e40329f749f266288634a944e0cce36c73fca7ecb23",
+      "rows_read": 1345
+    },
+    {
+      "path": "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\ai\\data\\equilibrium_arrangements.csv",
+      "sha256": "f6be3cd1d0d03622d278ad793ad56556240e851014417053cd4889d4d61b073b",
+      "rows_read": 160
+    }
+  ],
+  "script_sha256": "b2dd98676f90fd8bf207258e69c309e9fc79790da8a5367167b68593efd6c6d8",
+  "software": {
+    "python": "3.13.5 | packaged by Anaconda, Inc. | (main, Jun 12 2025, 16:37:03) [MSC v.1929 64 bit (AMD64)]",
+    "numpy": "2.5.1",
+    "matplotlib": "3.11.1"
+  },
+  "arguments": {
+    "input": [
+      "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\ai\\data\\equilibrium_extended.csv",
+      "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\ai\\data\\equilibrium_arrangements.csv"
+    ],
+    "output": "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\ai\\analysis_equilibrium",
+    "figures": "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\ai\\figures_equilibrium",
+    "lmins": [
+      0,
+      12,
+      18,
+      27,
+      36,
+      45
+    ],
+    "reference_lmin": 18.0,
+    "ground_tol": 1e-08,
+    "plot_betas": [
+      0,
+      0.5,
+      1,
+      2,
+      4
+    ],
+    "comparison_L": 90,
+    "no_plots": false
+  },
+  "rows": 1505,
+  "ground_rows": 1005,
+  "obstructed_rows": 500,
+  "data_checks": {
+    "identical_duplicates_removed": 0,
+    "finite_rows_ignored": 0
+  },
+  "coverage": [
+    {
+      "pattern": "checker_AB",
+      "state_class": "obstructed",
+      "family": "special",
+      "m": 2,
+      "rows": 100,
+      "sizes": [
+        6,
+        12,
+        18,
+        24,
+        30,
+        36,
+        42,
+        48,
+        54,
+        72,
+        90
+      ],
+      "betas": [
+        0.0,
+        0.25,
+        0.5,
+        0.75,
+        1.0,
+        1.5,
+        2.0,
+        3.0,
+        4.0,
+        8.0
+      ],
+      "max_abs_premeasurement_excess": 39.198891248835935
+    },
+    {
+      "pattern": "diagonal_B_3",
+      "state_class": "ground",
+      "family": "special",
+      "m": 3,
+      "rows": 91,
+      "sizes": [
+        9,
+        18,
+        27,
+        36,
+        45,
+        54,
+        63,
+        72,
+        81,
+        90
+      ],
+      "betas": [
+        0.0,
+        0.25,
+        0.5,
+        0.75,
+        1.0,
+        1.5,
+        2.0,
+        3.0,
+        4.0,
+        8.0
+      ],
+      "max_abs_premeasurement_excess": 1.2732925824820995e-11
+    },
+    {
+      "pattern": "full_empty_checker",
+      "state_class": "obstructed",
+      "family": "general",
+      "m": 2,
+      "rows": 100,
+      "sizes": [
+        6,
+        12,
+        18,
+        24,
+        30,
+        36,
+        42,
+        48,
+        54,
+        72,
+        90
+      ],
+      "betas": [
+        0.0,
+        0.25,
+        0.5,
+        0.75,
+        1.0,
+        1.5,
+        2.0,
+        3.0,
+        4.0,
+        8.0
+      ],
+      "max_abs_premeasurement_excess": 104.584057857468
+    },
+    {
+      "pattern": "full_empty_cluster3",
+      "state_class": "ground",
+      "family": "general",
+      "m": 3,
+      "rows": 91,
+      "sizes": [
+        9,
+        18,
+        27,
+        36,
+        45,
+        54,
+        63,
+        72,
+        81,
+        90
+      ],
+      "betas": [
+        0.0,
+        0.25,
+        0.5,
+        0.75,
+        1.0,
+        1.5,
+        2.0,
+        3.0,
+        4.0,
+        8.0
+      ],
+      "max_abs_premeasurement_excess": 1.0913936421275139e-11
+    },
+    {
+      "pattern": "full_empty_x",
+      "state_class": "obstructed",
+      "family": "general",
+      "m": 2,
+      "rows": 100,
+      "sizes": [
+        6,
+        12,
+        18,
+        24,
+        30,
+        36,
+        42,
+        48,
+        54,
+        72,
+        90
+      ],
+      "betas": [
+        0.0,
+        0.25,
+        0.5,
+        0.75,
+        1.0,
+        1.5,
+        2.0,
+        3.0,
+        4.0,
+        8.0
+      ],
+      "max_abs_premeasurement_excess": 39.198891248837754
+    },
+    {
+      "pattern": "general_matched_a",
+      "state_class": "ground",
+      "family": "general",
+      "m": 3,
+      "rows": 40,
+      "sizes": [
+        9,
+        18,
+        27,
+        36,
+        45,
+        54,
+        63,
+        72,
+        81,
+        90
+      ],
+      "betas": [
+        0.0,
+        0.5,
+        1.0,
+        2.0
+      ],
+      "max_abs_premeasurement_excess": 1.2732925824820995e-11
+    },
+    {
+      "pattern": "general_matched_b",
+      "state_class": "ground",
+      "family": "general",
+      "m": 3,
+      "rows": 40,
+      "sizes": [
+        9,
+        18,
+        27,
+        36,
+        45,
+        54,
+        63,
+        72,
+        81,
+        90
+      ],
+      "betas": [
+        0.0,
+        0.5,
+        1.0,
+        2.0
+      ],
+      "max_abs_premeasurement_excess": 1.0913936421275139e-11
+    },
+    {
+      "pattern": "one_B_2",
+      "state_class": "ground",
+      "family": "special",
+      "m": 2,
+      "rows": 136,
+      "sizes": [
+        6,
+        12,
+        18,
+        24,
+        30,
+        36,
+        42,
+        48,
+        54,
+        60,
+        66,
+        72,
+        78,
+        84,
+        90
+      ],
+      "betas": [
+        0.0,
+        0.25,
+        0.5,
+        0.75,
+        1.0,
+        1.5,
+        2.0,
+        3.0,
+        4.0,
+        8.0
+      ],
+      "max_abs_premeasurement_excess": 1.6370904631912708e-11
+    },
+    {
+      "pattern": "one_B_3",
+      "state_class": "ground",
+      "family": "special",
+      "m": 3,
+      "rows": 91,
+      "sizes": [
+        9,
+        18,
+        27,
+        36,
+        45,
+        54,
+        63,
+        72,
+        81,
+        90
+      ],
+      "betas": [
+        0.0,
+        0.25,
+        0.5,
+        0.75,
+        1.0,
+        1.5,
+        2.0,
+        3.0,
+        4.0,
+        8.0
+      ],
+      "max_abs_premeasurement_excess": 1.0913936421275139e-11
+    },
+    {
+      "pattern": "random_half_3",
+      "state_class": "ground",
+      "family": "general",
+      "m": 3,
+      "rows": 91,
+      "sizes": [
+        9,
+        18,
+        27,
+        36,
+        45,
+        54,
+        63,
+        72,
+        81,
+        90
+      ],
+      "betas": [
+        0.0,
+        0.25,
+        0.5,
+        0.75,
+        1.0,
+        1.5,
+        2.0,
+        3.0,
+        4.0,
+        8.0
+      ],
+      "max_abs_premeasurement_excess": 1.2732925824820995e-11
+    },
+    {
+      "pattern": "special_matched_a",
+      "state_class": "ground",
+      "family": "special",
+      "m": 3,
+      "rows": 40,
+      "sizes": [
+        9,
+        18,
+        27,
+        36,
+        45,
+        54,
+        63,
+        72,
+        81,
+        90
+      ],
+      "betas": [
+        0.0,
+        0.5,
+        1.0,
+        2.0
+      ],
+      "max_abs_premeasurement_excess": 1.2732925824820995e-11
+    },
+    {
+      "pattern": "special_matched_b",
+      "state_class": "ground",
+      "family": "special",
+      "m": 3,
+      "rows": 40,
+      "sizes": [
+        9,
+        18,
+        27,
+        36,
+        45,
+        54,
+        63,
+        72,
+        81,
+        90
+      ],
+      "betas": [
+        0.0,
+        0.5,
+        1.0,
+        2.0
+      ],
+      "max_abs_premeasurement_excess": 1.2732925824820995e-11
+    },
+    {
+      "pattern": "stripe_AB_x",
+      "state_class": "obstructed",
+      "family": "special",
+      "m": 2,
+      "rows": 100,
+      "sizes": [
+        6,
+        12,
+        18,
+        24,
+        30,
+        36,
+        42,
+        48,
+        54,
+        72,
+        90
+      ],
+      "betas": [
+        0.0,
+        0.25,
+        0.5,
+        0.75,
+        1.0,
+        1.5,
+        2.0,
+        3.0,
+        4.0,
+        8.0
+      ],
+      "max_abs_premeasurement_excess": 104.58405785746436
+    },
+    {
+      "pattern": "stripe_AB_y",
+      "state_class": "obstructed",
+      "family": "special",
+      "m": 2,
+      "rows": 100,
+      "sizes": [
+        6,
+        12,
+        18,
+        24,
+        30,
+        36,
+        42,
+        48,
+        54,
+        72,
+        90
+      ],
+      "betas": [
+        0.0,
+        0.25,
+        0.5,
+        0.75,
+        1.0,
+        1.5,
+        2.0,
+        3.0,
+        4.0,
+        8.0
+      ],
+      "max_abs_premeasurement_excess": 104.584057857468
+    },
+    {
+      "pattern": "two_B_3",
+      "state_class": "ground",
+      "family": "special",
+      "m": 3,
+      "rows": 91,
+      "sizes": [
+        9,
+        18,
+        27,
+        36,
+        45,
+        54,
+        63,
+        72,
+        81,
+        90
+      ],
+      "betas": [
+        0.0,
+        0.25,
+        0.5,
+        0.75,
+        1.0,
+        1.5,
+        2.0,
+        3.0,
+        4.0,
+        8.0
+      ],
+      "max_abs_premeasurement_excess": 1.2732925824820995e-11
+    },
+    {
+      "pattern": "uniform_A",
+      "state_class": "ground",
+      "family": "special",
+      "m": 1,
+      "rows": 127,
+      "sizes": [
+        12,
+        18,
+        24,
+        30,
+        36,
+        42,
+        48,
+        54,
+        60,
+        66,
+        72,
+        78,
+        84,
+        90
+      ],
+      "betas": [
+        0.0,
+        0.25,
+        0.5,
+        0.75,
+        1.0,
+        1.5,
+        2.0,
+        3.0,
+        4.0,
+        8.0
+      ],
+      "max_abs_premeasurement_excess": 1.8189894035458565e-12
+    },
+    {
+      "pattern": "uniform_B",
+      "state_class": "ground",
+      "family": "special",
+      "m": 1,
+      "rows": 127,
+      "sizes": [
+        12,
+        18,
+        24,
+        30,
+        36,
+        42,
+        48,
+        54,
+        60,
+        66,
+        72,
+        78,
+        84,
+        90
+      ],
+      "betas": [
+        0.0,
+        0.25,
+        0.5,
+        0.75,
+        1.0,
+        1.5,
+        2.0,
+        3.0,
+        4.0,
+        8.0
+      ],
+      "max_abs_premeasurement_excess": 5.4569682106375694e-12
+    }
+  ],
+  "matched_pattern_catalogue_source": {
+    "path": "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\ai\\data\\arrangement_selection.csv",
+    "sha256": "e2a77d15a4d0602d48abcdefee56b6fd02c16c4f5d4ca67553e96ca5b554b007",
+    "rows": 4
+  },
+  "fit_counts": {
+    "raw_region": 8223,
+    "difference": 5482,
+    "geometry_joint": 674
+  },
+  "definitions": {
+    "normalization": "single-species Renyi-2 entropy, natural logarithms",
+    "state_class": "abs(premeasurement_excess) < ground_tol; NEVER classify by measured energy",
+    "reference_window": "smallest available fitted Lmin >= reference_lmin, per model",
+    "canonical_raw_A_C": "aL+b+d/L",
+    "canonical_raw_B": "aL+q*ln(L)+b+d/L; corner coefficient c=-q",
+    "D": "(2*S_A+S_C)/3-S_B; independent fit c*ln(L)+b+d/L",
+    "joint_model": "SA=aA*L+bA+dA/L; SC=aC*L+bC+dC/L; SB=(2*aA+aC)*L/3-c*ln(L)+bB+dB/L",
+    "area_mismatch": "independent aB-(2*aA+aC)/3; geometry is checked, not forced in raw fits",
+    "leave_one_out": "raw fits leave one L out; joint fits also report leaving all 3 rows of one L out",
+    "uncertainty": "fit-window range, not statistical confidence; numerical/model errors not inferred from RMSE",
+    "window_range_scope": "all supported requested Lmin windows, including those below the reference window; inspect individual fits for matched-window comparisons"
+  },
+  "limitations": [
+    "A small raw-entropy residual can coexist with an uncertain subleading logarithm.",
+    "Ground-state energy equality does not establish identical zero-mode occupation.",
+    "Every comparison is finite-size and specific to the selected initial-state/measurement protocol.",
+    "The geometry joint model is a constrained diagnostic; independent fits and held-out residuals remain authoritative checks.",
+    "Effective log coefficients are not established thermodynamic corner coefficients when raw-region models disagree or window drift remains substantial.",
+    "Ground and obstructed states are never pooled in a fit or cross-pattern figure."
+  ]
+}

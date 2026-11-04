@@ -1,0 +1,57 @@
+final_E = [6, 104, 259, 57, 135, 76, 91, 172, 100, 201, 227, 282, 72, 54, 280, 210, 267, 56, 147, 181, 66, 131, 90, 245, 87, 186, 187, 248, 202, 113, 179, 263, 276, 122, 43, 196, 208, 164, 241, 285, 64, 230, 79, 84, 194, 207, 200, 18, 23, 166, 47, 183, 37, 281, 167, 278, 50, 249, 93, 77, 28, 213, 39, 35, 141, 152, 165, 190, 287, 271, 24, 151, 65, 146, 239, 214, 140, 44, 40, 98, 132, 157, 171, 162, 283, 80, 123, 12, 264, 107, 27, 235, 275, 260, 74, 71, 102, 219, 206, 8, 192, 119, 120, 223, 251, 198, 273, 182, 212, 133, 33, 177, 178, 199, 115, 269, 52, 109, 26, 22, 67, 45, 247, 138, 111, 243, 191, 105, 139, 148, 61, 32, 153, 118, 2, 195, 10, 58, 130, 124, 255, 265, 59, 78]
+maximum_inverse_asymmetry = 1.1027623258996755e-11
+elapsed_seconds = 11.719000101089478
+blas_threads = 1
+initial_state_definition = "E is the suppressed set. Even L: both sublattices on odd x columns; odd L: alternate full/empty through L-1 and only A on final column. uniform_A/B mean E=A/B."
+started_at = "2026-10-27T15:53:38.806"
+acceptance = 0.28881995506535946
+accepted = 362000
+initial_E = [172, 182, 113, 258, 168, 197, 241, 147, 18, 16, 269, 285, 282, 99, 53, 256, 65, 87, 185, 209, 191, 106, 63, 121, 214, 30, 279, 135, 45, 7, 69, 210, 208, 225, 250, 88, 91, 146, 193, 55, 35, 260, 244, 111, 272, 71, 29, 246, 170, 72, 259, 233, 165, 56, 218, 280, 97, 254, 221, 124, 206, 66, 196, 105, 144, 78, 176, 151, 43, 122, 138, 199, 180, 283, 153, 70, 5, 145, 62, 139, 131, 161, 33, 103, 8, 222, 216, 198, 74, 150, 140, 219, 237, 19, 184, 58, 174, 253, 129, 235, 59, 27, 169, 37, 188, 6, 156, 154, 48, 251, 68, 77, 2, 220, 112, 125, 211, 51, 227, 85, 90, 274, 94, 15, 11, 177, 110, 61, 204, 84, 95, 13, 163, 100, 240, 143, 108, 136, 32, 205, 137, 263, 160, 20]
+julia_version = "1.12.1"
+status = "complete"
+refreshes = 870
+plan_sha256 = "3f3929b15eec47c5720b7f481240ab66f36e843a4a09761cf98f7658ae427909"
+records = 4352
+model_manifest_sha256 = "166830ba189efb767434d6940fcd6ddcb44f5b6c63ffd26ad203b2ce1f5a9992"
+proposed = 1253376
+model_manifest = "data/born_scaling/production/models/state_L12_staggered_mu1.0e-8_model.toml"
+maximum_logweight_drift = 2.3177904040494468e-10
+maximum_inverse_drift = 1.2909224049873401e-10
+completed_at = "2026-10-27T15:53:50.522"
+
+[source_sha256]
+"run_born_scaling.jl" = "3d9004c1d112a29ee1a7b440a945dc89516f7cabba8e279e0e5dd145e5a65c76"
+"fused_original_swap_kernel.jl" = "da7d40a574902763417225417d30abce265a15f9804dbfa47882b46f8ed20d70"
+"original_swap_scaling.jl" = "1af51fff868fbe63025323618506295ce5622179c1381de5ea64549e8c0d40cb"
+"prepare_born_scaling_production.jl" = "9bda7e2de8c87d7d050cff3be7c62444c289281174d87ad7e8cf6a1ecf6a80a4"
+"run_born_scaling_fused.jl" = "3734470f7c633617a2a2b43d7d581c94e9c29f11af6efb0f523cabf266499fe3"
+"../../public/Geometry.jl" = "079c2052642d46a7072656ccd738411faa57c9f07791f786a0a6872a5a5970ad"
+
+[job]
+chain = 1
+output_dir = "data/born_scaling/production"
+L = 12
+mu = 1.0e-8
+state = "staggered"
+run_id = "production_L12_beta2p0_mu1p0em8_chain1_random"
+sweeps = 4352
+refresh_every = 5
+start = "random"
+model_manifest_sha256 = "166830ba189efb767434d6940fcd6ddcb44f5b6c63ffd26ad203b2ce1f5a9992"
+stage = "production"
+grid = "main"
+analysis_burnin = 256
+beta = 2.0
+model_manifest = "data/born_scaling/production/models/state_L12_staggered_mu1.0e-8_model.toml"
+seed = 1612200001
+retained_sweeps = 4096
+measure_every = 1
+
+[model_files]
+"state_L12_staggered_mu1.0e-8_G.bin" = "7047fe4445cfcaf330205a8f8bfa08c1b4695bfbccb69e6bc2ed88a0590a6c51"
+"state_L12_staggered_mu1.0e-8_Q.bin" = "c151aabb06fe3d3404812b46fa9dc06b99d3dbd207966c5c8ecb4eee06e5257c"
+"state_L12_staggered_mu1.0e-8_energies.bin" = "cab0c3e38e47d9783911c579bad81577aaf7fe3de16bef7ff345bde0c4ba3cc7"
+
+[files]
+"data/born_scaling/production/production_L12_beta2p0_mu1p0em8_chain1_random_initial.csv" = "36b861b2e843d770465326e93196c1134f109ea7206992dd0db68b6690679d0e"
+"data/born_scaling/production/production_L12_beta2p0_mu1p0em8_chain1_random_samples.csv" = "e832a51ae04bc57e364aa8df7d26a1993e970e2cfd20a538b21be1a4293ea7b0"

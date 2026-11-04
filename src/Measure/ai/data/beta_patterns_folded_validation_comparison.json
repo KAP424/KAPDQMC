@@ -1,0 +1,11 @@
+{
+  "status": "PASS",
+  "validated_utc": "2026-10-19T09:26:26.999335+00:00",
+  "rows": 18,
+  "max_S_A_S_C_S_B_D_error": 4.218847493575595e-14,
+  "tolerance": 1e-09,
+  "reference_path": "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\ai\\data\\beta_patterns_backend_openblas_validate.toml",
+  "reference_sha256": "6d3c1962569e3f285f5d536d04acbade97d226eaccfa35250dd5a5a7bf5111f8",
+  "observations_path": "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\ai\\data\\beta_patterns_folded_validation.csv",
+  "observations_sha256": "5d8c89bbc76232ea1207e43857e213460724b73e81f20d468b6e11939780afb9"
+}

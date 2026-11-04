@@ -1,0 +1,32 @@
+{
+  "recorded_utc": "2026-10-20",
+  "status": "Six examples selected by occupation class and ground-state reachability, before inspecting their new entropy coefficients. Three previously computed examples are reused with their original provenance.",
+  "patterns": ["one_B_2", "diagonal_B_3", "pure02_block4", "pure02_irregular4", "random_half_3", "general_matched_a"],
+  "pattern_metadata": {
+    "one_B_2": {"m": 2, "family": "special", "occupied_bits": "10101001", "occupancy_class": 1, "class_label": "Every cell: nA+nB=1", "equilibrium": {"Lmin": 18, "Lmax": 144, "lower_cuts": [18, 36, 54]}},
+    "diagonal_B_3": {"m": 3, "family": "special", "occupied_bits": "011010100110101001", "occupancy_class": 1, "class_label": "Every cell: nA+nB=1", "equilibrium": {"Lmin": 18, "Lmax": 144, "lower_cuts": [18, 36, 54]}},
+    "pure02_block4": {"m": 4, "family": "general", "occupied_bits": "11111111110011001100110000000000", "occupancy_class": 2, "class_label": "Every cell: nA+nB=0 or 2", "equilibrium": {"Lmin": 24, "Lmax": 144, "lower_cuts": [24, 36, 48]}},
+    "pure02_irregular4": {"m": 4, "family": "general", "occupied_bits": "11001111001100000011001111001100", "occupancy_class": 2, "class_label": "Every cell: nA+nB=0 or 2", "equilibrium": {"Lmin": 24, "Lmax": 144, "lower_cuts": [24, 36, 48]}},
+    "random_half_3": {"m": 3, "family": "general", "occupied_bits": "100110001011010110", "occupancy_class": 3, "class_label": "Mixed single, empty and double cells", "equilibrium": {"Lmin": 18, "Lmax": 144, "lower_cuts": [18, 36, 54]}},
+    "general_matched_a": {"m": 3, "family": "general", "occupied_bits": "011010111001011000", "occupancy_class": 3, "class_label": "Mixed single, empty and double cells", "equilibrium": {"Lmin": 18, "Lmax": 144, "lower_cuts": [18, 36, 54]}}
+  },
+  "inputs": ["data/ground_observations_baseline.csv", "data/ref_calibration_observations.csv", "data/ref_calibration_equilibrium.csv", "data/ref_calibration_late.csv", "data/random_half3_beta1_observations.csv", "data/beta_patterns_observations.csv", "data/occupancy_classes_observations.csv"],
+  "betas": [0, 0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2],
+  "primary": {"L": 180, "comparison_L": 144, "window": [4, 7], "model": "log_inv1_inv2"},
+  "windows": [[4, 7], [4.5, 7], [4, 6.5], [5, 7], [5, 8], [6, 9]],
+  "theta_min_screen": 4,
+  "theta_over_L_max_screen": 0.05,
+  "equilibrium_primary": {"model": "log_inv1"},
+  "required_finite_grids": [
+    {"patterns": ["one_B_2", "diagonal_B_3", "pure02_block4", "pure02_irregular4", "random_half_3", "general_matched_a"], "L": [144, 180], "theta": [4, 4.5, 5, 5.5, 6, 6.5, 7], "beta": [0, 0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2]},
+    {"patterns": ["one_B_2", "diagonal_B_3", "pure02_block4", "pure02_irregular4", "random_half_3", "general_matched_a"], "L": [180], "theta": [7.5, 8], "beta": [0, 0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2]}
+  ],
+  "required_equilibrium_grids": [
+    {"patterns": ["one_B_2"], "L": [18, 24, 30, 36, 42, 48, 54, 60, 66, 72, 78, 84, 90, 108, 126, 144], "theta": ["Inf"], "beta": [0, 0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2]},
+    {"patterns": ["diagonal_B_3", "random_half_3", "general_matched_a"], "L": [18, 27, 36, 45, 54, 63, 72, 81, 90, 108, 126, 144], "theta": ["Inf"], "beta": [0, 0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2]},
+    {"patterns": ["pure02_block4", "pure02_irregular4"], "L": [24, 36, 48, 60, 72, 84, 96, 108, 120, 132, 144], "theta": ["Inf"], "beta": [0, 0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2]}
+  ],
+  "protocol": "Same periodic HoneyComb120 real hopping; half-filled product state; exact finite-theta evolution then own-empty-site exp(-2beta) filter and QR. Equilibrium means the accessible ground state before measurement. Single-species natural-log S2; fixed origin (1,1); all three entropies independent; D=(2SA+SC)/3-SB.",
+  "interpretation": "Finite-window coefficients are reported even when diagnostics fail, with explicit unresolved labels. No parameter is selected to match the equilibrium coefficient. Model/window ranges are sensitivity intervals, not statistical confidence intervals. The six examples cannot establish a theorem about their entire occupation classes.",
+  "revisions": []
+}

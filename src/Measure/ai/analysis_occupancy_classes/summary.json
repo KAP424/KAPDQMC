@@ -1,0 +1,793 @@
+{
+  "generated_utc": "2026-10-20T15:54:06.061101+00:00",
+  "stage": "final",
+  "script_sha256": "f997cd25ad9d7cf757b8a1c076a4a56faa70416f2606f48249ed241f192deb5e",
+  "plan_sha256": "14076688e07d18174ee6a3885c2306ecef05f5f302fc5b65c9d89221c91906d1",
+  "plan": {
+    "recorded_utc": "2026-10-20",
+    "status": "Six examples selected by occupation class and ground-state reachability, before inspecting their new entropy coefficients. Three previously computed examples are reused with their original provenance.",
+    "patterns": [
+      "one_B_2",
+      "diagonal_B_3",
+      "pure02_block4",
+      "pure02_irregular4",
+      "random_half_3",
+      "general_matched_a"
+    ],
+    "pattern_metadata": {
+      "one_B_2": {
+        "m": 2,
+        "family": "special",
+        "occupied_bits": "10101001",
+        "occupancy_class": 1,
+        "class_label": "Every cell: nA+nB=1",
+        "equilibrium": {
+          "Lmin": 18,
+          "Lmax": 144,
+          "lower_cuts": [
+            18,
+            36,
+            54
+          ]
+        }
+      },
+      "diagonal_B_3": {
+        "m": 3,
+        "family": "special",
+        "occupied_bits": "011010100110101001",
+        "occupancy_class": 1,
+        "class_label": "Every cell: nA+nB=1",
+        "equilibrium": {
+          "Lmin": 18,
+          "Lmax": 144,
+          "lower_cuts": [
+            18,
+            36,
+            54
+          ]
+        }
+      },
+      "pure02_block4": {
+        "m": 4,
+        "family": "general",
+        "occupied_bits": "11111111110011001100110000000000",
+        "occupancy_class": 2,
+        "class_label": "Every cell: nA+nB=0 or 2",
+        "equilibrium": {
+          "Lmin": 24,
+          "Lmax": 144,
+          "lower_cuts": [
+            24,
+            36,
+            48
+          ]
+        }
+      },
+      "pure02_irregular4": {
+        "m": 4,
+        "family": "general",
+        "occupied_bits": "11001111001100000011001111001100",
+        "occupancy_class": 2,
+        "class_label": "Every cell: nA+nB=0 or 2",
+        "equilibrium": {
+          "Lmin": 24,
+          "Lmax": 144,
+          "lower_cuts": [
+            24,
+            36,
+            48
+          ]
+        }
+      },
+      "random_half_3": {
+        "m": 3,
+        "family": "general",
+        "occupied_bits": "100110001011010110",
+        "occupancy_class": 3,
+        "class_label": "Mixed single, empty and double cells",
+        "equilibrium": {
+          "Lmin": 18,
+          "Lmax": 144,
+          "lower_cuts": [
+            18,
+            36,
+            54
+          ]
+        }
+      },
+      "general_matched_a": {
+        "m": 3,
+        "family": "general",
+        "occupied_bits": "011010111001011000",
+        "occupancy_class": 3,
+        "class_label": "Mixed single, empty and double cells",
+        "equilibrium": {
+          "Lmin": 18,
+          "Lmax": 144,
+          "lower_cuts": [
+            18,
+            36,
+            54
+          ]
+        }
+      }
+    },
+    "inputs": [
+      "data/ground_observations_baseline.csv",
+      "data/ref_calibration_observations.csv",
+      "data/ref_calibration_equilibrium.csv",
+      "data/ref_calibration_late.csv",
+      "data/random_half3_beta1_observations.csv",
+      "data/beta_patterns_observations.csv",
+      "data/occupancy_classes_observations.csv"
+    ],
+    "betas": [
+      0,
+      0.25,
+      0.5,
+      0.75,
+      1,
+      1.25,
+      1.5,
+      1.75,
+      2
+    ],
+    "primary": {
+      "L": 180,
+      "comparison_L": 144,
+      "window": [
+        4,
+        7
+      ],
+      "model": "log_inv1_inv2"
+    },
+    "windows": [
+      [
+        4,
+        7
+      ],
+      [
+        4.5,
+        7
+      ],
+      [
+        4,
+        6.5
+      ],
+      [
+        5,
+        7
+      ],
+      [
+        5,
+        8
+      ],
+      [
+        6,
+        9
+      ]
+    ],
+    "theta_min_screen": 4,
+    "theta_over_L_max_screen": 0.05,
+    "equilibrium_primary": {
+      "model": "log_inv1"
+    },
+    "required_finite_grids": [
+      {
+        "patterns": [
+          "one_B_2",
+          "diagonal_B_3",
+          "pure02_block4",
+          "pure02_irregular4",
+          "random_half_3",
+          "general_matched_a"
+        ],
+        "L": [
+          144,
+          180
+        ],
+        "theta": [
+          4,
+          4.5,
+          5,
+          5.5,
+          6,
+          6.5,
+          7
+        ],
+        "beta": [
+          0,
+          0.25,
+          0.5,
+          0.75,
+          1,
+          1.25,
+          1.5,
+          1.75,
+          2
+        ]
+      },
+      {
+        "patterns": [
+          "one_B_2",
+          "diagonal_B_3",
+          "pure02_block4",
+          "pure02_irregular4",
+          "random_half_3",
+          "general_matched_a"
+        ],
+        "L": [
+          180
+        ],
+        "theta": [
+          7.5,
+          8
+        ],
+        "beta": [
+          0,
+          0.25,
+          0.5,
+          0.75,
+          1,
+          1.25,
+          1.5,
+          1.75,
+          2
+        ]
+      }
+    ],
+    "required_equilibrium_grids": [
+      {
+        "patterns": [
+          "one_B_2"
+        ],
+        "L": [
+          18,
+          24,
+          30,
+          36,
+          42,
+          48,
+          54,
+          60,
+          66,
+          72,
+          78,
+          84,
+          90,
+          108,
+          126,
+          144
+        ],
+        "theta": [
+          "Inf"
+        ],
+        "beta": [
+          0,
+          0.25,
+          0.5,
+          0.75,
+          1,
+          1.25,
+          1.5,
+          1.75,
+          2
+        ]
+      },
+      {
+        "patterns": [
+          "diagonal_B_3",
+          "random_half_3",
+          "general_matched_a"
+        ],
+        "L": [
+          18,
+          27,
+          36,
+          45,
+          54,
+          63,
+          72,
+          81,
+          90,
+          108,
+          126,
+          144
+        ],
+        "theta": [
+          "Inf"
+        ],
+        "beta": [
+          0,
+          0.25,
+          0.5,
+          0.75,
+          1,
+          1.25,
+          1.5,
+          1.75,
+          2
+        ]
+      },
+      {
+        "patterns": [
+          "pure02_block4",
+          "pure02_irregular4"
+        ],
+        "L": [
+          24,
+          36,
+          48,
+          60,
+          72,
+          84,
+          96,
+          108,
+          120,
+          132,
+          144
+        ],
+        "theta": [
+          "Inf"
+        ],
+        "beta": [
+          0,
+          0.25,
+          0.5,
+          0.75,
+          1,
+          1.25,
+          1.5,
+          1.75,
+          2
+        ]
+      }
+    ],
+    "protocol": "Same periodic HoneyComb120 real hopping; half-filled product state; exact finite-theta evolution then own-empty-site exp(-2beta) filter and QR. Equilibrium means the accessible ground state before measurement. Single-species natural-log S2; fixed origin (1,1); all three entropies independent; D=(2SA+SC)/3-SB.",
+    "interpretation": "Finite-window coefficients are reported even when diagnostics fail, with explicit unresolved labels. No parameter is selected to match the equilibrium coefficient. Model/window ranges are sensitivity intervals, not statistical confidence intervals. The six examples cannot establish a theorem about their entire occupation classes.",
+    "revisions": []
+  },
+  "dependencies": [
+    {
+      "path": "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\ai\\analyze_uniformA_dense.py",
+      "sha256": "774c1c39bd7618e8869d5bf8b72e3f52b4b99c9ce1db14e2673a11a377c1aae4"
+    },
+    {
+      "path": "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\ai\\analyze_beta_patterns.py",
+      "sha256": "b6383180df431286f4e9a8692c6e9a35203a02553f951462e79bf0e808b9fb6f"
+    }
+  ],
+  "sources": [
+    {
+      "path": "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\ai\\data\\ground_observations_baseline.csv",
+      "sha256": "8ba744bfef3730840ae3f143bffebc44dd27c8286644dfaf3f24c4604e3a5033",
+      "size_bytes": 498490,
+      "rows": 3201,
+      "ignored_incomplete_tail_bytes": 0,
+      "parsed_snapshot": "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\ai\\analysis_occupancy_classes\\source_snapshots\\ground_observations_baseline_8ba744bfef37.csv",
+      "parsed_sha256": "8ba744bfef3730840ae3f143bffebc44dd27c8286644dfaf3f24c4604e3a5033"
+    },
+    {
+      "path": "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\ai\\data\\ref_calibration_observations.csv",
+      "sha256": "a10427b188eb38ef7d98064a31766ba471f4732432c4d682f197afde72306a43",
+      "size_bytes": 457464,
+      "rows": 873,
+      "ignored_incomplete_tail_bytes": 0,
+      "parsed_snapshot": "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\ai\\analysis_occupancy_classes\\source_snapshots\\ref_calibration_observations_a10427b188eb.csv",
+      "parsed_sha256": "a10427b188eb38ef7d98064a31766ba471f4732432c4d682f197afde72306a43"
+    },
+    {
+      "path": "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\ai\\data\\ref_calibration_equilibrium.csv",
+      "sha256": "3c2e1ad4f4f2e617972ce37d7be14a303bf41babd054cdb19646e4aea4aa115f",
+      "size_bytes": 19139,
+      "rows": 36,
+      "ignored_incomplete_tail_bytes": 0,
+      "parsed_snapshot": "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\ai\\analysis_occupancy_classes\\source_snapshots\\ref_calibration_equilibrium_3c2e1ad4f4f2.csv",
+      "parsed_sha256": "3c2e1ad4f4f2e617972ce37d7be14a303bf41babd054cdb19646e4aea4aa115f"
+    },
+    {
+      "path": "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\ai\\data\\ref_calibration_late.csv",
+      "sha256": "bacd00aa7784eb08fe808341ee46c66c0c9e5ee2120da9f142dd96cc921ed77d",
+      "size_bytes": 60540,
+      "rows": 115,
+      "ignored_incomplete_tail_bytes": 0,
+      "parsed_snapshot": "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\ai\\analysis_occupancy_classes\\source_snapshots\\ref_calibration_late_bacd00aa7784.csv",
+      "parsed_sha256": "bacd00aa7784eb08fe808341ee46c66c0c9e5ee2120da9f142dd96cc921ed77d"
+    },
+    {
+      "path": "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\ai\\data\\random_half3_beta1_observations.csv",
+      "sha256": "89eb5964c39ff255318bd0085989e24cbc24e5d926aa3c610106e2cd8a418e47",
+      "size_bytes": 44627,
+      "rows": 82,
+      "ignored_incomplete_tail_bytes": 0,
+      "parsed_snapshot": "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\ai\\analysis_occupancy_classes\\source_snapshots\\random_half3_beta1_observations_89eb5964c39f.csv",
+      "parsed_sha256": "89eb5964c39ff255318bd0085989e24cbc24e5d926aa3c610106e2cd8a418e47"
+    },
+    {
+      "path": "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\ai\\data\\beta_patterns_observations.csv",
+      "sha256": "490d28a2b2b7a0a6a3a42ce49db5c558d3d991c0d369025721ade2132df3d4d1",
+      "size_bytes": 588567,
+      "rows": 909,
+      "ignored_incomplete_tail_bytes": 0,
+      "parsed_snapshot": "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\ai\\analysis_occupancy_classes\\source_snapshots\\beta_patterns_observations_490d28a2b2b7.csv",
+      "parsed_sha256": "490d28a2b2b7a0a6a3a42ce49db5c558d3d991c0d369025721ade2132df3d4d1"
+    },
+    {
+      "path": "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\ai\\data\\occupancy_classes_observations.csv",
+      "sha256": "7321ec21400690f1b353d729192a90691b347df67f43f201b571e948978b1a50",
+      "size_bytes": 468827,
+      "rows": 738,
+      "ignored_incomplete_tail_bytes": 0,
+      "parsed_snapshot": "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\ai\\analysis_occupancy_classes\\source_snapshots\\occupancy_classes_observations_7321ec214006.csv",
+      "parsed_sha256": "7321ec21400690f1b353d729192a90691b347df67f43f201b571e948978b1a50"
+    }
+  ],
+  "sources_changed_during_analysis": [],
+  "dependency_changed_during_analysis": false,
+  "plan_changed_during_analysis": false,
+  "patterns": {
+    "one_B_2": {
+      "m": 2,
+      "occupied_bits": "10101001",
+      "family": "special",
+      "occupancy_class": 1,
+      "class_label": "Every cell: nA+nB=1",
+      "double_cells": 0,
+      "empty_cells": 0,
+      "single_cells": 4,
+      "equilibrium": {
+        "Lmin": 18,
+        "Lmax": 144,
+        "lower_cuts": [
+          18,
+          36,
+          54
+        ]
+      }
+    },
+    "diagonal_B_3": {
+      "m": 3,
+      "occupied_bits": "011010100110101001",
+      "family": "special",
+      "occupancy_class": 1,
+      "class_label": "Every cell: nA+nB=1",
+      "double_cells": 0,
+      "empty_cells": 0,
+      "single_cells": 9,
+      "equilibrium": {
+        "Lmin": 18,
+        "Lmax": 144,
+        "lower_cuts": [
+          18,
+          36,
+          54
+        ]
+      }
+    },
+    "pure02_block4": {
+      "m": 4,
+      "occupied_bits": "11111111110011001100110000000000",
+      "family": "general",
+      "occupancy_class": 2,
+      "class_label": "Every cell: nA+nB=0 or 2",
+      "double_cells": 8,
+      "empty_cells": 8,
+      "single_cells": 0,
+      "equilibrium": {
+        "Lmin": 24,
+        "Lmax": 144,
+        "lower_cuts": [
+          24,
+          36,
+          48
+        ]
+      }
+    },
+    "pure02_irregular4": {
+      "m": 4,
+      "occupied_bits": "11001111001100000011001111001100",
+      "family": "general",
+      "occupancy_class": 2,
+      "class_label": "Every cell: nA+nB=0 or 2",
+      "double_cells": 8,
+      "empty_cells": 8,
+      "single_cells": 0,
+      "equilibrium": {
+        "Lmin": 24,
+        "Lmax": 144,
+        "lower_cuts": [
+          24,
+          36,
+          48
+        ]
+      }
+    },
+    "random_half_3": {
+      "m": 3,
+      "occupied_bits": "100110001011010110",
+      "family": "general",
+      "occupancy_class": 3,
+      "class_label": "Mixed single, empty and double cells",
+      "double_cells": 1,
+      "empty_cells": 1,
+      "single_cells": 7,
+      "equilibrium": {
+        "Lmin": 18,
+        "Lmax": 144,
+        "lower_cuts": [
+          18,
+          36,
+          54
+        ]
+      }
+    },
+    "general_matched_a": {
+      "m": 3,
+      "occupied_bits": "011010111001011000",
+      "family": "general",
+      "occupancy_class": 3,
+      "class_label": "Mixed single, empty and double cells",
+      "double_cells": 1,
+      "empty_cells": 1,
+      "single_cells": 7,
+      "equilibrium": {
+        "Lmin": 18,
+        "Lmax": 144,
+        "lower_cuts": [
+          18,
+          36,
+          54
+        ]
+      }
+    }
+  },
+  "betas": [
+    0.0,
+    0.25,
+    0.5,
+    0.75,
+    1.0,
+    1.25,
+    1.5,
+    1.75,
+    2.0
+  ],
+  "windows": [
+    [
+      4.0,
+      7.0
+    ],
+    [
+      4.5,
+      7.0
+    ],
+    [
+      4.0,
+      6.5
+    ],
+    [
+      5.0,
+      7.0
+    ],
+    [
+      5.0,
+      8.0
+    ],
+    [
+      6.0,
+      9.0
+    ]
+  ],
+  "primary": {
+    "one_B_2": {
+      "default": {
+        "L": 180,
+        "comparison_L": 144,
+        "window": [
+          4,
+          7
+        ],
+        "model": "log_inv1_inv2"
+      },
+      "by_beta": {}
+    },
+    "diagonal_B_3": {
+      "default": {
+        "L": 180,
+        "comparison_L": 144,
+        "window": [
+          4,
+          7
+        ],
+        "model": "log_inv1_inv2"
+      },
+      "by_beta": {}
+    },
+    "pure02_block4": {
+      "default": {
+        "L": 180,
+        "comparison_L": 144,
+        "window": [
+          4,
+          7
+        ],
+        "model": "log_inv1_inv2"
+      },
+      "by_beta": {}
+    },
+    "pure02_irregular4": {
+      "default": {
+        "L": 180,
+        "comparison_L": 144,
+        "window": [
+          4,
+          7
+        ],
+        "model": "log_inv1_inv2"
+      },
+      "by_beta": {}
+    },
+    "random_half_3": {
+      "default": {
+        "L": 180,
+        "comparison_L": 144,
+        "window": [
+          4,
+          7
+        ],
+        "model": "log_inv1_inv2"
+      },
+      "by_beta": {}
+    },
+    "general_matched_a": {
+      "default": {
+        "L": 180,
+        "comparison_L": 144,
+        "window": [
+          4,
+          7
+        ],
+        "model": "log_inv1_inv2"
+      },
+      "by_beta": {}
+    }
+  },
+  "rows": 2696,
+  "duplicates": 382,
+  "required_keys": 1530,
+  "required_grid_complete": true,
+  "missing_required_keys": 0,
+  "primary_complete": true,
+  "primary_rows": 54,
+  "figures": [
+    "one_B_2_corner_coefficient_beta",
+    "one_B_2_coefficient_diagnostics",
+    "one_B_2_scaling_beta_0",
+    "one_B_2_scaling_beta_0p5",
+    "one_B_2_scaling_beta_1",
+    "one_B_2_scaling_beta_1p5",
+    "one_B_2_scaling_beta_2",
+    "diagonal_B_3_corner_coefficient_beta",
+    "diagonal_B_3_coefficient_diagnostics",
+    "diagonal_B_3_scaling_beta_0",
+    "diagonal_B_3_scaling_beta_0p5",
+    "diagonal_B_3_scaling_beta_1",
+    "diagonal_B_3_scaling_beta_1p5",
+    "diagonal_B_3_scaling_beta_2",
+    "pure02_block4_corner_coefficient_beta",
+    "pure02_block4_coefficient_diagnostics",
+    "pure02_block4_scaling_beta_0",
+    "pure02_block4_scaling_beta_0p5",
+    "pure02_block4_scaling_beta_1",
+    "pure02_block4_scaling_beta_1p5",
+    "pure02_block4_scaling_beta_2",
+    "pure02_irregular4_corner_coefficient_beta",
+    "pure02_irregular4_coefficient_diagnostics",
+    "pure02_irregular4_scaling_beta_0",
+    "pure02_irregular4_scaling_beta_0p5",
+    "pure02_irregular4_scaling_beta_1",
+    "pure02_irregular4_scaling_beta_1p5",
+    "pure02_irregular4_scaling_beta_2",
+    "random_half_3_corner_coefficient_beta",
+    "random_half_3_coefficient_diagnostics",
+    "random_half_3_scaling_beta_0",
+    "random_half_3_scaling_beta_0p5",
+    "random_half_3_scaling_beta_1",
+    "random_half_3_scaling_beta_1p5",
+    "random_half_3_scaling_beta_2",
+    "general_matched_a_corner_coefficient_beta",
+    "general_matched_a_coefficient_diagnostics",
+    "general_matched_a_scaling_beta_0",
+    "general_matched_a_scaling_beta_0p5",
+    "general_matched_a_scaling_beta_1",
+    "general_matched_a_scaling_beta_1p5",
+    "general_matched_a_scaling_beta_2",
+    "corner_coefficients_by_class"
+  ],
+  "arguments": {
+    "plan": "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\ai\\analysis_occupancy_classes\\plan.json",
+    "inputs": null,
+    "output": "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\ai\\analysis_occupancy_classes",
+    "figures": "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\ai\\figures_occupancy_classes",
+    "stage": "final",
+    "plot_betas": [
+      0,
+      0.5,
+      1,
+      1.5,
+      2
+    ],
+    "no_plots": false,
+    "self_check": false,
+    "validate_fits": false
+  },
+  "fit_counts": {
+    "equilibrium_fits": 324,
+    "time_individual_fits": 1338,
+    "time_pair_fits": 1100,
+    "raw_entropy_fits": 972
+  },
+  "by_pattern": {
+    "one_B_2": {
+      "required_keys": 288,
+      "missing_required_keys": 0,
+      "available_eq": 9,
+      "available_time": 9,
+      "local_pass_beta": [
+        0.0,
+        0.25
+      ]
+    },
+    "diagonal_B_3": {
+      "required_keys": 252,
+      "missing_required_keys": 0,
+      "available_eq": 9,
+      "available_time": 9,
+      "local_pass_beta": [
+        0.5
+      ]
+    },
+    "pure02_block4": {
+      "required_keys": 243,
+      "missing_required_keys": 0,
+      "available_eq": 9,
+      "available_time": 9,
+      "local_pass_beta": []
+    },
+    "pure02_irregular4": {
+      "required_keys": 243,
+      "missing_required_keys": 0,
+      "available_eq": 9,
+      "available_time": 9,
+      "local_pass_beta": []
+    },
+    "random_half_3": {
+      "required_keys": 252,
+      "missing_required_keys": 0,
+      "available_eq": 9,
+      "available_time": 9,
+      "local_pass_beta": []
+    },
+    "general_matched_a": {
+      "required_keys": 252,
+      "missing_required_keys": 0,
+      "available_eq": 9,
+      "available_time": 9,
+      "local_pass_beta": [
+        0.0
+      ]
+    }
+  },
+  "conventions": {
+    "entropy": "single-species natural-log Renyi-2; no SA=SC assumption",
+    "observable": "D=(2SA+SC)/3-SB; fixed masks and cut origin; no phase averaging",
+    "equilibrium": "per-pattern actual Lmin/Lmax/lower cuts; log+constant+inverse size; inverse-square sensitivity",
+    "equilibrium_selector_adapter": "private metadata alias only for immutable primary helper; no fit/grid/value changes; all output bounds actual",
+    "time_fit": "common measured grids, both endpoints required, at least parameter_count+2 points",
+    "local_gates": "size<=2%, D_difference/log_span<=1%, model/window<=5%, same sign, full model set and >=2 windows; third size if present <=2% and decreasing",
+    "scope": "finite-window estimates, not certified asymptotic angle coefficients; no selection by eq agreement",
+    "scale_screen": "theta minimum and theta/L maximum apply to both primary and comparison; operational only",
+    "sensitivity": "available model/window ranges, not confidence intervals",
+    "axes": "explicit ln L and ln theta on linear axes; beta linear; overview class rows with independent y ranges and negative estimates retained"
+  }
+}

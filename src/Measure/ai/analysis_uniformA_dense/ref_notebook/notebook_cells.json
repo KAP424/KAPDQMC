@@ -1,0 +1,66 @@
+[
+  {
+    "index": 0,
+    "cell_type": "markdown",
+    "execution_count": null,
+    "source": "# 强制测量：纠缠熵与尺寸标度\n\n读取同目录的 EA.csv、EB.csv、ΔE.csv；首行是 β，首列是 L。同一 L 重复出现时取最后一行，三个文件应来自同一套计算参数。只需 NumPy 和 Matplotlib。\n\n下面依次显示 **1×3 总览图**、部分 β 的 **ΔS₂ = α ln L + c 拟合**、**α(β)**。L_MIN 控制拟合的最小尺寸，BETA_STEP 控制展示拟合图的 β 间隔；所有 β 都会参与拟合。",
+    "saved_text_output": []
+  },
+  {
+    "index": 1,
+    "cell_type": "code",
+    "execution_count": 1,
+    "source": "%matplotlib inline\nfrom pathlib import Path\nimport numpy as np\nimport matplotlib.pyplot as plt\n\nDATA_DIR = next(p for base in (Path.cwd(), *Path.cwd().parents)\n                for p in (base, base / \"src/Measure/Force\") if (p / \"EA.csv\").exists())\nL_MIN = 3\nBETA_STEP = 12\nOUT = DATA_DIR / \"figures\"\nOUT.mkdir(exist_ok=True)\n\ndef read_csv(name):\n    raw = np.loadtxt(DATA_DIR / name, delimiter=\",\", ndmin=2)\n    assert raw[0, 0] == 0 and np.isfinite(raw).all(), f\"{name}: 表头或数值有误\"\n    rows = {row[0]: row[1:] for row in raw[1:]}  # 重复 L 取最后一行\n    sizes = np.array(sorted(rows))\n    assert np.all(sizes > 0) and np.all(sizes == sizes.astype(int)), \"L 必须为正整数\"\n    return raw[0, 1:], sizes.astype(int), np.array([rows[L] for L in sizes])\n\nloaded = [read_csv(name) for name in (\"EA.csv\", \"EB.csv\", \"ΔE.csv\")]\nbeta, L, SA = loaded[0]\nassert np.all(np.diff(beta) > 0), \"beta 必须递增\"\nassert all(np.array_equal(b, beta) and np.array_equal(s, L) for b, s, _ in loaded)\nSB, DS = loaded[1][2], loaded[2][2]\nassert np.allclose(DS, SA - SB, rtol=1e-9, atol=1e-10), \"ΔE 与 EA - EB 不一致\"\nprint(f\"L = {L.tolist()}; beta = {beta[0]:g} … {beta[-1]:g} ({len(beta)} points)\")\n\ncolors = [\"#2166AC\", \"#D47719\", \"#7868A6\", \"#6F7E35\", \"#B34E7A\"]\nplt.rcParams.update({\"font.size\": 11, \"figure.dpi\": 120,\n                     \"axes.spines.top\": False, \"axes.spines.right\": False})\n\ndef show_save(fig, name):\n    for ext in (\"png\", \"pdf\"):\n        fig.savefig(OUT / f\"{name}.{ext}\", dpi=200, bbox_inches=\"tight\")\n    plt.show()\n",
+    "saved_text_output": [
+      "L = [3, 6, 9, 12, 15, 18, 21]; beta = 0.1 … 3 (59 points)\n"
+    ]
+  },
+  {
+    "index": 2,
+    "cell_type": "markdown",
+    "execution_count": null,
+    "source": "## 1×3 总览\n同一 L 在三个面板中使用相同颜色和标记，A、B 共用纵轴范围。",
+    "saved_text_output": []
+  },
+  {
+    "index": 3,
+    "cell_type": "code",
+    "execution_count": 2,
+    "source": "fig, axes = plt.subplots(1, 3, figsize=(15, 4.2), constrained_layout=True)\nfor ax, values, label in zip(axes, (SA, SB, DS),\n                              (r\"$S_2^A$\", r\"$S_2^B$\", r\"$\\Delta S_2$\")):\n    for i, size in enumerate(L):\n        ax.plot(beta, values[i], marker=\"os^DvPX\"[i % 7], markersize=4,\n                color=colors[i % 5], label=fr\"$L={size}$\")\n    ax.set(xlabel=r\"$\\beta$\", ylabel=label)\n    ax.grid(alpha=0.2)\n    ax.legend(frameon=False, fontsize=9)\nlimits = min(0, SA.min(), SB.min()), max(SA.max(), SB.max(), 1e-12) * 1.08\nfor ax in axes[:2]:\n    ax.set_ylim(limits)\nshow_save(fig, \"entropy_overview\")\n",
+    "saved_text_output": [
+      "<Figure size 1800x504 with 3 Axes>"
+    ]
+  },
+  {
+    "index": 4,
+    "cell_type": "markdown",
+    "execution_count": null,
+    "source": "## 每个 β 的尺寸拟合\n\n对选中的尺寸做等权最小二乘拟合：$\\Delta S_2(L)=\\alpha\\ln L+c$。下图每隔 BETA_STEP 个 β 展示一次，并包含最后一个 β；**各面板独立缩放纵轴**。点是原始数据，线是拟合。\n\nlog_scaling_fit.csv 保存所有 β 的 α、c 和残差 RMSE。它们是有限尺寸拟合结果；可以增大 L_MIN 检查稳定性。强测量下接近机器精度的数据，其微小拟合系数没有可靠的物理意义。",
+    "saved_text_output": []
+  },
+  {
+    "index": 5,
+    "cell_type": "code",
+    "execution_count": 3,
+    "source": "keep = L >= L_MIN\nassert keep.sum() >= 2, \"拟合至少需要两个不同尺寸\"\nassert BETA_STEP >= 1, \"BETA_STEP 必须为正整数\"\nx, y = np.log(L[keep]), DS[keep]\nalpha, c = np.polyfit(x, y, 1)  # 每一列对应一个 beta\nrmse = np.sqrt(np.mean((y - (x[:, None] * alpha + c))**2, axis=0))\nnp.savetxt(OUT / \"log_scaling_fit.csv\", np.column_stack((beta, alpha, c, rmse)),\n           delimiter=\",\", header=\"beta,alpha,c,rmse\", comments=\"\")\n\nchosen = np.unique(np.r_[np.arange(0, len(beta), BETA_STEP), len(beta) - 1])\nncols = min(3, len(chosen))\nfig, axes = plt.subplots(int(np.ceil(len(chosen) / ncols)), ncols, squeeze=False,\n                         figsize=(5 * ncols, 3.5 * int(np.ceil(len(chosen) / ncols))),\n                         constrained_layout=True)\nxx = np.linspace(x.min(), x.max(), 100)\nfor ax, j in zip(axes.flat, chosen):\n    ax.plot(x, y[:, j], \"o\", color=colors[0], label=\"Data\")\n    ax.plot(xx, alpha[j] * xx + c[j], \"-\", color=colors[1], label=\"Fit\")\n    ax.set(xlabel=r\"$\\ln L$\", ylabel=r\"$\\Delta S_2$\",\n           title=fr\"$\\beta={beta[j]:g},\\ \\alpha={alpha[j]:.3g}$\")\n    ax.ticklabel_format(axis=\"y\", style=\"sci\", scilimits=(-3, 3), useOffset=False)\n    ax.grid(alpha=0.2)\n    ax.legend(frameon=False)\nfor ax in list(axes.flat)[len(chosen):]:\n    ax.set_visible(False)\nshow_save(fig, \"log_scaling_examples\")\n",
+    "saved_text_output": [
+      "<Figure size 1800x840 with 6 Axes>"
+    ]
+  },
+  {
+    "index": 6,
+    "cell_type": "markdown",
+    "execution_count": null,
+    "source": "## $\\alpha$ 随 $\\beta$ 的变化",
+    "saved_text_output": []
+  },
+  {
+    "index": 7,
+    "cell_type": "code",
+    "execution_count": 4,
+    "source": "fig, ax = plt.subplots(figsize=(7, 4), constrained_layout=True)\nax.plot(beta, alpha, \"o-\", color=colors[0], markersize=4)\nax.axhline(0, color=\"0.5\", linewidth=0.8)\nax.set(xlabel=r\"$\\beta$\", ylabel=r\"$\\alpha$\",\n       title=f\"Logarithmic fit: L = {L[keep].min()}–{L[keep].max()} ({keep.sum()} sizes)\")\nax.grid(alpha=0.2)\nshow_save(fig, \"alpha_vs_beta\")\n",
+    "saved_text_output": [
+      "<Figure size 840x480 with 1 Axes>"
+    ]
+  }
+]

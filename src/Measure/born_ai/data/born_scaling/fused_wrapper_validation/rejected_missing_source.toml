@@ -1,0 +1,52 @@
+created_at = "2026-10-27T15:23:16.908"
+mu = 1.0e-8
+state = "staggered"
+max_inverse_drift_tolerance = 1.0e-5
+seed_formula = "930000000 + 100000000*stage_code + 1000000*L + 100*round(1000*beta) + chain; pilot=1,smallcheck=2"
+burnin_discarded = 0
+acceptance_columns = "accepted/proposed count all attempts since the previous recorded sample; measure_every=1 in these presets"
+update_kernel = "fused_rank_updates"
+version = 1
+blas_threads = 1
+stage = "kernel_validation"
+initial_02_stripe = "Even L: E contains both A/B on odd x columns. Odd L: alternate full/empty for x<=L-1, and place only A in the final column; this is half-filled but not pure 0/2."
+max_logweight_drift_tolerance = 1.0e-5
+phase = "all_recorded_no_burnin_discard"
+columns = ["L", "beta", "mu", "chain", "seed", "start", "sweep", "record_index", "measure_every", "SA", "SB", "SC", "D", "accepted", "proposed", "log_weight", "stage", "phase", "run_id", "refreshed", "inverse_drift", "logweight_drift"]
+sweep_definition = "2L^2 uniform E/S index pairs, with the original Metropolis acceptance rule; rejected states remain in the trace"
+
+[[models]]
+model_manifest = "data/born_scaling/smallcheck/models/state_L3_staggered_mu1.0e-8_model.toml"
+model_manifest_sha256 = "4d6ffe387f29f3fe6c64ed85b2f836c04aa2f92a73e9a415ed16783bc613f735"
+L = 3
+mu = 1.0e-8
+
+    [models.files]
+    "data/born_scaling/smallcheck/models/state_L3_staggered_mu1.0e-8_G.bin" = "b2a8fadcfe2f4d16c0c9b80f18148b57bf08f204589bd074ea5826475e6a4881"
+    "data/born_scaling/smallcheck/models/state_L3_staggered_mu1.0e-8_Q.bin" = "2907b68467db033bbe94cb6bad8c9a2320a38973ace2fd903ef281efbd1d2a0d"
+    "data/born_scaling/smallcheck/models/state_L3_staggered_mu1.0e-8_energies.bin" = "901d1d74f6bc6241722f0644ac2db02d075b01525dbc615ae17798887ba29d26"
+    "data/born_scaling/smallcheck/models/state_L3_staggered_mu1.0e-8_model.toml" = "4d6ffe387f29f3fe6c64ed85b2f836c04aa2f92a73e9a415ed16783bc613f735"
+
+[source_sha256]
+"../../public/Geometry.jl" = "079c2052642d46a7072656ccd738411faa57c9f07791f786a0a6872a5a5970ad"
+"run_born_scaling.jl" = "3d9004c1d112a29ee1a7b440a945dc89516f7cabba8e279e0e5dd145e5a65c76"
+"original_swap_scaling.jl" = "1af51fff868fbe63025323618506295ce5622179c1381de5ea64549e8c0d40cb"
+"run_born_scaling_fused.jl" = "3734470f7c633617a2a2b43d7d581c94e9c29f11af6efb0f523cabf266499fe3"
+"validate_fused_original_swap.jl" = "16199e6f3dd6b13223a397d0d0531259f8361920d440c22ba71297878743c575"
+
+[[jobs]]
+chain = 1
+output_dir = "data/born_scaling/fused_wrapper_validation"
+L = 3
+mu = 1.0e-8
+state = "staggered"
+run_id = "fused_wrapper_validation_L3_beta1p5"
+sweeps = 20
+refresh_every = 5
+start = "random"
+model_manifest_sha256 = "4d6ffe387f29f3fe6c64ed85b2f836c04aa2f92a73e9a415ed16783bc613f735"
+stage = "kernel_validation"
+beta = 1.5
+model_manifest = "data/born_scaling/smallcheck/models/state_L3_staggered_mu1.0e-8_model.toml"
+seed = 875003
+measure_every = 1

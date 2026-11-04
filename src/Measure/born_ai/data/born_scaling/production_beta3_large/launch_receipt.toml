@@ -1,0 +1,107 @@
+status = "launched"
+started_at = "2026-10-27T14:27:28.469011+00:00"
+plan_path = "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\born_ai\\data\\born_scaling\\production_beta3_large\\production_beta3_large_plan.toml"
+plan_sha256 = "3835a7f4af98fd0ae41bba5df2b94f96a48f0cbd6703b9d3b1ebfb0b7112bef9"
+launcher_sha256 = "b33eca2b78793ece954428862f9e3740b43df943a48a9b0585d4dd9ca7f676d7"
+working_directory = "D:\\JuliaDQMC\\code\\KAPDQMC"
+window_mode = "Windows CREATE_NO_WINDOW"
+update_kernel = "fused_rank_updates"
+execution_mode = "fresh_process_per_chain"
+workers = 4
+blas_threads_per_worker = 1
+
+[[worker_processes]]
+slot = 1
+run_id = "production_beta3_large_L27_beta3p0_mu1p0em8_chain1_random"
+pid = 36328
+command = ["C:\\Users\\admin\\AppData\\Local\\Microsoft\\WindowsApps\\julia.EXE", "--project=.", "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\born_ai\\run_born_beta3_fresh_chain.jl", "--plan=D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\born_ai\\data\\born_scaling\\production_beta3_large\\production_beta3_large_plan.toml", "--run-id=production_beta3_large_L27_beta3p0_mu1p0em8_chain1_random"]
+log = "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\born_ai\\data\\born_scaling\\production_beta3_large\\production_beta3_large_L27_beta3p0_mu1p0em8_chain1_random.log"
+started_at = "2026-10-27T14:27:28.523444+00:00"
+
+[[worker_processes]]
+slot = 2
+run_id = "production_beta3_large_L27_beta3p0_mu1p0em8_chain2_uniform_A"
+pid = 98764
+command = ["C:\\Users\\admin\\AppData\\Local\\Microsoft\\WindowsApps\\julia.EXE", "--project=.", "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\born_ai\\run_born_beta3_fresh_chain.jl", "--plan=D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\born_ai\\data\\born_scaling\\production_beta3_large\\production_beta3_large_plan.toml", "--run-id=production_beta3_large_L27_beta3p0_mu1p0em8_chain2_uniform_A"]
+log = "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\born_ai\\data\\born_scaling\\production_beta3_large\\production_beta3_large_L27_beta3p0_mu1p0em8_chain2_uniform_A.log"
+started_at = "2026-10-27T14:27:28.551260+00:00"
+
+[[worker_processes]]
+slot = 3
+run_id = "production_beta3_large_L27_beta3p0_mu1p0em8_chain3_uniform_B"
+pid = 94584
+command = ["C:\\Users\\admin\\AppData\\Local\\Microsoft\\WindowsApps\\julia.EXE", "--project=.", "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\born_ai\\run_born_beta3_fresh_chain.jl", "--plan=D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\born_ai\\data\\born_scaling\\production_beta3_large\\production_beta3_large_plan.toml", "--run-id=production_beta3_large_L27_beta3p0_mu1p0em8_chain3_uniform_B"]
+log = "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\born_ai\\data\\born_scaling\\production_beta3_large\\production_beta3_large_L27_beta3p0_mu1p0em8_chain3_uniform_B.log"
+started_at = "2026-10-27T14:27:28.582814+00:00"
+
+[[worker_processes]]
+slot = 4
+run_id = "production_beta3_large_L27_beta3p0_mu1p0em8_chain4_02_stripe"
+pid = 105256
+command = ["C:\\Users\\admin\\AppData\\Local\\Microsoft\\WindowsApps\\julia.EXE", "--project=.", "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\born_ai\\run_born_beta3_fresh_chain.jl", "--plan=D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\born_ai\\data\\born_scaling\\production_beta3_large\\production_beta3_large_plan.toml", "--run-id=production_beta3_large_L27_beta3p0_mu1p0em8_chain4_02_stripe"]
+log = "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\born_ai\\data\\born_scaling\\production_beta3_large\\production_beta3_large_L27_beta3p0_mu1p0em8_chain4_02_stripe.log"
+started_at = "2026-10-27T14:27:28.612977+00:00"
+
+[[worker_processes]]
+slot = 3
+run_id = "production_beta3_large_L30_beta3p0_mu1p0em8_chain1_random"
+pid = 109348
+command = ["C:\\Users\\admin\\AppData\\Local\\Microsoft\\WindowsApps\\julia.EXE", "--project=.", "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\born_ai\\run_born_beta3_fresh_chain.jl", "--plan=D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\born_ai\\data\\born_scaling\\production_beta3_large\\production_beta3_large_plan.toml", "--run-id=production_beta3_large_L30_beta3p0_mu1p0em8_chain1_random"]
+log = "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\born_ai\\data\\born_scaling\\production_beta3_large\\production_beta3_large_L30_beta3p0_mu1p0em8_chain1_random.log"
+started_at = "2026-10-27T14:37:58.788662+00:00"
+
+[[worker_processes]]
+slot = 1
+run_id = "production_beta3_large_L30_beta3p0_mu1p0em8_chain2_uniform_A"
+pid = 105608
+command = ["C:\\Users\\admin\\AppData\\Local\\Microsoft\\WindowsApps\\julia.EXE", "--project=.", "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\born_ai\\run_born_beta3_fresh_chain.jl", "--plan=D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\born_ai\\data\\born_scaling\\production_beta3_large\\production_beta3_large_plan.toml", "--run-id=production_beta3_large_L30_beta3p0_mu1p0em8_chain2_uniform_A"]
+log = "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\born_ai\\data\\born_scaling\\production_beta3_large\\production_beta3_large_L30_beta3p0_mu1p0em8_chain2_uniform_A.log"
+started_at = "2026-10-27T14:38:13.828796+00:00"
+
+[[worker_processes]]
+slot = 2
+run_id = "production_beta3_large_L30_beta3p0_mu1p0em8_chain3_uniform_B"
+pid = 108128
+command = ["C:\\Users\\admin\\AppData\\Local\\Microsoft\\WindowsApps\\julia.EXE", "--project=.", "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\born_ai\\run_born_beta3_fresh_chain.jl", "--plan=D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\born_ai\\data\\born_scaling\\production_beta3_large\\production_beta3_large_plan.toml", "--run-id=production_beta3_large_L30_beta3p0_mu1p0em8_chain3_uniform_B"]
+log = "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\born_ai\\data\\born_scaling\\production_beta3_large\\production_beta3_large_L30_beta3p0_mu1p0em8_chain3_uniform_B.log"
+started_at = "2026-10-27T14:38:13.855455+00:00"
+
+[[worker_processes]]
+slot = 4
+run_id = "production_beta3_large_L30_beta3p0_mu1p0em8_chain4_02_stripe"
+pid = 111020
+command = ["C:\\Users\\admin\\AppData\\Local\\Microsoft\\WindowsApps\\julia.EXE", "--project=.", "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\born_ai\\run_born_beta3_fresh_chain.jl", "--plan=D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\born_ai\\data\\born_scaling\\production_beta3_large\\production_beta3_large_plan.toml", "--run-id=production_beta3_large_L30_beta3p0_mu1p0em8_chain4_02_stripe"]
+log = "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\born_ai\\data\\born_scaling\\production_beta3_large\\production_beta3_large_L30_beta3p0_mu1p0em8_chain4_02_stripe.log"
+started_at = "2026-10-27T14:38:13.889888+00:00"
+
+[[worker_processes]]
+slot = 3
+run_id = "production_beta3_large_L36_beta3p0_mu1p0em8_chain1_random"
+pid = 100536
+command = ["C:\\Users\\admin\\AppData\\Local\\Microsoft\\WindowsApps\\julia.EXE", "--project=.", "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\born_ai\\run_born_beta3_fresh_chain.jl", "--plan=D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\born_ai\\data\\born_scaling\\production_beta3_large\\production_beta3_large_plan.toml", "--run-id=production_beta3_large_L36_beta3p0_mu1p0em8_chain1_random"]
+log = "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\born_ai\\data\\born_scaling\\production_beta3_large\\production_beta3_large_L36_beta3p0_mu1p0em8_chain1_random.log"
+started_at = "2026-10-27T15:07:44.378749+00:00"
+
+[[worker_processes]]
+slot = 1
+run_id = "production_beta3_large_L36_beta3p0_mu1p0em8_chain2_uniform_A"
+pid = 28404
+command = ["C:\\Users\\admin\\AppData\\Local\\Microsoft\\WindowsApps\\julia.EXE", "--project=.", "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\born_ai\\run_born_beta3_fresh_chain.jl", "--plan=D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\born_ai\\data\\born_scaling\\production_beta3_large\\production_beta3_large_plan.toml", "--run-id=production_beta3_large_L36_beta3p0_mu1p0em8_chain2_uniform_A"]
+log = "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\born_ai\\data\\born_scaling\\production_beta3_large\\production_beta3_large_L36_beta3p0_mu1p0em8_chain2_uniform_A.log"
+started_at = "2026-10-27T15:07:59.418593+00:00"
+
+[[worker_processes]]
+slot = 4
+run_id = "production_beta3_large_L36_beta3p0_mu1p0em8_chain3_uniform_B"
+pid = 106896
+command = ["C:\\Users\\admin\\AppData\\Local\\Microsoft\\WindowsApps\\julia.EXE", "--project=.", "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\born_ai\\run_born_beta3_fresh_chain.jl", "--plan=D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\born_ai\\data\\born_scaling\\production_beta3_large\\production_beta3_large_plan.toml", "--run-id=production_beta3_large_L36_beta3p0_mu1p0em8_chain3_uniform_B"]
+log = "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\born_ai\\data\\born_scaling\\production_beta3_large\\production_beta3_large_L36_beta3p0_mu1p0em8_chain3_uniform_B.log"
+started_at = "2026-10-27T15:07:59.457551+00:00"
+
+[[worker_processes]]
+slot = 2
+run_id = "production_beta3_large_L36_beta3p0_mu1p0em8_chain4_02_stripe"
+pid = 104020
+command = ["C:\\Users\\admin\\AppData\\Local\\Microsoft\\WindowsApps\\julia.EXE", "--project=.", "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\born_ai\\run_born_beta3_fresh_chain.jl", "--plan=D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\born_ai\\data\\born_scaling\\production_beta3_large\\production_beta3_large_plan.toml", "--run-id=production_beta3_large_L36_beta3p0_mu1p0em8_chain4_02_stripe"]
+log = "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\born_ai\\data\\born_scaling\\production_beta3_large\\production_beta3_large_L36_beta3p0_mu1p0em8_chain4_02_stripe.log"
+started_at = "2026-10-27T15:08:14.510254+00:00"

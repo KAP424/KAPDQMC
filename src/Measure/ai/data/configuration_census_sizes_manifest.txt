@@ -1,0 +1,8 @@
+mode=exhaustive_by_selected_class
+blas_threads=1
+julia_version=1.12.1
+elapsed_seconds=119.34899997711182
+tol=1e-10
+energy_zero_threshold=1e-9
+m2 L12: all70; m3 L18: all48620; m3 L27 and36: all512special each
+No symmetry reduction. All rows are distinct full masks at specified L.

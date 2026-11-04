@@ -1,0 +1,57 @@
+final_E = [415, 135, 227, 150, 36, 107, 65, 382, 239, 254, 23, 256, 319, 58, 30, 273, 436, 141, 283, 120, 8, 84, 189, 201, 5, 309, 431, 344, 277, 427, 334, 282, 423, 278, 17, 384, 296, 381, 286, 362, 264, 370, 424, 422, 180, 271, 108, 139, 199, 272, 198, 229, 289, 123, 233, 182, 394, 332, 268, 242, 355, 21, 156, 399, 96, 83, 222, 131, 62, 151, 34, 109, 20, 354, 165, 281, 69, 298, 237, 304, 308, 240, 133, 181, 260, 167, 356, 246, 154, 200, 124, 171, 341, 441, 160, 221, 440, 7, 287, 393, 303, 111, 210, 363, 81, 186, 177, 269, 376, 26, 143, 27, 194, 412, 230, 335, 12, 371, 176, 215, 115, 207, 388, 11, 173, 338, 152, 158, 265, 417, 37, 178, 97, 88, 407, 386, 190, 448, 218, 52, 61, 447, 380, 252, 245, 402, 197, 138, 420, 312, 406, 326, 132, 89, 292, 377, 170, 321, 212, 18, 82, 366, 101, 103, 74, 349, 428, 442, 92, 410, 118, 142, 291, 45, 219, 372, 113, 195, 63, 392, 389, 244, 38, 364, 16, 140, 112, 3, 14, 435, 55, 293, 79, 155, 95, 320, 397, 375, 443, 71, 48, 128, 404, 236, 270, 24, 259, 337, 191, 104, 391, 75, 98, 450, 164, 220, 359, 184, 251, 336, 357, 307, 225, 144, 243]
+maximum_inverse_asymmetry = 1.3322676295501878e-15
+elapsed_seconds = 25.848999977111816
+blas_threads = 1
+initial_state_definition = "E is the suppressed set. Even L: both sublattices on odd x columns; odd L: alternate full/empty through L-1 and only A on final column. uniform_A/B mean E=A/B."
+started_at = "2026-10-27T15:55:04.172"
+acceptance = 0.883269675925926
+accepted = 915774
+initial_E = [80, 106, 213, 126, 420, 327, 250, 277, 248, 209, 188, 298, 323, 378, 20, 230, 102, 218, 443, 439, 387, 364, 216, 322, 1, 157, 116, 349, 32, 371, 193, 397, 423, 334, 346, 148, 287, 131, 408, 247, 313, 84, 44, 391, 335, 184, 370, 293, 303, 314, 317, 107, 394, 348, 306, 211, 70, 273, 307, 400, 341, 311, 404, 425, 81, 179, 274, 149, 14, 285, 191, 383, 309, 63, 42, 265, 48, 62, 222, 321, 418, 433, 207, 376, 108, 129, 95, 406, 60, 361, 241, 178, 161, 362, 51, 427, 390, 232, 208, 5, 36, 220, 429, 264, 280, 10, 432, 167, 384, 40, 141, 268, 176, 422, 336, 8, 242, 196, 93, 197, 316, 79, 92, 24, 190, 39, 243, 46, 132, 350, 435, 445, 438, 23, 69, 67, 87, 150, 269, 283, 137, 54, 45, 245, 206, 130, 35, 330, 166, 386, 282, 49, 436, 270, 160, 412, 73, 28, 180, 261, 419, 395, 124, 143, 169, 53, 339, 19, 135, 152, 344, 347, 187, 233, 368, 52, 396, 41, 369, 215, 21, 374, 183, 185, 399, 380, 6, 94, 266, 138, 255, 337, 357, 98, 333, 446, 2, 121, 27, 76, 276, 332, 356, 363, 146, 174, 85, 200, 231, 389, 171, 291, 7, 38, 175, 295, 360, 256, 228, 97, 86, 275, 136, 377, 447]
+julia_version = "1.12.1"
+status = "complete"
+refreshes = 460
+plan_sha256 = "3f3929b15eec47c5720b7f481240ab66f36e843a4a09761cf98f7658ae427909"
+records = 2304
+model_manifest_sha256 = "91192ca1ded610c918ac176159ff3e78f8a04c1f2364dbc90514b5f0ccc4056f"
+proposed = 1036800
+model_manifest = "data/born_scaling/production/models/state_L15_staggered_mu1.0e-8_model.toml"
+maximum_logweight_drift = 1.3642420526593924e-12
+maximum_inverse_drift = 3.1101620884365894e-15
+completed_at = "2026-10-27T15:55:30.014"
+
+[source_sha256]
+"run_born_scaling.jl" = "3d9004c1d112a29ee1a7b440a945dc89516f7cabba8e279e0e5dd145e5a65c76"
+"fused_original_swap_kernel.jl" = "da7d40a574902763417225417d30abce265a15f9804dbfa47882b46f8ed20d70"
+"original_swap_scaling.jl" = "1af51fff868fbe63025323618506295ce5622179c1381de5ea64549e8c0d40cb"
+"prepare_born_scaling_production.jl" = "9bda7e2de8c87d7d050cff3be7c62444c289281174d87ad7e8cf6a1ecf6a80a4"
+"run_born_scaling_fused.jl" = "3734470f7c633617a2a2b43d7d581c94e9c29f11af6efb0f523cabf266499fe3"
+"../../public/Geometry.jl" = "079c2052642d46a7072656ccd738411faa57c9f07791f786a0a6872a5a5970ad"
+
+[job]
+chain = 1
+output_dir = "data/born_scaling/production"
+L = 15
+mu = 1.0e-8
+state = "staggered"
+run_id = "production_L15_beta0p5_mu1p0em8_chain1_random"
+sweeps = 2304
+refresh_every = 5
+start = "random"
+model_manifest_sha256 = "91192ca1ded610c918ac176159ff3e78f8a04c1f2364dbc90514b5f0ccc4056f"
+stage = "production"
+grid = "main"
+analysis_burnin = 256
+beta = 0.5
+model_manifest = "data/born_scaling/production/models/state_L15_staggered_mu1.0e-8_model.toml"
+seed = 1615050001
+retained_sweeps = 2048
+measure_every = 1
+
+[model_files]
+"state_L15_staggered_mu1.0e-8_G.bin" = "a22d3ec8d7b2a6716a8824c1a14eb8262f3cfa644d03613f7021da3472cecfdf"
+"state_L15_staggered_mu1.0e-8_energies.bin" = "4c381357272ed135d47030d39d5e2a3abc90c71be5370da22506c909a99998b2"
+"state_L15_staggered_mu1.0e-8_Q.bin" = "52bd8ecdcfd8067fd5f189121b87324adc71886aaa7bcc35c746aa019d255642"
+
+[files]
+"data/born_scaling/production/production_L15_beta0p5_mu1p0em8_chain1_random_initial.csv" = "43402f1df4738e76eb48fb13464e89a4e9f65723ec10019b1ab33d3251b51f41"
+"data/born_scaling/production/production_L15_beta0p5_mu1p0em8_chain1_random_samples.csv" = "8c8e9e53e5e608c60ac9ea9f6fd2231ae20be9bc217a521b8c5e5949deb1bf9f"

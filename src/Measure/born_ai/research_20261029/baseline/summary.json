@@ -1,0 +1,563 @@
+{
+  "status": "PASS",
+  "dense_validation": [
+    {
+      "L": 6,
+      "p": 0.3333333333333333,
+      "projector_error": 4.440892098500626e-16,
+      "corner_error": 2.7755575615628914e-17,
+      "DV": 0.12940559252380893,
+      "reference": "data\\born_scaling\\pilot\\models\\state_L6_staggered_mu1.0e-8_G.bin",
+      "reference_sha256": "adc4a1a4cb1c3108e8377129a5535471a8d5e15e5512f297def5daab54806556"
+    },
+    {
+      "L": 6,
+      "p": 0.5,
+      "projector_error": 4.440892098500626e-16,
+      "corner_error": 5.662137425588298e-15,
+      "DV": 0.14471176309408873,
+      "reference": "data\\born_scaling\\pilot\\models\\state_L6_staggered_mu1.0e-8_G.bin",
+      "reference_sha256": "adc4a1a4cb1c3108e8377129a5535471a8d5e15e5512f297def5daab54806556"
+    },
+    {
+      "L": 12,
+      "p": 0.3333333333333333,
+      "projector_error": 4.997957562620771e-16,
+      "corner_error": 5.828670879282072e-16,
+      "DV": 0.18303464537767736,
+      "reference": "data\\born_scaling\\pilot\\models\\state_L12_staggered_mu1.0e-8_G.bin",
+      "reference_sha256": "7047fe4445cfcaf330205a8f8bfa08c1b4695bfbccb69e6bc2ed88a0590a6c51"
+    },
+    {
+      "L": 12,
+      "p": 0.5,
+      "projector_error": 4.997957562620771e-16,
+      "corner_error": 4.884981308350689e-15,
+      "DV": 0.19828732635573454,
+      "reference": "data\\born_scaling\\pilot\\models\\state_L12_staggered_mu1.0e-8_G.bin",
+      "reference_sha256": "7047fe4445cfcaf330205a8f8bfa08c1b4695bfbccb69e6bc2ed88a0590a6c51"
+    },
+    {
+      "L": 18,
+      "p": 0.3333333333333333,
+      "projector_error": 3.885839603429492e-16,
+      "corner_error": 7.022160630754115e-15,
+      "DV": 0.21154446337187247,
+      "reference": "data\\born_scaling\\pilot\\models\\state_L18_staggered_mu1.0e-8_G.bin",
+      "reference_sha256": "6484b9dc101e25e55c23b5a038b8d2d669d4a3f0ab7e107113f916f0f5a0a9d8"
+    },
+    {
+      "L": 18,
+      "p": 0.5,
+      "projector_error": 3.885839603429492e-16,
+      "corner_error": 7.688294445529209e-15,
+      "DV": 0.22664736210156575,
+      "reference": "data\\born_scaling\\pilot\\models\\state_L18_staggered_mu1.0e-8_G.bin",
+      "reference_sha256": "6484b9dc101e25e55c23b5a038b8d2d669d4a3f0ab7e107113f916f0f5a0a9d8"
+    }
+  ],
+  "fits": [
+    {
+      "mu": 0.0,
+      "p": 0.3333333333333333,
+      "L_min": 48,
+      "L_max": 1536,
+      "correction_order": 1,
+      "coefficient": [
+        0.02256102496925789,
+        0.06594283183881706,
+        -0.015020556728150988
+      ],
+      "max_abs_residual": 1.3596846699603926e-05,
+      "residual_dof": 8,
+      "role": "deterministic finite-window fit, no MC uncertainty"
+    },
+    {
+      "mu": 0.0,
+      "p": 0.3333333333333333,
+      "L_min": 48,
+      "L_max": 1536,
+      "correction_order": 2,
+      "coefficient": [
+        0.022326613080143727,
+        0.06597483951061808,
+        -0.0003363877707241997,
+        -0.4804553011625757
+      ],
+      "max_abs_residual": 1.437600526954519e-07,
+      "residual_dof": 7,
+      "role": "deterministic finite-window fit, no MC uncertainty"
+    },
+    {
+      "mu": 0.0,
+      "p": 0.3333333333333333,
+      "L_min": 96,
+      "L_max": 1536,
+      "correction_order": 1,
+      "coefficient": [
+        0.022416591061711986,
+        0.06596300897779367,
+        -0.008574560499366963
+      ],
+      "max_abs_residual": 2.9498848833076075e-06,
+      "residual_dof": 6,
+      "role": "deterministic finite-window fit, no MC uncertainty"
+    },
+    {
+      "mu": 0.0,
+      "p": 0.3333333333333333,
+      "L_min": 96,
+      "L_max": 1536,
+      "correction_order": 2,
+      "coefficient": [
+        0.022323995456664174,
+        0.06597518537998802,
+        -0.00011008873217442029,
+        -0.4922315655872231
+      ],
+      "max_abs_residual": 1.1990400394790157e-08,
+      "residual_dof": 5,
+      "role": "deterministic finite-window fit, no MC uncertainty"
+    },
+    {
+      "mu": 0.0,
+      "p": 0.3333333333333333,
+      "L_min": 192,
+      "L_max": 1536,
+      "correction_order": 1,
+      "coefficient": [
+        0.02236148059453315,
+        0.0659704380103772,
+        -0.005021373877392994
+      ],
+      "max_abs_residual": 5.261968450409604e-07,
+      "residual_dof": 4,
+      "role": "deterministic finite-window fit, no MC uncertainty"
+    },
+    {
+      "mu": 0.0,
+      "p": 0.3333333333333333,
+      "L_min": 192,
+      "L_max": 1536,
+      "correction_order": 2,
+      "coefficient": [
+        0.02232340032875176,
+        0.06597526118746017,
+        -3.65915964585084e-05,
+        -0.4988731216876076
+      ],
+      "max_abs_residual": 6.932221463529231e-10,
+      "residual_dof": 3,
+      "role": "deterministic finite-window fit, no MC uncertainty"
+    },
+    {
+      "mu": 0.0,
+      "p": 0.3333333333333333,
+      "L_min": 384,
+      "L_max": 1536,
+      "correction_order": 1,
+      "coefficient": [
+        0.022339729237376718,
+        0.06597326930015199,
+        -0.0030472871423798957
+      ],
+      "max_abs_residual": 5.53277695325427e-08,
+      "residual_dof": 2,
+      "role": "deterministic finite-window fit, no MC uncertainty"
+    },
+    {
+      "mu": 0.0,
+      "p": 0.3333333333333333,
+      "L_min": 384,
+      "L_max": 1536,
+      "correction_order": 2,
+      "coefficient": [
+        0.022323264869704672,
+        0.0659752778324529,
+        -1.3226429896795262e-05,
+        -0.5023745535041633
+      ],
+      "max_abs_residual": 3.6551317528221716e-11,
+      "residual_dof": 1,
+      "role": "deterministic finite-window fit, no MC uncertainty"
+    },
+    {
+      "mu": 0.0,
+      "p": 0.5,
+      "L_min": 48,
+      "L_max": 1536,
+      "correction_order": 1,
+      "coefficient": [
+        0.037543894529317216,
+        0.06594472718777236,
+        -0.01415062276419466
+      ],
+      "max_abs_residual": 1.2821647674687853e-05,
+      "residual_dof": 8,
+      "role": "deterministic finite-window fit, no MC uncertainty"
+    },
+    {
+      "mu": 0.0,
+      "p": 0.5,
+      "L_min": 48,
+      "L_max": 1536,
+      "correction_order": 2,
+      "coefficient": [
+        0.03732322309637306,
+        0.06597485867482376,
+        -0.0003271916333033586,
+        -0.4522925870948536
+      ],
+      "max_abs_residual": 1.1352977308254353e-07,
+      "residual_dof": 7,
+      "role": "deterministic finite-window fit, no MC uncertainty"
+    },
+    {
+      "mu": 0.0,
+      "p": 0.5,
+      "L_min": 96,
+      "L_max": 1536,
+      "correction_order": 1,
+      "coefficient": [
+        0.03740802689329789,
+        0.0659637079184457,
+        -0.008087937170017547
+      ],
+      "max_abs_residual": 2.7833571244473276e-06,
+      "residual_dof": 6,
+      "role": "deterministic finite-window fit, no MC uncertainty"
+    },
+    {
+      "mu": 0.0,
+      "p": 0.5,
+      "L_min": 96,
+      "L_max": 1536,
+      "correction_order": 2,
+      "coefficient": [
+        0.03732070551562493,
+        0.06597519075517609,
+        -0.00010560004285375289,
+        -0.4641941528327711
+      ],
+      "max_abs_residual": 9.810328382986455e-09,
+      "residual_dof": 5,
+      "role": "deterministic finite-window fit, no MC uncertainty"
+    },
+    {
+      "mu": 0.0,
+      "p": 0.5,
+      "L_min": 192,
+      "L_max": 1536,
+      "correction_order": 1,
+      "coefficient": [
+        0.03735607074820802,
+        0.06597071178022121,
+        -0.004738322704740155
+      ],
+      "max_abs_residual": 4.964652911554346e-07,
+      "residual_dof": 4,
+      "role": "deterministic finite-window fit, no MC uncertainty"
+    },
+    {
+      "mu": 0.0,
+      "p": 0.5,
+      "L_min": 192,
+      "L_max": 1536,
+      "correction_order": 2,
+      "coefficient": [
+        0.037320146180506275,
+        0.06597526192051296,
+        -3.572557587367359e-05,
+        -0.4706322518216387
+      ],
+      "max_abs_residual": 5.975112071787692e-10,
+      "residual_dof": 3,
+      "role": "deterministic finite-window fit, no MC uncertainty"
+    },
+    {
+      "mu": 0.0,
+      "p": 0.5,
+      "L_min": 384,
+      "L_max": 1536,
+      "correction_order": 1,
+      "coefficient": [
+        0.03733555274943267,
+        0.06597338253286049,
+        -0.0028762016971546982
+      ],
+      "max_abs_residual": 5.221624227447208e-08,
+      "residual_dof": 2,
+      "role": "deterministic finite-window fit, no MC uncertainty"
+    },
+    {
+      "mu": 0.0,
+      "p": 0.5,
+      "L_min": 384,
+      "L_max": 1536,
+      "correction_order": 2,
+      "coefficient": [
+        0.037320014815627425,
+        0.06597527804701316,
+        -1.2864613668287582e-05,
+        -0.4741064286988062
+      ],
+      "max_abs_residual": 3.145994575959321e-11,
+      "residual_dof": 1,
+      "role": "deterministic finite-window fit, no MC uncertainty"
+    },
+    {
+      "mu": 1e-08,
+      "p": 0.3333333333333333,
+      "L_min": 48,
+      "L_max": 1536,
+      "correction_order": 1,
+      "coefficient": [
+        0.022561667835475373,
+        0.0659427150036573,
+        -0.015030916129486108
+      ],
+      "max_abs_residual": 1.3585621872758136e-05,
+      "residual_dof": 8,
+      "role": "deterministic finite-window fit, no MC uncertainty"
+    },
+    {
+      "mu": 1e-08,
+      "p": 0.3333333333333333,
+      "L_min": 48,
+      "L_max": 1536,
+      "correction_order": 2,
+      "coefficient": [
+        0.022327636984598387,
+        0.06597467064675411,
+        -0.0003706163959085394,
+        -0.47967431756273793
+      ],
+      "max_abs_residual": 1.3264942289037407e-07,
+      "residual_dof": 7,
+      "role": "deterministic finite-window fit, no MC uncertainty"
+    },
+    {
+      "mu": 1e-08,
+      "p": 0.3333333333333333,
+      "L_min": 96,
+      "L_max": 1536,
+      "correction_order": 1,
+      "coefficient": [
+        0.022417481258526023,
+        0.06596285770046616,
+        -0.008596345599350024
+      ],
+      "max_abs_residual": 2.9389892494680048e-06,
+      "residual_dof": 6,
+      "role": "deterministic finite-window fit, no MC uncertainty"
+    },
+    {
+      "mu": 1e-08,
+      "p": 0.3333333333333333,
+      "L_min": 96,
+      "L_max": 1536,
+      "correction_order": 2,
+      "coefficient": [
+        0.022325428224816323,
+        0.06597496275406005,
+        -0.00018147208005492765,
+        -0.4893472954420299
+      ],
+      "max_abs_residual": 5.6870572140432785e-09,
+      "residual_dof": 5,
+      "role": "deterministic finite-window fit, no MC uncertainty"
+    },
+    {
+      "mu": 1e-08,
+      "p": 0.3333333333333333,
+      "L_min": 192,
+      "L_max": 1536,
+      "correction_order": 1,
+      "coefficient": [
+        0.02236272452542368,
+        0.06597023918751344,
+        -0.005066663197812607
+      ],
+      "max_abs_residual": 5.178401885075345e-07,
+      "residual_dof": 4,
+      "role": "deterministic finite-window fit, no MC uncertainty"
+    },
+    {
+      "mu": 1e-08,
+      "p": 0.3333333333333333,
+      "L_min": 192,
+      "L_max": 1536,
+      "correction_order": 2,
+      "coefficient": [
+        0.022325430309413117,
+        0.06597496280496458,
+        -0.00018477639014846689,
+        -0.4885754229988942
+      ],
+      "max_abs_residual": 3.3330758708594033e-09,
+      "residual_dof": 3,
+      "role": "deterministic finite-window fit, no MC uncertainty"
+    },
+    {
+      "mu": 1e-08,
+      "p": 0.3333333333333333,
+      "L_min": 384,
+      "L_max": 1536,
+      "correction_order": 1,
+      "coefficient": [
+        0.022341486189052896,
+        0.06597300386665768,
+        -0.0031402887568443903
+      ],
+      "max_abs_residual": 5.1749535601164354e-08,
+      "residual_dof": 2,
+      "role": "deterministic finite-window fit, no MC uncertainty"
+    },
+    {
+      "mu": 1e-08,
+      "p": 0.3333333333333333,
+      "L_min": 384,
+      "L_max": 1536,
+      "correction_order": 2,
+      "coefficient": [
+        0.022326234701222577,
+        0.06597486443649879,
+        -0.0003297380600596979,
+        -0.4653661495916617
+      ],
+      "max_abs_residual": 8.479976720821014e-10,
+      "residual_dof": 1,
+      "role": "deterministic finite-window fit, no MC uncertainty"
+    },
+    {
+      "mu": 1e-08,
+      "p": 0.5,
+      "L_min": 48,
+      "L_max": 1536,
+      "correction_order": 1,
+      "coefficient": [
+        0.03754475712389533,
+        0.06594457041897006,
+        -0.014164522959017567
+      ],
+      "max_abs_residual": 1.2806586281832733e-05,
+      "residual_dof": 8,
+      "role": "deterministic finite-window fit, no MC uncertainty"
+    },
+    {
+      "mu": 1e-08,
+      "p": 0.5,
+      "L_min": 48,
+      "L_max": 1536,
+      "correction_order": 2,
+      "coefficient": [
+        0.037324596965370216,
+        0.06597463209427314,
+        -0.0003731193843309001,
+        -0.45124466880908526
+      ],
+      "max_abs_residual": 9.862160782470042e-08,
+      "residual_dof": 7,
+      "role": "deterministic finite-window fit, no MC uncertainty"
+    },
+    {
+      "mu": 1e-08,
+      "p": 0.5,
+      "L_min": 96,
+      "L_max": 1536,
+      "correction_order": 1,
+      "coefficient": [
+        0.037409221354313786,
+        0.06596350493538737,
+        -0.008117168286133205
+      ],
+      "max_abs_residual": 2.768737435099311e-06,
+      "residual_dof": 6,
+      "role": "deterministic finite-window fit, no MC uncertainty"
+    },
+    {
+      "mu": 1e-08,
+      "p": 0.5,
+      "L_min": 96,
+      "L_max": 1536,
+      "correction_order": 2,
+      "coefficient": [
+        0.03732262799522625,
+        0.06597489203704376,
+        -0.00020138175561921627,
+        -0.46032405848067415
+      ],
+      "max_abs_residual": 5.626784260748252e-09,
+      "residual_dof": 5,
+      "role": "deterministic finite-window fit, no MC uncertainty"
+    },
+    {
+      "mu": 1e-08,
+      "p": 0.5,
+      "L_min": 192,
+      "L_max": 1536,
+      "correction_order": 1,
+      "coefficient": [
+        0.037357739847235255,
+        0.06597044500088114,
+        -0.004799091626133625
+      ],
+      "max_abs_residual": 4.852523855514157e-07,
+      "residual_dof": 4,
+      "role": "deterministic finite-window fit, no MC uncertainty"
+    },
+    {
+      "mu": 1e-08,
+      "p": 0.5,
+      "L_min": 192,
+      "L_max": 1536,
+      "correction_order": 2,
+      "coefficient": [
+        0.03732286999575635,
+        0.06597486155273782,
+        -0.00023455894169646592,
+        -0.456814869937187
+      ],
+      "max_abs_residual": 4.673290754375614e-09,
+      "residual_dof": 3,
+      "role": "deterministic finite-window fit, no MC uncertainty"
+    },
+    {
+      "mu": 1e-08,
+      "p": 0.5,
+      "L_min": 384,
+      "L_max": 1536,
+      "correction_order": 1,
+      "coefficient": [
+        0.03733791021623478,
+        0.06597302637583276,
+        -0.0030009906475340175
+      ],
+      "max_abs_residual": 4.7414994153172074e-08,
+      "residual_dof": 2,
+      "role": "deterministic finite-window fit, no MC uncertainty"
+    },
+    {
+      "mu": 1e-08,
+      "p": 0.5,
+      "L_min": 384,
+      "L_max": 1536,
+      "correction_order": 2,
+      "coefficient": [
+        0.037323999715732935,
+        0.06597472335503879,
+        -0.00043755766881979993,
+        -0.42444882293525227
+      ],
+      "max_abs_residual": 1.155420981113764e-09,
+      "residual_dof": 1,
+      "role": "deterministic finite-window fit, no MC uncertainty"
+    }
+  ],
+  "source_sha256": "cb0e9678c1ae847e4ed1c775bb8f1e98911964c91788fe61c0fbe7d5304fd6b0",
+  "files": {
+    "attenuation.csv": "df0adb27b9c609bf6241993d4dda3016ed00abe0aab986a766a7a0b82e17c26f",
+    "ground_corners.csv": "c3d5ef9032c26281d226b9d7726863c0d848d53a6917d3cbfa2fe263e09781ce"
+  },
+  "scope": "Ground number variance only; not finite-beta Born entropy or its corner coefficient"
+}

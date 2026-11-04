@@ -1,0 +1,2 @@
+L,beta,mu,chain,seed,start,sweep,record_index,measure_every,SA,SB,SC,D,accepted,proposed,log_weight,stage,phase,run_id,refreshed,inverse_drift,logweight_drift
+18,2.0,1.0e-8,1,1618200001,random,0,0,1,5.6469104996568085,4.558882333139482,3.6321096137207602,0.4164278712053111,0,0,-496.9827614634513,production,all_recorded_no_burnin_discard,production_L18_beta2p0_mu1p0em8_chain1_random,0,0.0,0.0

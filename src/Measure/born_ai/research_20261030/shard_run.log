@@ -1,0 +1,41 @@
+tol=0.050  budget=34.0 CPU-h  -> 14 points, 33.2 CPU-h, wall >= 2.4 h
+  L         z      n   rel%      + shards  /shard  CPU-h  file
+ 30     0.089   3648   16.1  34240     14    2496  23.30  L30_beta4.6108.csv
+ 24     0.089   9728    9.2  23552     12    1984   3.93  L24_beta4.3876.csv
+ 30     0.357   1600    9.0   3776      8     512   2.57  L30_beta3.9162.csv
+ 36     5.935    512    5.1    256      2     192   0.85  L36_beta2.6931_w2.csv
+ 30     0.803    576    8.5   1216      2     640   0.83  L30_beta3.5109.csv
+ 24     0.357   2048    8.1   3584      2    1856   0.60  L24_beta3.6931.csv
+ 30     1.428    512    6.4    512      2     320   0.35  L30_beta3.2231.csv
+ 18     0.089   6784    9.0  15488      2    7808   0.34  L18_beta4.0999.csv
+ 30     3.213    512    5.1    256      1     320   0.17  L30_beta2.8176.csv
+ 30    10.551    256    6.0    256      1     320   0.17  L30_beta2.2231_w1.csv
+ 24     0.803   1152    5.7    384      1     448   0.06  L24_beta3.2878.csv
+ 12     0.089  10304    8.2  17344      1   17408   0.04  L12_beta3.6945.csv
+ 18     0.357   3456    5.7   1152      1    1216   0.02  L18_beta3.4054.csv
+ 12     0.357   2048    7.0   2048      1    2112   0.01  L12_beta2.9999.csv
+
+launching 50 shards on 14 workers
+[5/50] 11117s
+[10/50] 11132s
+[15/50] 11154s
+[20/50] 12960s
+[25/50] 12973s
+[30/50] 13073s
+[35/50] 14528s
+[40/50] 15111s
+[45/50] 15125s
+[50/50] 15984s
+OK L30_beta2.2231_w1.csv: 256 -> 576 samples
+OK L36_beta2.6931_w2.csv: 512 -> 896 samples
+OK L18_beta3.4054.csv: 3456 -> 4672 samples
+OK L24_beta3.2878.csv: 1152 -> 1600 samples
+OK L24_beta3.6931.csv: 2048 -> 5760 samples
+OK L24_beta4.3876.csv: 9728 -> 33536 samples
+OK L30_beta2.8176.csv: 512 -> 832 samples
+OK L30_beta3.2231.csv: 512 -> 1152 samples
+OK L30_beta3.5109.csv: 576 -> 1856 samples
+OK L30_beta3.9162.csv: 1600 -> 5696 samples
+OK L30_beta4.6108.csv: 3648 -> 38592 samples
+
+all shards done in 4.44 h, 0 failed

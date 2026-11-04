@@ -1,0 +1,14 @@
+{
+  "role": "Deterministic theory figures; no sampled or fitted entropy coefficient",
+  "source_sha256": "647f83922576bcf2ddca31ad354229367aceb2066d7eb1694d18f1945cb0ce9c",
+  "inputs": {
+    "baseline\\ground_corners.csv": "c3d5ef9032c26281d226b9d7726863c0d848d53a6917d3cbfa2fe263e09781ce",
+    "baseline\\summary.json": "3d2387482b4ceffc55468d695bd8cdfc03933fd4a839974a1aed79e03c91427c",
+    "compute_corner_baseline.py": "cb0e9678c1ae847e4ed1c775bb8f1e98911964c91788fe61c0fbe7d5304fd6b0"
+  },
+  "analytic_Dirac_cV": 0.0659752833606631,
+  "figures": [
+    "ground_variance_corner",
+    "channel_crossover"
+  ]
+}

@@ -1,0 +1,88 @@
+48 distinct (L,beta) points; pooled duplicates: L=18 beta=1.0 (2 files, n=4096), L=30 beta=2.2231 (2 files, n=512), L=30 beta=2.5108 (2 files, n=512), L=36 beta=2.4055 (2 files, n=512), L=36 beta=2.6931 (2 files, n=512)
+
+==============================================================================
+1. LEVEL CROSSINGS z_h(L)   [width = ln-z gap of the bracketing points]
+==============================================================================
+  h=0.3  L6:   0.86  L12:   1.34  L18:   1.72  L24:   1.97  L30:   2.20  L36: --
+  h=0.4  L6:   1.09  L12:   1.92  L18:   2.54  L24:   2.81  L30:   3.39  L36:   3.43
+  h=0.5  L6:   1.39  L12:   2.73  L18:   3.69  L24:   4.04  L30:   5.16  L36:   5.98
+  h=0.6  L6:   1.74  L12:   4.30*  L18:   5.20  L24:   5.83  L30:   7.60  L36:   9.22
+  h=0.7  L6:   2.18  L12:   7.37*  L18:   7.41  L24:   8.42  L30:  11.59  L36:  17.27
+  h=0.8  L6:   2.74  L12:  12.65*  L18:  10.64  L24:  12.99  L30:  21.97  L36:  31.71
+  h=0.9  L6: --  L12:  21.69*  L18:  15.28  L24:  22.20  L30:  36.12  L36:  53.31
+  (* = bracket wider than ln z = 1.25, i.e. interpolated, not measured)
+
+  exponent p(h) from well-bracketed crossings, bootstrap over samples:
+    h=0.3: p = 0.585 +- 0.028   sizes [6, 12, 18, 24, 30]
+    h=0.4: p = 0.648 +- 0.029   sizes [6, 12, 18, 24, 30, 36]
+    h=0.5: p = 0.787 +- 0.040   sizes [6, 12, 18, 24, 30, 36]
+    h=0.6: p = 0.913 +- 0.040   sizes [6, 18, 24, 30, 36]
+    h=0.7: p = 1.089 +- 0.069   sizes [6, 18, 24, 30, 36]
+    h=0.8: p = 1.312 +- 0.057   sizes [6, 18, 24, 30, 36]
+    h=0.9: p = 1.818 +- 0.269   sizes [18, 24, 30, 36]
+
+==============================================================================
+2. FIXED BETA: h(L), deficit Delta = D_gs - D_bar, and ln L slope
+==============================================================================
+
+  beta = 0.5
+      L        z    D_bar     sem     D_gs       h    Delta
+     18   119.19   0.5549  0.0050   0.5409   1.026  -0.0140
+     24   211.90   0.6166  0.0080   0.5959   1.035  -0.0207
+     30   331.09   0.6431  0.0117   0.6368   1.010  -0.0063
+     36   476.77   0.6645  0.0134   0.6692   0.993  +0.0047
+    L>=24 slope dD_bar/dlnL = 0.118 +- 0.037   (ground state over same L: 0.181;  ratio 0.65 +- 0.20)
+    deficit: additive const -0.0121 (chi2 2.95),  multiplicative -0.019*D_gs (chi2 3.28),  dof 2
+
+  beta = 1.0
+      L        z    D_bar     sem     D_gs       h    Delta
+     18    43.85   0.5656  0.0063   0.5409   1.046  -0.0247
+     24    77.95   0.6011  0.0143   0.5959   1.009  -0.0051
+     30   121.80   0.6549  0.0218   0.6368   1.029  -0.0182
+     36   175.39   0.6767  0.0257   0.6692   1.011  -0.0076
+    L>=24 slope dD_bar/dlnL = 0.198 +- 0.068   (ground state over same L: 0.181;  ratio 1.10 +- 0.38)
+    deficit: additive const -0.0088 (chi2 0.25),  multiplicative -0.014*D_gs (chi2 0.24),  dof 2
+
+  beta = 1.5
+      L        z    D_bar     sem     D_gs       h    Delta
+     18    16.13   0.4950  0.0091   0.5409   0.915  +0.0459
+     24    28.68   0.5648  0.0150   0.5959   0.948  +0.0312
+     30    44.81   0.6007  0.0235   0.6368   0.943  +0.0361
+     36    64.52   0.6269  0.0259   0.6692   0.937  +0.0423
+    L>=24 slope dD_bar/dlnL = 0.155 +- 0.070   (ground state over same L: 0.181;  ratio 0.86 +- 0.39)
+    deficit: additive const +0.0345 (chi2 0.15),  multiplicative 0.056*D_gs (chi2 0.06),  dof 2
+
+  beta = 2.0
+      L        z    D_bar     sem     D_gs       h    Delta
+     18     5.93   0.3454  0.0072   0.5409   0.639  +0.1955
+     24    10.55   0.4537  0.0122   0.5959   0.761  +0.1423
+     30    16.48   0.4726  0.0197   0.6368   0.742  +0.1642
+     36    23.74   0.4981  0.0228   0.6692   0.744  +0.1711
+    L>=24 slope dD_bar/dlnL = 0.104 +- 0.060   (ground state over same L: 0.181;  ratio 0.58 +- 0.33)
+    deficit: additive const +0.1523 (chi2 1.71),  multiplicative 0.247*D_gs (chi2 0.35),  dof 2
+
+  beta = 3.0
+      L        z    D_bar     sem     D_gs       h    Delta
+      6     0.09   0.0014  0.0002   0.2885   0.005  +0.2871
+     12     0.36   0.0192  0.0014   0.4571   0.042  +0.4379
+     18     0.80   0.0689  0.0030   0.5409   0.127  +0.4720
+     24     1.43   0.1249  0.0065   0.5959   0.210  +0.4710
+     36     3.21   0.2599  0.0116   0.6692   0.388  +0.4093
+    L>=24 slope dD_bar/dlnL = 0.333 +- 0.033   (ground state over same L: 0.181;  ratio 1.84 +- 0.18)
+    deficit: additive const +0.4564 (chi2 21.46),  multiplicative 0.740*D_gs (chi2 75.86),  dof 1
+
+==============================================================================
+3. DOES D_bar = f(z) STILL HOLD AT z = 5.93 AND 10.55?  (matched z)
+==============================================================================
+
+  z = 5.9343:   reference L=18  D_bar = 0.3454 +- 0.0072
+    L=18 beta=2.0000  D_bar = 0.3454 +- 0.0072   h = 0.639   vs ref: +0.00 sigma
+    L=30 beta=2.5108  D_bar = 0.3395 +- 0.0155   h = 0.533   vs ref: -0.35 sigma
+    L=36 beta=2.6931  D_bar = 0.3334 +- 0.0161   h = 0.498   vs ref: -0.68 sigma
+
+  z = 10.5498:   reference L=24  D_bar = 0.4537 +- 0.0122
+    L=24 beta=2.0000  D_bar = 0.4537 +- 0.0122   h = 0.761   vs ref: +0.00 sigma
+    L=30 beta=2.2231  D_bar = 0.4386 +- 0.0186   h = 0.689   vs ref: -0.68 sigma
+    L=36 beta=2.4055  D_bar = 0.4225 +- 0.0186   h = 0.631   vs ref: -1.40 sigma
+
+figure -> d:/JuliaDQMC/code/KAPDQMC/src/Measure/born_ai/research_20261030/docs/audit/v3_scratch_fig\crossover_structure.png

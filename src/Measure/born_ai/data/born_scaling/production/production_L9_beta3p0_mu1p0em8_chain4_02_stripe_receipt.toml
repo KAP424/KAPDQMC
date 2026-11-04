@@ -1,0 +1,57 @@
+final_E = [118, 48, 146, 134, 148, 103, 25, 36, 120, 4, 123, 96, 45, 162, 52, 38, 81, 54, 110, 34, 114, 131, 2, 63, 9, 13, 80, 84, 75, 23, 97, 122, 87, 141, 6, 109, 154, 19, 138, 67, 139, 30, 94, 40, 22, 60, 7, 57, 86, 35, 11, 121, 74, 14, 77, 99, 29, 116, 50, 152, 62, 41, 111, 151, 127, 18, 3, 28, 88, 126, 107, 157, 140, 59, 68, 72, 61, 101, 130, 161, 79]
+maximum_inverse_asymmetry = 5.502442945726216e-11
+elapsed_seconds = 1.4259998798370361
+blas_threads = 1
+initial_state_definition = "E is the suppressed set. Even L: both sublattices on odd x columns; odd L: alternate full/empty through L-1 and only A on final column. uniform_A/B mean E=A/B."
+started_at = "2026-10-27T15:53:03.500"
+acceptance = 0.15981063528806586
+accepted = 59649
+initial_E = [1, 2, 5, 6, 9, 10, 13, 14, 17, 19, 20, 23, 24, 27, 28, 31, 32, 35, 37, 38, 41, 42, 45, 46, 49, 50, 53, 55, 56, 59, 60, 63, 64, 67, 68, 71, 73, 74, 77, 78, 81, 82, 85, 86, 89, 91, 92, 95, 96, 99, 100, 103, 104, 107, 109, 110, 113, 114, 117, 118, 121, 122, 125, 127, 128, 131, 132, 135, 136, 139, 140, 143, 145, 146, 149, 150, 153, 154, 157, 158, 161]
+julia_version = "1.12.1"
+status = "complete"
+refreshes = 460
+plan_sha256 = "3f3929b15eec47c5720b7f481240ab66f36e843a4a09761cf98f7658ae427909"
+records = 2304
+model_manifest_sha256 = "0b019fad58d8833f2baadb114b78c3495571d1cdd5e7b5eac5b53c81514e5e62"
+proposed = 373248
+model_manifest = "data/born_scaling/production/models/state_L9_staggered_mu1.0e-8_model.toml"
+maximum_logweight_drift = 9.23336074265535e-9
+maximum_inverse_drift = 9.19565146243329e-9
+completed_at = "2026-10-27T15:53:04.925"
+
+[source_sha256]
+"run_born_scaling.jl" = "3d9004c1d112a29ee1a7b440a945dc89516f7cabba8e279e0e5dd145e5a65c76"
+"fused_original_swap_kernel.jl" = "da7d40a574902763417225417d30abce265a15f9804dbfa47882b46f8ed20d70"
+"original_swap_scaling.jl" = "1af51fff868fbe63025323618506295ce5622179c1381de5ea64549e8c0d40cb"
+"prepare_born_scaling_production.jl" = "9bda7e2de8c87d7d050cff3be7c62444c289281174d87ad7e8cf6a1ecf6a80a4"
+"run_born_scaling_fused.jl" = "3734470f7c633617a2a2b43d7d581c94e9c29f11af6efb0f523cabf266499fe3"
+"../../public/Geometry.jl" = "079c2052642d46a7072656ccd738411faa57c9f07791f786a0a6872a5a5970ad"
+
+[job]
+chain = 4
+output_dir = "data/born_scaling/production"
+L = 9
+mu = 1.0e-8
+state = "staggered"
+run_id = "production_L9_beta3p0_mu1p0em8_chain4_02_stripe"
+sweeps = 2304
+refresh_every = 5
+start = "02_stripe"
+model_manifest_sha256 = "0b019fad58d8833f2baadb114b78c3495571d1cdd5e7b5eac5b53c81514e5e62"
+stage = "production"
+grid = "main"
+analysis_burnin = 256
+beta = 3.0
+model_manifest = "data/born_scaling/production/models/state_L9_staggered_mu1.0e-8_model.toml"
+seed = 1609300004
+retained_sweeps = 2048
+measure_every = 1
+
+[model_files]
+"state_L9_staggered_mu1.0e-8_Q.bin" = "8b215f372da8abb1e96c1b8c82fc1ce02502a7ad8da578fda4beb402b9c865b9"
+"state_L9_staggered_mu1.0e-8_G.bin" = "46aad722ce35c7f141a098dc11f8acc6ccd19c379a1c37d937966bfb500f4e55"
+"state_L9_staggered_mu1.0e-8_energies.bin" = "f233dfb9ac6f53b08850435f1bbdfa573bc1babe5f5319301c5ea17237889ac2"
+
+[files]
+"data/born_scaling/production/production_L9_beta3p0_mu1p0em8_chain4_02_stripe_initial.csv" = "773792c268f11640afdcee8beb24e1749828cc54ae8b6d83bf2f87b9b79ee73d"
+"data/born_scaling/production/production_L9_beta3p0_mu1p0em8_chain4_02_stripe_samples.csv" = "0d706284a7987161606ec9c8ffbe0347f2c0fea16eca27df223f2cfef8f2f62e"

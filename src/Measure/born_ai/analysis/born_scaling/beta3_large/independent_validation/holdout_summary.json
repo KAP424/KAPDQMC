@@ -1,0 +1,37 @@
+{
+  "status": "COMPUTED",
+  "tests": [
+    {
+      "model": "D_log_invL",
+      "new_sizes": [
+        27,
+        30,
+        36
+      ],
+      "statistic": 1.7508189991570275,
+      "nominal_degrees_of_freedom": 3,
+      "statistic_per_dof": 0.5836063330523424,
+      "parameters_refitted_to_new_data": false
+    },
+    {
+      "model": "D_linear_log_diagnostic",
+      "new_sizes": [
+        27,
+        30,
+        36
+      ],
+      "statistic": 29.44094879019648,
+      "nominal_degrees_of_freedom": 3,
+      "statistic_per_dof": 9.81364959673216,
+      "parameters_refitted_to_new_data": false
+    }
+  ],
+  "formula": "delta.T @ inverse(diag(new_MCSE^2)+frozen_parameter_prediction_covariance) @ delta",
+  "interpretation": "Joint predictive discrepancy for two old-data models, not a proof of an asymptotic log/linear law",
+  "caveats": [
+    "Old fits used five points and two residual degrees of freedom; prediction variance excludes model bias",
+    "Nominal chi-square interpretation is approximate with estimated MCSE and finite non-Gaussian chains",
+    "Two models share old and new data, so their test statistics are correlated",
+    "L42 was not sampled by the cost decision; only the predefined 27/30/36 covariance submatrix is used"
+  ]
+}

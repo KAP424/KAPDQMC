@@ -1,0 +1,6818 @@
+{
+  "status": "PASS",
+  "stage": "final",
+  "generated_utc": "2026-10-20T15:53:50.392281+00:00",
+  "plan_sha256": "14076688e07d18174ee6a3885c2306ecef05f5f302fc5b65c9d89221c91906d1",
+  "validator_sha256": "20fec52c04a654d7246e3c305ecdca31a2dcc726db9659da9e0ee53bbefabf92",
+  "required_rows": 1530,
+  "available_required_rows": 1530,
+  "missing_required_rows": 0,
+  "missing_keys": [],
+  "coverage": [
+    {
+      "pattern": "one_B_2",
+      "required": 288,
+      "available": 288,
+      "missing": 0
+    },
+    {
+      "pattern": "diagonal_B_3",
+      "required": 252,
+      "available": 252,
+      "missing": 0
+    },
+    {
+      "pattern": "pure02_block4",
+      "required": 243,
+      "available": 243,
+      "missing": 0
+    },
+    {
+      "pattern": "pure02_irregular4",
+      "required": 243,
+      "available": 243,
+      "missing": 0
+    },
+    {
+      "pattern": "random_half_3",
+      "required": 252,
+      "available": 252,
+      "missing": 0
+    },
+    {
+      "pattern": "general_matched_a",
+      "required": 252,
+      "available": 252,
+      "missing": 0
+    }
+  ],
+  "classes": [
+    {
+      "pattern": "one_B_2",
+      "occupancy_class": 1,
+      "n0": 0,
+      "n1": 4,
+      "n2": 0
+    },
+    {
+      "pattern": "diagonal_B_3",
+      "occupancy_class": 1,
+      "n0": 0,
+      "n1": 9,
+      "n2": 0
+    },
+    {
+      "pattern": "pure02_block4",
+      "occupancy_class": 2,
+      "n0": 8,
+      "n1": 0,
+      "n2": 8
+    },
+    {
+      "pattern": "pure02_irregular4",
+      "occupancy_class": 2,
+      "n0": 8,
+      "n1": 0,
+      "n2": 8
+    },
+    {
+      "pattern": "random_half_3",
+      "occupancy_class": 3,
+      "n0": 1,
+      "n1": 7,
+      "n2": 1
+    },
+    {
+      "pattern": "general_matched_a",
+      "occupancy_class": 3,
+      "n0": 1,
+      "n1": 7,
+      "n2": 1
+    }
+  ],
+  "inputs": {
+    "data/ground_observations_baseline.csv": {
+      "complete_rows": 3201,
+      "accepted_rows": 3201,
+      "selected_rows": 1059,
+      "file_sha256": "8ba744bfef3730840ae3f143bffebc44dd27c8286644dfaf3f24c4604e3a5033",
+      "complete_prefix_sha256": "8ba744bfef3730840ae3f143bffebc44dd27c8286644dfaf3f24c4604e3a5033",
+      "ledger_sha256": null,
+      "ledger_verified": false,
+      "unpaired_csv_rows_deferred": 0
+    },
+    "data/ref_calibration_observations.csv": {
+      "complete_rows": 873,
+      "accepted_rows": 873,
+      "selected_rows": 329,
+      "file_sha256": "a10427b188eb38ef7d98064a31766ba471f4732432c4d682f197afde72306a43",
+      "complete_prefix_sha256": "a10427b188eb38ef7d98064a31766ba471f4732432c4d682f197afde72306a43",
+      "ledger_sha256": null,
+      "ledger_verified": false,
+      "unpaired_csv_rows_deferred": 0
+    },
+    "data/ref_calibration_equilibrium.csv": {
+      "complete_rows": 36,
+      "accepted_rows": 36,
+      "selected_rows": 12,
+      "file_sha256": "3c2e1ad4f4f2e617972ce37d7be14a303bf41babd054cdb19646e4aea4aa115f",
+      "complete_prefix_sha256": "3c2e1ad4f4f2e617972ce37d7be14a303bf41babd054cdb19646e4aea4aa115f",
+      "ledger_sha256": null,
+      "ledger_verified": false,
+      "unpaired_csv_rows_deferred": 0
+    },
+    "data/ref_calibration_late.csv": {
+      "complete_rows": 115,
+      "accepted_rows": 115,
+      "selected_rows": 52,
+      "file_sha256": "bacd00aa7784eb08fe808341ee46c66c0c9e5ee2120da9f142dd96cc921ed77d",
+      "complete_prefix_sha256": "bacd00aa7784eb08fe808341ee46c66c0c9e5ee2120da9f142dd96cc921ed77d",
+      "ledger_sha256": null,
+      "ledger_verified": false,
+      "unpaired_csv_rows_deferred": 0
+    },
+    "data/random_half3_beta1_observations.csv": {
+      "complete_rows": 82,
+      "accepted_rows": 82,
+      "selected_rows": 82,
+      "file_sha256": "89eb5964c39ff255318bd0085989e24cbc24e5d926aa3c610106e2cd8a418e47",
+      "complete_prefix_sha256": "89eb5964c39ff255318bd0085989e24cbc24e5d926aa3c610106e2cd8a418e47",
+      "ledger_sha256": null,
+      "ledger_verified": false,
+      "unpaired_csv_rows_deferred": 0
+    },
+    "data/beta_patterns_observations.csv": {
+      "complete_rows": 909,
+      "accepted_rows": 909,
+      "selected_rows": 909,
+      "file_sha256": "490d28a2b2b7a0a6a3a42ce49db5c558d3d991c0d369025721ade2132df3d4d1",
+      "complete_prefix_sha256": "490d28a2b2b7a0a6a3a42ce49db5c558d3d991c0d369025721ade2132df3d4d1",
+      "ledger_sha256": "b6e4af1045f2127ff7300318b6863151a7a89629b7b7c26d98756762e1d790d6",
+      "ledger_verified": true,
+      "unpaired_csv_rows_deferred": 0
+    },
+    "data/occupancy_classes_observations.csv": {
+      "complete_rows": 738,
+      "accepted_rows": 738,
+      "selected_rows": 738,
+      "file_sha256": "7321ec21400690f1b353d729192a90691b347df67f43f201b571e948978b1a50",
+      "complete_prefix_sha256": "7321ec21400690f1b353d729192a90691b347df67f43f201b571e948978b1a50",
+      "ledger_sha256": "75dddb67c58554e216471cadbbd86290670510fb622dfb1a2d6273947ed798fb",
+      "ledger_verified": true,
+      "unpaired_csv_rows_deferred": 0
+    }
+  },
+  "source_counts": {
+    "legacy_reference": 1534,
+    "computed": 1391,
+    "reused": 256
+  },
+  "audited_runs": [
+    {
+      "manifest": "beta_patterns_run_20261019T072840943.toml",
+      "sha256": "ef91cbfa7c3291460d37a8742696d87c7962b240f42d1a2c182addaccecdc7b9",
+      "status": "complete",
+      "accepted_rows": 1
+    },
+    {
+      "manifest": "beta_patterns_run_20261019T073030659.toml",
+      "sha256": "915d8653be752eb5a729f541009cc44cfa89de62166ec11bbe21c619b6aead45",
+      "status": "interrupted",
+      "accepted_rows": 18
+    },
+    {
+      "manifest": "beta_patterns_run_20261019T073944015.toml",
+      "sha256": "d410956fd05454293e84923ff39106640bce617e5cffcbd9e782f26c2c827740",
+      "status": "complete",
+      "accepted_rows": 179
+    },
+    {
+      "manifest": "beta_patterns_run_20261019T092330307.toml",
+      "sha256": "b85796ed94ae65011dc2d2435dacba6c9e885862fc3623e1e3e7350cf16ee5a1",
+      "status": "complete",
+      "accepted_rows": 144
+    },
+    {
+      "manifest": "beta_patterns_run_20261019T092502602.toml",
+      "sha256": "5ceebfc3e7a3a771920080a19ffb9d55c0956cb48faafff4482b700b242fb421",
+      "status": "complete",
+      "accepted_rows": 216
+    },
+    {
+      "manifest": "beta_patterns_run_20261019T092812512.toml",
+      "sha256": "cc6b1534cade07c326bf7c9981e10584dcd83f84df79486fcf75b037136255ed",
+      "status": "complete",
+      "accepted_rows": 315
+    },
+    {
+      "manifest": "beta_patterns_run_20261019T102022695.toml",
+      "sha256": "c2ae073deafd93d112001c6c611111cfa008390edc581d8daff6dd95a3631ad7",
+      "status": "complete",
+      "accepted_rows": 36
+    },
+    {
+      "manifest": "occupancy_classes_run_20261020T140750398.toml",
+      "sha256": "72461e89d71ddd6397e1037f9f88e355f7f046a992dad0ce53f44a3d638e2153",
+      "status": "complete",
+      "accepted_rows": 108
+    },
+    {
+      "manifest": "occupancy_classes_run_20261020T141504000.toml",
+      "sha256": "c15432a00b6484c81bbb83c67b31ec594b77182b20dea78e4d458a7e610d3f81",
+      "status": "complete",
+      "accepted_rows": 198
+    },
+    {
+      "manifest": "occupancy_classes_run_20261020T142149372.toml",
+      "sha256": "49a80f9ceb1400b6eb12e99aaba6f5001fbce255e460522fb8ba9de4b2fe2f24",
+      "status": "complete",
+      "accepted_rows": 189
+    },
+    {
+      "manifest": "occupancy_classes_run_20261020T143921895.toml",
+      "sha256": "4ed4845bcbfb2a4eb899162a00068dbbae101705e95c5d77e8a101ab8420b242",
+      "status": "complete",
+      "accepted_rows": 243
+    }
+  ],
+  "code_snapshots_checked": 10,
+  "ledger_finite_rows": 981,
+  "ledger_infinite_rows": 666,
+  "numerical_maxima": {
+    "D_identity": 0.0,
+    "premeasurement_excess": 5.093170329928398e-11,
+    "delta_identity": 0.0,
+    "premeasurement_residual": 8.122165182049166e-13,
+    "projector_error": 4.3538672494534665e-15,
+    "reconstruction_error": 7.007219954504525e-16,
+    "rectangle_imag_error": 3.519603427829659e-15,
+    "rectangle_real_error_bound": 5.596311744224207e-24,
+    "accessible_excess": 9.094947017729282e-13,
+    "unmeasured_ground_excess_energy": 2.9103830456733704e-11,
+    "unmeasured_ground_residual": 5.402546342348375e-13,
+    "duplicate_entropy_difference": 4.54036808150704e-12
+  },
+  "consistent_duplicate_rows": 382,
+  "duplicates": [
+    {
+      "key": [
+        "random_half_3",
+        90,
+        2.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1405
+      ],
+      "second": [
+        "random_half3_beta1_observations.csv",
+        2
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        90,
+        3.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1406
+      ],
+      "second": [
+        "random_half3_beta1_observations.csv",
+        3
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        90,
+        4.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1407
+      ],
+      "second": [
+        "random_half3_beta1_observations.csv",
+        4
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        90,
+        5.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1408
+      ],
+      "second": [
+        "random_half3_beta1_observations.csv",
+        5
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        90,
+        6.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1409
+      ],
+      "second": [
+        "random_half3_beta1_observations.csv",
+        6
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        90,
+        7.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1410
+      ],
+      "second": [
+        "random_half3_beta1_observations.csv",
+        7
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        90,
+        8.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1411
+      ],
+      "second": [
+        "random_half3_beta1_observations.csv",
+        8
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        90,
+        10.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1412
+      ],
+      "second": [
+        "random_half3_beta1_observations.csv",
+        9
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        90,
+        12.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1413
+      ],
+      "second": [
+        "random_half3_beta1_observations.csv",
+        10
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        90,
+        14.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1414
+      ],
+      "second": [
+        "random_half3_beta1_observations.csv",
+        11
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        90,
+        16.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1415
+      ],
+      "second": [
+        "random_half3_beta1_observations.csv",
+        12
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        90,
+        18.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1416
+      ],
+      "second": [
+        "random_half3_beta1_observations.csv",
+        13
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        90,
+        20.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1417
+      ],
+      "second": [
+        "random_half3_beta1_observations.csv",
+        14
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        90,
+        24.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1418
+      ],
+      "second": [
+        "random_half3_beta1_observations.csv",
+        15
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        90,
+        28.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1419
+      ],
+      "second": [
+        "random_half3_beta1_observations.csv",
+        16
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        90,
+        32.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1420
+      ],
+      "second": [
+        "random_half3_beta1_observations.csv",
+        17
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        108,
+        2.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1423
+      ],
+      "second": [
+        "random_half3_beta1_observations.csv",
+        18
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        108,
+        3.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1424
+      ],
+      "second": [
+        "random_half3_beta1_observations.csv",
+        19
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        108,
+        4.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1425
+      ],
+      "second": [
+        "random_half3_beta1_observations.csv",
+        20
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        108,
+        5.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1426
+      ],
+      "second": [
+        "random_half3_beta1_observations.csv",
+        21
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        108,
+        6.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1427
+      ],
+      "second": [
+        "random_half3_beta1_observations.csv",
+        22
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        108,
+        7.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1428
+      ],
+      "second": [
+        "random_half3_beta1_observations.csv",
+        23
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        108,
+        8.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1429
+      ],
+      "second": [
+        "random_half3_beta1_observations.csv",
+        24
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        108,
+        10.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1430
+      ],
+      "second": [
+        "random_half3_beta1_observations.csv",
+        25
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        108,
+        12.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1431
+      ],
+      "second": [
+        "random_half3_beta1_observations.csv",
+        26
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        108,
+        14.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1432
+      ],
+      "second": [
+        "random_half3_beta1_observations.csv",
+        27
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        108,
+        16.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1433
+      ],
+      "second": [
+        "random_half3_beta1_observations.csv",
+        28
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        108,
+        18.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1434
+      ],
+      "second": [
+        "random_half3_beta1_observations.csv",
+        29
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        108,
+        20.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1435
+      ],
+      "second": [
+        "random_half3_beta1_observations.csv",
+        30
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        108,
+        24.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1436
+      ],
+      "second": [
+        "random_half3_beta1_observations.csv",
+        31
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        108,
+        28.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1437
+      ],
+      "second": [
+        "random_half3_beta1_observations.csv",
+        32
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        108,
+        32.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1438
+      ],
+      "second": [
+        "random_half3_beta1_observations.csv",
+        33
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        144,
+        2.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1443
+      ],
+      "second": [
+        "random_half3_beta1_observations.csv",
+        34
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        144,
+        3.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1444
+      ],
+      "second": [
+        "random_half3_beta1_observations.csv",
+        35
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        144,
+        4.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1445
+      ],
+      "second": [
+        "random_half3_beta1_observations.csv",
+        36
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        144,
+        5.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1446
+      ],
+      "second": [
+        "random_half3_beta1_observations.csv",
+        37
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        144,
+        6.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1447
+      ],
+      "second": [
+        "random_half3_beta1_observations.csv",
+        38
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        144,
+        7.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1448
+      ],
+      "second": [
+        "random_half3_beta1_observations.csv",
+        39
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        144,
+        8.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1449
+      ],
+      "second": [
+        "random_half3_beta1_observations.csv",
+        40
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        144,
+        10.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1451
+      ],
+      "second": [
+        "random_half3_beta1_observations.csv",
+        41
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        144,
+        12.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1453
+      ],
+      "second": [
+        "random_half3_beta1_observations.csv",
+        42
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        144,
+        14.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1454
+      ],
+      "second": [
+        "random_half3_beta1_observations.csv",
+        43
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        144,
+        16.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1455
+      ],
+      "second": [
+        "random_half3_beta1_observations.csv",
+        44
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        144,
+        18.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1456
+      ],
+      "second": [
+        "random_half3_beta1_observations.csv",
+        45
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        144,
+        20.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1457
+      ],
+      "second": [
+        "random_half3_beta1_observations.csv",
+        46
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        144,
+        24.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1458
+      ],
+      "second": [
+        "random_half3_beta1_observations.csv",
+        47
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        144,
+        28.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1459
+      ],
+      "second": [
+        "random_half3_beta1_observations.csv",
+        48
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        144,
+        32.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1460
+      ],
+      "second": [
+        "random_half3_beta1_observations.csv",
+        49
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        180,
+        4.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1465
+      ],
+      "second": [
+        "random_half3_beta1_observations.csv",
+        50
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        180,
+        5.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1466
+      ],
+      "second": [
+        "random_half3_beta1_observations.csv",
+        51
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        180,
+        6.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1467
+      ],
+      "second": [
+        "random_half3_beta1_observations.csv",
+        52
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        180,
+        7.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1468
+      ],
+      "second": [
+        "random_half3_beta1_observations.csv",
+        53
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        180,
+        8.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1469
+      ],
+      "second": [
+        "random_half3_beta1_observations.csv",
+        54
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        180,
+        10.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1471
+      ],
+      "second": [
+        "random_half3_beta1_observations.csv",
+        55
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        180,
+        12.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1473
+      ],
+      "second": [
+        "random_half3_beta1_observations.csv",
+        56
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        180,
+        14.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1474
+      ],
+      "second": [
+        "random_half3_beta1_observations.csv",
+        57
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        180,
+        16.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1475
+      ],
+      "second": [
+        "random_half3_beta1_observations.csv",
+        58
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        180,
+        18.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1476
+      ],
+      "second": [
+        "random_half3_beta1_observations.csv",
+        59
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        180,
+        20.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1477
+      ],
+      "second": [
+        "random_half3_beta1_observations.csv",
+        60
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        180,
+        24.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1478
+      ],
+      "second": [
+        "random_half3_beta1_observations.csv",
+        61
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        180,
+        28.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1479
+      ],
+      "second": [
+        "random_half3_beta1_observations.csv",
+        62
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        180,
+        32.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1480
+      ],
+      "second": [
+        "random_half3_beta1_observations.csv",
+        63
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        216,
+        4.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1483
+      ],
+      "second": [
+        "random_half3_beta1_observations.csv",
+        64
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        216,
+        5.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1484
+      ],
+      "second": [
+        "random_half3_beta1_observations.csv",
+        65
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        216,
+        6.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1485
+      ],
+      "second": [
+        "random_half3_beta1_observations.csv",
+        66
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        216,
+        7.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1486
+      ],
+      "second": [
+        "random_half3_beta1_observations.csv",
+        67
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        216,
+        8.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1487
+      ],
+      "second": [
+        "random_half3_beta1_observations.csv",
+        68
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        216,
+        10.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1489
+      ],
+      "second": [
+        "random_half3_beta1_observations.csv",
+        69
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        216,
+        12.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1491
+      ],
+      "second": [
+        "random_half3_beta1_observations.csv",
+        70
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        216,
+        14.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1492
+      ],
+      "second": [
+        "random_half3_beta1_observations.csv",
+        71
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        216,
+        16.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1493
+      ],
+      "second": [
+        "random_half3_beta1_observations.csv",
+        72
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        216,
+        18.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1494
+      ],
+      "second": [
+        "random_half3_beta1_observations.csv",
+        73
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        216,
+        20.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1495
+      ],
+      "second": [
+        "random_half3_beta1_observations.csv",
+        74
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        216,
+        24.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1496
+      ],
+      "second": [
+        "random_half3_beta1_observations.csv",
+        75
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        216,
+        28.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1497
+      ],
+      "second": [
+        "random_half3_beta1_observations.csv",
+        76
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        216,
+        32.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1498
+      ],
+      "second": [
+        "random_half3_beta1_observations.csv",
+        77
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        144,
+        9.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1450
+      ],
+      "second": [
+        "random_half3_beta1_observations.csv",
+        78
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        144,
+        11.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1452
+      ],
+      "second": [
+        "random_half3_beta1_observations.csv",
+        79
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        180,
+        9.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1470
+      ],
+      "second": [
+        "random_half3_beta1_observations.csv",
+        80
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        180,
+        11.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1472
+      ],
+      "second": [
+        "random_half3_beta1_observations.csv",
+        81
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        216,
+        9.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1488
+      ],
+      "second": [
+        "random_half3_beta1_observations.csv",
+        82
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        216,
+        11.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1490
+      ],
+      "second": [
+        "random_half3_beta1_observations.csv",
+        83
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        180,
+        4.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1465
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        2
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        180,
+        5.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1466
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        75
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        180,
+        6.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1467
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        81
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        180,
+        7.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1468
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        87
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        180,
+        8.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1469
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        93
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        180,
+        9.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1470
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        99
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        216,
+        4.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1483
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        168
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        216,
+        5.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1484
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        174
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        216,
+        6.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1485
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        180
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        216,
+        7.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1486
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        186
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        216,
+        8.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1487
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        192
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        216,
+        9.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1488
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        198
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        18,
+        "Inf",
+        0.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        687
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        200
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        18,
+        "Inf",
+        0.25
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        726
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        201
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        18,
+        "Inf",
+        0.5
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        743
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        202
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        18,
+        "Inf",
+        0.75
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        780
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        203
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        18,
+        "Inf",
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        797
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        204
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        18,
+        "Inf",
+        1.5
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        836
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        206
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        18,
+        "Inf",
+        2.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        851
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        208
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        24,
+        "Inf",
+        0.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        688
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        209
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        24,
+        "Inf",
+        0.25
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        727
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        210
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        24,
+        "Inf",
+        0.5
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        744
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        211
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        24,
+        "Inf",
+        0.75
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        781
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        212
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        24,
+        "Inf",
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        798
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        213
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        24,
+        "Inf",
+        1.5
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        837
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        215
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        24,
+        "Inf",
+        2.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        852
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        217
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        30,
+        "Inf",
+        0.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        689
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        218
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        30,
+        "Inf",
+        0.25
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        728
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        219
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        30,
+        "Inf",
+        0.5
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        745
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        220
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        30,
+        "Inf",
+        0.75
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        782
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        221
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        30,
+        "Inf",
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        799
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        222
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        30,
+        "Inf",
+        1.5
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        838
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        224
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        30,
+        "Inf",
+        2.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        853
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        226
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        36,
+        "Inf",
+        0.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        692
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        227
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        36,
+        "Inf",
+        0.25
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        729
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        228
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        36,
+        "Inf",
+        0.5
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        746
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        229
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        36,
+        "Inf",
+        0.75
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        783
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        230
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        36,
+        "Inf",
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        802
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        231
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        36,
+        "Inf",
+        1.5
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        839
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        233
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        36,
+        "Inf",
+        2.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        854
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        235
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        42,
+        "Inf",
+        0.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        693
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        236
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        42,
+        "Inf",
+        0.25
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        730
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        237
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        42,
+        "Inf",
+        0.5
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        747
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        238
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        42,
+        "Inf",
+        0.75
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        784
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        239
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        42,
+        "Inf",
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        803
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        240
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        42,
+        "Inf",
+        1.5
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        840
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        242
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        42,
+        "Inf",
+        2.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        855
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        244
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        48,
+        "Inf",
+        0.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        694
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        245
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        48,
+        "Inf",
+        0.25
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        731
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        246
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        48,
+        "Inf",
+        0.5
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        748
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        247
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        48,
+        "Inf",
+        0.75
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        785
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        248
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        48,
+        "Inf",
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        804
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        249
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        48,
+        "Inf",
+        1.5
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        841
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        251
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        48,
+        "Inf",
+        2.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        856
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        253
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        54,
+        "Inf",
+        0.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        706
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        254
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        54,
+        "Inf",
+        0.25
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        732
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        255
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        54,
+        "Inf",
+        0.5
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        760
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        256
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        54,
+        "Inf",
+        0.75
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        786
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        257
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        54,
+        "Inf",
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        816
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        258
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        54,
+        "Inf",
+        1.5
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        842
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        260
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        54,
+        "Inf",
+        2.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        868
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        262
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        60,
+        "Inf",
+        0.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        707
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        263
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        60,
+        "Inf",
+        0.25
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        733
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        264
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        60,
+        "Inf",
+        0.5
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        761
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        265
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        60,
+        "Inf",
+        0.75
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        787
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        266
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        60,
+        "Inf",
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        817
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        267
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        60,
+        "Inf",
+        1.5
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        843
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        269
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        60,
+        "Inf",
+        2.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        869
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        271
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        66,
+        "Inf",
+        0.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        708
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        272
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        66,
+        "Inf",
+        0.25
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        734
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        273
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        66,
+        "Inf",
+        0.5
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        762
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        274
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        66,
+        "Inf",
+        0.75
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        788
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        275
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        66,
+        "Inf",
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        818
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        276
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        66,
+        "Inf",
+        1.5
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        844
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        278
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        66,
+        "Inf",
+        2.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        870
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        280
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        72,
+        "Inf",
+        0.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        720
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        281
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        72,
+        "Inf",
+        0.25
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        735
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        282
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        72,
+        "Inf",
+        0.5
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        774
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        283
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        72,
+        "Inf",
+        0.75
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        789
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        284
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        72,
+        "Inf",
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        830
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        285
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        72,
+        "Inf",
+        1.5
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        845
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        287
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        72,
+        "Inf",
+        2.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        882
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        289
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        78,
+        "Inf",
+        0.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        721
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        290
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        78,
+        "Inf",
+        0.25
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        736
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        291
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        78,
+        "Inf",
+        0.5
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        775
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        292
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        78,
+        "Inf",
+        0.75
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        790
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        293
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        78,
+        "Inf",
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        831
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        294
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        78,
+        "Inf",
+        1.5
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        846
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        296
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        78,
+        "Inf",
+        2.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        883
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        298
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        84,
+        "Inf",
+        0.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        722
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        299
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        84,
+        "Inf",
+        0.25
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        737
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        300
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        84,
+        "Inf",
+        0.5
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        776
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        301
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        84,
+        "Inf",
+        0.75
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        791
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        302
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        84,
+        "Inf",
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        832
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        303
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        84,
+        "Inf",
+        1.5
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        847
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        305
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        84,
+        "Inf",
+        2.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        884
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        307
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        90,
+        "Inf",
+        0.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        723
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        308
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        90,
+        "Inf",
+        0.25
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        738
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        309
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        90,
+        "Inf",
+        0.5
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        777
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        310
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        90,
+        "Inf",
+        0.75
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        792
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        311
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        90,
+        "Inf",
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        833
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        312
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        90,
+        "Inf",
+        1.5
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        848
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        314
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        90,
+        "Inf",
+        2.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        885
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        316
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        108,
+        "Inf",
+        0.0
+      ],
+      "first": [
+        "ref_calibration_equilibrium.csv",
+        4
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        317
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        126,
+        "Inf",
+        0.0
+      ],
+      "first": [
+        "ref_calibration_equilibrium.csv",
+        16
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        326
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        144,
+        "Inf",
+        0.0
+      ],
+      "first": [
+        "ref_calibration_equilibrium.csv",
+        28
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        335
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "diagonal_B_3",
+        18,
+        "Inf",
+        0.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        7
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        344
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "diagonal_B_3",
+        18,
+        "Inf",
+        0.25
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        41
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        345
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "diagonal_B_3",
+        18,
+        "Inf",
+        0.5
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        53
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        346
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "diagonal_B_3",
+        18,
+        "Inf",
+        0.75
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        85
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        347
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "diagonal_B_3",
+        18,
+        "Inf",
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        97
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        348
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "diagonal_B_3",
+        18,
+        "Inf",
+        1.5
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        131
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        350
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "diagonal_B_3",
+        18,
+        "Inf",
+        2.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        141
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        352
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        18,
+        "Inf",
+        0.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1168
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        353
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        18,
+        "Inf",
+        0.25
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1229
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        354
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        18,
+        "Inf",
+        0.5
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1257
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        355
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        18,
+        "Inf",
+        0.75
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1317
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        356
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        18,
+        "Inf",
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1346
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        357
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        18,
+        "Inf",
+        1.5
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1501
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        359
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        18,
+        "Inf",
+        2.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1529
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        361
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "diagonal_B_3",
+        27,
+        "Inf",
+        0.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        8
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        362
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "diagonal_B_3",
+        27,
+        "Inf",
+        0.25
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        42
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        363
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "diagonal_B_3",
+        27,
+        "Inf",
+        0.5
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        54
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        364
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "diagonal_B_3",
+        27,
+        "Inf",
+        0.75
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        86
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        365
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "diagonal_B_3",
+        27,
+        "Inf",
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        98
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        366
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "diagonal_B_3",
+        27,
+        "Inf",
+        1.5
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        132
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        368
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "diagonal_B_3",
+        27,
+        "Inf",
+        2.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        142
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        370
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        27,
+        "Inf",
+        0.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1169
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        371
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        27,
+        "Inf",
+        0.25
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1230
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        372
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        27,
+        "Inf",
+        0.5
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1258
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        373
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        27,
+        "Inf",
+        0.75
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1318
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        374
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        27,
+        "Inf",
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1347
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        375
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        27,
+        "Inf",
+        1.5
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1502
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        377
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        27,
+        "Inf",
+        2.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1530
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        379
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "diagonal_B_3",
+        36,
+        "Inf",
+        0.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        11
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        380
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "diagonal_B_3",
+        36,
+        "Inf",
+        0.25
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        43
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        381
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "diagonal_B_3",
+        36,
+        "Inf",
+        0.5
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        55
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        382
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "diagonal_B_3",
+        36,
+        "Inf",
+        0.75
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        87
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        383
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "diagonal_B_3",
+        36,
+        "Inf",
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        101
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        384
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "diagonal_B_3",
+        36,
+        "Inf",
+        1.5
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        133
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        386
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "diagonal_B_3",
+        36,
+        "Inf",
+        2.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        143
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        388
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        36,
+        "Inf",
+        0.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1189
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        389
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        36,
+        "Inf",
+        0.25
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1231
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        390
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        36,
+        "Inf",
+        0.5
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1277
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        391
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        36,
+        "Inf",
+        0.75
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1319
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        392
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        36,
+        "Inf",
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1367
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        393
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        36,
+        "Inf",
+        1.5
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1503
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        395
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        36,
+        "Inf",
+        2.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1549
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        397
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "diagonal_B_3",
+        45,
+        "Inf",
+        0.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        12
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        398
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "diagonal_B_3",
+        45,
+        "Inf",
+        0.25
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        44
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        399
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "diagonal_B_3",
+        45,
+        "Inf",
+        0.5
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        56
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        400
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "diagonal_B_3",
+        45,
+        "Inf",
+        0.75
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        88
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        401
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "diagonal_B_3",
+        45,
+        "Inf",
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        102
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        402
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "diagonal_B_3",
+        45,
+        "Inf",
+        1.5
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        134
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        404
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "diagonal_B_3",
+        45,
+        "Inf",
+        2.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        144
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        406
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        45,
+        "Inf",
+        0.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1190
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        407
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        45,
+        "Inf",
+        0.25
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1232
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        408
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        45,
+        "Inf",
+        0.5
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1278
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        409
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        45,
+        "Inf",
+        0.75
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1320
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        410
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        45,
+        "Inf",
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1368
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        411
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        45,
+        "Inf",
+        1.5
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1504
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        413
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        45,
+        "Inf",
+        2.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1550
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        415
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "diagonal_B_3",
+        54,
+        "Inf",
+        0.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        24
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        416
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "diagonal_B_3",
+        54,
+        "Inf",
+        0.25
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        45
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        417
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "diagonal_B_3",
+        54,
+        "Inf",
+        0.5
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        68
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        418
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "diagonal_B_3",
+        54,
+        "Inf",
+        0.75
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        89
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        419
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "diagonal_B_3",
+        54,
+        "Inf",
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        114
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        420
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "diagonal_B_3",
+        54,
+        "Inf",
+        1.5
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        135
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        422
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "diagonal_B_3",
+        54,
+        "Inf",
+        2.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        156
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        424
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        54,
+        "Inf",
+        0.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1212
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        425
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        54,
+        "Inf",
+        0.25
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1233
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        426
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        54,
+        "Inf",
+        0.5
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1300
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        427
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        54,
+        "Inf",
+        0.75
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1321
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        428
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        54,
+        "Inf",
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1390
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        429
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        54,
+        "Inf",
+        1.5
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1505
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        431
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        54,
+        "Inf",
+        2.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1572
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        433
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "diagonal_B_3",
+        63,
+        "Inf",
+        0.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        25
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        434
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "diagonal_B_3",
+        63,
+        "Inf",
+        0.25
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        46
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        435
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "diagonal_B_3",
+        63,
+        "Inf",
+        0.5
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        69
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        436
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "diagonal_B_3",
+        63,
+        "Inf",
+        0.75
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        90
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        437
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "diagonal_B_3",
+        63,
+        "Inf",
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        115
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        438
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "diagonal_B_3",
+        63,
+        "Inf",
+        1.5
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        136
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        440
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "diagonal_B_3",
+        63,
+        "Inf",
+        2.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        157
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        442
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        63,
+        "Inf",
+        0.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1213
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        443
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        63,
+        "Inf",
+        0.25
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1234
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        444
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        63,
+        "Inf",
+        0.5
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1301
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        445
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        63,
+        "Inf",
+        0.75
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1322
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        446
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        63,
+        "Inf",
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1391
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        447
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        63,
+        "Inf",
+        1.5
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1506
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        449
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        63,
+        "Inf",
+        2.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1573
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        451
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "diagonal_B_3",
+        72,
+        "Inf",
+        0.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        37
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        452
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "diagonal_B_3",
+        72,
+        "Inf",
+        0.25
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        47
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        453
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "diagonal_B_3",
+        72,
+        "Inf",
+        0.5
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        81
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        454
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "diagonal_B_3",
+        72,
+        "Inf",
+        0.75
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        91
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        455
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "diagonal_B_3",
+        72,
+        "Inf",
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        127
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        456
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "diagonal_B_3",
+        72,
+        "Inf",
+        1.5
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        137
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        458
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "diagonal_B_3",
+        72,
+        "Inf",
+        2.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        169
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        460
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        72,
+        "Inf",
+        0.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1225
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        461
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        72,
+        "Inf",
+        0.25
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1235
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        462
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        72,
+        "Inf",
+        0.5
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1313
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        463
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        72,
+        "Inf",
+        0.75
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1323
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        464
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        72,
+        "Inf",
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1403
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        465
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        72,
+        "Inf",
+        1.5
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1507
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        467
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        72,
+        "Inf",
+        2.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1585
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        469
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "diagonal_B_3",
+        81,
+        "Inf",
+        0.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        38
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        470
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "diagonal_B_3",
+        81,
+        "Inf",
+        0.25
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        48
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        471
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "diagonal_B_3",
+        81,
+        "Inf",
+        0.5
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        82
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        472
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "diagonal_B_3",
+        81,
+        "Inf",
+        0.75
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        92
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        473
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "diagonal_B_3",
+        81,
+        "Inf",
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        128
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        474
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "diagonal_B_3",
+        81,
+        "Inf",
+        1.5
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        138
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        476
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "diagonal_B_3",
+        81,
+        "Inf",
+        2.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        170
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        478
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        81,
+        "Inf",
+        0.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1226
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        479
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        81,
+        "Inf",
+        0.25
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1236
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        480
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        81,
+        "Inf",
+        0.5
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1314
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        481
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        81,
+        "Inf",
+        0.75
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1324
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        482
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        81,
+        "Inf",
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1404
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        483
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        81,
+        "Inf",
+        1.5
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1508
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        485
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        81,
+        "Inf",
+        2.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1586
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        487
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "diagonal_B_3",
+        90,
+        "Inf",
+        0.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        39
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        488
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "diagonal_B_3",
+        90,
+        "Inf",
+        0.25
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        49
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        489
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "diagonal_B_3",
+        90,
+        "Inf",
+        0.5
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        83
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        490
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "diagonal_B_3",
+        90,
+        "Inf",
+        0.75
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        93
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        491
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "diagonal_B_3",
+        90,
+        "Inf",
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        129
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        492
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "diagonal_B_3",
+        90,
+        "Inf",
+        1.5
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        139
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        494
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "diagonal_B_3",
+        90,
+        "Inf",
+        2.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        171
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        496
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        90,
+        "Inf",
+        0.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1227
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        497
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        90,
+        "Inf",
+        0.25
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1237
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        498
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        90,
+        "Inf",
+        0.5
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1315
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        499
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        90,
+        "Inf",
+        0.75
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1325
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        500
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        90,
+        "Inf",
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1421
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        501
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        90,
+        "Inf",
+        1.5
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1509
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        503
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        90,
+        "Inf",
+        2.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1587
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        505
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "diagonal_B_3",
+        108,
+        "Inf",
+        0.0
+      ],
+      "first": [
+        "ref_calibration_equilibrium.csv",
+        7
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        506
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        108,
+        "Inf",
+        0.0
+      ],
+      "first": [
+        "ref_calibration_equilibrium.csv",
+        11
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        515
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        108,
+        "Inf",
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1439
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        519
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "diagonal_B_3",
+        126,
+        "Inf",
+        0.0
+      ],
+      "first": [
+        "ref_calibration_equilibrium.csv",
+        19
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        524
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        126,
+        "Inf",
+        0.0
+      ],
+      "first": [
+        "ref_calibration_equilibrium.csv",
+        23
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        533
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        126,
+        "Inf",
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1441
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        537
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "diagonal_B_3",
+        144,
+        "Inf",
+        0.0
+      ],
+      "first": [
+        "ref_calibration_equilibrium.csv",
+        31
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        542
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        144,
+        "Inf",
+        0.0
+      ],
+      "first": [
+        "ref_calibration_equilibrium.csv",
+        35
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        551
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        144,
+        "Inf",
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1461
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        555
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        144,
+        4.0,
+        0.0
+      ],
+      "first": [
+        "ref_calibration_late.csv",
+        45
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        560
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        144,
+        5.0,
+        0.0
+      ],
+      "first": [
+        "ref_calibration_late.csv",
+        46
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        578
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        144,
+        6.0,
+        0.0
+      ],
+      "first": [
+        "ref_calibration_late.csv",
+        47
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        596
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "one_B_2",
+        144,
+        7.0,
+        0.0
+      ],
+      "first": [
+        "ref_calibration_late.csv",
+        48
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        614
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "diagonal_B_3",
+        144,
+        4.0,
+        0.0
+      ],
+      "first": [
+        "ref_calibration_late.csv",
+        54
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        623
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "diagonal_B_3",
+        144,
+        5.0,
+        0.0
+      ],
+      "first": [
+        "ref_calibration_late.csv",
+        55
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        641
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "diagonal_B_3",
+        144,
+        6.0,
+        0.0
+      ],
+      "first": [
+        "ref_calibration_late.csv",
+        56
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        659
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "diagonal_B_3",
+        144,
+        7.0,
+        0.0
+      ],
+      "first": [
+        "ref_calibration_late.csv",
+        57
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        677
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        144,
+        4.0,
+        0.0
+      ],
+      "first": [
+        "ref_calibration_late.csv",
+        90
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        686
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        144,
+        4.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1445
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        690
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        144,
+        5.0,
+        0.0
+      ],
+      "first": [
+        "ref_calibration_late.csv",
+        91
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        704
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        144,
+        5.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1446
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        708
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        144,
+        6.0,
+        0.0
+      ],
+      "first": [
+        "ref_calibration_late.csv",
+        92
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        722
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        144,
+        6.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1447
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        726
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        144,
+        7.0,
+        0.0
+      ],
+      "first": [
+        "ref_calibration_late.csv",
+        93
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        740
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "random_half_3",
+        144,
+        7.0,
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        1448
+      ],
+      "second": [
+        "beta_patterns_observations.csv",
+        744
+      ],
+      "max_error": 0.0
+    },
+    {
+      "key": [
+        "general_matched_a",
+        18,
+        "Inf",
+        0.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        399
+      ],
+      "second": [
+        "occupancy_classes_observations.csv",
+        2
+      ],
+      "max_error": 7.105427357601002e-15
+    },
+    {
+      "key": [
+        "general_matched_a",
+        18,
+        "Inf",
+        0.5
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        433
+      ],
+      "second": [
+        "occupancy_classes_observations.csv",
+        4
+      ],
+      "max_error": 1.7763568394002505e-14
+    },
+    {
+      "key": [
+        "general_matched_a",
+        18,
+        "Inf",
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        465
+      ],
+      "second": [
+        "occupancy_classes_observations.csv",
+        6
+      ],
+      "max_error": 1.8207657603852567e-14
+    },
+    {
+      "key": [
+        "general_matched_a",
+        18,
+        "Inf",
+        2.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        511
+      ],
+      "second": [
+        "occupancy_classes_observations.csv",
+        10
+      ],
+      "max_error": 2.901845430614003e-14
+    },
+    {
+      "key": [
+        "general_matched_a",
+        27,
+        "Inf",
+        0.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        400
+      ],
+      "second": [
+        "occupancy_classes_observations.csv",
+        11
+      ],
+      "max_error": 1.3145040611561853e-13
+    },
+    {
+      "key": [
+        "general_matched_a",
+        27,
+        "Inf",
+        0.5
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        434
+      ],
+      "second": [
+        "occupancy_classes_observations.csv",
+        13
+      ],
+      "max_error": 2.4868995751603507e-14
+    },
+    {
+      "key": [
+        "general_matched_a",
+        27,
+        "Inf",
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        466
+      ],
+      "second": [
+        "occupancy_classes_observations.csv",
+        15
+      ],
+      "max_error": 4.1744385725905886e-14
+    },
+    {
+      "key": [
+        "general_matched_a",
+        27,
+        "Inf",
+        2.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        512
+      ],
+      "second": [
+        "occupancy_classes_observations.csv",
+        19
+      ],
+      "max_error": 1.5309975509580909e-13
+    },
+    {
+      "key": [
+        "general_matched_a",
+        36,
+        "Inf",
+        0.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        401
+      ],
+      "second": [
+        "occupancy_classes_observations.csv",
+        20
+      ],
+      "max_error": 1.6697754290362354e-13
+    },
+    {
+      "key": [
+        "general_matched_a",
+        36,
+        "Inf",
+        0.5
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        435
+      ],
+      "second": [
+        "occupancy_classes_observations.csv",
+        22
+      ],
+      "max_error": 2.1316282072803006e-13
+    },
+    {
+      "key": [
+        "general_matched_a",
+        36,
+        "Inf",
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        467
+      ],
+      "second": [
+        "occupancy_classes_observations.csv",
+        24
+      ],
+      "max_error": 4.3520742565306136e-14
+    },
+    {
+      "key": [
+        "general_matched_a",
+        36,
+        "Inf",
+        2.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        513
+      ],
+      "second": [
+        "occupancy_classes_observations.csv",
+        28
+      ],
+      "max_error": 1.0137723993608461e-13
+    },
+    {
+      "key": [
+        "general_matched_a",
+        45,
+        "Inf",
+        0.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        402
+      ],
+      "second": [
+        "occupancy_classes_observations.csv",
+        29
+      ],
+      "max_error": 1.2434497875801753e-13
+    },
+    {
+      "key": [
+        "general_matched_a",
+        45,
+        "Inf",
+        0.5
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        436
+      ],
+      "second": [
+        "occupancy_classes_observations.csv",
+        31
+      ],
+      "max_error": 4.547473508864641e-13
+    },
+    {
+      "key": [
+        "general_matched_a",
+        45,
+        "Inf",
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        468
+      ],
+      "second": [
+        "occupancy_classes_observations.csv",
+        33
+      ],
+      "max_error": 2.6645352591003757e-14
+    },
+    {
+      "key": [
+        "general_matched_a",
+        45,
+        "Inf",
+        2.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        514
+      ],
+      "second": [
+        "occupancy_classes_observations.csv",
+        37
+      ],
+      "max_error": 2.142730437526552e-13
+    },
+    {
+      "key": [
+        "general_matched_a",
+        54,
+        "Inf",
+        0.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        414
+      ],
+      "second": [
+        "occupancy_classes_observations.csv",
+        38
+      ],
+      "max_error": 1.1652900866465643e-12
+    },
+    {
+      "key": [
+        "general_matched_a",
+        54,
+        "Inf",
+        0.5
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        448
+      ],
+      "second": [
+        "occupancy_classes_observations.csv",
+        40
+      ],
+      "max_error": 4.369837824924616e-13
+    },
+    {
+      "key": [
+        "general_matched_a",
+        54,
+        "Inf",
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        480
+      ],
+      "second": [
+        "occupancy_classes_observations.csv",
+        42
+      ],
+      "max_error": 5.657696533489798e-13
+    },
+    {
+      "key": [
+        "general_matched_a",
+        54,
+        "Inf",
+        2.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        526
+      ],
+      "second": [
+        "occupancy_classes_observations.csv",
+        46
+      ],
+      "max_error": 8.386624728018433e-13
+    },
+    {
+      "key": [
+        "general_matched_a",
+        63,
+        "Inf",
+        0.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        415
+      ],
+      "second": [
+        "occupancy_classes_observations.csv",
+        47
+      ],
+      "max_error": 4.902744876744691e-13
+    },
+    {
+      "key": [
+        "general_matched_a",
+        63,
+        "Inf",
+        0.5
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        449
+      ],
+      "second": [
+        "occupancy_classes_observations.csv",
+        49
+      ],
+      "max_error": 7.709388682997087e-13
+    },
+    {
+      "key": [
+        "general_matched_a",
+        63,
+        "Inf",
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        481
+      ],
+      "second": [
+        "occupancy_classes_observations.csv",
+        51
+      ],
+      "max_error": 1.687538997430238e-13
+    },
+    {
+      "key": [
+        "general_matched_a",
+        63,
+        "Inf",
+        2.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        527
+      ],
+      "second": [
+        "occupancy_classes_observations.csv",
+        55
+      ],
+      "max_error": 1.201816424156732e-13
+    },
+    {
+      "key": [
+        "general_matched_a",
+        72,
+        "Inf",
+        0.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        427
+      ],
+      "second": [
+        "occupancy_classes_observations.csv",
+        56
+      ],
+      "max_error": 9.237055564881302e-14
+    },
+    {
+      "key": [
+        "general_matched_a",
+        72,
+        "Inf",
+        0.5
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        461
+      ],
+      "second": [
+        "occupancy_classes_observations.csv",
+        58
+      ],
+      "max_error": 5.186961971048731e-13
+    },
+    {
+      "key": [
+        "general_matched_a",
+        72,
+        "Inf",
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        493
+      ],
+      "second": [
+        "occupancy_classes_observations.csv",
+        60
+      ],
+      "max_error": 2.0907719999740948e-12
+    },
+    {
+      "key": [
+        "general_matched_a",
+        72,
+        "Inf",
+        2.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        539
+      ],
+      "second": [
+        "occupancy_classes_observations.csv",
+        64
+      ],
+      "max_error": 2.0470292128038636e-12
+    },
+    {
+      "key": [
+        "general_matched_a",
+        81,
+        "Inf",
+        0.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        428
+      ],
+      "second": [
+        "occupancy_classes_observations.csv",
+        65
+      ],
+      "max_error": 4.54036808150704e-12
+    },
+    {
+      "key": [
+        "general_matched_a",
+        81,
+        "Inf",
+        0.5
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        462
+      ],
+      "second": [
+        "occupancy_classes_observations.csv",
+        67
+      ],
+      "max_error": 9.308109838457312e-13
+    },
+    {
+      "key": [
+        "general_matched_a",
+        81,
+        "Inf",
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        494
+      ],
+      "second": [
+        "occupancy_classes_observations.csv",
+        69
+      ],
+      "max_error": 2.632560835991171e-12
+    },
+    {
+      "key": [
+        "general_matched_a",
+        81,
+        "Inf",
+        2.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        540
+      ],
+      "second": [
+        "occupancy_classes_observations.csv",
+        73
+      ],
+      "max_error": 2.1949109196839345e-12
+    },
+    {
+      "key": [
+        "general_matched_a",
+        90,
+        "Inf",
+        0.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        429
+      ],
+      "second": [
+        "occupancy_classes_observations.csv",
+        74
+      ],
+      "max_error": 3.993250174971763e-12
+    },
+    {
+      "key": [
+        "general_matched_a",
+        90,
+        "Inf",
+        0.5
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        463
+      ],
+      "second": [
+        "occupancy_classes_observations.csv",
+        76
+      ],
+      "max_error": 2.9558577807620168e-12
+    },
+    {
+      "key": [
+        "general_matched_a",
+        90,
+        "Inf",
+        1.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        502
+      ],
+      "second": [
+        "occupancy_classes_observations.csv",
+        78
+      ],
+      "max_error": 2.255973186038318e-12
+    },
+    {
+      "key": [
+        "general_matched_a",
+        90,
+        "Inf",
+        2.0
+      ],
+      "first": [
+        "ground_observations_baseline.csv",
+        548
+      ],
+      "second": [
+        "occupancy_classes_observations.csv",
+        82
+      ],
+      "max_error": 6.445954880973659e-13
+    },
+    {
+      "key": [
+        "general_matched_a",
+        108,
+        "Inf",
+        0.0
+      ],
+      "first": [
+        "ref_calibration_equilibrium.csv",
+        12
+      ],
+      "second": [
+        "occupancy_classes_observations.csv",
+        83
+      ],
+      "max_error": 1.8474111129762605e-13
+    },
+    {
+      "key": [
+        "general_matched_a",
+        126,
+        "Inf",
+        0.0
+      ],
+      "first": [
+        "ref_calibration_equilibrium.csv",
+        24
+      ],
+      "second": [
+        "occupancy_classes_observations.csv",
+        92
+      ],
+      "max_error": 6.821210263296962e-13
+    },
+    {
+      "key": [
+        "general_matched_a",
+        144,
+        "Inf",
+        0.0
+      ],
+      "first": [
+        "ref_calibration_equilibrium.csv",
+        36
+      ],
+      "second": [
+        "occupancy_classes_observations.csv",
+        101
+      ],
+      "max_error": 2.984279490192421e-13
+    },
+    {
+      "key": [
+        "general_matched_a",
+        144,
+        4.0,
+        0.0
+      ],
+      "first": [
+        "ref_calibration_late.csv",
+        99
+      ],
+      "second": [
+        "occupancy_classes_observations.csv",
+        434
+      ],
+      "max_error": 2.5579538487363607e-13
+    },
+    {
+      "key": [
+        "general_matched_a",
+        144,
+        5.0,
+        0.0
+      ],
+      "first": [
+        "ref_calibration_late.csv",
+        100
+      ],
+      "second": [
+        "occupancy_classes_observations.csv",
+        452
+      ],
+      "max_error": 2.5579538487363607e-13
+    },
+    {
+      "key": [
+        "general_matched_a",
+        144,
+        6.0,
+        0.0
+      ],
+      "first": [
+        "ref_calibration_late.csv",
+        101
+      ],
+      "second": [
+        "occupancy_classes_observations.csv",
+        470
+      ],
+      "max_error": 5.542233338928781e-13
+    },
+    {
+      "key": [
+        "general_matched_a",
+        144,
+        7.0,
+        0.0
+      ],
+      "first": [
+        "ref_calibration_late.csv",
+        102
+      ],
+      "second": [
+        "occupancy_classes_observations.csv",
+        488
+      ],
+      "max_error": 1.2789769243681803e-13
+    }
+  ],
+  "legacy_missing_fields": {
+    "occupied_bits": 1141,
+    "premeasurement_residual": 1059,
+    "projector_error": 1059,
+    "reconstruction_error": 1059,
+    "rectangle_imag_error": 1276,
+    "rectangle_real_error_bound": 1276,
+    "accessible_excess": 1059
+  },
+  "small_system_validation_sha256": "d6b352ca377b7a7827c4e41b4a094bf453b5c0b47c2b3ef2a04a6233f4bf52d5",
+  "incomplete_tail_bytes": {},
+  "changed_during_preliminary": [],
+  "sources": {
+    "analysis_occupancy_classes\\plan.json": "14076688e07d18174ee6a3885c2306ecef05f5f302fc5b65c9d89221c91906d1",
+    "occupancy_classes_patterns.jl": "0b76349c8e42df6cd71d76278d06b86887e832ce3e6df6d2d0d47b144e1cb6ae",
+    "data\\occupancy_classes_validation.toml": "d6b352ca377b7a7827c4e41b4a094bf453b5c0b47c2b3ef2a04a6233f4bf52d5",
+    "data\\occupancy_classes_validation.csv": "9e4cdcacac2fa4cd538a662eb55a165a6cf2171ee8f2250ae4fabb471d93eff5",
+    "occupancy_classes_experiments.jl": "a0a092a2bad70bff6045e922cccb40ccd65ca4902d71dc4b0640390776b43a61",
+    "real_entropy_extension.jl": "56ef0aa79ec2e2c04f35d1120093dd32a513cb76d3f5cfc4c17acc41887065c9",
+    "beta_patterns_strip_extension.jl": "94d04924a186701c575710f10d7d55f00b533b5f27076914f5a3dc7a90bdaf1b",
+    "validate_occupancy_classes.jl": "485b1e79a56f819a04be8a8ad9712bfc84b234c58c9f25abbeec79e622e3af3d",
+    "fermion_experiment.jl": "9efd053e7d469082ad8cead86ec256dade17e40279902842013c9a8dc9864fab",
+    "data\\ground_observations_baseline.csv": "8ba744bfef3730840ae3f143bffebc44dd27c8286644dfaf3f24c4604e3a5033",
+    "data\\ref_calibration_observations.csv": "a10427b188eb38ef7d98064a31766ba471f4732432c4d682f197afde72306a43",
+    "data\\ref_calibration_equilibrium.csv": "3c2e1ad4f4f2e617972ce37d7be14a303bf41babd054cdb19646e4aea4aa115f",
+    "data\\ref_calibration_late.csv": "bacd00aa7784eb08fe808341ee46c66c0c9e5ee2120da9f142dd96cc921ed77d",
+    "data\\random_half3_beta1_observations.csv": "89eb5964c39ff255318bd0085989e24cbc24e5d926aa3c610106e2cd8a418e47",
+    "data\\beta_patterns_observations.csv": "490d28a2b2b7a0a6a3a42ce49db5c558d3d991c0d369025721ade2132df3d4d1",
+    "data\\beta_patterns_observations_provenance.tsv": "b6e4af1045f2127ff7300318b6863151a7a89629b7b7c26d98756762e1d790d6",
+    "data\\equilibrium_extended.csv": "8d26ae7ebb69e7b378b62e40329f749f266288634a944e0cce36c73fca7ecb23",
+    "data\\random_half3_beta1_equilibrium.csv": "2d420b431567711b10f3a2da003c09e7e45aef55812c80eab946c9329c6e1826",
+    "data\\occupancy_classes_observations.csv": "7321ec21400690f1b353d729192a90691b347df67f43f201b571e948978b1a50",
+    "data\\occupancy_classes_observations_provenance.tsv": "75dddb67c58554e216471cadbbd86290670510fb622dfb1a2d6273947ed798fb",
+    "data\\beta_patterns_run_20261019T072840943.toml": "ef91cbfa7c3291460d37a8742696d87c7962b240f42d1a2c182addaccecdc7b9",
+    "data\\provenance\\code\\58f0ed0bfe931f4494986966adb8c1c04a7801fc5e46d4a0881173d376207f0e\\experiment_patterns.jl": "58f0ed0bfe931f4494986966adb8c1c04a7801fc5e46d4a0881173d376207f0e",
+    "data\\provenance\\code\\56ef0aa79ec2e2c04f35d1120093dd32a513cb76d3f5cfc4c17acc41887065c9\\real_entropy_extension.jl": "56ef0aa79ec2e2c04f35d1120093dd32a513cb76d3f5cfc4c17acc41887065c9",
+    "data\\provenance\\code\\9efd053e7d469082ad8cead86ec256dade17e40279902842013c9a8dc9864fab\\fermion_experiment.jl": "9efd053e7d469082ad8cead86ec256dade17e40279902842013c9a8dc9864fab",
+    "data\\provenance\\code\\e15fefb68b7680dc7296bb702391a0f389347786cc29bc59270550b522548725\\arrangement_patterns.jl": "e15fefb68b7680dc7296bb702391a0f389347786cc29bc59270550b522548725",
+    "data\\provenance\\code\\a1707175f46996b2a2191895cb373cb2cf521e0253358a9e305c15fee7daf67c\\beta_patterns_experiments.jl": "a1707175f46996b2a2191895cb373cb2cf521e0253358a9e305c15fee7daf67c",
+    "data\\beta_patterns_run_20261019T073030659.toml": "915d8653be752eb5a729f541009cc44cfa89de62166ec11bbe21c619b6aead45",
+    "data\\beta_patterns_interruption_20261019T073030659.json": "b6e0d9cd6933dcd74ad1d120a57ed11aa0e99ba54af3a6a6eca4e1a77ce31001",
+    "data\\provenance\\interrupted\\20261019T073030659\\beta_patterns_run_20261019T073030659.toml": "efbea5fbf31bf31b97e55c1d49927b060722cec69cc3d14237c17dfcc2f77c96",
+    "data\\provenance\\interrupted\\20261019T073030659\\beta_patterns_observations.csv": "a8c1b2eff0ad80f08e66a116bd2c1ed666f1a6fafadab9decb1988c76f9288a1",
+    "data\\provenance\\interrupted\\20261019T073030659\\beta_patterns_observations_provenance.tsv": "5640c09b8e4fb6dce0a247ce5a43e43eb8ed4ebad0c66265338138f9af959f78",
+    "data\\provenance\\interrupted\\20261019T073030659\\beta_patterns_queue_status.json": "d524ffe8d78b173430ce4247c4937ff4570cf2adf55b1be02fe5c2043b7040da",
+    "data\\provenance\\interrupted\\20261019T073030659\\beta_patterns_queue.ps1": "458d6ee4a9f9f2a4d7e7afe5d32b5634e54f298c971439d32f6be92dffb288c8",
+    "data\\provenance\\interrupted\\20261019T073030659\\beta_patterns_calibration_run.log": "60af2e43130b442060e791a3459fec2134799b8ae9593157353824910648cac6",
+    "data\\provenance\\interrupted\\20261019T073030659\\beta_patterns_interrupted_processes.json": "9f80f68e7b7b2cb972485a551cab147a5730ed90ff9673e43788109e0db953d6",
+    "data\\beta_patterns_run_20261019T073944015.toml": "d410956fd05454293e84923ff39106640bce617e5cffcbd9e782f26c2c827740",
+    "data\\provenance\\code\\522d2783d944a5aab415699db2fbf27dba1ec463114f68e6031f5a1c7b5e8aa5\\beta_patterns_experiments.jl": "522d2783d944a5aab415699db2fbf27dba1ec463114f68e6031f5a1c7b5e8aa5",
+    "data\\beta_patterns_run_20261019T092330307.toml": "b85796ed94ae65011dc2d2435dacba6c9e885862fc3623e1e3e7350cf16ee5a1",
+    "data\\beta_patterns_run_20261019T092502602.toml": "5ceebfc3e7a3a771920080a19ffb9d55c0956cb48faafff4482b700b242fb421",
+    "data\\beta_patterns_run_20261019T092812512.toml": "cc6b1534cade07c326bf7c9981e10584dcd83f84df79486fcf75b037136255ed",
+    "data\\provenance\\code\\94d04924a186701c575710f10d7d55f00b533b5f27076914f5a3dc7a90bdaf1b\\beta_patterns_strip_extension.jl": "94d04924a186701c575710f10d7d55f00b533b5f27076914f5a3dc7a90bdaf1b",
+    "data\\provenance\\code\\d5585aa13d5349cd3d12f65122bcf3dbb499d4afd2afb347cb633cb24f0156ca\\beta_patterns_experiments.jl": "d5585aa13d5349cd3d12f65122bcf3dbb499d4afd2afb347cb633cb24f0156ca",
+    "data\\beta_patterns_run_20261019T102022695.toml": "c2ae073deafd93d112001c6c611111cfa008390edc581d8daff6dd95a3631ad7",
+    "data\\occupancy_classes_run_20261020T140750398.toml": "72461e89d71ddd6397e1037f9f88e355f7f046a992dad0ce53f44a3d638e2153",
+    "data\\provenance\\code\\a0a092a2bad70bff6045e922cccb40ccd65ca4902d71dc4b0640390776b43a61\\occupancy_classes_experiments.jl": "a0a092a2bad70bff6045e922cccb40ccd65ca4902d71dc4b0640390776b43a61",
+    "data\\provenance\\code\\0b76349c8e42df6cd71d76278d06b86887e832ce3e6df6d2d0d47b144e1cb6ae\\occupancy_classes_patterns.jl": "0b76349c8e42df6cd71d76278d06b86887e832ce3e6df6d2d0d47b144e1cb6ae",
+    "data\\occupancy_classes_run_20261020T141504000.toml": "c15432a00b6484c81bbb83c67b31ec594b77182b20dea78e4d458a7e610d3f81",
+    "data\\occupancy_classes_run_20261020T142149372.toml": "49a80f9ceb1400b6eb12e99aaba6f5001fbce255e460522fb8ba9de4b2fe2f24",
+    "data\\occupancy_classes_run_20261020T143921895.toml": "4ed4845bcbfb2a4eb899162a00068dbbae101705e95c5d77e8a101ab8420b242",
+    "data\\occupancy_classes_run_20261020T141346456.toml": "1ce84c4b6e6fda021144cb5362c3dbf7174954c31ede4322b7d0f0a269c069df",
+    "validate_occupancy_classes.py": "20fec52c04a654d7246e3c305ecdca31a2dcc726db9659da9e0ee53bbefabf92"
+  },
+  "scope": "Data identity, six occupation classes, own-empty protocol via validated kernel hashes, finite/Inf distinction, CSV/ledger/source/run/code provenance, ground-limit diagnostics and plan coverage. The ground flag describes reachability of theta->Inf, not finite-theta convergence. Legacy reference tables without ledgers are labeled; audited beta/new outputs have full row provenance. No scaling-fit or asymptotic claim."
+}

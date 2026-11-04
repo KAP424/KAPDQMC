@@ -1,0 +1,19 @@
+====================================================================================
+Does the first-moment Gaussian conserve particle number?  (L=2, a=4)
+====================================================================================
+ beta  S2(rho_bar)   S2(rho_G)    Tr rb^2    Tr rG^2  VarN(rho_bar)  VarN(rho_G)  <N>(rho_G)
+ 0.25     0.277671    0.549093   0.757546   0.577473       0.00e+00     0.265336    4.000000
+ 0.50     1.022609    1.948919   0.359655   0.142428       3.55e-15     0.864842    4.000000
+ 1.00     2.913451    4.713292   0.054288   0.008975      -7.11e-15     1.780831    4.000000
+ 2.00     3.824777    5.533298   0.021823   0.003953       0.00e+00     1.997028    4.000000
+ 3.00     3.840166    5.544978   0.021490   0.003907       1.42e-14     1.999950    4.000000
+
+rho_bar has Var(N) = 0 to roundoff (the charge is exactly conserved).
+rho_G has Var(N) >> 0: the naive Gaussian does NOT respect the charge.
+=> the 'maximum entropy given the first moment' state is NOT rho_G;
+   conditioning on the conserved charge raises the achievable entropy
+   and the inequality  S2(rho_bar) >= S2(rho_G)  is the wrong direction.
+
+real	0m1.533s
+user	0m0.000s
+sys	0m0.016s

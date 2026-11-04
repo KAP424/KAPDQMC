@@ -1,0 +1,6 @@
+source,pattern,L,theta,beta,max_S_D_error
+ref_calibration_validation.csv,uniform_A,18,2.0,0.0,1.4210854715202004e-14
+ref_calibration_validation.csv,uniform_A,18,2.0,1.0,8.43769498715119e-15
+ref_calibration_validation.csv,one_B_2,18,2.0,0.0,7.460698725481052e-14
+ref_calibration_validation.csv,random_half_3,18,2.0,0.0,2.3092638912203256e-14
+ref_calibration_validation.csv,random_half_3,18,2.0,1.0,5.284661597215745e-14

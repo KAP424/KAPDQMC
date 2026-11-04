@@ -1,0 +1,51 @@
+final_E = [126, 183, 62, 98, 27, 8, 287, 15, 108, 129, 114, 34, 237, 30, 262, 152, 234, 122, 187, 157, 84, 67, 104, 203, 127, 282, 149, 17, 250, 73, 9, 199, 180, 150, 26, 182, 70, 134, 202, 1, 115, 102, 154, 25, 171, 188, 266, 38, 77, 228, 213, 101, 29, 56, 42, 83, 207, 236, 5, 33, 112, 248, 52, 82, 257, 137, 139, 193, 285, 222, 186, 92, 36, 103, 173, 105, 78, 72, 174, 269, 143, 168, 141, 44, 219, 242, 251, 288, 201, 66, 224, 272, 86, 41, 50, 109, 59, 148, 124, 35, 74, 132, 88, 277, 191, 198, 200, 230, 13, 253, 246, 94, 131, 238, 18, 181, 283, 240, 6, 7, 110, 118, 21, 260, 194, 217, 23, 274, 169, 58, 232, 268, 241, 263, 153, 172, 32, 144, 164, 179, 93, 210, 281, 165]
+maximum_inverse_asymmetry = 1.3322676295501878e-15
+elapsed_seconds = 8.407999992370605
+blas_threads = 1
+initial_state_definition = "Even L: E contains both A/B on odd x columns. Odd L: alternate full/empty for x<=L-1, and place only A in the final column; this is half-filled but not pure 0/2."
+started_at = "2026-10-27T15:24:05.006"
+acceptance = 0.8828260633680556
+accepted = 520712
+initial_E = [231, 163, 173, 164, 271, 54, 251, 127, 245, 266, 18, 220, 129, 214, 274, 60, 84, 140, 170, 235, 249, 132, 30, 96, 172, 49, 128, 275, 25, 89, 77, 239, 138, 35, 254, 196, 51, 227, 136, 150, 62, 4, 200, 264, 211, 282, 99, 86, 259, 39, 9, 42, 288, 174, 64, 12, 205, 152, 97, 91, 223, 187, 17, 178, 234, 15, 63, 213, 191, 31, 184, 109, 113, 16, 284, 232, 269, 265, 66, 159, 263, 36, 52, 145, 8, 5, 233, 218, 166, 215, 94, 148, 10, 104, 85, 3, 56, 92, 222, 101, 261, 22, 45, 156, 135, 192, 210, 209, 273, 20, 13, 151, 72, 83, 61, 112, 242, 74, 40, 286, 228, 133, 155, 247, 147, 7, 169, 224, 212, 68, 88, 203, 243, 14, 102, 123, 70, 100, 29, 193, 75, 105, 207, 162]
+julia_version = "1.12.1"
+status = "complete"
+refreshes = 409
+plan_sha256 = "19dde87d9227436fa49f3355692324c20369b50839dbf869ba38c3872365d296"
+records = 2048
+model_manifest_sha256 = "166830ba189efb767434d6940fcd6ddcb44f5b6c63ffd26ad203b2ce1f5a9992"
+proposed = 589824
+model_manifest = "data/born_scaling/pilot/models/state_L12_staggered_mu1.0e-8_model.toml"
+maximum_logweight_drift = 4.973799150320701e-13
+maximum_inverse_drift = 3.3122601353337413e-15
+completed_at = "2026-10-27T15:24:13.411"
+
+[source_sha256]
+"run_born_scaling.jl" = "3d9004c1d112a29ee1a7b440a945dc89516f7cabba8e279e0e5dd145e5a65c76"
+"original_swap_scaling.jl" = "1af51fff868fbe63025323618506295ce5622179c1381de5ea64549e8c0d40cb"
+"../../public/Geometry.jl" = "079c2052642d46a7072656ccd738411faa57c9f07791f786a0a6872a5a5970ad"
+
+[job]
+chain = 1
+output_dir = "data/born_scaling/pilot"
+L = 12
+mu = 1.0e-8
+state = "staggered"
+run_id = "pilot_L12_beta0p5_mu1p0em8_chain1_random"
+sweeps = 2048
+refresh_every = 5
+start = "random"
+model_manifest_sha256 = "166830ba189efb767434d6940fcd6ddcb44f5b6c63ffd26ad203b2ce1f5a9992"
+stage = "pilot"
+beta = 0.5
+model_manifest = "data/born_scaling/pilot/models/state_L12_staggered_mu1.0e-8_model.toml"
+seed = 1042050001
+measure_every = 1
+
+[model_files]
+"state_L12_staggered_mu1.0e-8_G.bin" = "7047fe4445cfcaf330205a8f8bfa08c1b4695bfbccb69e6bc2ed88a0590a6c51"
+"state_L12_staggered_mu1.0e-8_Q.bin" = "c151aabb06fe3d3404812b46fa9dc06b99d3dbd207966c5c8ecb4eee06e5257c"
+"state_L12_staggered_mu1.0e-8_energies.bin" = "cab0c3e38e47d9783911c579bad81577aaf7fe3de16bef7ff345bde0c4ba3cc7"
+
+[files]
+"data/born_scaling/pilot/pilot_L12_beta0p5_mu1p0em8_chain1_random_samples.csv" = "72e509a24e8e210252ae340083920972a053e0f18b602457c3488b915dfbb5fd"
+"data/born_scaling/pilot/pilot_L12_beta0p5_mu1p0em8_chain1_random_initial.csv" = "3953e99ac8ef64aa59d7a9ad978c8f26b04405f9466f618a3f714601a1e7ddca"

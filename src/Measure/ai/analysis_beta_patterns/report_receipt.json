@@ -1,0 +1,9 @@
+{
+  "generated_utc": "2026-10-19T10:36:15.514420+00:00",
+  "report_sha256": "835ec58f4e105532a7e0e3f5113c140999bf82d2a5e7d688ae2ecbd5281b9b0e",
+  "summary_sha256": "b34fb7527a58e21f3674066cf7b2511ca7b94448e69a870eed619d2e585bfbf1",
+  "generator_sha256": "2f945d360ce3edd5b77c6c5bb9be9aaa502a3caaf89afced9bf493436255ee36",
+  "data_audit_sha256": "b2d9c9fc267909a8c9492d6f2e6f6a30c2c3e439d9edd651be2d51cae80dd079",
+  "fit_audit_sha256": "dec195365e7d1d36b7b2c00eecd26a88d2bbee3b7e9b53f96b540968b902a45f",
+  "calibration_review_sha256": "6502143b4c77d48a899ab789840f41dc45329d7378bace62f53c29b848057820"
+}

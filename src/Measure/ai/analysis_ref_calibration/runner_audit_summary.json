@@ -1,0 +1,289 @@
+{
+  "created_utc": "2026-10-19T01:57:56.633684+00:00",
+  "status": "PASS_SNAPSHOT",
+  "errors": [],
+  "outputs": {
+    "ref_calibration_equilibrium.csv": {
+      "rows": 36,
+      "patterns": [
+        "diagonal_B_3",
+        "full_empty_cluster3",
+        "general_matched_a",
+        "general_matched_b",
+        "one_B_2",
+        "one_B_3",
+        "random_half_3",
+        "special_matched_a",
+        "special_matched_b",
+        "two_B_3",
+        "uniform_A",
+        "uniform_B"
+      ],
+      "maxima": {
+        "D_error": 0.0,
+        "delta_error": 0.0,
+        "ground_excess": 2.9103830456733704e-11,
+        "ground_residual": 5.40679350192984e-13,
+        "projector_error": 2.2568514002028683e-15,
+        "reconstruction_error": 5.843308821896632e-16,
+        "imag_error": 4.9183149679740805e-15,
+        "real_entropy_bound": 3.4414291594878715e-24,
+        "matched_entropy_difference": 0.0
+      }
+    },
+    "ref_calibration_late.csv": {
+      "rows": 115,
+      "patterns": [
+        "diagonal_B_3",
+        "full_empty_cluster3",
+        "general_matched_a",
+        "general_matched_b",
+        "one_B_2",
+        "random_half_3",
+        "special_matched_a",
+        "special_matched_b",
+        "uniform_A"
+      ],
+      "maxima": {
+        "D_error": 0.0,
+        "delta_error": 0.0,
+        "ground_excess": 1.0913936421275139e-11,
+        "ground_residual": 5.402546342348375e-13,
+        "projector_error": 2.50690160713658e-15,
+        "reconstruction_error": 5.843308821896632e-16,
+        "imag_error": 2.261197620275547e-15,
+        "real_entropy_bound": 1.6223343987206363e-24,
+        "matched_entropy_difference": 0.0
+      }
+    },
+    "ref_calibration_observations.csv": {
+      "rows": 873,
+      "patterns": [
+        "diagonal_B_3",
+        "full_empty_cluster3",
+        "general_matched_a",
+        "general_matched_b",
+        "one_B_2",
+        "one_B_3",
+        "random_half_3",
+        "special_matched_a",
+        "special_matched_b",
+        "two_B_3",
+        "uniform_B"
+      ],
+      "maxima": {
+        "D_error": 0.0,
+        "delta_error": 0.0,
+        "ground_excess": 1.2732925824820995e-11,
+        "ground_residual": 4.0166351098526426e-13,
+        "projector_error": 3.5371177690063052e-15,
+        "reconstruction_error": 6.378922179649513e-16,
+        "imag_error": 2.8663480588512853e-15,
+        "real_entropy_bound": 1.5078469837998635e-24,
+        "matched_entropy_difference": 0.0
+      }
+    },
+    "ref_calibration_validation.csv": {
+      "rows": 6,
+      "patterns": [
+        "one_B_2",
+        "random_half_3",
+        "uniform_A"
+      ],
+      "maxima": {
+        "D_error": 0.0,
+        "delta_error": 0.0,
+        "ground_excess": 2.8421709430404007e-13,
+        "ground_residual": 6.014773246980486e-14,
+        "projector_error": 2.015854461045532e-15,
+        "reconstruction_error": 4.971198079039153e-16,
+        "imag_error": 5.026699617681974e-16,
+        "real_entropy_bound": 4.0093052532561773e-28,
+        "matched_entropy_difference": 7.460698725481052e-14
+      }
+    }
+  },
+  "receipts": [
+    {
+      "path": "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\ai\\data\\ref_calibration_equilibrium.csv",
+      "bytes_captured": 19139,
+      "complete_bytes": 19139,
+      "complete_sha256": "3c2e1ad4f4f2e617972ce37d7be14a303bf41babd054cdb19646e4aea4aa115f",
+      "incomplete_tail_bytes": 0
+    },
+    {
+      "path": "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\ai\\data\\ref_calibration_late.csv",
+      "bytes_captured": 60540,
+      "complete_bytes": 60540,
+      "complete_sha256": "bacd00aa7784eb08fe808341ee46c66c0c9e5ee2120da9f142dd96cc921ed77d",
+      "incomplete_tail_bytes": 0
+    },
+    {
+      "path": "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\ai\\data\\ref_calibration_observations.csv",
+      "bytes_captured": 457464,
+      "complete_bytes": 457464,
+      "complete_sha256": "a10427b188eb38ef7d98064a31766ba471f4732432c4d682f197afde72306a43",
+      "incomplete_tail_bytes": 0
+    },
+    {
+      "path": "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\ai\\data\\ref_calibration_validation.csv",
+      "bytes_captured": 3476,
+      "complete_bytes": 3476,
+      "complete_sha256": "5931e3bdefaf22dd472529832861ce56da9ff74e0fa14460c388dfa5e6f7d3e4",
+      "incomplete_tail_bytes": 0
+    }
+  ],
+  "baseline_receipt": {
+    "path": "D:\\JuliaDQMC\\code\\KAPDQMC\\src\\Measure\\ai\\data\\ground_observations_baseline.csv",
+    "bytes_captured": 498490,
+    "complete_bytes": 498490,
+    "complete_sha256": "8ba744bfef3730840ae3f143bffebc44dd27c8286644dfaf3f24c4604e3a5033",
+    "incomplete_tail_bytes": 0
+  },
+  "manifests": [
+    {
+      "run_id": "20261019T011807561",
+      "status": "complete",
+      "expected_rows": 6,
+      "captured_rows": 6,
+      "current_code_differs": [
+        "ref_calibration_experiments.jl"
+      ],
+      "unverified_recorded_code": [],
+      "recorded_code_sources": {
+        "experiment_patterns.jl": "experiment_patterns.jl",
+        "ref_calibration_experiments.jl": "data\\provenance\\code\\3309b3a7033e10c2a79113ba8526163e4facf8a356c2321afed7b7e1e3ca51df\\ref_calibration_experiments.jl",
+        "real_entropy_extension.jl": "real_entropy_extension.jl",
+        "fermion_experiment.jl": "fermion_experiment.jl",
+        "arrangement_patterns.jl": "arrangement_patterns.jl"
+      },
+      "recorded_baseline_sha256": "8ba744bfef3730840ae3f143bffebc44dd27c8286644dfaf3f24c4604e3a5033",
+      "baseline_hash_matches": true,
+      "completion_prefix_hash_matches": true,
+      "manifest_sha256": "c7c022d35b6e794b2c1acf421f8d5e650f197266eaf64cc1cd399e18e19c7990"
+    },
+    {
+      "run_id": "20261019T011829109",
+      "status": "complete",
+      "expected_rows": 242,
+      "captured_rows": 242,
+      "current_code_differs": [
+        "ref_calibration_experiments.jl"
+      ],
+      "unverified_recorded_code": [],
+      "recorded_code_sources": {
+        "experiment_patterns.jl": "experiment_patterns.jl",
+        "ref_calibration_experiments.jl": "data\\provenance\\code\\3309b3a7033e10c2a79113ba8526163e4facf8a356c2321afed7b7e1e3ca51df\\ref_calibration_experiments.jl",
+        "real_entropy_extension.jl": "real_entropy_extension.jl",
+        "fermion_experiment.jl": "fermion_experiment.jl",
+        "arrangement_patterns.jl": "arrangement_patterns.jl"
+      },
+      "recorded_baseline_sha256": "8ba744bfef3730840ae3f143bffebc44dd27c8286644dfaf3f24c4604e3a5033",
+      "baseline_hash_matches": true,
+      "completion_prefix_hash_matches": true,
+      "manifest_sha256": "a13e057ac6b615d2fdd29a90f21f8df94be5cbe2b383b9cdc7eef42bbed4d81a"
+    },
+    {
+      "run_id": "20261019T011955855",
+      "status": "complete",
+      "expected_rows": 36,
+      "captured_rows": 36,
+      "current_code_differs": [
+        "ref_calibration_experiments.jl"
+      ],
+      "unverified_recorded_code": [],
+      "recorded_code_sources": {
+        "experiment_patterns.jl": "experiment_patterns.jl",
+        "ref_calibration_experiments.jl": "data\\provenance\\code\\3309b3a7033e10c2a79113ba8526163e4facf8a356c2321afed7b7e1e3ca51df\\ref_calibration_experiments.jl",
+        "real_entropy_extension.jl": "real_entropy_extension.jl",
+        "fermion_experiment.jl": "fermion_experiment.jl",
+        "arrangement_patterns.jl": "arrangement_patterns.jl"
+      },
+      "recorded_baseline_sha256": "8ba744bfef3730840ae3f143bffebc44dd27c8286644dfaf3f24c4604e3a5033",
+      "baseline_hash_matches": true,
+      "completion_prefix_hash_matches": true,
+      "manifest_sha256": "28d35f74ea42794353f525a2adbdf894f66a673ae9470eb4edcf5daef3b80aaa"
+    },
+    {
+      "run_id": "20261019T012410213",
+      "status": "complete",
+      "expected_rows": 631,
+      "captured_rows": 631,
+      "current_code_differs": [
+        "ref_calibration_experiments.jl"
+      ],
+      "unverified_recorded_code": [],
+      "recorded_code_sources": {
+        "experiment_patterns.jl": "experiment_patterns.jl",
+        "ref_calibration_experiments.jl": "data\\provenance\\code\\3309b3a7033e10c2a79113ba8526163e4facf8a356c2321afed7b7e1e3ca51df\\ref_calibration_experiments.jl",
+        "real_entropy_extension.jl": "real_entropy_extension.jl",
+        "fermion_experiment.jl": "fermion_experiment.jl",
+        "arrangement_patterns.jl": "arrangement_patterns.jl"
+      },
+      "recorded_baseline_sha256": "8ba744bfef3730840ae3f143bffebc44dd27c8286644dfaf3f24c4604e3a5033",
+      "baseline_hash_matches": true,
+      "completion_prefix_hash_matches": true,
+      "manifest_sha256": "a2528c073103800d8dfbeacabd1f0080df23214c8fd69e214286411af41fe924"
+    },
+    {
+      "run_id": "20261019T012410263",
+      "status": "complete",
+      "expected_rows": 34,
+      "captured_rows": 34,
+      "current_code_differs": [
+        "ref_calibration_experiments.jl"
+      ],
+      "unverified_recorded_code": [],
+      "recorded_code_sources": {
+        "experiment_patterns.jl": "experiment_patterns.jl",
+        "ref_calibration_experiments.jl": "data\\provenance\\code\\3309b3a7033e10c2a79113ba8526163e4facf8a356c2321afed7b7e1e3ca51df\\ref_calibration_experiments.jl",
+        "real_entropy_extension.jl": "real_entropy_extension.jl",
+        "fermion_experiment.jl": "fermion_experiment.jl",
+        "arrangement_patterns.jl": "arrangement_patterns.jl"
+      },
+      "recorded_baseline_sha256": "8ba744bfef3730840ae3f143bffebc44dd27c8286644dfaf3f24c4604e3a5033",
+      "baseline_hash_matches": true,
+      "completion_prefix_hash_matches": true,
+      "manifest_sha256": "6654065b4200937e2b89dd57da2487bb549243bc46d8fa5ceacdada82a5c31ea"
+    },
+    {
+      "run_id": "20261019T012612183",
+      "status": "complete",
+      "expected_rows": 81,
+      "captured_rows": 81,
+      "current_code_differs": [
+        "ref_calibration_experiments.jl"
+      ],
+      "unverified_recorded_code": [],
+      "recorded_code_sources": {
+        "experiment_patterns.jl": "experiment_patterns.jl",
+        "ref_calibration_experiments.jl": "data\\provenance\\code\\3309b3a7033e10c2a79113ba8526163e4facf8a356c2321afed7b7e1e3ca51df\\ref_calibration_experiments.jl",
+        "real_entropy_extension.jl": "real_entropy_extension.jl",
+        "fermion_experiment.jl": "fermion_experiment.jl",
+        "arrangement_patterns.jl": "arrangement_patterns.jl"
+      },
+      "recorded_baseline_sha256": "8ba744bfef3730840ae3f143bffebc44dd27c8286644dfaf3f24c4604e3a5033",
+      "baseline_hash_matches": true,
+      "completion_prefix_hash_matches": true,
+      "manifest_sha256": "02fff1e2e3a5938753487cc19f7d9ce4208796f29c1f20cdd63443d41d0a9bb0"
+    }
+  ],
+  "code_sha256": {
+    "ref_calibration_experiments.jl": "a7a02bc0eab1b0af102e84ec04b32cd2f19dcfd3a2c5524132af6c52c3ab9e0f",
+    "fermion_experiment.jl": "9efd053e7d469082ad8cead86ec256dade17e40279902842013c9a8dc9864fab",
+    "real_entropy_extension.jl": "56ef0aa79ec2e2c04f35d1120093dd32a513cb76d3f5cfc4c17acc41887065c9",
+    "experiment_patterns.jl": "58f0ed0bfe931f4494986966adb8c1c04a7801fc5e46d4a0881173d376207f0e",
+    "arrangement_patterns.jl": "e15fefb68b7680dc7296bb702391a0f389347786cc29bc59270550b522548725"
+  },
+  "audit_script_sha256": "b861981d05acd686ca218f95638899450e7675e9c61c51445fff4f71b4b9fa82",
+  "static_review": {
+    "ground_semantics": "premeasurement_ground means the unmeasured theta=Inf accessible limit has global ground energy and zero residual; it does not assert the finite-theta state is already a ground state.",
+    "evolution": "state=FE.evolve(prepared,theta), cached only within exact pattern,L,theta; every beta measures the same unmeasured state, not a previously measured state.",
+    "measurement": "FE.measure copies orbitals and scales original empty rows by exp(-2beta), then thin QR; beta zero returns unchanged state.",
+    "geometry": "L divisible by 3m, fixed origin (1,1), A=L/3 by L, C=L by L/3, B=L/3 by 2L/3; D=(2SA+SC)/3-SB.",
+    "entropy": "one species, natural log, real covariance checked before discarding imaginary part; Cholesky of .5I+2(C-.5I)^2 computes -logdet and has spectrum [.5,1].",
+    "diagnostics": "energy/excess/residual/overlap/empty occupancy describe measured state; premeasurement_excess/residual describe theta=Inf unmeasured limit.",
+    "provenance": "Each row hash must match its run manifest. Each recorded source hash is verified against current or archived exact source bytes. The relocated baseline must match the original recorded input hash. Completion prefix hashes accommodate later appends.",
+    "scope": "Read-only static review and existing numeric record checks. No new large-region entropy computation."
+  }
+}

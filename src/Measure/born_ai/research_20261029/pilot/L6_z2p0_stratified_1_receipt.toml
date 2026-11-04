@@ -1,0 +1,32 @@
+sampling_seconds = 0.0163086
+created_at = "2026-10-29T09:24:50.914"
+julia_version = "1.12.1"
+maximum_reference_entropy_error = 6.522560269672795e-15
+status = "complete"
+matrix_format = "Float64 native-endian column-major Nsites x Nsites"
+elapsed_seconds = 0.054000139236450195
+blas_threads = 1
+plan_sha256 = "c51cd1a47e6edb80aaee924a9944909b85dc6ca750289dfb68dbb1c28c29347b"
+records = 64
+j_counts = [64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+entropy_seconds = 0.008378099999999998
+fluctuation_seconds = 0.0143476
+
+[job]
+method = "stratified"
+jhi = 0
+model = "pilot/models/stratified_L6_staggered_mu1.0e-8_model.toml"
+L = 6
+jlo = 0
+id = "L6_z2p0_stratified_1"
+z = 2.0000000000000004
+stratum_probability = 0.09400379299796349
+records = 64
+case = "z2p0"
+beta = 1.4451858789480823
+seed = 291089401
+
+[files]
+"pilot/L6_z2p0_stratified_1_meanGsquare.bin" = "7f636b87e4a9c47a1de6689b708cde56a75e73da55a0391f823d45f102aff378"
+"pilot/L6_z2p0_stratified_1_meanG.bin" = "e596a578ebcb3f4ab650119643c0393e5e118a1704549b07bfeaaf716b93ce86"
+"pilot/L6_z2p0_stratified_1.csv" = "f67fc791661c3dc1b93b7b59a52cd7b5beb475616a52f1047dbab822bb34e6ba"

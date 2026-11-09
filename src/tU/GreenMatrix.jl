@@ -1,3 +1,33 @@
+# -------------------------------------------For Measure---------------------------------
+function BM_F4M!(tmpN, tmpNN, BM, model::tU_Hubbard_Para_, s::Array{UInt8,2}, idx::Int64, Mdiag::Vector{ComplexF64})
+    """
+    不包头包尾
+    """
+    @assert 0 < idx <= length(model.nodes)
+
+    fill!(BM, 0)
+    @inbounds for i in diagind(BM)
+        BM[i] = 1
+    end
+    for lt in model.nodes[idx]+1:model.nodes[idx+1]
+        @inbounds @simd for i in 1:model.Ns
+            tmpN[i] = model.exp_αη_pos[lt, s[i, lt]]
+        end
+        mul!(tmpNN, model.eK, BM)
+        mul!(BM, Diagonal(tmpN), tmpNN)
+    end
+    if idx == div(length(model.nodes), 2)
+        mul!(tmpNN, Diagonal(Mdiag), BM)
+        BM .= tmpNN
+    end
+    if idx == div(length(model.nodes), 2) + 1
+        mul!(tmpNN, BM, Diagonal(Mdiag))
+        BM .= tmpNN
+    end
+end
+
+
+# ------------------------------------------------------------------------------------------
 function Initial_s(model::tU_Hubbard_Para_, rng::MersenneTwister)::Array{UInt8,2}
     sp = Random.Sampler(rng, [1, 2, 3, 4])
     s = zeros(model.Ns, model.Nt)

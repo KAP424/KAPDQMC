@@ -9,8 +9,10 @@ using LinearAlgebra
 
     rng = MersenneTwister(1234)
 
-    model = tU_Hubbard_Para(Ht=1.0, Hu1=3.8, Hu2=3.8, Θrelax=3.1, Θquench=0., Lattice="HoneyComb120", site=[3, 3], Δt=0.03, BatchSize=10, Initial="V")
+    model = tU_Hubbard_Para(Ht=1.0, Hu1=3.8, Hu2=3.8, Θrelax=2., Θquench=0., Lattice="HoneyComb120", site=[3, 3], Δt=0.1, BatchSize=10, Initial="V")
     s = Initial_s(model, rng)
+
+    println(model.nodes)
 
     beta = 0.
     Eidx = collect(1:2:model.Ns)

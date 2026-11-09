@@ -1,6 +1,5 @@
-# 后选择的测量
+# turn off symmetric HS decomposition when debuging
 
-# 基本没改，只需要添加一下测量的初始化
 function phy_update_M(path::String, model::tU_Hubbard_Para_, Eidx::Vector{Int64}, beta::Float64, s::Array{UInt8,2}, Sweeps::Int64, record::Bool=false)
     global LOCK = ReentrantLock()
     TTT = time_ns()
@@ -21,7 +20,8 @@ function phy_update_M(path::String, model::tU_Hubbard_Para_, Eidx::Vector{Int64}
 
     Ns = model.Ns
     ns = div(Ns, 2)
-    rng = MersenneTwister(Threads.threadid() + time_ns())
+    rng = MersenneTwister(1234)
+    # rng = MersenneTwister(Threads.threadid() + time_ns())
 
     G, tau, ipiv, BLs, BRs, tmpN, tmpNN, BM, tmpNn, tmpnn, tmpnN =
         Phy.G, Phy.tau, Phy.ipiv, Phy.BLs, Phy.BRs, Phy.N, Phy.NN, Phy.BM, Phy.Nn, Phy.nn, Phy.nN
@@ -31,15 +31,15 @@ function phy_update_M(path::String, model::tU_Hubbard_Para_, Eidx::Vector{Int64}
 
     BRs[:, :, 1] .= model.HalfeKinv * model.Pt
     BLs[:, :, NN] .= model.Pt' * model.HalfeK
+
     # BRs[:, :, 1] .= model.Pt
     # BLs[:, :, NN] .= model.Pt'
 
-    Mdiag = ones(Ns)
+    Mdiag = ones(ComplexF64, Ns)
     Mdiag[Eidx] .= exp(-2 * beta)
-    M = MeasureG(Mdiag, eltype(G))
 
     for idx in NN-1:-1:1
-        BM_F!(tmpN, tmpNN, BM, model, s, idx)
+        BM_F4M!(tmpN, tmpNN, BM, model, s, idx, Mdiag)
         mul!(tmpnN, view(BLs, :, :, idx + 1), BM)
         LAPACK.gerqf!(tmpnN, tau)
         LAPACK.orgrq!(tmpnN, tau, ns)
@@ -67,7 +67,7 @@ function phy_update_M(path::String, model::tU_Hubbard_Para_, Eidx::Vector{Int64}
             # ---------------------------------------------------------------------------------------------------------
             # record physical quantities
             if record && 0 <= (Θidx - idx) <= 1
-                tmp = phy_measure_M(model, M, lt, s, G, tmpNN, tmpN)
+                tmp = phy_measure_M(model, lt, s, G, tmpNN, tmpN, Mdiag, true)
                 counter += 1
                 Ek += tmp[1]
                 Eu += tmp[2]
@@ -78,7 +78,7 @@ function phy_update_M(path::String, model::tU_Hubbard_Para_, Eidx::Vector{Int64}
 
             if any(model.nodes .== lt)
                 idx += 1
-                BM_F!(tmpN, tmpNN, BM, model, s, idx - 1)
+                BM_F4M!(tmpN, tmpNN, BM, model, s, idx - 1, Mdiag)
                 mul!(tmpNn, BM, view(BRs, :, :, idx - 1))
                 LAPACK.geqrf!(tmpNn, tau)
                 LAPACK.orgqr!(tmpNn, tau, ns)
@@ -108,7 +108,7 @@ function phy_update_M(path::String, model::tU_Hubbard_Para_, Eidx::Vector{Int64}
             # ---------------------------------------------------------------------------------------------------------
             # record physical quantities
             if record && 0 <= (idx - Θidx) <= 1
-                tmp = phy_measure_M(model, M, lt, s, G, tmpNN, tmpN)
+                tmp = phy_measure_M(model, lt, s, G, tmpNN, tmpN, Mdiag, false)
                 counter += 1
                 Ek += tmp[1]
                 Eu += tmp[2]
@@ -124,7 +124,7 @@ function phy_update_M(path::String, model::tU_Hubbard_Para_, Eidx::Vector{Int64}
             if any(model.nodes .== (lt - 1))
                 # println("idx=",idx," lt=",lt-1)
                 idx -= 1
-                BM_F!(tmpN, tmpNN, BM, model, s, idx)
+                BM_F4M!(tmpN, tmpNN, BM, model, s, idx, Mdiag)
                 mul!(tmpnN, view(BLs, :, :, idx + 1), BM)
                 LAPACK.gerqf!(tmpnN, tau)
                 LAPACK.orgrq!(tmpnN, tau, ns)
@@ -154,79 +154,13 @@ function phy_update_M(path::String, model::tU_Hubbard_Para_, Eidx::Vector{Int64}
     return s
 end
 
-# ================================================================
-# 输入 G，令 G' = I - G，计算
-#     MG' = M G' [I + (M² - I) G']⁻¹ M ,  M 为固定对角阵
-# 并返回 I - MG'（存放在 W.MG 中）。G 只读，不会被修改。
-#
-# 推导 (D = M² - I 对角)：由 push-through 恒等式 G'(I + DG') = (I + G'D)G'，
-#     G' (I + DG')⁻¹ = (I + G'D)⁻¹ G'
-# 故  MG' = M · B⁻¹ · (G' M),   B = I + G' D
-# 实现：不单独构造 G'。一次遍历 G，按列缩放（列主序，连续访存），
-#       非对角部分直接取 -G[i,j]，对角线再补上 G' 里的 1，同时得到
-#         B = I + G' D    （工作区；对角线补 m_j² = 1 + d_j）
-#         MG ← G' M       （直接写进输出；对角线补 m_j）
-#       B 做 LU (getrf!)，解 B Z = G' M (getrs!，原地覆盖 MG)
-#       最后一次遍历：MG ← I - M Z（按行缩放、取负、对角线加 1），O(N²)
-# 总计 1 次 getrf + 1 次 getrs ≈ 8/3 N³ flops，不显式求逆；
-# 额外内存只有 B、MG (各 N×N) 和 ipiv (N)；M、D 只在构造时算一次。
-# 注意：B、MG 都是工作区，返回的 W.MG 会在下一次调用时被覆盖，需要保留请先拷贝；
-#       多线程时每个线程各自构造一个 MeasureG。
-# ================================================================
-struct MeasureG{T<:Union{Float64,ComplexF64}}
-    m::Vector{T}                              # diag(M)
-    d::Vector{T}                              # diag(M² - I)
-    B::Matrix{T}                              # 工作区：I + G' D，被 LU 原地覆盖
-    MG::Matrix{T}                             # 输出：I - M G' [I + (M² - I) G']⁻¹ M，每次调用都会覆盖
-    ipiv::Vector{LinearAlgebra.BLAS.BlasInt}
-end
-
-function MeasureG(M::AbstractVector, ::Type{T}) where {T<:Union{Float64,ComplexF64}}
-    N = length(M)
-    m = T.(M)                                 # 广播总会新分配，不与调用方的数组共用内存
-    return MeasureG{T}(m, m .^ 2 .- one(T), Matrix{T}(undef, N, N), Matrix{T}(undef, N, N), Vector{LinearAlgebra.BLAS.BlasInt}(undef, N))
-end
-# MeasureG(M::AbstractVector) = MeasureG(M, float(eltype(M)))
-# MeasureG(M::AbstractMatrix, T::Type...) = MeasureG(diag(M), T...)
-
-function Measure_G!(G::AbstractMatrix{T}, W::MeasureG{T}) where {T}
-    m, d, B, MG = W.m, W.d, W.B, W.MG
-    N = length(m)
-    size(G) == (N, N) || throw(DimensionMismatch("G must be N×N with N = length(M)"))
-
-    # 一次遍历 G（G' = I - G 不单独构造）：B = I + G' D,  MG = G' M
-    @inbounds for j in 1:N
-        dj = d[j]
-        mj = m[j]
-        @simd for i in 1:N
-            g = -G[i, j]                          # G' = I - G：这里先取 -G[i,j]，对角线的 1 在循环外补，G 本身不改
-            B[i, j] = g * dj
-            MG[i, j] = g * mj
-        end
-        B[j, j] += m[j]^2                         # 对角：I 的 1 加上 G' 的 1·d_j，合计 1 + d_j = m_j²
-        MG[j, j] += mj                            # 对角：G' 的 1·m_j
-    end
-
-    LAPACK.getrf!(B, W.ipiv)
-    LAPACK.getrs!('N', B, W.ipiv, MG)           # MG ← B⁻¹ (G' M)
-
-    @inbounds for j in 1:N
-        @simd for i in 1:N
-            MG[i, j] = -MG[i, j] * m[i]                     # 按行缩放并取负：MG ← -M B⁻¹ (G' M)
-        end
-        MG[j, j] += one(T)                        # 对角线加 1：MG ← I - M B⁻¹ (G' M) = I - MG'
-    end
-    return MG
-end
-
-# 只改了一行
-function phy_measure_M(model::tU_Hubbard_Para_, M, lt, s, G, tmpNN, tmpN)
+function phy_measure_M(model::tU_Hubbard_Para_, lt, s, G, tmpNN, tmpN, Mdiag::Vector{ComplexF64}, forward::Bool)
     """
     (Ek,Ev,R0,R1)    
     """
     G0 = G[:, :]
     SDW0 = SDW1 = 0.0
-
+    τlessΘ = lt >= model.Nt / 2
     if lt > model.Nt / 2
         for t in lt:-1:div(model.Nt, 2)+1
             for i in axes(s, 1)
@@ -234,15 +168,28 @@ function phy_measure_M(model::tU_Hubbard_Para_, M, lt, s, G, tmpNN, tmpN)
             end
             WrapKV!(tmpNN, model.eK, model.eKinv, tmpN, G0, "Backward", "B")
         end
-    else
+        mul!(tmpNN, G0, Diagonal(Mdiag))
+        mul!(G0, Diagonal(1 ./ Mdiag), tmpNN)
+    elseif lt < model.Nt / 2
         for t in lt+1:div(model.Nt, 2)
             for i in axes(s, 1)
                 tmpN[i] = model.exp_αη_pos[t, s[i, t]]
             end
             WrapKV!(tmpNN, model.eK, model.eKinv, tmpN, G0, "Forward", "B")
         end
+        mul!(tmpNN, G0, Diagonal(1 ./ Mdiag))
+        mul!(G0, Diagonal(Mdiag), tmpNN)
+    else
+        if forward
+            mul!(tmpNN, G0, Diagonal(1 ./ Mdiag))
+            mul!(G0, Diagonal(Mdiag), tmpNN)
+        else
+            mul!(tmpNN, G0, Diagonal(Mdiag))
+            mul!(G0, Diagonal(1 ./ Mdiag), tmpNN)
+        end
     end
-    copyto!(G0, Measure_G!(G0, M))
+
+
     ####################################################################
     # if norm(G0 - Gτ(model, s, div(model.Nt, 2))) > 1e-7
     #     error("record error lt=$(lt) : $(norm(G0-Gτ(model,s,div(model.Nt,2))))")

@@ -26,6 +26,34 @@ function BM_F4M!(tmpN, tmpNN, BM, model::tU_Hubbard_Para_, s::Array{UInt8,2}, id
     end
 end
 
+function BMinv_F4M!(tmpN, tmpNN, BM, model::tU_Hubbard_Para_, s::Array{UInt8,2}, idx::Int64, Mdiag::Vector{ComplexF64})
+    """
+    不包头包尾
+    """
+    @assert 0 < idx <= length(model.nodes)
+
+    fill!(BM, 0)
+    @inbounds for i in diagind(BM)
+        BM[i] = 1
+    end
+
+    for lt in model.nodes[idx]+1:model.nodes[idx+1]
+        @inbounds for i in 1:model.Ns
+            tmpN[i] = model.exp_αη_neg[lt, s[i, lt]]
+        end
+        mul!(tmpNN, BM, model.eKinv)
+        mul!(BM, tmpNN, Diagonal(tmpN))
+    end
+    if idx == div(length(model.nodes), 2)
+        mul!(tmpNN, BM, Diagonal(1 ./ Mdiag))
+        BM .= tmpNN
+    end
+    if idx == div(length(model.nodes), 2) + 1
+        mul!(tmpNN, Diagonal(1 ./ Mdiag), BM)
+        BM .= tmpNN
+    end
+end
+
 
 # ------------------------------------------------------------------------------------------
 function Initial_s(model::tU_Hubbard_Para_, rng::MersenneTwister)::Array{UInt8,2}

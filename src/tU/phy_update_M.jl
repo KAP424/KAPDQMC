@@ -20,8 +20,7 @@ function phy_update_M(path::String, model::tU_Hubbard_Para_, Eidx::Vector{Int64}
 
     Ns = model.Ns
     ns = div(Ns, 2)
-    rng = MersenneTwister(1234)
-    # rng = MersenneTwister(Threads.threadid() + time_ns())
+    rng = MersenneTwister(Threads.threadid() + time_ns())
 
     G, tau, ipiv, BLs, BRs, tmpN, tmpNN, BM, tmpNn, tmpnn, tmpnN =
         Phy.G, Phy.tau, Phy.ipiv, Phy.BLs, Phy.BRs, Phy.N, Phy.NN, Phy.BM, Phy.Nn, Phy.nn, Phy.nN

@@ -42,7 +42,7 @@ using .M_VBSDQMC: M_VBS_Hubbard_Para
 
 export tU_Hubbard_Para, tV_Hubbard_Para, tUV_Hubbard_Para, SO3_Hubbard_Para, VBS_Hubbard_Para, M_VBS_Hubbard_Para
 export Initial_s, phy_update, ctrl_SCEEicr, ctrl_EEicr, ctrl_SCDOPicr
-export phy_update_M
+export phy_update_M, ctrl_SCEEicr_M
 end
 
 

@@ -1,0 +1,13 @@
+Julia=1.12.1
+sweeps=1000
+warmup=200
+betas=[0.0, 0.2, 0.4, 0.6, 0.8, 1.0, 1.2, 1.4, 1.6, 1.8, 2.0]
+Nlambda=3
+Theta_relax=5.0
+Eidx=[1, 3, 5, 7, 9, 11, 13, 15, 17]
+indexA=[1, 2, 7, 8, 13, 14]
+indexB=[1, 2, 7, 8]
+Initialization seeds=1234+beta index. Library update RNG uses time_ns; reruns are statistical, not bitwise identical.
+src/tU/SCEE_M.jl sha256=4976fc3ae79c85f83c41b7ec44456b00216677d26ff3219e65c5ef6b4b6094c1
+test/tU_Measure/SCEEtest_M_tU.jl sha256=00fbc59291f73743a2328b039c4eabac15b1ab658ad2d7452f2006a1884e79af
+DP_Lib.py sha256=8da8fe05048d1f57891528e7d5b2c091d432de9d47baf30d2576cf3a9363132d

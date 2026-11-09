@@ -22,7 +22,7 @@ using LinearAlgebra
     indexA = area_index(model.Lattice, model.site, ([1, 1], [div(L, 3), L]))
     indexB = area_index(model.Lattice, model.site, ([1, 1], [div(L, 3), div(2 * L, 3)]))
 
-    λ = 0.5
-    Nλ = 2
-    ss = ctrl_SCEEicr_M(path, model, Eidx, beta, indexA, indexB, 2, λ, Nλ, ss, true)
+    λ = 0.
+    Nλ = 1
+    ss = ctrl_SCEEicr_M(path, model, Eidx, beta, indexA, indexB, 500, λ, Nλ, ss, true)
 end

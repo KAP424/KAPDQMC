@@ -13,9 +13,9 @@ function phy_update_M(path::String, model::tU_Hubbard_Para_, Eidx::Vector{Int64}
     name = name_Lattice(model.Lattice)
 
     if model.Θquench == 0.0
-        file = "$(path)/tUMphy$(name)_t$(model.Ht)U$(model.Hu1)size$(model.site)Δt$(model.Δt)Θ$(model.Θrelax)BS$(model.BatchSize).csv"
+        file = "$(path)/tUMphy$(name)_t$(model.Ht)U$(model.Hu1)size$(model.site)Δt$(model.Δt)Θ$(model.Θrelax)BS$(model.BatchSize)M$(beta).csv"
     else
-        file = "$(path)/tUMphy$(name)_t$(model.Ht)U$(model.Hu1)_$(model.Hu2)size$(model.site)Δt$(model.Δt)Θ$(model.Θrelax)_$(model.Θquench)BS$(model.BatchSize).csv"
+        file = "$(path)/tUMphy$(name)_t$(model.Ht)U$(model.Hu1)_$(model.Hu2)size$(model.site)Δt$(model.Δt)Θ$(model.Θrelax)_$(model.Θquench)BS$(model.BatchSize)M$(beta).csv"
     end
 
     Ns = model.Ns

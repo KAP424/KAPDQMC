@@ -21,9 +21,9 @@ function ctrl_SCEEicr_M(path::String, model::tU_Hubbard_Para_, Eidx::Vector{Int6
     name = name_Lattice(model.Lattice)
 
     if model.Θquench == 0.0
-        file = "$(path)/tUMSCEE$(name)_t$(model.Ht)U$(model.Hu1)size$(model.site)Δt$(model.Δt)Θ$(model.Θrelax)N$(Nλ)BS$(model.BatchSize).csv"
+        file = "$(path)/tUMSCEE$(name)_t$(model.Ht)U$(model.Hu1)size$(model.site)Δt$(model.Δt)Θ$(model.Θrelax)N$(Nλ)BS$(model.BatchSize)M$(beta).csv"
     else
-        file = "$(path)/tUMSCEE$(name)_t$(model.Ht)U$(model.Hu1)_$(model.Hu2)size$(model.site)Δt$(model.Δt)Θ$(model.Θrelax)_$(model.Θquench)N$(Nλ)BS$(model.BatchSize).csv"
+        file = "$(path)/tUMSCEE$(name)_t$(model.Ht)U$(model.Hu1)_$(model.Hu2)size$(model.site)Δt$(model.Δt)Θ$(model.Θrelax)_$(model.Θquench)N$(Nλ)BS$(model.BatchSize)M$(beta).csv"
     end
 
     rng = MersenneTwister(Threads.threadid() + time_ns())

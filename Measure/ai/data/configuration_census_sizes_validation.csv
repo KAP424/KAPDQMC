@@ -1,2 +1,0 @@
-row_count,unique_count,complement_checks,translation_checks,complement_energy_error,complement_sv_error,translation_energy_error,translation_sv_error,max_residual,max_reconstruction_error
-49714,49714,49714,99428,9.094947017729282e-13,2.3869795029440866e-15,6.821210263296962e-13,2.1094237467877974e-15,1.2968556203914677e-13,8.78666298949292e-15

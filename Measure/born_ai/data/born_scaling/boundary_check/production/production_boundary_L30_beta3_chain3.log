@@ -1,7 +1,0 @@
-PROGRESS production_boundary_L30_beta3_chain3 sweep=128/768 elapsed=257.3
-PROGRESS production_boundary_L30_beta3_chain3 sweep=256/768 elapsed=520.0
-PROGRESS production_boundary_L30_beta3_chain3 sweep=384/768 elapsed=735.8
-PROGRESS production_boundary_L30_beta3_chain3 sweep=512/768 elapsed=1006.8
-PROGRESS production_boundary_L30_beta3_chain3 sweep=640/768 elapsed=1264.3
-PROGRESS production_boundary_L30_beta3_chain3 sweep=768/768 elapsed=1523.5
-DONE production_boundary_L30_beta3_chain3 seconds=1523.611999988556 legacy_error=4.218847493575595e-14

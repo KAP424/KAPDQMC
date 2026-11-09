@@ -1,9 +1,0 @@
-label,c,provenance
-"Ref eq, same grid",0.1553240603455604,computed
-"Current eq, same grid",0.15532501704301785,computed
-"Current time, 2-6, L108",0.15603016620738946,computed
-"Ref eq, cutoff poly-5",0.15811846965727566,reproduced saved snapshot
-"Ref time, cutoff poly-2",0.165,saved label only
-"Ref time, cutoff poly-3",0.164,saved label only
-"Ref time, cutoff poly-4",0.157,saved label only
-"Ref time, cutoff power",0.155,saved label only

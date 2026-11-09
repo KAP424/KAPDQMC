@@ -1,8 +1,0 @@
-cell,description,Ref_c,single_c
-4,"eq direct log, saved L<=69 snapshot",0.343,0.1715
-6,eq fifth-order cutoff extrapolation,0.3162,0.1581
-8,"neq direct log, source table missing",0.375,0.1875
-13,neq second-order cutoff extrapolation,0.33,0.165
-13,neq third-order cutoff extrapolation,0.328,0.164
-13,neq fourth-order cutoff extrapolation,0.314,0.157
-13,neq nonlinear power cutoff extrapolation,0.31,0.155

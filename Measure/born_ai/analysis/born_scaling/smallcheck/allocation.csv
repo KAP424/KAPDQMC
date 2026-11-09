@@ -1,7 +1,0 @@
-L,beta,mu,stage,burnin_for_estimate,burnin_screen_status,observable,target_MCSE,pilot_MCSE,required_raw,required_power2,provisional_per_chain,status
-3,0.5,1e-08,smallcheck,256,provisional_burnin_screen_pass_inspect_drift_and_tails,SA,0.01,0.0012992341364499026,2048,2048,2048,pilot_variance_extrapolation_not_guarantee
-3,0.5,1e-08,smallcheck,256,provisional_burnin_screen_pass_inspect_drift_and_tails,D,0.003,0.0007602965248641173,2048,2048,2048,pilot_variance_extrapolation_not_guarantee
-3,1.5,1e-08,smallcheck,256,provisional_burnin_screen_pass_inspect_drift_and_tails,SA,0.01,0.0008347385935830591,2048,2048,2048,pilot_variance_extrapolation_not_guarantee
-3,1.5,1e-08,smallcheck,256,provisional_burnin_screen_pass_inspect_drift_and_tails,D,0.003,0.0003249441093232181,2048,2048,2048,pilot_variance_extrapolation_not_guarantee
-3,3.0,1e-08,smallcheck,256,provisional_burnin_screen_pass_inspect_drift_and_tails,SA,0.01,3.300813500752283e-05,2048,2048,2048,pilot_variance_extrapolation_not_guarantee
-3,3.0,1e-08,smallcheck,256,provisional_burnin_screen_pass_inspect_drift_and_tails,D,0.003,1.3026806740082422e-05,2048,2048,2048,pilot_variance_extrapolation_not_guarantee

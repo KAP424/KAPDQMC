@@ -1,4 +1,0 @@
-L,beta,earliest_screen_pass_stable_over_later_cuts,burnin256_screen_pass,caution
-27,3.0,32,True,A 512-sweep pilot cannot certify mixing or rule out unseen tails; production uses fresh seeds.
-30,3.0,32,True,A 512-sweep pilot cannot certify mixing or rule out unseen tails; production uses fresh seeds.
-36,3.0,32,True,A 512-sweep pilot cannot certify mixing or rule out unseen tails; production uses fresh seeds.

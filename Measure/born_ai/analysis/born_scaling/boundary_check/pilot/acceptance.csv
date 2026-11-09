@@ -1,4 +1,0 @@
-L,beta,mu,measure_every,burnin,recorded_accepted,recorded_proposed,acceptance,records_per_chain,first_retained_sweep,last_retained_sweep
-6,3.0,1e-08,4,128,8119,36864,0.2202419704861111,32,132,256
-18,3.0,1e-08,4,128,40222,331776,0.12123239776234568,32,132,256
-36,3.0,1e-08,4,128,149337,1327104,0.11252848307291667,32,132,256

@@ -1,9 +1,0 @@
-all: chi2=42.3 dof=17 p=6.0e-04
-  drop L=36 z=   3.21 h=0.388 : chi2=29.5 dof=16 p=2.1e-02
-  drop L=36 z=   5.93 h=0.498 : chi2=41.7 dof=16 p=4.4e-04
-  drop L=36 z=  10.55 h=0.631 : chi2=40.7 dof=16 p=6.2e-04
-  drop L=36 z=  23.74 h=0.744 : chi2=28.9 dof=16 p=2.5e-02
-  drop L=36 z=  64.52 h=0.937 : chi2=38.0 dof=16 p=1.5e-03
-  drop L=36 z= 175.39 h=1.011 : chi2=42.2 dof=16 p=3.7e-04
-  drop L=36 z= 476.77 h=0.993 : chi2=38.3 dof=16 p=1.4e-03
-  drop L=36 z=23.7 AND z=64.5: chi2=24.2 dof=15 p=6.3e-02

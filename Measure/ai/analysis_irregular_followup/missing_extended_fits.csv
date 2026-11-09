@@ -1,7 +1,0 @@
-pattern,beta,model,requested_Lmin,requested_Lmax,fit_role,reason,n
-pure02_block4,0.0,log_inv1_inv2,96,144,baseline_sensitivity,fewer_than_parameters_plus_two_points,5
-pure02_block4,1.0,log_inv1_inv2,96,144,baseline_sensitivity,fewer_than_parameters_plus_two_points,5
-pure02_block4,2.0,log_inv1_inv2,96,144,baseline_sensitivity,fewer_than_parameters_plus_two_points,5
-pure02_irregular4,0.0,log_inv1_inv2,96,144,baseline_sensitivity,fewer_than_parameters_plus_two_points,5
-pure02_irregular4,1.0,log_inv1_inv2,96,144,baseline_sensitivity,fewer_than_parameters_plus_two_points,5
-pure02_irregular4,2.0,log_inv1_inv2,96,144,baseline_sensitivity,fewer_than_parameters_plus_two_points,5

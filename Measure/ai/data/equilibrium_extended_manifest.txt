@@ -1,9 +1,0 @@
-START UTC=2026-10-18T05:35:59.156; Julia=1.12.1; BLAS_threads=4; grid=equilibrium_v2_2026-10-18; args=--mode=run --threads=4
-Source=D:\JuliaDQMC\code\KAPDQMC\src\Measure\ai\data\observations.csv; SHA256=b6e6403a7cf5a228b77f37c6f167bff7da93cc800f768de662a0ae9be34666dc; requested=1345; remaining=1345; reusable=601; new=744
-All theta=Inf; each (pattern,L) limit is evolved once, then each beta is applied independently to that immutable limit. Classification uses its premeasurement energy, abs(excess)<1e-8. Measured energy is not used to decide whether the unmeasured limit is a global ground state.
-Common L=18,36,54,72,90; GS candidates: m1=12:6:90,m2=6:6:90,m3=9:9:90; blocked controls=6:6:54,72,90. beta=0,.25,.5,.75,1,1.5,2,3,4. Historical beta8 preserved as audit only.
-Columns=pattern,family,m,L,theta,beta,S_A,S_C,S_B,delta,D,energy,excess_energy,accessible_excess,residual,min_initial_sv,log_initial_overlap2,empty_occupancy,projector_error,reconstruction_error,min_pivot_sv,premeasurement_ground,premeasurement_energy,premeasurement_excess,premeasurement_residual,ground_energy,limit_fingerprint,source,source_file,source_sha256,source_row,calculation_seconds,scan_stage,grid_version
-SHA256 fermion_experiment.jl 9efd053e7d469082ad8cead86ec256dade17e40279902842013c9a8dc9864fab
-SHA256 experiment_patterns.jl 58f0ed0bfe931f4494986966adb8c1c04a7801fc5e46d4a0881173d376207f0e
-SHA256 equilibrium_experiments.jl 806265ce6705e47f6dc2523f11b9246738c0238d70d54bb5c3e1eea4c5355218
-FINISH UTC=2026-10-18T05:42:38.371; rows_written=1345; total_rows=1345; elapsed_seconds=399.21399998664856; OUTPUT_SHA256=8d26ae7ebb69e7b378b62e40329f749f266288634a944e0cce36c73fca7ecb23

@@ -1,6 +1,0 @@
-PASS: deterministic exact latent-mixture identity, normalization, and empirical samples
-max_latent_probability_error=1.1102230246251565e-16
-max_normalization_error=1.5543122344752192e-15
-max_single_state_empirical_z=3.462456946702856
-empirical_samples=400000; seed=20261027; Julia=1.12.1
-BLAS_threads=1

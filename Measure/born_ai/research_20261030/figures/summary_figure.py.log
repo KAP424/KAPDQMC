@@ -1,2 +1,0 @@
-p(h): {0.3: (np.float64(0.59), 0.023), 0.4: (np.float64(0.687), 0.022), 0.5: (np.float64(0.782), 0.025), 0.6: (np.float64(0.888), 0.022), 0.7: (np.float64(1.028), 0.043), 0.8: (np.float64(1.242), 0.046), 0.9: (np.float64(1.592), 0.211)}
-figure -> D:\JuliaDQMC\code\KAPDQMC\src\Measure\born_ai\research_20261030\figures\summary.png

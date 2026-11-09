@@ -1,0 +1,10 @@
+D:/JuliaDQMC/code/KAPDQMC/test/tU_Measure/tl=0.15/beta0.0/L12 0.0 12 3.0 50 500 1.8
+D:/JuliaDQMC/code/KAPDQMC/test/tU_Measure/tl=0.15/beta0.0/L12 0.0 12 3.3 50 500 1.8
+D:/JuliaDQMC/code/KAPDQMC/test/tU_Measure/tl=0.15/beta0.0/L12 0.0 12 3.5 50 500 1.8
+D:/JuliaDQMC/code/KAPDQMC/test/tU_Measure/tl=0.15/beta0.0/L12 0.0 12 3.6 50 500 1.8
+D:/JuliaDQMC/code/KAPDQMC/test/tU_Measure/tl=0.15/beta0.0/L12 0.0 12 3.7 50 500 1.8
+D:/JuliaDQMC/code/KAPDQMC/test/tU_Measure/tl=0.15/beta0.0/L12 0.0 12 3.8 50 500 1.8
+D:/JuliaDQMC/code/KAPDQMC/test/tU_Measure/tl=0.15/beta0.0/L12 0.0 12 3.9 50 500 1.8
+D:/JuliaDQMC/code/KAPDQMC/test/tU_Measure/tl=0.15/beta0.0/L12 0.0 12 4.0 50 500 1.8
+D:/JuliaDQMC/code/KAPDQMC/test/tU_Measure/tl=0.15/beta0.0/L12 0.0 12 4.1 50 500 1.8
+D:/JuliaDQMC/code/KAPDQMC/test/tU_Measure/tl=0.15/beta0.0/L12 0.0 12 4.5 50 500 1.8

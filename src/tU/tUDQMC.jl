@@ -1,5 +1,6 @@
 module tUDQMC
 import ..KAPDQMC: phy_update, Initial_s, ctrl_SCEEicr, ctrl_SCDOPicr, ctrl_EEicr
+import ..KAPDQMC: phy_update_M, ctrl_SCEEicr_M
 
 using ..KAPDQMC: name_Lattice, nn2idx, xy_i, i_xy, nnK_Matrix, area_index, nnidx_F, Initial_Pt!
 using ..KAPDQMC: PhyBuffer_, G4Buffer_, SCEEBuffer_, AreaBuffer_, DOPBuffer_
@@ -17,6 +18,8 @@ include("phy_update.jl")
 include("SCEE.jl")
 include("EEicr.jl")
 include("disorder_operate.jl")
+include("phy_update_M.jl")
+include("SCEE_M.jl")
 
 export tU_Hubbard_Para
 end

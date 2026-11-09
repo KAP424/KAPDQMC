@@ -1,0 +1,3 @@
+HoneyComb120 size=[9, 9]  Δt=0.05  Θ=1.35+0.0  U=3.7--3.7  Initial=V  flux=0.0  opt=xy  BS=5  54*162*(162, 162)
+      acc = 41.34%  500 Sweep finished in 00:12:26
+DONE beta=0.0 L=9 U=3.7 warm=101.9s record=746.0s

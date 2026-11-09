@@ -206,23 +206,15 @@ function phy_measure(model::tU_Hubbard_Para_, lt, s, G, tmpNN, tmpN)
 
                         delta = idx1 == idx2 ? 1 : 0
 
-                        tmp1 += ((1 - G0[idx1, idx1]) * (1 - G0[idx2, idx2]) + (delta - G0[idx1, idx2]) * G0[idx2, idx1])
-                        +adjoint(G0[idx1, idx1] * G0[idx2, idx2] + G0[idx1, idx2] * (delta - G0[idx2, idx1]))  # <i_A j_A>
-                        tmp1 += ((1 - G0[idx1+1, idx1+1]) * (1 - G0[idx2+1, idx2+1]) + (delta - G0[idx1+1, idx2+1]) * G0[idx2+1, idx1+1])
-                        +adjoint(G0[idx1+1, idx1+1] * G0[idx2+1, idx2+1] + G0[idx1+1, idx2+1] * (delta - G0[idx2+1, idx1+1]))  # <i_B j_B>
-                        tmp1 -= ((1 - G0[idx1+1, idx1+1]) * (1 - G0[idx2, idx2]) - G0[idx1+1, idx2] * G0[idx2, idx1+1])
-                        +adjoint(G0[idx1+1, idx1+1] * G0[idx2, idx2] - G0[idx1+1, idx2] * G0[idx2, idx1+1])  # <i_B j_A>
-                        tmp1 -= ((1 - G0[idx1, idx1]) * (1 - G0[idx2+1, idx2+1]) - G0[idx1, idx2+1] * G0[idx2+1, idx1])
-                        +adjoint(G0[idx1, idx1] * G0[idx2+1, idx2+1] - G0[idx1, idx2+1] * G0[idx2+1, idx1])  # <i_A j_B>
+                        tmp1 += ((1 - G0[idx1, idx1]) * (1 - G0[idx2, idx2]) + (delta - G0[idx1, idx2]) * G0[idx2, idx1]) + adjoint(G0[idx1, idx1] * G0[idx2, idx2] + G0[idx1, idx2] * (delta - G0[idx2, idx1]))  # <i_A j_A>
+                        tmp1 += ((1 - G0[idx1+1, idx1+1]) * (1 - G0[idx2+1, idx2+1]) + (delta - G0[idx1+1, idx2+1]) * G0[idx2+1, idx1+1]) + adjoint(G0[idx1+1, idx1+1] * G0[idx2+1, idx2+1] + G0[idx1+1, idx2+1] * (delta - G0[idx2+1, idx1+1]))  # <i_B j_B>
+                        tmp1 -= ((1 - G0[idx1+1, idx1+1]) * (1 - G0[idx2, idx2]) - G0[idx1+1, idx2] * G0[idx2, idx1+1]) + adjoint(G0[idx1+1, idx1+1] * G0[idx2, idx2] - G0[idx1+1, idx2] * G0[idx2, idx1+1])  # <i_B j_A>
+                        tmp1 -= ((1 - G0[idx1, idx1]) * (1 - G0[idx2+1, idx2+1]) - G0[idx1, idx2+1] * G0[idx2+1, idx1]) + adjoint(G0[idx1, idx1] * G0[idx2+1, idx2+1] - G0[idx1, idx2+1] * G0[idx2+1, idx1])  # <i_A j_B>
 
-                        tmp2 += (1 - G0[idx1, idx1]) * adjoint(G0[idx2, idx2])
-                        +adjoint(G0[idx1, idx1]) * (1 - G0[idx2, idx2])    # <i_A j_A>
-                        tmp2 += (1 - G0[idx1+1, idx1+1]) * adjoint(G0[idx2+1, idx2+1])
-                        +adjoint(G0[idx1+1, idx1+1]) * (1 - G0[idx2+1, idx2+1])    # <i_B j_B>
-                        tmp2 -= (1 - G0[idx1, idx1]) * adjoint(G0[idx2+1, idx2+1])
-                        +adjoint(G0[idx1, idx1]) * (1 - G0[idx2+1, idx2+1])    # <i_A j_B>
-                        tmp2 -= (1 - G0[idx1+1, idx1+1]) * adjoint(G0[idx2, idx2])
-                        +adjoint(G0[idx1+1, idx1+1]) * (1 - G0[idx2, idx2])    # <i_B j_A>
+                        tmp2 += (1 - G0[idx1, idx1]) * adjoint(G0[idx2, idx2]) + adjoint(G0[idx1, idx1]) * (1 - G0[idx2, idx2])    # <i_A j_A>
+                        tmp2 += (1 - G0[idx1+1, idx1+1]) * adjoint(G0[idx2+1, idx2+1]) + adjoint(G0[idx1+1, idx1+1]) * (1 - G0[idx2+1, idx2+1])    # <i_B j_B>
+                        tmp2 -= (1 - G0[idx1, idx1]) * adjoint(G0[idx2+1, idx2+1]) + adjoint(G0[idx1, idx1]) * (1 - G0[idx2+1, idx2+1])    # <i_A j_B>
+                        tmp2 -= (1 - G0[idx1+1, idx1+1]) * adjoint(G0[idx2, idx2]) + adjoint(G0[idx1+1, idx1+1]) * (1 - G0[idx2, idx2])    # <i_B j_A>
                     end
                 end
                 CDW0 += tmp1 + tmp2
@@ -315,6 +307,15 @@ function Correlation_Cal(G, i, j, k, l)
     """
     ans = (Int(i == j) - G[j, i]) * (Int(k == l) - G[l, k]) + (Int(i == l) - G[l, i]) * G[j, k]
     return ans
+end
+
+function Correlation_Cal_dagger(G, i, j, k, l)
+    """
+    dagger space for down spin
+    calculate the correlation <c†_i c_j c†_k c_l> = <h_i h†_j h_k h†_l>
+    (G_ij)* = h_i h†_j
+    """
+    return adjoint(G[i, j] * G[k, l] + G[i, l] * (Int(j == k) - G[k, j]))
 end
 
 function UpdatePhyLayer!(rng, s, lt, model::tU_Hubbard_Para_, UPD::UpdateBuffer_, Phy::PhyBuffer_)

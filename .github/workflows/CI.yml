@@ -19,12 +19,15 @@ jobs:
     permissions: # needed to allow julia-actions/cache to proactively delete old caches that it has created
       actions: write
       contents: read
+    # Project.toml declares julia = "1.12" and Printf = "1.11", so older
+    # releases (e.g. 1.6) cannot resolve; they are intentionally not in the
+    # matrix. Nightly ('pre') is allowed to fail without reddening CI.
+    continue-on-error: ${{ matrix.version == 'pre' }}
     strategy:
       fail-fast: false
       matrix:
         version:
           - '1.12'
-          - '1.6'
           - 'pre'
         os:
           - ubuntu-latest

@@ -52,3 +52,5 @@ phy_update(path, model, s, 100, true)   # 记录物理量到 CSV
 纠缠增量计算需分别运行 `λ = 0, 1/Nλ, …, (Nλ-1)/Nλ`。`DP_Lib.py` 中的 `File_Process2` 按 λ 汇总观测量，并返回 `-log(∏λ ⟨Oλ⟩)` 及误差估计；用于 `ctrl_SCEEicr` 输出时，该量是区域熵差。
 
 ## 待完善
+
+测量
